@@ -8,7 +8,7 @@ category: 4강 Digital Transmission, 메인
 
 이번 장의 주인공은 단연 [[PCM]]이다. 교수는 "especially pulse code modulation — '''we would emphasize this one in this course'''"라고 못 박았다. [[sampling]] → [[quantization]] → [[encoding]] 세 단계, [[Nyquist sampling theorem]], Example 2.13 의 64 kbps, 그리고 "디지털화의 대가" [[PCM bandwidth]] 증명이 핵심이다.
 
-{info}페이지 번호는 '''L3(CH02_Physical Layer (2)) 슬라이드 인쇄 번호'''다. L3 p.2–41 은 지난 시간([[CH02 Signals]], [[CH02 Transmission]]) 복습이다. 같은 PCM 내용이 다음 덱 L4 p.17–33 에 복습으로 다시 나오며, 그쪽은 [[PCM bandwidth]] 증명을 4장으로 나눠 보여 준다.{/info}
+{info}페이지 번호는 '''L3(CH02_Physical Layer (2)) 슬라이드 인쇄 번호'''다. L3 p.2–41 은 지난 시간([[CH02 Signals]], [[CH02 Transmission]]) 복습이다. 같은 PCM 내용이 다음 덱 L4 p.15–33 에 복습으로 다시 나온다 ([[PCM bandwidth]] 증명은 L3 p.61–64 / L4 p.28–32, 양쪽 모두 4장).{/info}
 
 == 한눈에 보는 지도 (p.42) ==
 
@@ -156,7 +156,7 @@ $$\text{Bit rate} = f_s \times n_b$$
 
 [[img:L3-64.png|p.64 PCM Bandwidth 증명 전체 — Nyquist sampling theorem 과 Nyquist bit rate 공식 두 개를 연달아 쓴다|large]]
 
-증명은 L4 덱(p.29–32) 기준 '''4단계'''다. 교수: "step by step 으로 써 두었으니 '''혼자 따라가 보라''' — [[Nyquist sampling theorem]] 과 [[Nyquist bit rate]] formula 를 쓰면 된다."
+증명은 L3 p.62–64 (복습 덱 L4 p.29–32) 기준 '''4단계'''다. 교수: "step by step 으로 써 두었으니 '''혼자 따라가 보라''' — [[Nyquist sampling theorem]] 과 [[Nyquist bit rate]] formula 를 쓰면 된다."
 <pre class="txt">
 ① [[Nyquist sampling theorem]]  :  f_s = 2 B_analog                     [samples/s]
       (baseband 아날로그 신호: f_max = B_analog)

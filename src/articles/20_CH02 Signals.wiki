@@ -168,7 +168,7 @@ $$B = f_{high} - f_{low} = 5000 - 1000 = 4000\ \text{Hz}$$
 
 그림의 교훈: '''같은 시간 동안 같은 수의 "칸"'''을 보내도 level 이 2 → 4 로 늘면 칸마다 비트가 1 → 2 로 늘어 bit rate 가 두 배가 된다. 이것이 [[Nyquist bit rate]] 공식의 $\log_2 L$ 항이다.
 
-{info}교수: "LG U+ 에서 '1 Gbps' 인터넷 상품을 확인해 봤을 것이다. 그게 바로 '''ISP 가 가정에 파는 bit rate''' 다." 1 Gbps ≈ $2^{30}$ bps.{/info}
+{info}교수: "LG U+ 에서 '1 Gbps' 인터넷 상품을 확인해 봤을 것이다. 그게 바로 '''ISP 가 가정에 파는 bit rate''' 다." 1 Gbps = $10^9$ bps (교수는 구두로 $2^{30}$ 이라 했지만 data rate 의 G 는 10진 SI 접두어 — [[bit rate]] 참고).{/info}
 → [[bit rate]]
 
 == p.33–34 — Example 2.3 ==

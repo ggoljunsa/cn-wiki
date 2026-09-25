@@ -313,9 +313,11 @@ function formatPre(src, cls) {
 function wikiLink(key, label) {
   key = key.trim();
   var exists = typeof ARTICLES !== "undefined" && !!ARTICLES[key];
-  if (label === null || label === undefined) label = exists ? ARTICLES[key].title : key;
+  // 표시 문구가 없으면 key 를 그대로 보여 주고(제목이 길어 문장이 깨지는 것 방지), 전체 제목은 툴팁으로.
+  var tip = exists ? ARTICLES[key].title : key;
+  if (label === null || label === undefined) label = key;
   return '<a href="#' + encodeURIComponent(key) + '" class="' +
-    (exists ? "wiki" : "wiki wiki-stub") + '">' + label + "</a>";
+    (exists ? "wiki" : "wiki wiki-stub") + '" title="' + String(tip).replace(/"/g, "&quot;") + '">' + label + "</a>";
 }
 
 // ------------------------------------------------------------
@@ -367,6 +369,20 @@ if (typeof window !== "undefined") window.inlineFormat = inlineFormat;
 // ------------------------------------------------------------
 // 목차 / 검색 / 라우팅
 // ------------------------------------------------------------
+// 목차용 제목 텍스트: KaTeX 가 렌더된 뒤에는 접근성용 MathML 중복을 빼고, 아직이면 $…$ 를 읽을 수 있게 정리.
+function tocText(h) {
+  var c = h.cloneNode(true);
+  c.querySelectorAll(".katex-mathml").forEach(function (e) { e.parentNode.removeChild(e); });
+  var t = c.textContent || "";
+  if (t.indexOf("$") >= 0) {
+    t = t.replace(/\$\$?([^$]+)\$\$?/g, function (m, x) {
+      return x.replace(/\\geq?/g, "≥").replace(/\\leq?/g, "≤").replace(/\\times/g, "×")
+              .replace(/\\(mathrm|text|mathbf)/g, "").replace(/\\[a-zA-Z]+/g, "").replace(/[{}]/g, "");
+    });
+  }
+  return t;
+}
+
 function renderTOC() {
   var tocList = document.getElementById("tocList");
   if (!tocList) return;
@@ -377,7 +393,7 @@ function renderTOC() {
     li.className = "toc-item " + (h.tagName === "H2" ? "l2" : "l3");
     var a = document.createElement("a");
     a.href = "#" + h.id;
-    a.textContent = h.textContent;
+    a.textContent = tocText(h);
     a.style.color = "#1d65b3";
     a.style.textDecoration = "none";
     a.style.fontSize = "12px";
@@ -457,6 +473,7 @@ if (QUERY.anim) renderSingleAnim(QUERY.anim); else renderArticle(currentArticle(
 // KaTeX 는 defer 로 로드되므로, 첫 렌더 시점엔 아직 없을 수 있다 → load 후 한 번 더.
 window.addEventListener("load", function () {
   renderMath(document.getElementById("articleArea"));
+  renderTOC();
 });
 
 // 모바일 문서 목록 토글 (☰). 문서로 이동하면 자동으로 닫는다.

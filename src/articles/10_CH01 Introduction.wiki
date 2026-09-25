@@ -49,7 +49,7 @@ category: 1강 Introduction, 메인
 |-
 | [[half-duplex]] (p.6) || 양방향 가능 || '''not at the same time''' || Walkie-talkies
 |-
-| [[full-duplex]] (p.7) || 양방향 || '''simultaneously''' || (전화) — "capacity of the channel must be divided between the two directions"
+| [[full-duplex]] (p.7) || 양방향 || '''simultaneously''' || (교재 예: 전화) — "capacity of the channel must be divided between the two directions"
 |}
 
 [[anim:data_flow_modes|세 줄의 화살표가 언제 오가는지 보고, "동시에"가 되는 줄이 어느 것인지 스스로 말해 보라]]

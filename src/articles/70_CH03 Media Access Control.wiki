@@ -44,7 +44,7 @@ category: 7강 MAC, 메인
 
 == p.6–11 — Pure ALOHA ==
 
-[[pure ALOHA]]는 '''최초의 random-access 방식'''이다. 1970년대 초 University of Hawaii 에서 만들었고, ALOHA 는 하와이어 인사말 "Hello" 다 (p.6). 섬과 섬 사이를 무선으로 잇는 공유 매체였다 (p.7–8).
+[[pure ALOHA]]는 '''최초의 random-access 방식'''이다. 1970년 초(early 1970) University of Hawaii 에서 만들었고, ALOHA 는 하와이어 인사말 "Hello" 다 (p.6). 매체가 스테이션들 사이에 공유된다 (p.7–8); 원래는 섬과 섬 사이를 무선으로 잇는 망이었다 (교재 외 보충).
 
 규칙은 세 줄뿐이다 (p.9–11):
 # "Allows each station to send a frame '''whenever it has data'''." — 보낼 게 생기면 그냥 보낸다

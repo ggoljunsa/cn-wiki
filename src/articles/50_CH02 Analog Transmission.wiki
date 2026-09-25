@@ -6,7 +6,7 @@ category: 5강 Analog Transmission, 메인
 
 계산 포인트는 대역폭 공식 세 개와 Example 5 하나다: $B = (1+d)S$ (ASK, PSK), $B = (1+d)S + 2\Delta f$ (FSK).
 
-{info}페이지 번호는 '''L4(CH02_Physical Layer (3)) 슬라이드 인쇄 번호'''. L4 p.2–33 은 복습(→ [[CH02 Digital Transmission]]). 뒤 p.46–52 는 [[CH02 Multiplexing]]. 슬라이드 몇 장(p.37, 38, 40, 42)에는 수업 중 판서(파란 손글씨)가 남아 있다.{/info}
+{info}페이지 번호는 '''L4(CH02_Physical Layer (3)) 슬라이드 인쇄 번호'''. L4 p.2–33 은 복습(→ [[CH02 Digital Transmission]]). 뒤 p.46–52 는 [[CH02 Multiplexing]]. 슬라이드 몇 장(p.37, 38, 40, 42, 45)에는 수업 중 판서(파란 손글씨)가 남아 있다.{/info}
 
 == p.34 — 이번 장의 두 질문 ==
 # digital data → '''analog signal''' : [[digital-to-analog conversion]] (이 문서의 전부)

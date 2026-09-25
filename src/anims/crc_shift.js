@@ -111,7 +111,7 @@ ANIMS["crc_shift"] = {
     // codeword: 1001 + remainder 110
     var CYW = 330;
     s += '<text x="30" y="' + (CYW + 5) + '" font-size="12" fill="#333" font-weight="700">Codeword</text>';
-    s += vis(8.2, D, box(EX - 11 + 0 * CW, CYW - 12, 4 * CW, 24, "#fff59d", "#b59b00") +
+    s += vis(8.2, D, box(EX, CYW - 12, 4 * CW, 24, "#fff59d", "#b59b00") +
       txt(enc.col(0), CYW + 5, "1", 15, "#222", MONO) + txt(enc.col(1), CYW + 5, "0", 15, "#222", MONO) +
       txt(enc.col(2), CYW + 5, "0", 15, "#222", MONO) + txt(enc.col(3), CYW + 5, "1", 15, "#222", MONO));
     // remainder 가 아래로 내려와 붙음

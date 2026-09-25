@@ -102,7 +102,7 @@ ANIMS["csma_cd_abort"] = {
       txt(xMeet, yMeet - 14, "Collision occurs", 12, C.red, ' font-weight="700"'));
     // C 감지 (t₃)
     s += vis(t3, D, '<rect x="' + (XC - 7) + '" y="' + (T3 - 7) + '" width="14" height="14" fill="' + C.red + '" stroke="#fff" stroke-width="1.5"/>' +
-      '<text x="' + (XC + 10) + '" y="' + (T3 + 4) + '" font-size="13" fill="' + C.red + '" font-weight="700">' + sb("t", "3") + '</text>' +
+      '<text x="' + (XC + 18) + '" y="' + (T3 - 5) + '" font-size="13" fill="' + C.red + '" font-weight="700">' + sb("t", "3") + '</text>' +
       '<text x="' + (XD + 12) + '" y="' + (T3 - 4) + '" font-size="11" fill="' + C.red + '" font-weight="700">C 감지</text>' +
       '<text x="' + (XD + 12) + '" y="' + (T3 + 10) + '" font-size="11" fill="' + C.red + '" font-weight="700">abort</text>' +
       '<text x="' + (XD + 12) + '" y="' + (T3 + 24) + '" font-size="11" fill="' + C.red + '" font-weight="700">+ jam</text>');
@@ -120,7 +120,7 @@ ANIMS["csma_cd_abort"] = {
     var rt = '<line x1="' + XA + '" y1="320" x2="' + XD + '" y2="320" stroke="' + C.red + '" stroke-width="2" marker-end="url(#ccd_arrow)"/>' +
       '<line x1="' + XD + '" y1="332" x2="' + XA + '" y2="332" stroke="' + C.red + '" stroke-width="2" marker-end="url(#ccd_arrow)"/>' +
       txt(395, 315, "① A 의 첫 비트가 매체 끝까지: " + sb("T", "p"), 11, C.red, ' font-weight="700"') +
-      txt(395, 347, "② 끝에서 난 충돌 신호가 A 로 돌아옴: " + sb("T", "p") + "  → 왕복 2" + sb("T", "p"), 11, C.red, ' font-weight="700"');
+      txt(395, 341, "② 끝에서 난 충돌 신호가 A 로 돌아옴: " + sb("T", "p") + "  → 왕복 2" + sb("T", "p"), 11, C.red, ' font-weight="700"');
     s += vis(9.5, D, rt);
 
     // ---- 요점 ----

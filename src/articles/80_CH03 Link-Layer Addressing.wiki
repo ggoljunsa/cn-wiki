@@ -41,6 +41,10 @@ p.55 섹션 목표: "Introduce link-layer addressing / Mention how a link-layer 
 
 [[anim:node_to_node|프레임이 링크를 건널 때마다 L 두 칸이 갈아끼워지고 N₁, N₈ 은 그대로인 것을 확인하라. 라우터에서 decapsulate → encapsulate 가 일어난다]]
 
+라우터가 어느 계층까지 벗기고 다시 씌우는지는 [[캡슐화]] 시뮬레이터의 '''host→router→host''' 경로로 한 단계씩 확인할 수 있다 — data-link 헤더(= L 주소 두 칸)만 새로 붙고 network 헤더(= N 주소)는 그대로다.
+
+[[sim:encapsulation]]
+
 {warn}순서가 '''반대'''라는 점을 헷갈리지 말 것. 프레임 헤더는 '''목적지 MAC 이 먼저'''(수신 측이 첫 필드만 보고 "내 거냐"를 빨리 판단), IP 헤더는 '''출발지가 먼저'''다.{/warn}
 
 == p.59–62 — 주소의 세 종류 ⭐ ==
@@ -54,6 +58,8 @@ p.55 섹션 목표: "Introduce link-layer addressing / Mention how a link-layer 
 |-
 | [[broadcast 주소|Broadcast]] || One-to-All. 링크 안의 '''모든 엔티티'''에게 || Ex 3.15: `FF:FF:FF:FF:FF:FF`
 |}
+
+[[img:L6-60.png|p.60 Example 3.13 — unicast link-layer 주소: 48 bits = 12 hex digits, 콜론 구분 (A3:34:45:11:92:F1)|medium]]
 
 [[img:L6-61.png|p.61 Example 3.14 — "second digit … even number", A2:34:45:11:92:F1|medium]]
 

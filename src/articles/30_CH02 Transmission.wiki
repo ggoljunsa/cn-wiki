@@ -271,7 +271,7 @@ p.35 직후 교수는 "특성을 순서대로 설명하는 건 나도 지루하�
 {answer}Nyquist: $2 \times 3000 \times \log_2 2 = $ '''6000 bps'''. 4 level: $2 \times 3000 \times 2 = $ '''12,000 bps'''.{/answer}
 
 {quiz}SNR 이 0 인 채널(잡음에 비해 신호 전력이 사실상 0)의 Shannon capacity 는? 이 결과가 의미하는 바는?{/quiz}
-{answer}$C = B\log_2(1+0) = B\log_2 1 = $ '''0'''. bandwidth 가 아무리 넓어도 신호가 잡음에 묻혀 있으면 '''어떤 데이터도 신뢰성 있게 보낼 수 없다'''. (Forouzan Example 3.37 과 같은 논리){/answer}
+{answer}$C = B\log_2(1+0) = B\log_2 1 = $ '''0'''. bandwidth 가 아무리 넓어도 신호가 잡음에 묻혀 있으면 '''어떤 데이터도 신뢰성 있게 보낼 수 없다'''. (Forouzan 의 SNR≈0 예제와 같은 논리){/answer}
 
 {quiz}대역폭 2 MHz, SNR_dB = 36 dB 인 채널의 capacity 를 근사식으로 구하시오.{/quiz}
 {answer}$C \approx B \times \text{SNR}_{dB}/3 = 2\times10^6 \times 36/3 = $ '''24 Mbps'''. (SNR = $10^{3.6} \approx 3981$ 로 매우 커서 근사식이 잘 맞는다.){/answer}

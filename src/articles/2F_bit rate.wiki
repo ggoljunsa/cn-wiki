@@ -13,7 +13,7 @@ category: 2강 Signals, 용어
 == 이름에서 개념 끌어내기 ==
 '''bit''' (binary digit) + '''rate''' (단위 시간당 양). "초당 몇 비트". [[주파수]]가 "초당 몇 번 변하는가"(Hz) 라면, bit rate 는 "초당 몇 비트를 싣는가"(bps). 둘은 '''다른 단위'''다 → [[bps와 Hz]].
 
-{info}교수(9/1): "이사 가서 인터넷 알아볼 때 LG U+ '1 Gbps' 같은 걸 확인한다. 그게 '''bit rate — ISP 가 우리 집에 파는 것'''이다." 1 Gbps ≈ $2^{30}$ bps ≈ 10억 bps. p.32 의 8 bps 와 비교하면 "extremely fast".{/info}
+{info}교수(9/1): "이사 가서 인터넷 알아볼 때 LG U+ '1 Gbps' 같은 걸 확인한다. 그게 '''bit rate — ISP 가 우리 집에 파는 것'''이다." 1 Gbps = $10^9$ bps (10억 bps). 교수는 구두로 $2^{30}$ 이라 했지만 data rate 의 k·M·G 는 '''10진 SI 접두어'''다 — Ex 2.6 의 265 kbps = 265,000 bps, Ex 2.9 의 1 MHz = $10^6$ Hz. 계산에서는 항상 $10^3$ 단위로 쓴다. p.32 의 8 bps 와 비교하면 "extremely fast".{/info}
 
 {analogy}🎭 '''컨베이어 벨트.''' 벨트가 1초에 상자 몇 개를 옮기는가가 bit rate 다. 상자 하나에 물건을 하나씩 담으면(2 level) 8개/s, 두 개씩 담으면(4 level) 같은 벨트 속도로 16개/s. 벨트 속도를 높이거나(더 넓은 [[bandwidth]]) 상자를 크게 하면([[signal level|level]] 증가) 된다 — 이게 [[Nyquist bit rate]] 공식의 두 항이다.{/analogy}
 
