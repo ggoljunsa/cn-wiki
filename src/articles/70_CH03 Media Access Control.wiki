@@ -1,0 +1,325 @@
+key: CH03 Media Access Control
+title: CH03 Media Access Control (7강 — 한 줄을 여럿이 나눠 쓰는 법)
+category: 7강 MAC, 메인
+---
+'''CH03 Media Access Control'''은 L6 덱(`CH03_Data Link Layer (2).pdf`) p.2–54 다. 지난 시간 [[data-link layer]]의 위쪽 sublayer인 [[DLC]](framing, error control)를 끝냈고, 이번에는 아래쪽 sublayer인 [[MAC sublayer]]를 다룬다. 던지는 질문은 하나다 — '''"하나의 [[point-to-point 링크와 broadcast 링크|broadcast 링크]]를 여러 스테이션이 동시에 쓰려 할 때, 누가 언제 말하게 할 것인가?"'''
+답은 세 갈래다: 각자 알아서 보내고 부딪히면 다시 보내는 [[random access]]([[pure ALOHA]] → [[slotted ALOHA]] → [[CSMA]] → [[CSMA/CD]]), 서로 허락을 받고 보내는 [[controlled access]]([[reservation]] · [[polling]] · [[token passing]]), 그리고 채널 자체를 쪼개는 [[channelization]].
+
+이 덱은 '''recap 없이 p.2 부터 바로 새 내용'''이다. 페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. 녹음본은 아직 없다.
+
+{exam}⭐⭐⭐ 이 강의에서 해설본이 ⭐⭐⭐ 를 준 곳은 세 군데뿐이다 — 전부 '''숫자'''로 물을 수 있는 자리다.
+* [[vulnerable time]]: pure ALOHA $2T_{fr}$ (p.19) / slotted ALOHA $T_{fr}$ (p.27)
+* [[CSMA/CD]] 의 [[최소 프레임 크기]] 조건 $T_{fr} \geq 2T_p$ 와 그 이유 (p.45)
+* Example 3.12: 10 Mbps × 51.2 μs = '''512 bits = 64 bytes''' (p.46){/exam}
+
+{analogy}🎭 '''불 꺼진 단체 대화방에서 여럿이 한 마이크로 말하기.'''
+* [[pure ALOHA]] = 할 말이 생기면 그냥 말한다. 둘이 겹치면 둘 다 못 알아듣는다.
+* [[slotted ALOHA]] = "종이 울릴 때만 말을 시작해도 된다"는 규칙을 추가.
+* [[CSMA]] = 말하기 전에 '''먼저 귀를 기울인다'''. 그래도 저쪽 목소리가 아직 안 들려 겹칠 수 있다.
+* [[CSMA/CD]] = 말하면서도 계속 듣다가, 겹치면 '''즉시 입을 다물고''' "잠깐!"([[jamming signal]])이라고 외친다.
+* [[controlled access]] = 사회자가 마이크를 넘겨주거나(polling), 발언권 막대기를 돌린다(token passing).{/analogy}
+
+== p.2–3 — Media Access Protocols (3분류) ==
+
+매체를 여러 사용자와 '''공유'''한다면 "First manage the sharing process, and then do the data transfer" — 먼저 공유를 관리하고 그다음에 데이터를 보내야 한다. 그 관리 규칙이 [[multiple access protocols]]다.
+
+[[img:L6-3.png|p.3 Multiple-access protocols 3분류 — random / controlled / channelization|medium]]
+
+{|
+! 분류 || 핵심 한 줄 || 이 강의에서 다룬 것
+|-
+| [[random access|Random-access]] || 모두 대등, 매체 상태만 보고 스스로 결정 → 충돌 가능 || ALOHA, CSMA/CD (CSMA/CA 는 목록만)
+|-
+| [[controlled access|Controlled-access]] || 서로 협의해서 권한 받은 쪽만 전송 → 충돌 없음 || Reservation, Polling, Token passing
+|-
+| [[channelization|Channelization]] || 채널을 주파수·시간·코드로 쪼개서 나눠 가짐 || FDMA, TDMA, CDMA (목록만)
+|}
+
+== p.4–5 — Random Access와 collision ==
+
+{def}"'''All stations are equal: no station has control over any other.''' Station makes a decision on whether or not to send. It depends on the state of the medium (idle or busy)." (p.4)
+모든 스테이션이 대등하다. 누구도 남을 통제하지 않고, 매체가 idle 인지 busy 인지만 보고 보낼지를 '''스스로''' 정한다.{/def}
+
+이름 그대로다 — 접근(access)이 '''random'''이다. 정해진 순서도, 허락해 주는 주인도 없다. 그러니 둘 이상이 동시에 보내면 access conflict 가 나고 프레임은 "destroyed or modified" 된다. 이것이 [[collision]]이다 (p.5).
+
+== p.6–11 — Pure ALOHA ==
+
+[[pure ALOHA]]는 '''최초의 random-access 방식'''이다. 1970년대 초 University of Hawaii 에서 만들었고, ALOHA 는 하와이어 인사말 "Hello" 다 (p.6). 섬과 섬 사이를 무선으로 잇는 공유 매체였다 (p.7–8).
+
+규칙은 세 줄뿐이다 (p.9–11):
+# "Allows each station to send a frame '''whenever it has data'''." — 보낼 게 생기면 그냥 보낸다
+# "If '''even one bit''' of a frame overlaps with another frame on the channel (a collision), '''both are destroyed'''." — 1비트만 겹쳐도 둘 다 사망
+# "Any frames lost due to collisions must be '''retransmitted'''." — 잃은 프레임은 다시 보낸다
+
+[[img:L6-9.png|p.9 Pure ALOHA — Station 1~4 가 제멋대로 전송, 겹친 구간이 collision duration|large]]
+
+[[anim:pure_aloha_collision|네 스테이션이 아무 때나 쏠 때 어느 구간이 빨갛게(collision duration) 되는지, 충돌한 프레임이 backoff 뒤 어떻게 재전송되는지 보라]]
+
+== p.12–13 — ALOHA 재전송 절차와 Example 3.8 ⭐⭐ ==
+
+재전송을 '''어떻게''' 하느냐가 p.12 흐름도다 → [[ALOHA 절차]].
+
+[[img:L6-12.png|p.12 Procedure for pure ALOHA — K=0 → 전송 → 2×T_p 동안 ACK 대기 → 실패 시 K+1, R 선택, T_B 대기|large]]
+
+# $K = 0$ ($K$ = 시도 횟수)
+# 프레임을 보내고 '''$2 \times$ [[T_p]]''' 동안 ACK 를 기다린다 (ACK 가 왕복하는 최대 시간)
+# ACK 가 오면 Success
+# 안 오면 $K = K + 1$. $K > K_{max}$ (보통 15) 면 Abort
+# 아니면 $R$ 을 $0 \sim 2^K - 1$ 에서 랜덤으로 골라 '''[[binary exponential backoff|backoff time]] $T_B = R \times T_p$''' (또는 $R \times T_{fr}$) 만큼 기다렸다가 2번으로
+
+실패할 때마다 $R$ 의 범위가 2배로 넓어진다 — 그래서 '''binary exponential''' backoff. 같이 충돌한 스테이션들이 또 같은 순간을 고를 확률이 점점 줄어든다.
+
+'''Example 3.8''' (p.13) — 무선 ALOHA, 스테이션 간 최대 거리 600 km, 전파 속도 $3 \times 10^8$ m/s.
+<pre class="txt">
+[[T_p]] = 최대 거리 / 전파 속도
+    = (600 × 10³ m) / (3 × 10⁸ m/s)
+    = 2 × 10⁻³ s = '''2 ms'''
+K = 2 → R ∈ {0, 1, …, 2² − 1} = {0, 1, 2, 3}
+T_B = R × T_p → {0×2, 1×2, 2×2, 3×2} = '''{0, 2, 4, 6} ms'''
+</pre>
+
+[[sim:aloha_backoff]]
+
+== p.14–20 — Pure ALOHA의 vulnerable time ⭐⭐⭐ ==
+
+{def}"'''Vulnerable time''': The length of time in which there is a possibility of collision." (p.14)
+충돌이 일어날 '''가능성이 있는''' 시간 구간.{/def}
+
+B 가 시각 $t$ 에 전송을 시작하고, 모든 프레임 길이가 [[T_fr]] 이라 하자.
+* A 가 $t - T_{fr}$ '''이후'''에 시작했다면 → A 의 끝이 B 의 머리를 친다 → collision (p.17)
+* C 가 $t + T_{fr}$ '''이전'''에 시작하면 → B 의 끝이 C 의 머리와 겹친다 → collision (p.18)
+
+<pre class="txt">
+위험 구간 = (t − T_fr) ~ (t + T_fr)
+Vulnerable time = (t + T_fr) − (t − T_fr)
+               = '''2 T_fr'''
+</pre>
+
+[[img:L6-19.png|p.19 Vulnerable time in Pure ALOHA = 2 × T_fr — 앞쪽은 A의 끝, 뒤쪽은 C의 머리|large]]
+
+[[anim:vulnerable_time|B 의 프레임 앞뒤로 T_fr 씩, 합쳐 2T_fr 가 위험 구간이 되는 것을 보고, 슬롯이 생기면 T_fr 로 줄어드는 장면까지 확인하라]]
+
+'''Example 3.9''' (p.20) — pure ALOHA, 200-bit 프레임, 200 kbps 공유 채널. 충돌 없으려면?
+<pre class="txt">
+[[T_fr]] = 프레임 크기 / [[bit rate]] = 200 bits / 200 kbps
+     = 200 / (200 × 10³) s = '''1 ms'''
+Vulnerable time = 2 × T_fr = 2 × 1 ms = '''2 ms'''
+→ 내가 시작하기 1 ms 전부터, 그리고 내가 보내는 1 ms 동안 아무도 시작하면 안 된다
+</pre>
+
+== p.21–23 — Pure ALOHA의 throughput ⭐⭐ ==
+
+{def}"The '''average number of successfully transmitted frames''' for pure ALOHA: $S = Ge^{-2G}$. $G$ is the average number of frames generated by the system during one frame transmission time." (p.21)
+$S$ = 성공적으로 전송되는 평균 프레임 수, $G$ = [[T_fr]] 동안 시스템 전체가 만들어 내는 평균 프레임 수.{/def}
+
+[[img:L6-22.png|p.22 Throughput of Pure ALOHA — S = Ge^{-2G}, S_max = 0.184 at G = 1/2|medium]]
+
+→ [[offered load G]], [[ALOHA throughput]].
+* 최대: $S_{max} = 0.184$, $G = 1/2$ 일 때 (p.22)
+* 해석 (p.23): "one-half a frame per time → '''18.4% success rate'''". 가장 잘 돼도 채널의 80% 이상이 충돌과 빈 시간으로 버려진다.
+
+== p.24–29 — Slotted ALOHA ⭐⭐ ==
+
+[[slotted ALOHA]]: "Invented to improve the efficiency of pure ALOHA" (p.24).
+* "Divide the time into slots of $T_{fr}$ seconds" (p.25)
+* "Force the station to send '''only at the beginning of the time slot'''" (p.26)
+
+[[img:L6-24.png|p.24 Slotted ALOHA — 충돌은 같은 슬롯 안에서만, 슬롯 경계에 딱 맞춰서|large]]
+
+시작 시점이 슬롯 경계로 묶이니 "반쯤 겹치는" 충돌이 사라진다. 충돌하려면 '''같은 슬롯에서 동시에''' 시작해야 한다.
+
+[[img:L6-27.png|p.27 Slotted ALOHA의 vulnerable time = T_fr — B 와 같은 슬롯에서 시작한 C 만 충돌|large]]
+
+{|
+! || [[vulnerable time|Vulnerable time]] || Throughput || 최대
+|-
+| [[pure ALOHA|Pure ALOHA]] || $2T_{fr}$ || $S = Ge^{-2G}$ || 0.184 ($G = 1/2$)
+|-
+| [[slotted ALOHA|Slotted ALOHA]] || $T_{fr}$ || $S = Ge^{-G}$ || 0.368 ($G = 1$)
+|}
+
+위험 구간이 '''절반'''이 되자 최대 효율이 '''정확히 2배'''가 됐다.
+
+'''Example 3.11''' (p.29) — slotted ALOHA, 200-bit 프레임, 200 kbps → $T_{fr}$ = 1 ms. 시스템 전체가 초당 만드는 프레임 수별 throughput:
+<pre class="txt">
+T_fr = 200 bits / 200 kbps = 1 ms  → 1초 = 1000 T_fr
+a. 1000 frames/s → [[offered load G|G]] = 1000 × 1 ms = 1
+   S = G e^(−G) = 1 × e^(−1) = 0.368 (36.8%)
+   생존 = 1000 × 0.368 = '''368 frames'''   ← 최대 효율 지점
+b. 500 frames/s → G = 500 × 1 ms = 1/2
+   S = 0.5 × e^(−0.5) = 0.5 × 0.607 = 0.303 (30.3%)
+   생존 = 500 × 0.303 = '''151 frames'''
+c. 250 frames/s → G = 250 × 1 ms = 1/4
+   S = 0.25 × e^(−0.25) = 0.25 × 0.779 = 0.195 (19.5%)
+   생존 = 250 × 0.195 = '''49 frames'''
+</pre>
+
+[[img:L6-29.png|p.29 Example 3.11 풀이 — 슬라이드의 "1000 × 0.0368", "500 × 0.0303" 은 0.368, 0.303 의 오타|medium]]
+
+{warn}슬라이드(교재 인쇄) 풀이의 "$1000 \times 0.0368 = 368$", "$500 \times 0.0303 = 151$" 은 '''소수점 오타'''다. 곱하는 값은 $S$ 그 자체인 0.368, 0.303 이다. 답(368 / 151 / 49)은 맞다.{/warn}
+
+[[sim:aloha_throughput]]
+
+== p.30–33 — CSMA ⭐⭐ ==
+
+[[CSMA]] (Carrier Sense Multiple Access): "Each station '''first listen to the medium before sending'''" (p.30). 이름 그대로 — carrier 를 sense 하고, 여럿(multiple)이 access 한다.
+
+그런데 "CSMA can '''reduce''' the possibility of collision, but it '''cannot eliminate''' it" (p.31). 이유는 [[propagation time|propagation delay]]다: "A station may sense the medium and find it idle, only because '''the first bit sent by another station has not yet been received'''."
+
+[[img:L6-32.png|p.32 Space-time model — B 가 t₁ 에 시작했지만 신호가 C 에 닿기 전인 t₂ 에 C 도 시작 → 가운데 회색이 충돌 영역|large]]
+
+→ [[space-time model]]: 가로축 = 스테이션 위치, 세로축 = 시간(아래로). 신호는 기울어진 띠로 퍼진다.
+
+[[anim:csma_space_time|B 의 신호가 기울어진 띠로 퍼지는 동안 아직 못 들은 C 가 전송을 시작해 회색(충돌) 영역이 생기는 것을 보라]]
+
+[[img:L6-33.png|p.33 Vulnerable time in CSMA = propagation time T_p — 첫 비트가 맨 끝 D 에 닿으면 모두가 busy 를 안다|large]]
+
+{exam}⭐⭐ '''CSMA 의 vulnerable time = [[T_p]]''' (propagation time). A 의 첫 비트가 링크 끝까지 가는 동안만 누군가 "idle" 로 잘못 들을 수 있다. 보통 $T_p \ll T_{fr}$ 이므로 ALOHA 의 $2T_{fr}$ · $T_{fr}$ 보다 훨씬 짧다.{/exam}
+
+== p.34–40 — Persistence methods ⭐ ==
+
+"What should a station do if the channel is '''busy'''?" (p.34) → [[persistence method]] 셋.
+
+{|
+! 방식 || busy 일 때 || idle 을 찾으면 || 성격
+|-
+| [[1-persistent]] (p.35) || 계속 듣는다 || '''확률 1''' 로 즉시 전송 || 빠르지만 대기자끼리 동시 출발 → 충돌↑. 예: Ethernet
+|-
+| [[nonpersistent]] (p.36) || '''랜덤 시간 대기''' 후 다시 sense || 즉시 전송 || 충돌↓, 채널이 놀 수 있음
+|-
+| [[p-persistent]] (p.37–39) || 계속 듣는다 || 확률 $p$ 로 전송 / $q = 1 - p$ 로 다음 슬롯까지 대기 후 재확인, 그때 busy 면 backoff || 둘의 절충
+|}
+
+[[img:L6-40.png|p.40 Flow diagrams — a. 1-persistent / b. Nonpersistent / c. p-persistent (R ≤ p 면 전송)|large]]
+
+[[anim:persistence_methods|채널이 busy 에서 idle 로 바뀌는 순간 세 스테이션이 각각 어떻게 반응하는지 비교하라]]
+
+== p.41–48 — CSMA/CD ⭐⭐⭐ ==
+
+[[CSMA/CD]] (Collision Detection): "A station '''monitors the medium after it sends a frame''' to see if the transmission was successful. If so, the station is finished. If there is a collision, the frame is sent again." (p.41)
+
+CSMA 가 "말하기 전에 듣기"라면 CSMA/CD 는 '''"말하는 동안에도 듣기"'''다.
+
+[[img:L6-42.png|p.42 Collision of the first bits — A(t₁)와 C(t₂)의 첫 비트가 가운데서 충돌, C 는 t₃, A 는 t₄ 에 감지 후 abort|large]]
+
+[[img:L6-43.png|p.43 Collision and abortion — 프레임 조각이 겹치는 지점에서 충돌, 둘 다 감지 즉시 중단|large]]
+
+p.42 에서 눈여겨볼 점: '''감지까지 걸린 시간이 위치마다 다르다'''. C 는 $t_3 - t_2$ 만큼만 보내고 알았지만, A 는 C 의 첫 비트가 돌아올 때까지 $t_4 - t_1$ 동안 보내야 알았다. ALOHA 는 끝까지 보낸 뒤 ACK 로 알았지만, CSMA/CD 는 '''보내는 도중'''에 알고 끊으니 낭비가 줄어든다.
+
+[[anim:csma_cd_abort|A 와 C 가 충돌을 감지하는 순간 abort 하고 jamming signal 을 내는 장면, 그리고 아래 T_fr ≥ 2T_p 왕복 화살표를 보라]]
+
+=== 최소 프레임 크기 (p.44–46) ⭐⭐⭐ ===
+
+"Before sending the last bit of the frame, the sending station must detect a collision, if any, and abort the transmission." — "'''Once the entire frame is sent''', the station does not keep a copy of the frame and '''does not monitor the line''' for collision detection." (p.44)
+
+[[img:L6-45.png|p.45 T_fr ≥ 2T_p (Please think about why)|medium]]
+
+{exam}⭐⭐⭐ '''왜 $T_{fr} \geq 2T_p$ 인가?''' 최악의 경우는 A 가 한쪽 끝, 상대가 반대쪽 끝에 있을 때다.
+# A 의 첫 비트가 반대쪽 끝까지 가는 데 $T_p$
+# 그 직전에 저쪽 끝 스테이션이 전송을 시작해 충돌 → 그 신호가 A 까지 돌아오는 데 또 $T_p$
+# 즉 A 는 '''왕복 $2T_p$''' 가 지나야 충돌을 확신할 수 있다
+# 그런데 프레임을 다 보내면 더 이상 듣지 않으므로, '''전송이 $2T_p$ 이상 계속돼야''' 한다 → $T_{fr} \geq 2T_p$
+→ [[최소 프레임 크기]]{/exam}
+
+'''Example 3.12''' (p.46) — 대역폭 10 Mbps, 최대 propagation time 25.6 μs. 최소 프레임 크기는?
+<pre class="txt">
+[[T_p]] = 25.6 μs
+T_fr(min) = 2 × T_p = 2 × 25.6 μs = 51.2 μs
+최소 크기 = [[bit rate]] × T_fr(min)
+         = 10 × 10⁶ bps × 51.2 × 10⁻⁶ s
+         = '''512 bits'''
+         = 512 / 8 = '''64 bytes'''   ← Standard Ethernet 의 최소 프레임 크기
+</pre>
+
+[[sim:csma_cd_minframe]]
+
+=== 흐름도와 에너지 레벨 (p.47–48) ===
+
+[[img:L6-47.png|p.47 Flow diagram for CSMA/CD — persistence 적용 → Transmit and receive → 충돌이면 jamming signal → K<15 면 backoff|large]]
+
+p.12 의 [[ALOHA 절차]]와 비교하면 달라진 곳은 세 군데다.
+# 전송 전에 [[persistence method]] 를 적용한다 (carrier sense)
+# ACK 를 기다리는 대신 '''전송하면서 동시에 수신'''("Transmit and receive")하며 "Done or collision?" 을 확인한다
+# 충돌이면 '''[[jamming signal]]''' 을 보내 모두에게 충돌을 확실히 알린 뒤 $K = K+1$, $K < 15$ 면 $T_B = R \times T_{fr}$ 대기
+
+충돌은 어떻게 "감지"하나? → [[energy level]] (p.48).
+
+[[img:L6-48.png|p.48 Energy levels — idle 0, frame transmission = normal, collision = 두 배|medium]]
+
+"For the collision case, the energy level is '''twice''' the normal one." 두 스테이션의 신호가 겹치면 에너지가 더해진다.
+
+== p.49–54 — Controlled Access ⭐ ==
+
+{def}"The stations '''consult one another''' to find which station has the right to send. A station '''cannot send unless it has been authorized''' by other stations." (p.49){/def}
+
+→ [[controlled access]]. 허락을 받고 보내니 '''충돌이 원천적으로 없다'''.
+
+[[img:L6-50.png|p.50 Reservation — N=5 개 minislot 에 1 을 표시한 스테이션만 그 뒤에 데이터 전송|large]]
+
+[[img:L6-51.png|p.51 Polling — Select(SEL→ACK→Data→ACK) 와 Poll(Poll→NAK, Poll→Data→ACK)|large]]
+
+[[img:L6-54.png|p.54 Token passing — a. Physical ring / b. Dual ring / c. Bus ring / d. Star ring|large]]
+
+{|
+! 방식 || 권한을 얻는 방법 || 핵심 용어
+|-
+| [[reservation|Reservation]] (p.50) || reservation frame 의 '''내 minislot''' 에 1 표시 || N 스테이션 → 정확히 N minislot
+|-
+| [[polling|Polling]] (p.51–53) || '''primary''' 가 secondary 를 지명 || Select(SEL) / Poll, ACK / NAK
+|-
+| [[token passing|Token passing]] (p.54) || 링을 도는 '''token''' 을 가진 쪽만 || logical ring
+|}
+
+[[anim:controlled_access|reservation → polling → token passing 세 장면에서 '누가 허락해 주는지'가 어떻게 다른지 보라]]
+
+== 공식 모음 ==
+
+{|
+! 프로토콜 || Vulnerable time || Throughput || 최대 효율 || 기타
+|-
+| [[pure ALOHA|Pure ALOHA]] || $2T_{fr}$ || $S = Ge^{-2G}$ || 0.184 ($G = 1/2$) || ACK 대기 $2T_p$
+|-
+| [[slotted ALOHA|Slotted ALOHA]] || $T_{fr}$ || $S = Ge^{-G}$ || 0.368 ($G = 1$) || 슬롯 = $T_{fr}$
+|-
+| [[CSMA]] || $T_p$ || — || persistence 에 따라 || busy 시 행동 = persistence
+|-
+| [[CSMA/CD]] || — || — || — || $T_{fr} \geq 2T_p$, 충돌 에너지 = 2배
+|}
+
+* [[binary exponential backoff|Backoff]]: $T_B = R \times T_p$ (또는 $R \times T_{fr}$), $R \in \{0, \dots, 2^K - 1\}$, $K_{max} = 15$
+* [[T_p]] = 최대 거리 / 전파 속도, [[T_fr]] = 프레임 크기 / bit rate, [[offered load G|G]] = (초당 프레임 수) × $T_{fr}$
+* 최소 프레임 = bit rate × $2T_p$ → 10 Mbps × 51.2 μs = 512 bits = 64 bytes
+
+{quiz}Pure ALOHA 와 slotted ALOHA 의 vulnerable time 을 각각 쓰고, 왜 slotted 가 절반인지 한 문장으로 설명하시오.{/quiz}
+{answer}Pure ALOHA = $2T_{fr}$, slotted ALOHA = $T_{fr}$.
+Pure 에서는 B 앞쪽 $T_{fr}$(A 의 꼬리가 B 머리를 침) + 뒤쪽 $T_{fr}$(C 의 머리가 B 꼬리를 침) 모두 위험하지만, slotted 에서는 전송이 '''슬롯 시작에만''' 허용되므로 앞 슬롯에서 시작한 프레임은 B 의 슬롯이 시작되기 전에 끝난다 — 같은 슬롯에서 시작한 프레임만 충돌하므로 위험 구간은 한 슬롯($T_{fr}$)뿐이다.{/answer}
+
+{quiz}CSMA 는 보내기 전에 매체를 듣는데도 왜 충돌이 생기는가? CSMA 의 vulnerable time 은?{/quiz}
+{answer}'''propagation delay''' 때문이다. 다른 스테이션이 이미 보낸 첫 비트가 아직 나에게 도착하지 않았다면, 나는 매체를 idle 로 듣고 전송을 시작한다. 따라서 vulnerable time 은 첫 비트가 매체 끝까지 퍼지는 시간 = '''$T_p$''' (propagation time).{/answer}
+
+{quiz}CSMA/CD 네트워크가 100 Mbps 이고 최대 propagation time 이 Example 3.12 와 같은 25.6 μs 라면 최소 프레임 크기는?{/quiz}
+{answer}<pre class="txt">
+T_fr(min) = 2 × 25.6 μs = 51.2 μs
+최소 크기 = 100 × 10⁶ × 51.2 × 10⁻⁶ = 5120 bits = 640 bytes
+</pre>
+bit rate 가 10배가 되면 같은 시간 동안 10배 많은 비트를 보내므로 최소 프레임도 10배가 된다. (그래서 실제 Fast Ethernet 은 64 bytes 를 유지하는 대신 '''케이블 길이(= $T_p$)를 1/10 로''' 줄였다.){/answer}
+
+== 시험 대비 핵심 요약 ==
+# '''MAC 프로토콜 3분류''': random access(ALOHA, CSMA/CD, CSMA/CA) / controlled access(reservation, polling, token passing) / channelization(FDMA, TDMA, CDMA). Random access 는 모두 대등하고 매체 상태만 보고 스스로 결정 → 충돌 가능.
+# '''Pure ALOHA''': 데이터가 생기면 무조건 전송, 1비트라도 겹치면 둘 다 파괴 → $2T_p$ 동안 ACK 없으면 binary exponential backoff ($T_B = R \times T_p$, $R \in 0 \sim 2^K - 1$, $K_{max} = 15$). '''Vulnerable time = $2T_{fr}$''', $S = Ge^{-2G}$, 최대 '''18.4%''' ($G = 1/2$).
+# '''Slotted ALOHA''': 시간을 $T_{fr}$ 슬롯으로 나누고 슬롯 시작에만 전송 → vulnerable time '''$T_{fr}$''' (절반), $S = Ge^{-G}$, 최대 '''36.8%''' ($G = 1$). Ex 3.11: 368 / 151 / 49.
+# '''CSMA''': sense before transmit. propagation delay 때문에 충돌을 없애진 못함 → vulnerable time '''$T_p$'''.
+# '''Persistence''': 1-persistent(계속 듣다 idle 즉시, Ethernet) / nonpersistent(랜덤 대기 후 재감지) / p-persistent(확률 $p$ 전송, $q = 1-p$ 로 슬롯 대기, busy 면 backoff).
+# '''CSMA/CD''': 보내는 동안에도 monitor → 충돌 감지 시 즉시 abort + jamming signal + backoff. '''$T_{fr} \geq 2T_p$''' (왕복 시간 동안은 아직 보내고 있어야 감지 가능). Ex 3.12: '''512 bits = 64 bytes''' = Ethernet 최소 프레임. 충돌 시 에너지 = 정상의 2배.
+# '''Controlled access''': reservation(N 스테이션 → N minislot) / polling(primary 가 SEL 로 보내고 Poll 로 걷음, NAK/ACK) / token passing(logical ring, token 가진 쪽만).
+# Ex 3.8: 600 km / $3 \times 10^8$ = 2 ms, $K = 2$ → $T_B \in \{0, 2, 4, 6\}$ ms. Ex 3.9: $T_{fr}$ = 1 ms → vulnerable 2 ms.
+
+== 관련 문서 ==
+* 이전 강의: [[CH03 Data-Link Control]] · [[DLC]] · [[MAC sublayer]] · [[point-to-point 링크와 broadcast 링크]]
+* 다음 강의: [[CH03 Link-Layer Addressing]]
+* 분류: [[multiple access protocols]] · [[random access]] · [[controlled access]] · [[channelization]]
+* ALOHA: [[pure ALOHA]] · [[slotted ALOHA]] · [[ALOHA 절차]] · [[binary exponential backoff]] · [[vulnerable time]] · [[offered load G]] · [[ALOHA throughput]] · [[collision]]
+* 기호: [[T_p]] · [[T_fr]] · [[propagation time]] · [[transmission time]]
+* CSMA: [[CSMA]] · [[space-time model]] · [[persistence method]] · [[1-persistent]] · [[nonpersistent]] · [[p-persistent]] · [[CSMA/CD]] · [[최소 프레임 크기]] · [[jamming signal]] · [[energy level]]
+* Controlled: [[reservation]] · [[polling]] · [[token passing]]
+* [[공식 모음]] · [[계산 문제 모음]]

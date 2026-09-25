@@ -1,0 +1,47 @@
+key: time domain과 frequency domain
+title: Time Domain과 Frequency Domain (시간 영역과 주파수 영역)
+category: 2강 Signals, 용어
+---
+같은 신호를 두 가지 방식으로 그린다. '''Time-domain plot''' 은 시간에 따른 amplitude 변화, '''frequency-domain plot''' 은 '''각 주파수 성분의 peak value''' 만 그린다. L2 p.26. 둘은 '''같은 정보'''이고, 둘을 잇는 다리가 [[Fourier analysis]] 다.
+
+{def}L2 p.26 "Time and Frequency Domain"
+* '''Time-domain plot''': Changes in signal amplitude with respect to time
+* '''Frequency-domain plot''': Concern with '''only the peak value and the frequency'''
+시간 영역 = 시간에 따른 진폭 변화 / 주파수 영역 = 피크 값과 주파수만.{/def}
+
+[[img:L2-26.png|p.26 — 6 Hz, peak 5 V 사인파. (a) 시간 영역: 1초에 6번 출렁임 (b) 주파수 영역: 6 Hz 에 높이 5 인 막대 하나|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''domain''' = "영역, 가로축이 무엇인가". time domain 은 '''가로축이 시간''', frequency domain 은 '''가로축이 주파수'''. 세로축은 둘 다 amplitude 다. 가로축만 바꿔 끼운 두 그림이다.
+
+{analogy}🎭 '''악보와 연주 녹음.''' 녹음 파일의 파형(time domain)은 시간에 따라 공기 압력이 어떻게 출렁이는지 보여준다. 악보(frequency domain)는 "도·미·솔을 이 세기로" — '''어떤 음(주파수)이 얼마나 크게(amplitude)''' 들어 있는지만 적는다. 같은 화음을 두 방식으로 기록한 것. 악보가 훨씬 간단하다 — 그래서 통신 엔지니어는 frequency domain 을 좋아한다.{/analogy}
+
+== 비교 ==
+{|
+! || Time domain || Frequency domain
+|-
+| 가로축 || 시간 (s) || 주파수 (Hz)
+|-
+| 세로축 || 순간 amplitude || 성분별 '''peak''' amplitude
+|-
+| 사인파 하나 || 끝없이 출렁이는 곡선 || '''막대(spike) 하나'''
+|-
+| [[composite signal]] || 복잡하게 겹친 곡선 || 막대 여러 개 (주기) / 연속 면적 (비주기)
+|-
+| [[phase]] 정보 || 보임 || 이 슬라이드의 plot 에서는 '''안 보임'''
+|-
+| [[bandwidth]] 읽기 || 어렵다 || 쉽다: 가장 오른쪽 − 가장 왼쪽
+|}
+
+[[img:L2-28.png|p.28 — 세 성분(0, 8, 16 Hz)의 합. 시간 영역에서는 선 세 개가 겹쳐 복잡하지만 주파수 영역에서는 막대 세 개로 한눈에 보인다|large]]
+
+교수(9/1): "Signals and Systems 를 들은 사람은 알겠지만, 신호는 time domain 과 frequency domain 양쪽으로 표현할 수 있다. 사인파는 frequency domain 에서 그 주파수 위치의 '''impulse 하나'''다. 이 둘은 '''equivalent — same information'''. 둘을 잇는 것이 Fourier transform/analysis 이고, 그건 두 domain 을 연결하는 '''도구일 뿐'''이다."
+
+[[anim:composite_fourier|왼쪽(time domain)에 사인파가 하나 더해질 때마다 오른쪽(frequency domain)에 막대가 하나 생긴다. 두 그림이 같은 정보라는 걸 확인하라]]
+
+{quiz}frequency domain 에서 3 Hz 에 높이 2, 9 Hz 에 높이 1 인 막대 두 개가 있다. time domain 신호를 식으로 쓰고(phase 0 가정), 이 신호의 bandwidth 를 구하시오.{/quiz}
+{answer}$s(t) = 2\sin(2\pi\cdot3t) + \sin(2\pi\cdot9t)$. bandwidth = $9 - 3 =$ '''6 Hz'''.{/answer}
+
+== 관련 문서 ==
+* [[Fourier analysis]] · [[composite signal]] · [[bandwidth]] · [[사인파]]
+* [[peak amplitude]] · [[주파수]] · [[CH02 Signals]]

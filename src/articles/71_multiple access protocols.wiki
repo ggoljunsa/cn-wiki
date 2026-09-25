@@ -1,0 +1,40 @@
+key: multiple access protocols
+title: Multiple-Access Protocols (다중 접근 프로토콜)
+category: 7강 MAC, 용어
+---
+'''Multiple-access protocols'''는 하나의 매체를 여러 스테이션이 '''공유'''할 때 "누가 언제 보낼지"를 정하는 규칙의 총칭이다. [[MAC sublayer]]가 하는 일이 바로 이것이다. L6 p.2–3.
+
+{def}"If we are sharing the media with other users, we need to have a protocol to: '''First manage the sharing process''', and then to do the data transfer." (p.3)
+매체를 다른 사용자와 나눠 쓴다면, ① 먼저 공유 과정을 관리하고 ② 그다음에 데이터를 전송하는 프로토콜이 필요하다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''multiple''' — 여럿이
+* '''access''' — 매체에 접근한다(= 전송한다)
+* '''protocol''' — 그 접근의 규칙
+[[point-to-point 링크와 broadcast 링크|point-to-point 링크]]는 두 노드만 쓰니 이런 규칙이 필요 없다. 문제는 '''broadcast 링크'''(한 매체를 여럿이 공유)일 때다.
+
+[[img:L6-3.png|p.3 Multiple-access protocols 3분류|medium]]
+
+== 3분류 ==
+{|
+! 분류 || 누가 결정하나 || 충돌 || 이 강의의 예
+|-
+| [[random access|Random-access]] || 각 스테이션이 '''혼자''' (매체 상태만 보고) || 있다 || [[pure ALOHA|ALOHA]], [[CSMA/CD]], CSMA/CA
+|-
+| [[controlled access|Controlled-access]] || 스테이션들이 '''서로 협의''' / 권한 부여 || 없다 || [[reservation]], [[polling]], [[token passing]]
+|-
+| [[channelization|Channelization]] || 채널을 '''미리 쪼개''' 나눠 줌 || 없다 || FDMA, TDMA, CDMA
+|}
+
+{analogy}🎭 '''회의실 한 곳을 여러 팀이 쓰는 방법 세 가지.'''
+* Random access = 빈 것 같으면 그냥 들어간다. 가끔 두 팀이 동시에 문을 연다.
+* Controlled access = 예약표에 이름을 쓰거나(reservation), 총무가 차례로 불러 주거나(polling), 열쇠를 가진 팀만 들어간다(token passing).
+* Channelization = 회의실을 칸막이로 아예 나눠 버린다 (시간대별로 나누면 TDMA, 방을 쪼개면 FDMA).{/analogy}
+
+{quiz}다음을 3분류 중 어디에 속하는지 쓰시오: (a) Polling (b) CSMA/CD (c) TDMA (d) Token passing (e) Slotted ALOHA{/quiz}
+{answer}(a) controlled-access (b) random-access (c) channelization (d) controlled-access (e) random-access.
+slotted ALOHA 는 시간 슬롯이 있어서 channelization(TDMA)처럼 보이지만, 슬롯이 '''특정 스테이션에 배정되지 않고''' 누구나 아무 슬롯에서나 시작할 수 있으므로 여전히 random access 다.{/answer}
+
+== 관련 문서 ==
+* [[CH03 Media Access Control]] · [[MAC sublayer]] · [[DLC]]
+* [[random access]] · [[controlled access]] · [[channelization]]

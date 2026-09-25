@@ -1,0 +1,32 @@
+key: variable-size framing
+title: Variable-Size Framing (가변 크기 프레이밍)
+category: 6강 DLC, 용어
+---
+'''Variable-size framing''' 은 프레임마다 크기가 다를 수 있는 [[framing]] 방식이다. 그래서 '''한 프레임의 끝과 다음 프레임의 시작을 정의'''해야 한다. [[LAN]] 에서 일반적이다. L5 p.16.
+
+{def}"Variable-size framing: Need to define '''the end of one frame and the beginning of the next'''. '''Prevalent in LAN'''." (p.16)
+→ 가변 크기이므로 경계를 표시해야 하고, LAN 에서 널리 쓰인다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''variable''' — 크기가 '''변한다'''. 세기만으로는 경계를 알 수 없으니 '''표지판'''([[flag]])을 세워야 한다. 표지판을 무엇으로 만드느냐에 따라 두 방법:
+* 바이트(문자) 단위 표지판 → [[character-oriented framing]] (+ [[byte stuffing]])
+* 비트 패턴 표지판 01111110 → [[bit-oriented framing]] (+ [[bit stuffing]])
+
+{analogy}🎭 '''기차의 연결부.''' 객차 길이가 제각각이면 "어디까지가 한 칸인지" 연결부(flag)를 보고 안다. 그런데 객차 안에 연결부처럼 생긴 짐이 실려 있으면 헷갈린다 — 그래서 그런 짐에는 "짐입니다" 스티커(ESC, 여분 0)를 붙인다.{/analogy}
+
+[[img:L5-19.png|p.19 bit-oriented 프레임: 양 끝 flag 01111110 사이에 가변 개수의 bits|medium]]
+
+{|
+! 방식 || 경계 표시 || 데이터 속 가짜 경계 대책
+|-
+| [[character-oriented framing]] || 8-bit flag 문자 || [[byte stuffing]] (앞에 [[ESC]])
+|-
+| [[bit-oriented framing]] || 8-bit 패턴 01111110 || [[bit stuffing]] (0 뒤 1 다섯 개 → 0 삽입)
+|}
+
+== 예상 문제 ==
+{quiz}variable-size framing 이 fixed-size 와 달리 추가로 해야 하는 일은? 어떤 네트워크에서 일반적인가?{/quiz}
+{answer}'''한 프레임의 끝과 다음 프레임의 시작을 정의'''해야 한다(flag 등). '''LAN''' 에서 일반적.{/answer}
+
+== 관련 문서 ==
+* [[framing]] · [[fixed-size framing]] · [[character-oriented framing]] · [[bit-oriented framing]] · [[flag]]

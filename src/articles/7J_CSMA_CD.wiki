@@ -1,0 +1,97 @@
+key: CSMA/CD
+title: CSMA/CD (Carrier Sense Multiple Access with Collision Detection)
+category: 7강 MAC, 용어
+---
+'''CSMA/CD'''는 [[CSMA]]에 '''충돌 감지(Collision Detection)'''를 더한 방식이다. 보낸 '''후에도''' 매체를 계속 듣다가 충돌이면 즉시 중단(abort)하고 [[jamming signal]]을 보낸 뒤 [[binary exponential backoff|backoff]] 한다. Standard Ethernet 의 방식. L6 p.41–48.
+
+{def}"A station '''monitors the medium after it sends a frame''' to see if the transmission was successful. If so, the station is finished. If there is a collision, the frame is sent again." (p.41)
+스테이션은 프레임을 보낸 뒤에도 매체를 감시해 전송이 성공했는지 본다. 성공이면 끝, 충돌이면 다시 보낸다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''CS''' (Carrier Sense) — 보내기 전에 듣는다
+* '''MA''' (Multiple Access) — 여럿이 공유
+* '''CD''' (Collision Detection) — 보내는 '''동안''' 충돌을 감지한다
+[[pure ALOHA|ALOHA]] 는 다 보낸 뒤 ACK 가 안 와야 충돌을 알았다. CSMA/CD 는 '''보내는 도중에''' 알고 '''즉시 끊는다''' → 망가진 프레임의 나머지를 보내느라 낭비하는 시간이 사라진다.
+
+== 충돌과 중단 (p.42–43) ==
+[[img:L6-42.png|p.42 Collision of the first bits — A 는 t₁, C 는 t₂ 에 시작, C 는 t₃, A 는 t₄ 에 충돌 감지 후 abort|large]]
+
+[[img:L6-43.png|p.43 Collision and abortion — A detects collision and aborts / C detects collision and aborts|large]]
+
+<pre class="txt">
+t₁ : A 전송 시작
+t₂ : C 전송 시작 (A 의 첫 비트가 아직 C 에 안 닿음 → C 는 idle 로 들음)
+     두 첫 비트가 가운데서 충돌
+t₃ : A 의 첫 비트가 C 에 도착 → '''C 가 충돌 감지, abort''' (C 는 t₃ − t₂ 만 보냄)
+t₄ : C 의 첫 비트가 A 에 도착 → '''A 가 충돌 감지, abort''' (A 는 t₄ − t₁ 동안 보냄)
+</pre>
+
+[[anim:csma_cd_abort|A 와 C 가 충돌을 감지하는 즉시 전송을 끊고 jamming signal 을 보내는 장면, 그리고 아래 T_fr ≥ 2T_p 왕복 화살표를 보라]]
+
+== 왜 $T_{fr} \geq 2T_p$ 인가 ⭐⭐⭐ ==
+{exam}⭐⭐⭐ "Before sending the last bit of the frame, the sending station must detect a collision, if any, and abort the transmission. '''Once the entire frame is sent''', the station does not keep a copy of the frame and '''does not monitor the line''' for collision detection." (p.44)
+"The frame transmission time $T_{fr}$ must be at least two times the maximum propagation time $T_p$: '''$T_{fr} \geq 2T_p$'''. (Please think about why)" (p.45)
+
+'''이유 (왕복 논리)''':
+# 최악의 경우: A 가 한쪽 끝, 상대가 반대쪽 끝
+# A 의 첫 비트가 반대쪽 끝에 닿기까지 [[T_p]]
+# 그 직전에 저쪽이 전송을 시작하면 충돌 → 그 신호가 A 로 돌아오는 데 또 $T_p$
+# A 가 충돌을 확신하려면 '''$2T_p$''' 가 필요
+# 그런데 다 보내고 나면 더 이상 안 들으므로, '''$2T_p$ 동안은 아직 보내고 있어야''' 한다
+→ $T_{fr} \geq 2T_p$ → [[최소 프레임 크기]]{/exam}
+
+'''Example 3.12''' (p.46) — 10 Mbps, $T_p$ = 25.6 μs:
+<pre class="txt">
+T_fr(min) = 2 × T_p = 2 × 25.6 μs = 51.2 μs
+최소 크기 = 10 Mbps × 51.2 μs = 10 × 10⁶ × 51.2 × 10⁻⁶
+         = '''512 bits = 64 bytes'''   (Standard Ethernet 최소 프레임)
+</pre>
+
+[[sim:csma_cd_minframe]]
+
+== 흐름도 (p.47) ==
+[[img:L6-47.png|p.47 Flow diagram for the CSMA/CD|large]]
+
+<pre class="txt">
+Station has a frame to send
+1. K = 0
+2. Apply one of the [[persistence method|persistence methods]]
+3. Transmit and receive ↔ Done or collision?   (false 면 계속 송수신)
+4. Collision detected? → false → '''Success'''
+                       → true  → 5
+5. Send a [[jamming signal]]
+6. K = K + 1
+7. K < 15 ? → true  → Create random number R (0 ~ 2^K − 1)
+                     → Wait T_B = R × T_fr seconds → 2 로
+             → false → '''Abort'''
+</pre>
+
+== ALOHA 절차와의 차이 ==
+{|
+! || [[ALOHA 절차]] (p.12) || CSMA/CD (p.47)
+|-
+| 전송 전 || 없음 (그냥 보냄) || '''persistence method''' 적용 (carrier sense)
+|-
+| 충돌 판정 || 다 보내고 $2T_p$ 동안 '''ACK 대기''' || 보내면서 '''동시에 수신''' ([[energy level]])
+|-
+| 충돌 시 || 바로 backoff || '''jamming signal''' 후 backoff
+|-
+| backoff || $T_B = R \times T_p$ (또는 $R \times T_{fr}$) || $T_B = R \times T_{fr}$
+|-
+| 포기 || $K > K_{max}$ || $K < 15$ 가 false
+|}
+
+[[img:L6-48.png|p.48 Energy levels — collision 은 정상의 두 배|medium]]
+
+{analogy}🎭 '''회의 중 동시에 말 꺼내기.''' CSMA/CD 참석자는 조용한지 확인하고(CS) 말을 시작하되, 말하면서도 계속 듣는다(CD). 누가 동시에 말을 꺼냈다는 걸 알아채면 문장 중간이라도 '''즉시 멈추고''' "아, 먼저 하세요!"(jamming)라고 한 뒤, 잠깐 기다렸다가 다시 시도한다. 단, 너무 짧게 말하면 저쪽 끝 사람의 목소리가 오기 전에 말이 끝나서 겹친 줄도 모른다 — 그래서 '''최소 발언 길이'''가 있다.{/analogy}
+
+{quiz}CSMA/CD 에서 스테이션이 프레임 전송을 '''마친 뒤''' 충돌이 나면 어떤 문제가 생기는가? 이를 막는 조건은?{/quiz}
+{answer}전송을 마친 스테이션은 프레임 사본을 버리고 회선을 더 이상 monitor 하지 않으므로 '''충돌을 감지하지 못해 재전송도 하지 않는다'''. 이를 막으려면 최악의 왕복 시간 동안 아직 전송 중이어야 하므로 '''$T_{fr} \geq 2T_p$''' 여야 한다.{/answer}
+
+{quiz}p.42 에서 A 와 C 중 누가 충돌을 먼저 감지하는가? 이유는?{/quiz}
+{answer}'''C''' 가 먼저($t_3$) 감지한다. C 는 A 의 첫 비트가 이미 C 쪽으로 오고 있는 중에 전송을 시작했으므로 곧 A 의 신호를 받는다. A 는 C 의 첫 비트가 A 까지 돌아올 때($t_4$)까지 기다려야 한다.{/answer}
+
+== 관련 문서 ==
+* [[CSMA]] · [[최소 프레임 크기]] · [[jamming signal]] · [[energy level]]
+* [[ALOHA 절차]] · [[binary exponential backoff]] · [[persistence method]] · [[1-persistent]]
+* [[T_p]] · [[T_fr]] · [[space-time model]] · [[CH03 Media Access Control]]

@@ -1,0 +1,35 @@
+key: dataword
+title: Dataword (데이터워드)
+category: 6강 DLC, 용어
+---
+'''Dataword''' 는 [[block code]]에서 부호화하기 전의 '''원래 데이터 블록'''(k 비트)이다. Generator 가 여기에 redundancy 를 붙여 n 비트 [[codeword]]를 만든다. L5 p.23.
+
+{def}Block Coding 그림(p.23): "'''k bits''' Dataword → Generator → '''n bits''' Codeword" (Sender/Encoder) 그리고 "Codeword → Checker → Extract → Dataword" (Receiver/Decoder).
+→ dataword = 송신 측의 k 비트 원본, 수신 측에서 꺼내는(extract) 결과.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''data + word''' — "데이터 그 자체인 단어". [[codeword]] 가 "부호(code)로 포장된 단어" 라면 dataword 는 '''포장 전 알맹이'''다. 수신 측의 최종 목표는 codeword 가 아니라 dataword 를 되찾는 것.
+
+{analogy}🎭 '''선물과 포장 상자.''' dataword 는 선물, [[codeword]] 는 포장된 상자(선물 + 뽁뽁이 = redundancy). 받는 사람은 상자가 멀쩡한지 확인한 뒤 선물만 꺼낸다(extract).{/analogy}
+
+== 슬라이드 속 dataword 들 ==
+{|
+! 코드 || k || dataword 예 → codeword
+|-
+| Example 3.1 || 2 || 01 → 011
+|-
+| [[parity check code]] C(5,4) || 4 || 1011 → 10111
+|-
+| [[CRC]] C(7,4) || 4 || 1001 → 1001110
+|}
+
+[[img:L5-23.png|p.23 Encoder 의 파란 칸(k bits Dataword)과 Decoder 의 파란 칸(추출된 Dataword)|medium]]
+
+{tip}[[CRC]]에서는 dataword 뒤에 0 을 n−k 개 붙인 것을 '''augmented dataword''' 라고 부르며, 이것이 나눗셈의 dividend 가 된다(p.46: 1001 → 1001000).{/tip}
+
+== 예상 문제 ==
+{quiz}Example 3.7 case 4 에서 수신자가 만든 dataword 는? 그것은 올바른가?{/quiz}
+{answer}수신 00110 → syndrome 0 → dataword '''0011''' 을 추출. 원래는 1011 이므로 '''틀렸다''' — 2비트 오류가 상쇄되어 검출되지 않은 경우.{/answer}
+
+== 관련 문서 ==
+* [[codeword]] · [[block code]] · [[CRC]] · [[parity check code]]

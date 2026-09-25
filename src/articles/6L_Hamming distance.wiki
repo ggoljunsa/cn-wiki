@@ -1,0 +1,50 @@
+key: Hamming distance
+title: Hamming Distance (해밍 거리)
+category: 6강 DLC, 용어
+---
+'''Hamming distance''' $d(x, y)$ 는 같은 길이의 두 word 에서 '''대응하는 비트가 서로 다른 자리의 개수'''다. 이진수라면 '''$x \oplus y$ 의 1 의 개수'''로 바로 구한다. 송신 codeword 와 수신 codeword 사이의 Hamming distance 는 곧 '''전송 중 손상된 비트 수'''다. L5 p.27–28.
+
+{def}"The number of differences between the corresponding bits in two words of the same size." / "$d(x, y)$: The Hamming distance between two words $x$ & $y$." / "The Hamming distance between the received and sent codewords is the '''number of bits that are corrupted''' during transmission." (p.27)
+"Note: $d(x,y)$ = number of 1s in $x \oplus y$ for binary x and y." (p.28)
+→ 대응 비트가 다른 개수. 이진수면 XOR 결과의 1 의 개수.{/def}
+
+{exam}⭐⭐⭐ 계산 도구: '''[[XOR]] 하고 1 을 센다.''' 이 한 줄로 Example 3.2, 3.3, 3.6 이 전부 풀린다.{/exam}
+
+== 이름에서 개념 끌어내기 ==
+'''Richard Hamming''' (Bell Labs) 이 1950년 오류 정정 부호를 연구하며 정의한 '''거리'''. "거리" 라는 말이 핵심이다 — 비트열을 공간의 '''점'''으로 보면, 한 비트를 뒤집는 것은 '''한 칸 이동'''이고, 두 점 사이를 오가는 데 필요한 최소 이동 수가 Hamming distance 다. 그래서 [[minimum Hamming distance]] 를 '''원(반지름)'''으로 그릴 수 있다.
+
+{analogy}🎭 '''틀린 그림 찾기.''' 같은 크기의 두 그림을 겹쳐 놓고 '''다른 곳의 개수'''를 센다. 다른 곳 = XOR 결과의 1. 다른 곳이 2개면 거리 2 — 즉 그림 하나를 두 군데 고치면 다른 그림이 된다.{/analogy}
+
+[[anim:hamming_sphere|valid codeword x 주변의 반지름 s 원이 옆 codeword y 에 닿지 않는 조건을 보라 — 점 사이 "거리"가 곧 Hamming distance 다]]
+
+== Example 3.2 (p.28) ==
+<pre class="txt">
+d(000, 011)
+    0 0 0
+  ⊕ 0 1 1
+  -------
+    0 1 1      → 1 이 2개 → '''d = 2'''
+
+d(10101, 11110)
+    1 0 1 0 1
+  ⊕ 1 1 1 1 0
+  -----------
+    0 1 0 1 1  → 1 이 3개 → '''d = 3'''
+</pre>
+
+[[sim:hamming_distance]]
+
+== 성질 ==
+* $d(x, x) = 0$, $d(x, y) = d(y, x)$
+* 손상 비트 수 = $d(\text{sent}, \text{received})$. 예: Example 3.1 case 3 은 $d(011, 000) = 2$ → 2비트 손상.
+* 코드 전체의 가장 작은 쌍 거리 = [[minimum Hamming distance|$d_{min}$]]. 이것이 검출·정정 능력을 결정한다.
+
+{tip}XOR 은 "같으면 0, 다르면 1" 이라서 '''"다른 자리 표시기"''' 역할을 한다. 그러니 1 을 세는 게 곧 다른 자리를 세는 것이다. → [[XOR]]{/tip}
+
+== 예상 문제 ==
+{quiz}$d(1001110, 1000110)$ 을 구하고, p.47 의 CRC 오류 경우와 연결해 설명하라.{/quiz}
+{answer}$1001110 \oplus 1000110 = 0001000$ → 1 이 1개 → '''d = 1'''. p.47 오른쪽 경우는 codeword 1001110 에서 '''1비트'''(4번째)가 손상되어 1000110 이 된 것이고, CRC 는 syndrome 011 로 이를 검출했다.{/answer}
+
+== 관련 문서 ==
+* [[minimum Hamming distance]] · [[XOR]] · [[codeword]] · [[linear block code]]
+* [[block code]] · [[CH03 Data-Link Control]]

@@ -1,0 +1,33 @@
+key: unicast
+title: Unicast 주소 (유니캐스트)
+category: 8강 Addressing, 용어
+---
+'''Unicast''' 주소는 '''일대일(one-to-one)''' 통신용 주소다. 목적지가 unicast 주소인 프레임은 링크 안의 '''딱 한 엔티티'''만 받는다. L6 p.59–60.
+
+{def}"'''Unicast Address''': One-to-one communication. A frame with a unicast address destination is destined '''only for one entity in the link'''." (p.59)
+"Example 3.13: The unicast link-layer addresses in the most common LAN, Ethernet, are 48 bits (six bytes) that are presented as 12 hexadecimal digits separated by colons. For example, the following is a link-layer address of a computer: '''A3:34:45:11:92:F1'''" (p.60){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''uni''' = 하나 + '''cast''' = 던지다. '''한 명에게 던진다'''. [[multicast]](multi = 여럿)와 [[broadcast 주소|broadcast]](broad = 널리, 전부)와 나란히 외우면 세 개가 한 번에 정리된다.
+
+{|
+! || 대상 || 비유
+|-
+| '''Unicast''' || 1 : 1 || 개인 카톡
+|-
+| [[multicast|Multicast]] || 1 : 다 (그룹) || 단체방
+|-
+| [[broadcast 주소|Broadcast]] || 1 : 전체 || 교내 방송
+|}
+
+[[img:L6-59.png|p.59 Three Types of Addresses — Unicast / Multicast / Broadcast|medium]]
+
+{warn}⚠️ '''Ex 3.13 의 예시 `A3:34:45:11:92:F1` 은 IEEE 규약상 multicast 에 해당한다 (교수 확인 전).''' 첫 바이트 A3 = 1010 0011 의 최하위 비트가 1 이면 group(multicast) 주소다. 실제 unicast 는 첫 바이트가 짝수(최하위 비트 0)여야 한다. 슬라이드가 p.60–61 의 예시를 뒤바꾼 것으로 보인다 → [[multicast]] 문서 참고.{/warn}
+
+{analogy}🎭 '''교실에서 한 학생 이름 부르기.''' 교실(링크) 안 모두가 소리를 듣지만, 이름이 불린 한 명만 대답한다. broadcast 링크에서 프레임은 물리적으로 모두에게 가지만, 목적지 MAC 이 자기 것이 아닌 NIC 는 버린다.{/analogy}
+
+{quiz}목적지가 unicast 주소인 프레임은 링크 안의 몇 개 엔티티에게 전달되는가? 링크 밖으로도 나가는가?{/quiz}
+{answer}'''하나'''. 그리고 link-layer 주소이므로 범위는 '''링크 안'''뿐이다. 다른 링크로 가려면 라우터가 새 프레임(새 MAC 주소)을 만들어야 한다.{/answer}
+
+== 관련 문서 ==
+* [[multicast]] · [[broadcast 주소]] · [[MAC 주소]] · [[CH03 Link-Layer Addressing]]

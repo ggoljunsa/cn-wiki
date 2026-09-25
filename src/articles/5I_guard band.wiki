@@ -1,0 +1,35 @@
+key: guard band
+title: Guard Band (보호 대역)
+category: 5강 Analog Transmission, 용어
+---
+'''Guard band'''는 [[FDM]] 에서 이웃 채널 사이에 두는 '''쓰지 않는 주파수 띠'''다. 채널끼리 스펙트럼이 겹쳐 간섭하는 것을 막는다. L4 p.49.
+
+{def}"Channels can be separated by '''strips of unused bandwidth''' = '''guard bands'''."{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''guard''' (지키는) + '''band''' (주파수 띠). 채널을 '''지키기 위한 빈 띠'''. 아무 신호도 싣지 않는 게 역할이다.
+
+왜 필요한가: 변조된 신호의 스펙트럼은 칼같이 끊기지 않고 가장자리가 완만하게 퍼진다([[roll-off factor]] 의 둥근 어깨). 채널을 딱 붙여 놓으면 어깨끼리 겹쳐 수신 측 '''filter''' 가 두 채널을 깨끗이 가르지 못한다.
+
+<pre class="ascii">
+ 진폭
+   │   ┌──Ch1──┐       ┌──Ch2──┐       ┌──Ch3──┐
+   │  ╱         ╲     ╱         ╲     ╱         ╲
+   └─┴───────────┴───┴───────────┴───┴───────────┴──▶ 주파수
+                 ↑ guard ↑       ↑ guard ↑
+                 └ band ─┘       └ band ─┘   (아무것도 싣지 않는 띠)
+</pre>
+
+{analogy}🎭 '''주차 칸 사이의 빗금 구역.''' 칸(채널)을 딱 붙여 그리면 옆 차 문과 부딪힌다. 칸 사이에 '''아무도 세우지 않는 빗금 구역'''을 두면 공간은 조금 낭비되지만 사고(간섭)가 없다.{/analogy}
+
+[[img:L4-49.png|p.49 FDM — Channel 1/2/3 사이를 guard band 로 분리 (슬라이드 하단 문장)|medium]]
+
+[[anim:fdm_tdm|FDM 쪽 그림에서 채널 사이 빈 띠(guard band)를 찾아보라]]
+
+{info}guard band 만큼 대역이 '''낭비'''되므로 FDM 링크의 필요 대역폭은 "신호 대역 합 + guard band 합" 이다. 반면 [[TDM]] 에는 주파수 guard band 가 없다(대신 슬롯 동기가 필요).{/info}
+
+{quiz}FDM 에서 guard band 를 없애면 어떤 문제가 생기는가?{/quiz}
+{answer}이웃 채널의 스펙트럼 가장자리가 겹쳐 '''채널 간 간섭'''이 생기고, 수신 측 필터가 각 채널을 깨끗하게 분리하지 못해 복조된 신호가 섞인다.{/answer}
+
+== 관련 문서 ==
+* [[FDM]] · [[multiplexing]] · [[roll-off factor]] · [[bandwidth]]

@@ -1,0 +1,54 @@
+key: bandwidth-delay product
+title: Bandwidth-Delay Product (대역폭-지연 곱, BDP)
+category: 3강 Transmission, 용어
+---
+'''Bandwidth-delay product'''는 [[bandwidth]](bps) × delay(s) 이며, '''링크를 가득 채울 수 있는 비트 수'''를 뜻한다. L2 p.66–68. 파이프에 비유하면 단면적 = bandwidth, 길이 = delay, '''부피 = BDP'''.
+
+{def}L2 p.66 "Bandwidth-Delay Product"
+"The product of bandwidth and delay. It defines '''the number of bits that can fill the link'''."
+p.67 "Bandwidth: 1 bps, Delay: 5 seconds → BDP: '''5 bits''' (The link can be filled with 5 bits)"
+p.68 "Bandwidth: 5 bps, Delay: 5 seconds → BDP: '''25 bits''' (The link can be filled with 25 bits)"{/def}
+
+$$\text{BDP (bits)} = \text{bandwidth (bps)} \times \text{delay (s)}$$
+
+[[img:L2-66.png|p.66 — Cross section: bandwidth, Length: delay, Volume = bandwidth × delay|medium]]
+
+== 이름에서 개념 끌어내기 ==
+이름 = 공식. '''bandwidth''' 와 '''delay''' 의 '''product'''(곱). 단위를 곱해 보면 의미가 나온다: $\frac{\text{bits}}{\text{s}} \times \text{s} = \text{bits}$ — "'''비트 수'''". 무엇의 비트 수? 첫 비트가 도착하기까지(delay) 송신자가 계속 쏟아 넣은(bandwidth) 비트 = 그 순간 '''선로 위에 떠 있는''' 비트.
+
+{analogy}🎭 '''수도관 속 물.''' 수도꼭지를 틀어도 물이 반대편에 닿기까지 5초 걸린다(delay). 그동안 꼭지에서는 1초에 1리터씩(bandwidth) 나온다. 첫 물이 도착하는 순간 관 속에는 5리터가 차 있다 = BDP. 관이 굵으면(5 L/s) 25리터. 관을 '''가득 채워야''' 관을 100% 쓰는 것이다.{/analogy}
+
+== p.67 — 1 bps × 5 s ==
+[[img:L2-67.png|p.67 — After 1 s: 1st bit 출발 … After 5 s: 1st bit 이 Receiver 에 도착하는 순간 링크 위에 1st~5th bit 5개|large]]
+<pre class="txt">
+After 1 s : [1st]                          ← 1초에 1비트씩 진입
+After 2 s : [2nd][1st]
+After 3 s : [3rd][2nd][1st]
+After 4 s : [4th][3rd][2nd][1st]
+After 5 s : [5th][4th][3rd][2nd][1st] → 도착
+BDP = 1 bps × 5 s = '''5 bits'''
+</pre>
+
+== p.68 — 5 bps × 5 s ==
+[[img:L2-68.png|p.68 — 1초마다 5비트 묶음이 진입. 5초 뒤 링크 위에 5묶음 × 5비트 = 25비트|large]]
+<pre class="txt">
+BDP = 5 bps × 5 s = '''25 bits'''
+</pre>
+같은 delay 에서 bandwidth 가 5배 → 링크에 담기는 비트도 5배. 파이프가 굵어졌다.
+
+[[sim:bdp_pipe]]
+
+== 왜 중요한가 ==
+* 송신자가 첫 비트 도착(또는 응답)을 기다리기 전에 '''BDP 만큼은 이미 보낼 수 있다'''. 그만큼 보내지 않으면 링크 일부가 비어 논다.
+* 그래서 흐름 제어·혼잡 제어에서 "한 번에 몇 비트를 확인 없이 보내도 되는가(window)" 를 정할 때 BDP 가 기준이 된다 ([[TCP]]).
+* 양방향(왕복)을 생각하면 $2 \times$ BDP 까지 채울 수 있다 (Forouzan).
+
+{quiz}bandwidth 1 Mbps, delay 20 ms 인 링크의 BDP 는?{/quiz}
+{answer}$10^6 \times 20\times10^{-3} = $ '''20,000 bits''' (= 2,500 bytes).{/answer}
+
+{quiz}p.67 과 p.68 에서 delay 는 같고 BDP 가 5배 다르다. 무엇이 달랐나? 파이프 비유로 설명하시오.{/quiz}
+{answer}'''bandwidth''' 가 1 bps → 5 bps 로 5배. 파이프의 '''길이(delay)''' 는 같고 '''단면적(bandwidth)''' 이 5배라 '''부피(BDP)''' 가 5 → 25 bits.{/answer}
+
+== 관련 문서 ==
+* [[bandwidth]] · [[latency]] · [[propagation time]] · [[throughput]]
+* [[TCP]] · [[CH02 Transmission]] · [[계산 문제 모음]]

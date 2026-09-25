@@ -1,0 +1,46 @@
+key: signal rate와 bit rate
+title: Signal Rate와 Bit Rate (S = N / r)
+category: 5강 Analog Transmission, 용어
+---
+'''Signal rate''' $S$ 는 초당 signal element 수([[baud]]), '''bit rate''' $N$ 은 초당 비트 수(bps)다. 둘은 '''signal element 하나가 몇 비트를 싣느냐'''($r$)로 연결된다: $S = N / r$. L4 p.38 그림의 "r : bits/symbol, N (data rate): bits/sec", L3 p.63–64 [[PCM bandwidth]] 증명.
+
+{def}Slide p.38: "$r$ : '''bits/symbol'''", "$N$ ('''data rate'''): '''bits/sec'''", "$B$ (bandwidth) $= (1 + d) \times S$ ('''Signal rate''')".
+PCM bandwidth 증명: "The '''bit rate N''' and the '''symbol rate S''' are ($r$: bits per symbol): $N = n_b f_s$ [bps], $S = N/r$ [baud]"{/def}
+
+$$S = \frac{N}{r} \qquad (\text{binary: } r = 1 \Rightarrow S = N)$$
+
+== 이름에서 개념 끌어내기 ==
+* '''signal rate''' (= symbol rate = baud rate = modulation rate) — '''신호'''가 초당 몇 번 바뀌나
+* '''bit rate''' (= data rate) — '''데이터'''가 초당 몇 비트 가나
+* $r$ — '''r'''atio, symbol 당 비트 수. $L$ 개의 서로 다른 signal element 를 쓰면 $r = \log_2 L$ ([[signal level]])
+
+교수는 이것을 [[PCM]] 의 "sample" 과 연결했다: "sample 이라는 말은 통신에서 '''symbol''', 즉 신호의 단위다. … 이 예에서는 one bit 가 one sample 에 대응하니 거의 같다. 그래서 S 를 쓴다." (p.38 판서: "5 bits/sec = S ⟺ 5 samples/sec")
+
+{analogy}🎭 '''엘리베이터.''' $S$ = 초당 문이 열리는 횟수, $r$ = 한 번에 타는 사람 수, $N$ = 초당 운반되는 사람 수. 엘리베이터 속도(대역폭)가 정한 건 $S$ 이고, 한 번에 여럿 태우면($r$ ↑) 같은 $S$ 로 $N$ 을 늘릴 수 있다.{/analogy}
+
+[[img:L4-38.png|p.38 노란 박스 r = 1, S = N, B = (1+d)S — 대역폭 공식에 들어가는 건 S|medium]]
+
+== 어디에 쓰이나 ==
+{|
+! 문맥 || 식 || 비고
+|-
+| [[ASK]], [[PSK]] 대역폭 || $B = (1+d)S$ || binary → $S = N$
+|-
+| [[FSK]] 대역폭 || $B = (1+d)S + 2\Delta f$ || Example 5: $S = 25$ kbaud → $N = 25$ kbps
+|-
+| [[PCM bandwidth]] 증명 ② || $S = N/r = N = 2n_bB_{analog}$ || $r = 1$
+|-
+| [[Nyquist bit rate]] || $N = 2B\log_2 L$ || 최대 $S = 2B$, $r = \log_2 L$
+|}
+
+{exam}🎯 교수: "'''Terminology is very important'''" — S 와 N 을 섞으면 대역폭 계산이 전부 틀린다. 대역폭 공식에는 '''S''' 가 들어가고, 문제는 보통 '''N''' 을 묻는다. 마지막에 $N = r \times S$ 로 바꾸는 단계를 빠뜨리지 말 것.{/exam}
+
+{quiz}ASK 로 bit rate 8 kbps 를 보내는데 signal element 하나에 2비트를 싣는다($L = 4$). $d = 0$ 일 때 대역폭은?{/quiz}
+{answer}<pre class="txt">
+1. r = 2  →  S = N / r = 8000 / 2 = 4000 baud
+2. B = (1 + d) S = (1 + 0) × 4000 = 4 kHz
+</pre>(r = 1 이었다면 S = 8000 → B = 8 kHz. 비트를 여럿 실으면 같은 N 에 대역폭이 준다.){/answer}
+
+== 관련 문서 ==
+* [[baud]] · [[bit rate]] · [[signal level]] · [[roll-off factor]]
+* [[PCM bandwidth]] · [[Nyquist bit rate]] · [[ASK]] · [[FSK]] · [[PSK]]

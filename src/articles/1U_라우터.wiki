@@ -1,0 +1,51 @@
+key: 라우터
+title: 라우터 (Router)
+category: 1강 Introduction, 용어, 함정
+---
+'''라우터(router)''' — [[physical layer|Physical]] · [[data-link layer|Data link]] · [[network layer|Network]] '''세 층'''을 가진 중간 노드. 패킷마다 '''최적 경로(route)'''를 고른다 (L1 p.26, p.31, p.35, p.38).
+
+{def}"Intermediate nodes can be simpler than end nodes. — End users: application, transport, network, datalink, physical — '''Router: network, datalink, physical'''" (L1 p.26)
+"The '''routers''' in the path are responsible for '''choosing the best route''' for each packet." (L1 p.35)
+중간 노드는 종단보다 단순하다. 라우터는 network·datalink·physical 세 층만. 경로상의 라우터들이 패킷마다 최적 경로를 고른다.{/def}
+
+[[img:L1-38.png|Encapsulation/Decapsulation — 가운데 Router: 2·3·4·Message 를 받아 ↑ 2 를 벗기고 3 을 본 뒤 ↓ 새 2 를 붙인다|large]]
+
+{exam}⭐⭐⭐ '''0920 NotebookLM 퀴즈에서 여기서 틀렸다.''' "중간 노드에 대해 옳은 것 모두"에서
+* 정답 '''"라우터는 물리, 데이터링크, 네트워크 계층까지 가지고 있다"'''를 놓쳤고,
+* 오답 '''"라우터는 응용 계층의 메시지를 직접 처리한다"'''를 골랐다.
+라우터는 '''network layer 가 꼭대기'''다. transport 헤더(4)조차 열어 보지 않는다. 응용 메시지는 end host 끼리만 본다.{/exam}
+
+== 라우터가 하는 일 (p.38) ==
+<pre class="txt">
+1. link 1 에서 bits 수신 → frame [2][3][4]Message 복원
+2. ↑ Decapsulate: 헤더 2 를 벗긴다         → datagram [3][4]Message
+3. Network 층: 헤더 3 의 목적지 IP 주소를 보고 '''다음 경로(best route)''' 선택
+4. ↓ Encapsulate: 다음 링크용 '''새''' 헤더 2' 를 붙인다 → [2'][3][4]Message
+5. link 2 로 bits 송신
+   (헤더 3·4 와 Message 는 그대로)
+</pre>
+
+[[anim:layer_stack|라우터에서 패킷이 network 층까지 올라가 헤더 2 가 새것으로 바뀌는 순간을 보고, 스위치(data link 까지)와 높이 차이를 확인하라]]
+
+[[sim:encapsulation]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''route''' = 길, 노선. '''router''' = 길을 정해 주는 것. 그 일을 하려면 출발지·목적지 전체를 아는 주소, 즉 '''logical(IP) address''' 를 읽어야 하고, 그 주소는 [[network layer]] 에 있다. 그래서 라우터는 network 층까지 '''필요한 만큼만''' 올라간다. 이름 → 하는 일 → 필요한 층이 한 줄로 이어진다.
+
+{|
+! 장치 || 층 || 판단 근거
+|-
+| [[스위치]] || L1–L2 || MAC 주소 — "이 LAN 안의 누구"
+|-
+| '''라우터''' || '''L1–L3''' || '''IP 주소''' — "어느 망, 어느 길"
+|-
+| End host || L1–L5 || 전부
+|}
+
+{analogy}🎭 '''고속도로 톨게이트의 안내원.''' 차(패킷)의 '''최종 목적지 표지판'''(IP 주소)만 보고 "부산이면 경부선, 광주면 호남선"을 알려 준다. 트렁크(transport·application)는 열지 않는다. 다음 구간 통행권(헤더 2')만 새로 끊어 준다.{/analogy}
+
+{quiz}라우터를 지나기 전과 후, 헤더 2 · 3 · 4 중 바뀌는 것과 안 바뀌는 것은?{/quiz}
+{answer}'''2(data-link 헤더)만 새것으로 바뀐다.''' 3(network)과 4(transport)는 그대로. 라우터는 3 을 '''읽기만'''(경로 결정) 하고 4 는 열어 보지도 않는다.{/answer}
+
+== 관련 문서 ==
+* [[스위치]] · [[network layer]] · [[IP]] · [[캡슐화]] · [[WAN]] · [[end-to-end와 hop-to-hop]] · [[node와 link]] · [[CH01 Introduction]]

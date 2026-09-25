@@ -1,0 +1,44 @@
+key: byte stuffing
+title: Byte Stuffing / Unstuffing (바이트 스터핑)
+category: 6강 DLC, 용어
+---
+'''Byte stuffing''' 은 [[character-oriented framing]]에서 데이터 속에 [[flag]] 또는 [[ESC]] 와 같은 패턴의 바이트가 있을 때 그 '''앞에 ESC 바이트를 하나 끼워 넣는''' 기법이다. 수신 측은 반대로 ESC 를 걷어낸다(unstuffing). L5 p.18.
+
+{def}"A special byte '''ESC is added''' to the data section of the frame when there is a character with the same pattern as '''the flag and the ESC'''." / "Escape character (ESC): a predefined bit pattern." (p.18)
+→ 데이터 구역에 flag 나 ESC 와 같은 패턴의 문자가 있으면, 그 앞에 특수 바이트 ESC 를 추가한다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''stuff''' = "(속을) 채워 넣다". 데이터에 '''바이트를 채워 넣는다'''. 넣는 바이트 이름이 '''ESC(escape)''' — "다음 한 바이트는 특별한 의미에서 '''탈출'''시켜 그냥 데이터로 읽어라" 는 표시다.
+
+{analogy}🎭 '''문자열의 백슬래시.''' C 에서 `"` 로 문자열을 감싸는데 본문에 `"` 가 있으면 `\"`, 본문에 `\` 가 있으면 `\\`. flag = `"`, ESC = `\`. '''ESC 자신도 escape 해야 한다'''는 점까지 똑같다.{/analogy}
+
+[[img:L5-18.png|p.18 Data from upper layer 의 Flag, ESC 앞에 각각 ESC 가 삽입(Stuffed) → Two extra bytes → 수신 측 Unstuffed 로 원래 데이터 복원|large]]
+
+== 절차 (p.18 그림 그대로) ==
+<pre class="txt">
+송신 (stuffing): 데이터를 한 바이트씩 읽는다
+  바이트가 Flag 또는 ESC 모양이면 → 먼저 ESC 를 내보내고, 그 바이트를 내보낸다
+  아니면                           → 그대로 내보낸다
+
+  데이터 :  [d] [Flag] [d] [d] [ESC] [d]
+  송신   :  [d] '''[ESC]''' [Flag] [d] [d] '''[ESC]''' [ESC] [d]     → '''Two extra bytes'''
+
+수신 (unstuffing):
+  ESC 를 만나면 → ESC 는 버리고, 바로 다음 바이트는 무조건 데이터로 받는다
+  (ESC 없이) Flag 를 만나면 → 프레임 끝
+  복원   :  [d] [Flag] [d] [d] [ESC] [d]
+</pre>
+
+[[sim:byte_stuffing]]
+
+{warn}'''ESC 앞에 ESC 를 넣는 이유.''' 데이터 속 ESC 를 그대로 두면 수신자는 그걸 "탈출 표시" 로 읽고 '''ESC 는 버리고 뒤 바이트를 데이터로 처리한다''' → 원래 데이터에서 ESC 가 사라진다. 예컨대 데이터 끝이 [ESC] 이고 바로 뒤가 진짜 끝 Flag 라면, 수신자는 그 Flag 까지 데이터로 삼켜 '''프레임 끝을 놓친다'''. 그래서 ESC 도 escape 한다.{/warn}
+
+{info}비교: [[bit stuffing]]은 비트 단위(0 한 개), byte stuffing 은 바이트 단위(ESC 한 개). 둘 다 목적은 "데이터 속에 가짜 flag 가 보이지 않게" — 이런 성질을 '''transparency(투명성)'''라고 부른다(Forouzan).{/info}
+
+== 예상 문제 ==
+{quiz}데이터가 [A][ESC][Flag][B] 일 때 송신 프레임의 데이터 구역은? extra byte 는 몇 개?{/quiz}
+{answer}[A] [ESC][ESC] [ESC][Flag] [B] → '''extra byte 2개'''. ESC 앞에 ESC, Flag 앞에 ESC.{/answer}
+
+== 관련 문서 ==
+* [[character-oriented framing]] · [[ESC]] · [[flag]]
+* [[bit stuffing]] · [[framing]] · [[CH03 Data-Link Control]]

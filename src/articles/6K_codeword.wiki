@@ -1,0 +1,41 @@
+key: codeword
+title: Codeword (코드워드) — valid / invalid
+category: 6강 DLC, 용어
+---
+'''Codeword''' 는 [[block code]]에서 k 비트 [[dataword]]에 redundancy 를 붙여 만든 '''n 비트 블록'''이다. 가능한 $2^n$ 개 n비트 패턴 중 실제로 쓰는 $2^k$ 개가 '''valid codeword''', 나머지가 '''invalid codeword'''. L5 p.23–26.
+
+{def}"The receiver has (or can find) a list of '''valid codewords'''. The original codeword has changed to an '''invalid''' one → Error occurred." (p.23)
+→ valid codeword 목록에 없는 것이 오면 오류로 판단.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''code + word''' — "부호로 만든 단어". 규칙(code)에 맞게 만들어진 단어만 '''valid'''. 규칙에 안 맞는 단어는 누군가(잡음)가 '''건드린 흔적'''이다.
+
+{analogy}🎭 '''사전에 있는 단어 vs 없는 단어.''' "사과" 가 "사고" 로 바뀌면 둘 다 사전에 있는 단어라 오타인지 모른다(valid → 다른 valid, 검출 실패). "사과" 가 "사꽈" 로 바뀌면 사전에 없으니 바로 오타(invalid, 검출 성공). 좋은 코드는 '''사전 단어들끼리 멀리 떨어져 있어서''' 한두 글자 바뀌어도 다른 사전 단어가 되지 않는다 → [[Hamming distance]].{/analogy}
+
+[[img:L5-24.png|p.24 Example 3.1 codebook: valid codeword 는 000, 011, 101, 110 넷뿐|medium]]
+
+<pre class="txt">
+n = 3 → 가능한 패턴 2³ = 8 개
+valid   (codebook): 000  011  101  110       ← 1 의 개수가 짝수
+invalid           : 001  010  100  111       ← 1 의 개수가 홀수
+</pre>
+
+{tip}Example 3.1 의 valid codeword 는 모두 1 의 개수가 짝수다 — 사실 이것은 [[parity check code]] C(3,2) 이다. 그래서 1비트 오류는 항상 invalid(홀수)로 바뀌어 검출된다.{/tip}
+
+== 수신 측 판정 ==
+{|
+! 받은 것 || 판정 || 결과
+|-
+| valid codeword (보낸 것과 같음) || 오류 없음 || 올바른 dataword 추출
+|-
+| invalid codeword || 오류 검출 || discard
+|-
+| valid codeword (보낸 것과 다름) || '''오류를 못 알아챔''' || 틀린 dataword 추출 (Example 3.1 case 3)
+|}
+
+== 예상 문제 ==
+{quiz}C(5,4) parity check code 에서 valid codeword 와 invalid codeword 는 각각 몇 개인가?{/quiz}
+{answer}valid $2^4 = 16$ 개, invalid $2^5 - 2^4 = 16$ 개. (1 의 개수가 짝수인 5비트 패턴 16개가 valid.){/answer}
+
+== 관련 문서 ==
+* [[dataword]] · [[block code]] · [[Hamming distance]] · [[minimum Hamming distance]] · [[linear block code]]

@@ -1,0 +1,43 @@
+key: ring 토폴로지
+title: Ring Topology (링 토폴로지)
+category: 1강 Introduction, 용어
+---
+'''Ring topology''' 는 장치들이 '''고리''' 모양으로 이어져, 각자 '''양옆 두 장치하고만''' 연결되는 토폴로지 (L1 p.13).
+
+{def}"Each device has a dedicated '''point-to-point connection with only the two devices on either side''' of it / Signal is passed in '''one direction''' / Each device incorporates a '''repeater''' / Relatively easy to install/reconfigure, simple fault isolation / '''Break in the ring can disable the network'''" (L1 p.13)
+각 장치는 양옆의 두 장치하고만 전용 [[point-to-point]] 연결을 가진다. 신호는 한 방향으로 전달되고, 각 장치에는 repeater 가 들어 있다. 설치·재구성이 비교적 쉽고 고장 격리가 단순하지만, 링이 한 곳이라도 끊기면 네트워크 전체가 멈출 수 있다.{/def}
+
+[[img:L1-13.png|Ring — 사각 고리 위 빨간 Repeater 6 개, 각 repeater 에 노트북 하나|large]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''".
+* '''ring''' — 고리. 시작도 끝도 없이 한 바퀴 돈다. 그래서 신호도 '''한 방향'''으로 돌아 제자리에 온다.
+* '''repeater''' — "되풀이하는 것(re-peat)". 받은 신호를 '''다시 만들어(regenerate) 다음으로 넘긴다'''. 고리를 돌면서 약해지는 신호([[attenuation]])를 장치마다 새로 세워 주는 역할.
+
+[[anim:topologies|네 번째 ring 에서 신호가 한 방향으로 repeater 를 거쳐 도는 것을 보고, 마지막 장면에서 링크 하나가 끊기면 신호가 더 이상 돌지 못하는 것을 확인하라]]
+
+{analogy}🎭 '''전달 게임(귓속말 릴레이), 원형으로 앉아서.''' 각자 오른쪽 사람에게만 속삭이고(one direction), 들은 말을 또렷하게 다시 말해 준다(repeater). 원 어딘가 한 사람이 자리를 비우면(break in the ring) 말이 거기서 멈춰 한 바퀴를 못 돈다.{/analogy}
+
+== 장단점 ==
+{|
+! 장점 || 단점
+|-
+| Relatively easy to install/reconfigure — 장치 하나 추가 = 이웃 두 링크만 바꾸면 됨 || '''Break in the ring can disable the network''' — 한 방향으로만 도니 한 곳 끊기면 우회로가 없다
+|-
+| Simple fault isolation — 신호가 안 오는 지점 = 고장 지점 || 
+|}
+
+== 네 토폴로지 속 Ring ==
+{|
+! || [[mesh 토폴로지|Mesh]] || [[star 토폴로지|Star]] || [[bus 토폴로지|Bus]] || '''Ring'''
+|-
+| 연결 || 모두와 p2p || hub 와만 p2p || multipoint || '''양옆 둘과 p2p'''
+|-
+| 무엇이 죽으면 전체 마비 || (거의 없음) || hub || backbone || '''링의 아무 한 곳'''
+|}
+
+{quiz}Ring 에서 각 장치에 repeater 가 필요한 이유를, 신호가 도는 방식과 연결해 설명하시오.{/quiz}
+{answer}신호가 '''한 방향으로 모든 장치를 차례로 거쳐''' 돌기 때문에, 이동 거리가 길어지며 약해진다. 각 장치의 repeater 가 받은 신호를 재생해 다음 장치로 넘겨야 고리를 끝까지 돌 수 있다.{/answer}
+
+== 관련 문서 ==
+* [[mesh 토폴로지]] · [[star 토폴로지]] · [[bus 토폴로지]] · [[point-to-point]] · [[token passing]] · [[CH01 Introduction]]

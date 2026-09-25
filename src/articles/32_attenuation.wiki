@@ -1,0 +1,43 @@
+key: attenuation
+title: Attenuation (감쇠)
+category: 3강 Transmission, 용어
+---
+'''Attenuation'''은 신호가 매체의 저항을 이겨내며 '''에너지를 잃는 것'''이다. 모양은 그대로이고 '''크기만''' 줄어든다. 대응책은 '''[[amplifier]]'''. 크기는 '''[[데시벨|dB]]''' 로 잰다. L2 p.41–43.
+
+{def}L2 p.41 "Attenuation"
+"'''Loss of energy''' — Signal losses some of its energy in overcoming the resistance of the medium. To tackle this, we often use '''amplifiers'''."
+감쇠 = 에너지 손실. 신호가 매체 저항을 이기며 에너지 일부를 잃는다. 증폭기로 대응.{/def}
+
+[[img:L2-41.png|p.41 — Point 1 Original → Transmission medium → Point 2 Attenuated(작아짐) → Amplifier → Point 3 Amplified(복원)|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''attenuate''' = 라틴어 ''tenuis''(얇은, 가는) — "'''가늘게 만들다'''". 신호가 가늘어진다(약해진다). 같은 어근: tenuous(희박한).
+
+{analogy}🎭 '''멀어지는 목소리.''' 운동장 끝에서 소리치면 반대편에선 작게 들린다. 말의 내용과 억양(모양)은 그대로인데 '''소리만 작다'''. 중간에 확성기(amplifier)를 든 친구가 받아서 다시 크게 외쳐 주면 된다. 이게 긴 선로마다 amplifier/repeater 를 두는 이유다.{/analogy}
+
+[[anim:impairments|맨 위 줄: 파형이 작아졌다가 amplifier 를 지나 원래 크기로 돌아온다. 모양이 전혀 안 바뀐다는 점이 distortion 과의 차이다]]
+
+== 얼마나 약해졌나 — dB (p.42–43) ==
+$$\text{dB} = 10\log_{10}\frac{P_2}{P_1}$$
+* $P_1$ = 처음 전력, $P_2$ = 나중 전력
+* '''attenuation 이면 음수''', amplification 이면 양수
+
+'''Example 2.5''': 전력이 절반 ($P_2 = 0.5P_1$)
+<pre class="txt">
+1. 10 log₁₀(P₂/P₁) = 10 log₁₀(0.5 P₁ / P₁)
+2.                  = 10 log₁₀ 0.5
+3.                  = 10 × (−0.3)
+4.                  = '''−3 dB'''  → "A loss of 3 dB is equivalent to losing one-half the power"
+</pre>
+[[sim:db_calc]]
+
+{exam}⭐⭐ −3 dB = 절반, −10 dB = 1/10, −20 dB = 1/100. 여러 구간은 dB 를 '''더한다''' (곱셈 → 덧셈). → [[데시벨]]{/exam}
+
+{warn}attenuation 을 [[noise]] 와 헷갈리지 말 것. attenuation 은 '''신호 자체가 작아지는 것'''(곱하기 1보다 작은 수), noise 는 '''다른 게 더해지는 것'''. amplifier 는 attenuation 은 복구하지만 이미 섞인 noise 까지 같이 키운다 — 그래서 [[SNR]] 은 amplifier 로 좋아지지 않는다.{/warn}
+
+{quiz}신호 전력이 10 mW 에서 1 mW 로 줄었다. attenuation 은 몇 dB 인가?{/quiz}
+{answer}$10\log_{10}(1/10) = 10\times(-1) = $ '''−10 dB'''.{/answer}
+
+== 관련 문서 ==
+* [[데시벨]] · [[amplifier]] · [[signal impairment]] · [[distortion]] · [[noise]]
+* [[peak amplitude]] · [[CH02 Transmission]]

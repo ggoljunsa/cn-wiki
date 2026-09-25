@@ -1,0 +1,40 @@
+key: polling
+title: Polling (폴링)
+category: 7강 MAC, 용어
+---
+'''Polling'''은 [[controlled access]] 방식 중 하나로, '''primary station''' 한 대가 나머지 '''secondary station''' 들의 송수신을 모두 통제한다. 두 기능: '''Select'''(primary → secondary 로 보낼 때)와 '''Poll'''(secondary → primary 로 받을 때). L6 p.51–53.
+
+{def}"Works with topologies in which one device is designated as a '''primary station''' and the other devices are '''secondary stations'''." (p.51)
+"'''Select''': Used whenever the primary device has something to send. Sends SEL (select) packet to figure out the readiness of secondaries." (p.52)
+"'''Poll''': Used by the primary device to solicit transmissions from the secondary devices. When the primary is ready to receive data, it must ask (poll) each device in turn if it has anything to send." (p.53){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''poll''' = 여론조사, 의사를 묻다. primary 가 secondary 에게 차례로 "보낼 거 있어?" 하고 '''물어본다'''. '''select''' = 고르다. primary 가 보낼 상대를 '''골라서''' "받을 준비 됐어?" 확인한다. 두 경우 모두 '''primary 가 먼저 말을 건다''' — secondary 는 먼저 말할 수 없다. [[HDLC]] 의 [[NRM]] (primary–secondary) 과 같은 구조다.
+
+[[img:L6-51.png|p.51 Polling — 왼쪽 Select, 오른쪽 Poll|large]]
+
+== 두 절차 ==
+{|
+! || Select (p.52) || Poll (p.53)
+|-
+| 언제 || primary 가 '''보낼''' 게 있을 때 || primary 가 '''받을''' 준비가 됐을 때
+|-
+| 순서 || ① SEL → ② ACK ← ③ Data → ④ ACK ← || ① Poll → A ② NAK ← A (없음) ③ Poll → B ④ Data ← B ⑤ ACK → B
+|-
+| 핵심 || SEL 로 상대가 '''준비됐는지''' 먼저 확인 || 각 장치를 '''차례로''' 묻는다. 없으면 NAK, 있으면 Data
+|}
+
+[[img:L6-53.png|p.53 Poll — A 는 보낼 게 없어 NAK, B 는 Data 를 보내고 primary 가 ACK|medium]]
+
+{warn}Poll 에서 '''NAK''' 은 "오류"가 아니라 "'''보낼 게 없다'''"는 뜻이다. 그리고 Data 를 받은 뒤 ACK 는 '''primary 가''' 보낸다(⑤). Select 에서는 반대로 secondary 가 ACK 를 보낸다(②④).{/warn}
+
+[[anim:controlled_access|두 번째 장면에서 primary 가 SEL 과 Poll 을 보내고 NAK/ACK/Data 가 오가는 순서를 보라]]
+
+{analogy}🎭 '''교실의 선생님.''' Select = 선생님이 "철수야, 이거 받아 갈 준비 됐니?"(SEL) → "네"(ACK) → 유인물을 준다(Data) → "받았습니다"(ACK). Poll = 선생님이 한 명씩 "숙제 낼 거 있니?" → 영희 "없어요"(NAK) → 철수 "여기요"(Data) → 선생님 "받았다"(ACK). 학생은 먼저 손들고 말할 수 없다.{/analogy}
+
+{quiz}Polling 의 Poll 절차에서 secondary A 가 보낼 데이터가 없을 때 보내는 응답과, secondary B 의 Data 를 받은 뒤 ACK 를 보내는 주체는?{/quiz}
+{answer}A 는 '''NAK''' 을 보낸다(보낼 것 없음). B 의 Data 를 받은 뒤 ACK 는 '''primary''' 가 보낸다.{/answer}
+
+== 관련 문서 ==
+* [[controlled access]] · [[reservation]] · [[token passing]]
+* [[HDLC]] · [[NRM]] (primary–secondary 구조)

@@ -1,0 +1,162 @@
+key: 자주 틀리는 함정 모음
+title: 자주 틀리는 함정 모음
+category: 안내
+---
+이름이 비슷하거나, 공식이 비슷하거나, 슬라이드가 두 번 나와서 '''헷갈리기 딱 좋은 것'''들을 짝지어 모았다. 각 항목은 "무엇과 무엇이 헷갈리나 → 구분하는 한 문장 → 어느 문서" 순서다. [[0920 오답 복기]] 에서 실제로 틀린 것은 ⚠️ 표시.
+
+{analogy}
+🎭 '''공항 환승 안내판.''' 노선(강의)을 다 탔어도 환승역에서 잘못 내리면 목적지(정답)에 못 간다. 이 문서는 환승역만 모아 놓은 안내판이다. 시험 전날 이것만 한 번 훑는다.
+{/analogy}
+
+== CH01 ==
+
+{|
+! 함정 || 구분 || 문서
+|-
+| ⚠️ 데이터 통신 4대 특성에 '''Encryption''' 이 들어가나? || 아니다. Delivery / Accuracy / Timeliness / '''Jitter'''. 암호화는 보안 기법이지 통신 효과성의 특성이 아니다. || [[데이터 통신 4대 특성]]
+|-
+| ⚠️ 허브에 연결되는 토폴로지는? Bus 인가 Star 인가 || '''Star'''. Bus 에는 중앙 장비가 없고 '''drop line + tap''' 으로 백본에 붙는다. || [[star 토폴로지]] · [[bus 토폴로지]]
+|-
+| ⚠️ 스위치·라우터는 계층 몇 개? || '''스위치 L1–L2, 라우터 L1–L3'''. 5계층 전부는 종단 호스트만. 중간 노드는 최종 목적지가 아니라 상위 계층 서비스가 필요 없다. || [[스위치]] · [[라우터]] · [[end-to-end와 hop-to-hop]]
+|-
+| ⚠️ PDU 이름 || Application '''message''' / Transport '''segment''' / Network '''datagram''' / Data-link '''frame''' / Physical '''bits'''. 다섯 개 다 짝이 맞는 보기가 나오면 다 고른다. || [[PDU]]
+|-
+| ⚠️ IP 는 어느 계층? 라우팅은 누가? || '''Network layer'''. Transport 는 process-to-process 전달(TCP/UDP). || [[network layer]] · [[IP]]
+|-
+| ⚠️ connection-oriented 는 TCP? UDP? || '''TCP 하나뿐'''. UDP 도 IP 도 connectionless. 흐름·오류·혼잡 제어 = TCP. || [[TCP]] · [[UDP]] · [[IP]]
+|-
+| half-duplex 와 full-duplex || half: 양방향이지만 '''동시 불가'''(무전기). full: '''동시'''. || [[half-duplex]] · [[full-duplex]]
+|-
+| mesh 링크 수 || $n(n-1)/2$ (duplex 링크). n=5 → 10. || [[mesh 토폴로지]]
+|-
+| 논리적 연결의 두 원칙 || ① 각 계층은 반대되는 두 작업을 한다 ② 각 계층 아래 객체는 양쪽에서 '''identical'''. || [[논리적 연결]]
+|-
+| 주소가 없는 계층 || '''Physical'''. (App=이름, Transport=포트, Network=IP, Data-link=MAC) || [[주소 체계]]
+|}
+
+== CH02 Signals · Transmission ==
+
+{|
+! 함정 || 구분 || 문서
+|-
+| ⚠️ 배터리(일정 전압)의 주파수 || '''0 Hz'''. 주파수 = 변화율. 변화 없음 → $T\to\infty$ → $f=0$. ∞ 는 '''순간적으로''' 변할 때. || [[주파수]]
+|-
+| ⚠️ 정현파 3요소에 bandwidth 가 들어가나? || 아니다. '''peak amplitude / frequency / phase'''. bandwidth 는 '''composite signal''' 의 최고−최저 주파수. 단일 사인파의 bandwidth 는 0. || [[사인파]] · [[bandwidth]]
+|-
+| bandwidth 의 두 의미 || '''Hz'''(주파수 범위) vs '''bps'''(초당 비트). 같은 가입자 회선이 4 kHz 이면서 56 kbps. || [[bps와 Hz]] · [[bandwidth]]
+|-
+| 주기 vs 비주기 합성 신호의 스펙트럼 || 주기 → '''이산''' 주파수 / 비주기 → '''연속''' 스펙트럼. 디지털 신호는 대역폭 ∞ 인 합성 아날로그 신호. || [[Fourier analysis]] · [[디지털 신호]]
+|-
+| baseband 는 어느 채널? || baseband(변조 없음) → '''low-pass'''(0 부터 시작). broadband(변조) → '''bandpass'''. || [[baseband 전송]] · [[broadband 전송]]
+|-
+| dB 부호 || $10\log_{10}(P_2/P_1)$. 감쇠 '''음수''', 증폭 양수. '''−3 dB = 전력 절반'''. || [[데시벨]]
+|-
+| '''Nyquist bit rate''' vs '''Nyquist sampling theorem''' — 이름이 같다 || bit rate: '''무잡음 채널의 최대 비트율''' $2B\log_2 L$ (CH02 (1)). sampling: '''아날로그 복원에 필요한 표본화율''' $2f_{max}$ (CH02 (2)). 둘 다 "2배" 가 나오지만 무엇의 2배인지 다르다. || [[Nyquist bit rate]] · [[Nyquist sampling theorem]]
+|-
+| Nyquist 냐 Shannon 이냐 || '''noiseless → Nyquist''' (레벨 수 L 이 변수), '''noisy → Shannon''' (SNR 이 변수). Example 2.9 는 Shannon 으로 천장 → Nyquist 로 레벨 수. || [[data rate limits]] · [[Shannon capacity]]
+|-
+| Shannon 근사식 || $C \approx B \times \mathrm{SNR_{dB}}/3$ — dB 값을 쓴다 (선형 SNR 아님). || [[Shannon capacity]]
+|-
+| throughput vs bandwidth || bandwidth = '''potential''', throughput = '''actual'''. 병목(200 kbps 단말)이 throughput 을 정한다. || [[throughput]]
+|-
+| latency 의 4성분 || propagation + transmission + queuing + processing. propagation = '''거리/속도'''. || [[latency]] · [[propagation time]]
+|-
+| bandwidth-delay product 가 뭘 세나 || 링크를 '''가득 채우는 비트 수''' (파이프 부피). 1 bps × 5 s = 5 bits. || [[bandwidth-delay product]]
+|-
+| jitter 는 어디 나오나 || CH01 4대 특성 '''그리고''' CH02 performance 지표. 패킷마다 지연이 다른 것. || [[jitter]]
+|}
+
+== CH02 Digital · Analog Transmission ==
+
+{|
+! 함정 || 구분 || 문서
+|-
+| Nyquist sampling 의 기준 || '''최고 주파수''' $f_{max}$ 의 2배. 대역폭이 아니다 (bandpass 신호도 $2f_{max}$). || [[Nyquist sampling theorem]]
+|-
+| block coding (CH02) vs block code (CH03) || CH02 '''mB/nB'''(4B/5B): 동기화 + 오류 검출용 중복. CH03 '''block code''' $C(n,k)$: dataword→codeword, Hamming distance. 이름이 비슷하지만 문맥이 다르다. || [[block coding]] · [[block code]]
+|-
+| PCM bit rate 공식 || $f_s \times n_b$. 음성 4000 Hz × 2 = 8000 samples/s × 8 bits = '''64 kbps'''. || [[encoding]] · [[PCM]]
+|-
+| PCM bandwidth 의 대가 || $B_{min} = n_b \times B_{analog}$ — 비트 수만큼 대역폭이 곱해진다. || [[PCM bandwidth]]
+|-
+| quantization error 범위 || $-\Delta/2 \le e \le \Delta/2$, $\Delta = (V_{max}-V_{min})/L$. || [[quantization error]]
+|-
+| delta modulation 의 1/0 || 직전보다 '''올라가면 1, 내려가면 0'''. 샘플당 1비트. || [[delta modulation]]
+|-
+| baud vs bps || baud = '''초당 신호 요소(심볼)''' $S$, bps = 초당 비트 $N$. $S = N/r$. binary 변조는 $r=1$ 이라 같다. || [[baud]] · [[signal rate와 bit rate]]
+|-
+| ASK/PSK 대역폭 vs FSK 대역폭 || ASK·PSK $B=(1+d)S$. FSK 만 '''$+2\Delta f$''' (반송파가 둘). || [[변조 대역폭]] · [[FSK]]
+|-
+| PSK 입력은 unipolar? polar? || ASK 는 '''unipolar''' NRZ (0 이면 반송파 끔), PSK 는 '''polar''' NRZ (−1 곱해 위상 반전). || [[unipolar NRZ와 polar NRZ]] · [[PSK]]
+|-
+| QAM 은 무엇의 결합 || '''ASK + PSK''' (진폭 + 위상). || [[QAM]]
+|-
+| FDM 은 아날로그, TDM 은 디지털 || FDM: 주파수를 나눔, 변조 + guard band. TDM: '''시간'''을 나눔, 슬롯. || [[FDM]] · [[TDM]]
+|}
+
+== CH03 DLC ==
+
+{|
+! 함정 || 구분 || 문서
+|-
+| data-link 는 end-to-end 인가 || 아니다. '''node-to-node'''(hop). end-to-end 는 transport/application. || [[node와 link]] · [[end-to-end와 hop-to-hop]]
+|-
+| 중간 노드는 decapsulate 만 하나 || '''둘 다'''. 링크마다 frame format 이 다를 수 있어 벗기고 다시 씌운다. || [[data-link layer 서비스]]
+|-
+| DLC 와 MAC 중 P2P 링크에 있는 것 || '''DLC 만'''. MAC 은 broadcast 링크 전용. || [[DLC]] · [[MAC sublayer]]
+|-
+| bit stuffing 규칙 || '''0 뒤에 1 이 5개''' 연속이면 0 삽입. (flag 01111110 = 1 이 6개) || [[bit stuffing]]
+|-
+| byte stuffing 은 뭘 넣나 || 데이터 속 flag '''또는 ESC''' 앞에 ESC. ESC 자체도 stuffing 대상. || [[byte stuffing]]
+|-
+| burst error 길이 || '''첫 손상 비트부터 마지막 손상 비트까지''' (사이 멀쩡한 비트 포함). || [[burst error]]
+|-
+| $d_{min} = s+1$ 인가 $2s+1$ 인가 || '''검출''' $s$ 개: $d_{min}=s+1$. '''정정''' $t$ 개: $d_{min}=2t+1$. || [[minimum Hamming distance]]
+|-
+| linear block code 의 $d_{min}$ 지름길 || 0 이 아닌 codeword 의 '''1 개수(weight) 최솟값'''. 쌍 비교 불필요. || [[linear block code]]
+|-
+| parity 가 못 잡는 것 || '''짝수 개''' 오류 (Ex 3.7 case 4: syndrome 0 인데 dataword 틀림). 홀수 개는 잡는다. || [[parity check code]] · [[syndrome]]
+|-
+| CRC 나눗셈에서 최상위 비트가 0 이면 || divisor 대신 '''0000''' 으로 XOR (그냥 내린다). || [[CRC]] · [[divisor]]
+|-
+| divisor 비트 수 || '''다항식 차수 + 1'''. CRC-32 는 33 비트. || [[CRC 표준 다항식]]
+|-
+| NRM 과 ABM || NRM: primary/secondary, P2P '''+ multipoint'''. ABM: combined, '''P2P 전용'''. || [[NRM]] · [[ABM]]
+|-
+| I/S/U 프레임 || I = 사용자 데이터 (+ piggybacking), S = 제어만, U = 관리. || [[HDLC 프레임]]
+|}
+
+== CH03 MAC · Addressing ==
+
+{|
+! 함정 || 구분 || 문서
+|-
+| pure vs slotted ALOHA 의 vulnerable time || pure '''$2T_{fr}$''', slotted '''$T_{fr}$'''. || [[vulnerable time]]
+|-
+| $S = Ge^{-2G}$ vs $Ge^{-G}$ || pure 가 $-2G$ (최대 0.184 at G=1/2), slotted 가 $-G$ (최대 0.368 at G=1). || [[ALOHA throughput]]
+|-
+| $G$ 의 정의 || '''$T_{fr}$ 동안''' 시스템이 만드는 평균 프레임 수 (초당 프레임 수 × $T_{fr}$). || [[offered load G]]
+|-
+| backoff 의 R 범위 || $0 \sim 2^K - 1$, $T_B = R \times T_p$. $K_{max}=15$. || [[binary exponential backoff]]
+|-
+| CSMA 의 vulnerable time || '''$T_p$''' (propagation time). $T_{fr}$ 이 아니다. || [[CSMA]] · [[T_p]]
+|-
+| CSMA 가 충돌을 못 없애는 이유 || '''propagation delay''' — 첫 비트가 아직 도달 안 해 idle 로 보인다. || [[CSMA]]
+|-
+| 1-persistent 는 어디 쓰나 || '''Ethernet'''. idle 되는 순간 확률 1 로 전송. || [[1-persistent]]
+|-
+| p-persistent 에서 busy 면 || '''충돌처럼 간주하고 backoff'''. (q=1−p 는 슬롯 대기) || [[p-persistent]]
+|-
+| CSMA/CD 최소 프레임 조건 || $T_{fr} \ge 2T_p$ (왕복). 10 Mbps × 51.2 μs = '''512 bits = 64 bytes'''. || [[최소 프레임 크기]]
+|-
+| 충돌 시 에너지 레벨 || 정상의 '''2배'''. idle 은 0. || [[energy level]]
+|-
+| IP 주소와 MAC 주소의 프레임 안 순서 || IP: '''source–destination''', 경로 내내 불변. MAC: '''destination–source''', 링크마다 갱신. || [[IP 주소와 MAC 주소]]
+|-
+| broadcast MAC 주소 || FF:FF:FF:FF:FF:FF (48 비트 전부 1). || [[broadcast 주소]]
+|-
+| ARP 는 어느 계층 || '''network layer''' 의 보조 프로토콜 (ICMP, IGMP 와 함께). IP → MAC. || [[ARP]]
+|}
+
+== 관련 문서 ==
+* [[0920 오답 복기]] · [[공식 모음]] · [[계산 문제 모음]] · [[읽는 순서]]

@@ -1,0 +1,40 @@
+key: p-persistent
+title: p-Persistent (p-지속)
+category: 7강 MAC, 용어
+---
+'''p-persistent'''는 [[1-persistent]](효율)와 [[nonpersistent]](충돌 회피)의 절충이다. 채널이 idle 이 되면 '''확률 $p$ 로만''' 보내고, 나머지 확률 $q = 1-p$ 로는 한 슬롯 기다린다. L6 p.37–40.
+
+{def}"After the station finds the line idle it follows (p.37–39):
+1. With probability $p$, the station sends its frame
+2. With probability $q = 1 - p$, the station waits for the beginning of the next time slot and checks the line again
+ a. If the line is idle, it sends the frame (= step 1)
+ b. If the line is busy, it '''acts as though a collision has occurred''' and uses the backoff procedure"{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''p''' = 확률 probability. "확률 $p$ 만큼 끈질기다". $p = 1$ 이면 [[1-persistent]] 가 된다. $p$ 가 작을수록 양보를 많이 하는 셈이다.
+
+[[img:L6-40.png|p.40 c. p-persistent — R(0~1) 생성, R ≤ p 면 전송, 아니면 한 슬롯 대기 후 busy 면 back-off|large]]
+
+== 흐름 (p.40 c) ==
+<pre class="txt">
+1. Channel busy? → true 면 계속 확인 (여기까지는 1-persistent 와 같다)
+2. idle → Generate a random number R (0 to 1)
+3. R ≤ p ?  → true  → '''Station can transmit'''     (확률 p)
+            → false → Wait a slot                  (확률 q = 1 − p)
+4. Channel busy?
+     → false (idle) → 2 로 돌아가 다시 R 생성     (= step a)
+     → true  (busy) → '''Use back-off process as though collision occurred''' (= step b)
+</pre>
+
+{warn}step b 가 잘 틀리는 곳이다. 한 슬롯 기다렸더니 busy 라면 "다시 계속 듣는다"가 아니라 '''충돌이 난 것처럼 간주하고 [[binary exponential backoff|backoff]]''' 한다. 다른 누군가가 그 슬롯을 먼저 잡았다는 뜻이기 때문이다.{/warn}
+
+[[anim:persistence_methods|idle 이 되는 순간 p-persistent 스테이션이 동전을 던져(R ≤ p) 보내거나 한 슬롯 미루는 모습을 보라]]
+
+{analogy}🎭 '''엘리베이터 문이 열렸을 때 "먼저 타세요" 하는 사람.''' 문이 열리면(idle) 확률 $p$ 로는 바로 타고, $1-p$ 로는 한 박자 양보한다. 양보했는데 누가 타 버려서 꽉 찼으면(busy) 그냥 다음 엘리베이터를 기다린다(backoff).{/analogy}
+
+{quiz}$p = 0.3$ 인 p-persistent 스테이션이 idle 채널을 발견했다. 바로 보낼 확률과 한 슬롯 기다릴 확률은? 기다린 뒤 채널이 busy 면 무엇을 하나?{/quiz}
+{answer}바로 보낼 확률 = $p$ = '''0.3''', 한 슬롯 기다릴 확률 = $q = 1 - 0.3$ = '''0.7'''. 기다린 뒤 busy 면 '''충돌이 난 것처럼 간주하고 backoff procedure''' 를 수행한다.{/answer}
+
+== 관련 문서 ==
+* [[persistence method]] · [[1-persistent]] · [[nonpersistent]]
+* [[binary exponential backoff]] · [[CSMA]] · [[slotted ALOHA]] (슬롯 개념)

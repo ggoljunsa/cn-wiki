@@ -1,0 +1,40 @@
+key: framing
+title: Framing (프레이밍)
+category: 6강 DLC, 용어
+---
+'''Framing''' 은 [[DLC]] 의 첫 번째 임무다. [[physical layer]]가 올려 주는 것은 끝없는 비트의 강물뿐인데, 그 강물을 '''frame 단위로 끊어''' 하나하나 구분할 수 있게 만드는 일이다. L5 p.15–20.
+
+{def}"The data-link layer needs to '''pack bits into frames''', so that each frame is distinguishable from another." / "Framing separates a message from one source to a destination by adding a '''sender address and a destination address'''." / "Very large frames can make flow and error control inefficient → A message is usually divided into smaller frames." (p.15)
+→ 비트를 frame 으로 묶어 서로 구분 가능하게, 송신·수신 주소를 붙여 메시지를 가른다. 너무 큰 프레임은 비효율적이라 작게 나눈다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''frame''' = "액자, 틀". 그림(데이터)에 '''테두리'''를 둘러 "여기서부터 여기까지가 한 작품" 이라고 표시하는 것. 테두리를 어떻게 알아보느냐에 따라 방법이 갈린다:
+* 액자 크기가 모두 같다 → 테두리 표시 불필요 → [[fixed-size framing]]
+* 크기가 제각각 → 테두리를 그려야 함 → [[variable-size framing]] ([[character-oriented framing]] / [[bit-oriented framing]])
+
+{analogy}🎭 '''띄어쓰기 없는 문장.''' "아버지가방에들어가신다" 처럼 경계 표시가 없으면 읽는 사람이 어디서 끊을지 모른다. framing 은 비트열에 '''띄어쓰기와 마침표'''를 넣는 일이다. 문제는 본문에 마침표 모양 글자가 섞여 있을 때 — 그걸 해결하는 게 [[byte stuffing]] / [[bit stuffing]] 이다.{/analogy}
+
+[[img:L5-17.png|p.17 variable-size 프레임의 모양: Flag – Header – Data – Trailer – Flag. 양 끝의 flag 가 "테두리"다|medium]]
+
+== 왜 작게 나누나 (p.15) ==
+프레임이 크면 1비트만 깨져도 '''프레임 전체'''를 버리고 다시 보내야 한다(error control 비효율). 흐름 제어도 큰 덩어리 단위로는 세밀하게 못 한다. 그래서 긴 메시지는 여러 작은 frame 으로 나뉜다.
+
+== 방법 한눈에 ==
+{|
+! 크기 || 경계 표시 || 세부 방법 || 투명성 기법
+|-
+| 고정 || 불필요 || ATM cell || —
+|-
+| 가변 || 필요 || [[character-oriented framing|character-oriented]] (flag 바이트) || [[byte stuffing]] ([[ESC]])
+|-
+| 가변 || 필요 || [[bit-oriented framing|bit-oriented]] ([[flag]] 01111110) || [[bit stuffing]]
+|}
+
+== 예상 문제 ==
+{quiz}framing 이 프레임에 붙이는 두 가지 주소는? 그리고 큰 메시지를 작은 프레임으로 나누는 이유는?{/quiz}
+{answer}'''sender address 와 destination address'''. 너무 큰 프레임은 '''flow control 과 error control 을 비효율적'''으로 만들기 때문(오류 하나에 큰 프레임 전체 재전송).{/answer}
+
+== 관련 문서 ==
+* [[DLC]] · [[CH03 Data-Link Control]]
+* [[fixed-size framing]] · [[variable-size framing]] · [[character-oriented framing]] · [[bit-oriented framing]]
+* [[flag]] · [[byte stuffing]] · [[bit stuffing]]

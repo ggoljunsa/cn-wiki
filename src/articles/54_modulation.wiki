@@ -1,0 +1,39 @@
+key: modulation
+title: Modulation (변조)
+category: 5강 Analog Transmission, 용어
+---
+'''Modulation'''(변조)은 [[carrier|반송파]]의 특성 하나를 정보에 따라 바꾸는 것이다. [[digital-to-analog conversion]] 의 핵심 동작이며, [[FDM]] 송신에서도 쓰인다. 반대 과정은 '''demodulation'''(복조).
+
+{def}D2A 정의: "The process of '''changing one of the characteristics''' of an analog signal based on the information in digital data" (L4 p.35). 교수: "'''modulation means we change some characteristics''' of our data" ([[PCM]] 이름 설명 중).{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''modulate''' = (소리·세기를) '''조절하다, 바꾸다'''. 무엇을 바꾸는지가 방식의 이름이 된다. 교수의 조언대로 "'''remember the varying parts'''":
+
+{|
+! 방식 || 바꾸는 것 || 고정 || 한 줄
+|-
+| [[ASK]] || '''Amplitude''' (진폭) || 주파수, 위상 || 크게/작게
+|-
+| [[FSK]] || '''Frequency''' (주파수) || 진폭, 위상 || 빽빽/성김
+|-
+| [[PSK]] || '''Phase''' (위상) || 진폭, 주파수 || 뒤집기
+|-
+| [[QAM]] || Amplitude + Phase || 주파수 || 둘 다
+|}
+
+"Shift Keying" 은 전신(telegraph) 시절의 전건(key)을 두드려 값을 '''전환(shift)'''한다는 옛 말이다. 교수도 "weird name" 이라 했으니 뒤의 두 단어는 무시하고 '''첫 단어'''만 보면 된다.
+
+{analogy}🎭 '''라디오 DJ 의 목소리.''' 같은 목소리(반송파)로 크기를 바꾸면 AM(ASK 의 아날로그 버전), 높낮이를 바꾸면 FM(FSK 의 아날로그 버전). 라디오의 AM/FM 이 바로 Amplitude/Frequency Modulation 이다.{/analogy}
+
+[[anim:ask_fsk_psk|같은 비트열 1 0 1 1 0 에서 세 방식이 각각 무엇을 바꾸는지 비교하라]]
+
+== 이 과목에서 "modulation" 이 붙은 이름들 ==
+* [[PCM]] (Pulse Code '''Modulation'''), [[PAM]] (Pulse Amplitude '''Modulation'''), [[delta modulation]] — 이쪽은 A2D 맥락의 "변조"
+* [[QAM]] (Quadrature Amplitude '''Modulation''')
+* [[FDM]] 의 Modulator / Demodulator (L4 p.50–51)
+
+{quiz}PSK 에서 고정되는 반송파 특성 두 가지는?{/quiz}
+{answer}'''진폭'''과 '''주파수'''. PSK 는 위상만 바꾼다.{/answer}
+
+== 관련 문서 ==
+* [[carrier]] · [[digital-to-analog conversion]] · [[ASK]] · [[FSK]] · [[PSK]] · [[QAM]] · [[사인파]]

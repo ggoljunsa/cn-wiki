@@ -1,0 +1,41 @@
+key: MUX와 DEMUX
+title: MUX와 DEMUX (Multiplexer / Demultiplexer)
+category: 5강 Analog Transmission, 용어
+---
+'''MUX'''(Multiplexer)는 여러 전송 스트림을 '''하나로 합치는''' 장치(many to one), '''DEMUX'''(Demultiplexer)는 합쳐진 스트림을 '''원래대로 나누는''' 장치(one to many)다. [[multiplexing]] 의 양 끝. L4 p.47–48.
+
+{def}"'''Multiplexer (Mux)''' — '''Combines''' transmission streams into a single stream — '''Many to one'''"
+"'''Demultiplexer (Demux)''' — '''Separate''' the stream back into its component transmissions — '''one to many'''"
+"'''Link''' — Physical path"
+"'''Channel''' — The '''portion of a link''' that carries a transmission between a given pair of lines"{/def}
+
+[[img:L4-48.png|p.48 MUX/DEMUX/Link/Channel 네 정의와 "1 link, n channels" 그림|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''MUX''' = '''MU'''ltiple'''X'''er — 여러 겹으로 만드는 것 (합치기)
+* '''DE-MUX''' = 그 반대 (풀기). de- 는 "되돌리기"
+* '''link''' vs '''channel''': link 는 '''물리적 선로 하나''', channel 은 그 링크 안의 '''논리적 몫 하나'''. 그래서 "1 link, n channels".
+
+{|
+! 용어 || 방향 || 동사 || 개수
+|-
+| MUX || '''many → one''' || combines || 송신 측 1대
+|-
+| DEMUX || '''one → many''' || separates || 수신 측 1대
+|-
+| link || — || physical path || 1
+|-
+| channel || — || portion of a link || $n$
+|}
+
+{analogy}🎭 '''고속도로 톨게이트.''' 여러 진입로(input lines)의 차가 톨게이트(MUX)에서 한 도로(link)로 합류하고, 반대편 톨게이트(DEMUX)에서 각자 출구(output lines)로 나뉜다. 도로 하나 안의 차로 하나하나가 channel.{/analogy}
+
+교수 설명: "MUX plays a role of allocating aggregated input streams into different channels in the transmission medium, and the DEMUX does the '''reverse role''' — separates signals in channels to output lines." "Link can be physically wired or wireless, and channel means … a '''portion''' of it."
+
+{warn}link 와 channel 을 헷갈리지 말 것. "하나의 '''link''' 를 여러 '''channel''' 로 나눈다" 가 정답 방향이다. "하나의 channel 을 여러 link 로" 는 틀린 문장.{/warn}
+
+{quiz}"MUX 는 one to many, DEMUX 는 many to one 이다." 옳은가?{/quiz}
+{answer}'''틀렸다(반대).''' MUX 는 여러 스트림을 하나로 '''combine''' → '''many to one''', DEMUX 는 하나를 여러 개로 '''separate''' → '''one to many'''.{/answer}
+
+== 관련 문서 ==
+* [[multiplexing]] · [[FDM]] · [[TDM]] · [[CH02 Multiplexing]] · [[node와 link]]

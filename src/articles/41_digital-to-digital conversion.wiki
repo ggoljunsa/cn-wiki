@@ -1,0 +1,40 @@
+key: digital-to-digital conversion
+title: Digital-to-Digital Conversion (D2D 변환)
+category: 4강 Digital Transmission, 용어
+---
+'''Digital-to-digital conversion'''(D2D)은 이미 0/1 로 된 '''디지털 데이터'''를 링크에 실을 수 있는 '''[[디지털 신호]]'''(전압 파형)로 바꾸는 과정이다. L3 p.43. [[CH02 Digital Transmission]] 의 첫 번째 절.
+
+{def}"Digital-to-Digital Conversion — '''Change digital data to digital signals'''." Two categories of D2D conversion: '''Line Coding''', '''Block Coding'''.
+디지털 데이터를 디지털 신호로 바꾸는 것. 두 범주: [[line coding]] 과 [[block coding]].{/def}
+
+== 이름에서 개념 끌어내기 ==
+이 과목의 변환 이름은 전부 '''"(데이터 종류)-to-(신호 종류)"''' 규칙이다. 앞은 '''무엇을''' 보내느냐([[data와 signal|data]]), 뒤는 '''어떤 모양으로''' 보내느냐(signal). 그래서 네 가지 조합이 생긴다.
+{|
+! 변환 || 데이터 → 신호 || 대표 기법 || 문서
+|-
+| '''D2D''' || digital → digital || line coding, block coding (4B/5B) || 이 문서
+|-
+| A2D || analog → digital || [[PCM]], [[delta modulation|DM]] || [[analog-to-digital conversion]]
+|-
+| D2A || digital → analog || [[ASK]], [[FSK]], [[PSK]], [[QAM]] || [[digital-to-analog conversion]]
+|-
+| A2A || analog → analog || AM/FM/PM (범위 밖) || —
+|}
+
+{analogy}🎭 '''이미 타자로 친 원고를 방송용 자막으로 옮기기.''' 글자(비트)는 그대로다. 바뀌는 건 '''화면에 어떻게 보이느냐'''(전압 레벨·전이)뿐. line coding 은 글자 하나하나를 자막 한 칸씩에 대응시키는 것, block coding 은 "4글자씩 묶어 읽기 쉬운 5글자 약어로 바꾼 다음" 자막을 다는 것.{/analogy}
+
+== 두 범주 ==
+* [[line coding]] — 비트 '''하나씩''' 전압에 대응 (p.44). 교수: "bit 0 → negative voltage, bit 1 → positive voltage 처럼 one-by-one".
+* [[block coding]] — '''m비트 묶음'''을 n비트 묶음으로 바꾼 뒤 line coding (p.45–47). 예: [[4B/5B]] + [[NRZ-I]].
+
+[[img:L3-44.png|p.44 D2D 의 구조 — Encoder 와 Decoder 사이 Link 위에는 디지털 신호가 흐른다|medium]]
+
+{info}D2D 결과물은 [[baseband 전송|baseband]]로 그대로 보낼 수 있는 디지털 신호다. [[bandpass 채널]](무선 등)에 실으려면 다시 [[digital-to-analog conversion|D2A]](변조)를 해야 한다.{/info}
+
+{quiz}block coding 과 line coding 중 무엇이 먼저 적용되는가? 4B/5B 예로 설명하시오.{/quiz}
+{answer}'''block coding 이 먼저'''다. p.46 그림 순서: Sender → '''4B/5B encoding''' → '''NRZ-I encoding''' → Link → NRZ-I decoding → 4B/5B decoding → Receiver. block coding 은 비트열을 비트열로 바꾸는 전처리이고, 실제 전압 파형을 만드는 건 line coding(NRZ-I)이다.{/answer}
+
+== 관련 문서 ==
+* [[line coding]] · [[block coding]] · [[4B/5B]] · [[NRZ-I]]
+* 반대 방향/다른 조합: [[analog-to-digital conversion]] · [[digital-to-analog conversion]]
+* [[CH02 Digital Transmission]]

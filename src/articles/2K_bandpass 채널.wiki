@@ -1,0 +1,28 @@
+key: bandpass 채널
+title: Bandpass 채널 (대역통과 채널)
+category: 2강 Signals, 용어
+---
+'''Bandpass channel'''은 '''0 이 아닌 어떤 주파수 대역 $f_1$~$f_2$ 만''' 통과시키는 채널이다. L2 p.38. [[broadband 전송]]에 쓰이며, 디지털 신호를 [[modulation|변조]]해서 그 대역에 맞춰 넣어야 한다.
+
+{def}L2 p.38 "Broadband Transmission — Modulation of a digital signal for transmission on a '''bandpass''' channel." (그림: Available bandwidth $f_1$~$f_2$, Bandpass channel)
+대역통과 채널 = $f_1$~$f_2$ 의 대역만 통과시키는 채널.{/def}
+
+[[img:L2-38.png|p.38 — 가운데 노란 사다리꼴이 채널의 Available bandwidth(f₁~f₂). 양옆의 변조된 신호 스펙트럼이 그 안에 맞춰 들어가 있다|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''band''' (특정 대역) + '''pass''' (통과). [[low-pass 채널|low-pass]] 가 "바닥부터 위로 어디까지" 라면 bandpass 는 "'''이 구간만'''". 교수: "channel should allow passing the signal in our frequency '''band''' — so we call it '''band-pass'''."
+
+{analogy}🎭 '''라디오 주파수 다이얼.''' FM 89.1 MHz 에 맞추면 그 근처 좁은 대역만 들리고 옆 방송국은 안 들린다. 라디오 수신기가 bandpass 필터, 각 방송국이 자기 $f_1$~$f_2$ 를 배정받은 사용자다. 방송국들이 음성을 그 대역으로 옮겨(modulation) 보내기 때문에 서로 섞이지 않는다.{/analogy}
+
+== 성질 ==
+* bandwidth = $f_2 - f_1$ (예: 전화선 음성 대역 300~3300 Hz → '''3000 Hz''', [[Shannon capacity|Example 2.8]])
+* 0 Hz 를 통과시키지 않으므로 [[디지털 신호]]를 그대로 보낼 수 없다 → '''modulation 필수'''
+* 한 매체를 여러 bandpass 구간으로 나누면 [[FDM]] (사이 여백 = [[guard band]])
+* 변조 방식별 필요 대역폭 → [[변조 대역폭]]
+
+{quiz}300 Hz ~ 3300 Hz 를 통과시키는 전화선은 어떤 채널인가? bandwidth 는? 이 선으로 디지털 데이터를 보내려면 무엇이 필요한가?{/quiz}
+{answer}'''bandpass 채널''', bandwidth = $3300 - 300 = $ '''3000 Hz'''. 0 Hz 를 통과시키지 않으므로 '''modulation'''(모뎀)으로 디지털 신호를 해당 대역의 아날로그 신호로 바꿔야 한다 — [[broadband 전송]].{/answer}
+
+== 관련 문서 ==
+* [[low-pass 채널]] · [[broadband 전송]] · [[modulation]] · [[carrier]]
+* [[FDM]] · [[guard band]] · [[변조 대역폭]] · [[CH02 Signals]]

@@ -1,0 +1,49 @@
+key: transport layer
+title: Transport Layer (전송 계층, Layer 4)
+category: 1강 Introduction, 용어, 함정
+---
+'''Transport layer''' 는 Layer 4 — 출발 호스트의 '''응용 프로그램'''이 보낸 메시지를 목적 호스트의 '''대응하는 응용 프로그램'''에 건네는 층 (L1 p.36). [[TCP]] 와 [[UDP]] 가 여기 있다.
+
+{def}"Giving services to the application layers — To get a message from an application program running on the source host and deliver it to the '''corresponding application program''' on the destination host / '''End-to-end''' logical connection / Main protocol: '''TCP''' — '''Connection-oriented''' protocol — Establishes a logical connection between two transport layers at two hosts — Provides '''flow control, error control, congestion control''' / '''UDP''' is another common protocol — '''Connectionless''' protocol — Simple protocol w/o flow/error/congestion controls" (L1 p.36)
+응용 계층에 서비스를 준다: 출발 호스트에서 돌아가는 응용 프로그램의 메시지를 목적 호스트의 대응 응용 프로그램에 전달. end-to-end 논리 연결. 주 프로토콜 TCP 는 연결 지향형으로 두 호스트의 전송 계층 사이에 논리 연결을 세우고 흐름·오류·혼잡 제어를 제공한다. UDP 는 비연결형으로 그런 제어가 없는 단순한 프로토콜이다.{/def}
+
+{exam}⭐⭐⭐ '''0920 NotebookLM 퀴즈에서 두 번 틀린 자리.'''
+* "전송 계층 중 connection-oriented 이며 흐름·오류 제어를 제공하는 것" → '''UDP''' 라고 답했다. 정답 '''TCP'''.
+* "IP 가 속하고 경로를 고르는 계층" → '''Transport''' 라고 답했다. 정답 [[network layer|Network]].
+한 줄로: '''Transport = TCP·UDP, 경로 아님, 프로그램 간 전달. connection-oriented 는 TCP 하나.'''{/exam}
+
+== TCP vs UDP ==
+{|
+! || '''[[TCP]]''' || '''[[UDP]]'''
+|-
+| 연결 || '''Connection-oriented''' — 보내기 전에 두 호스트의 transport layer 사이 논리 연결 수립 || '''Connectionless'''
+|-
+| Flow control || ✅ || ✗
+|-
+| Error control || ✅ || ✗
+|-
+| Congestion control || ✅ || ✗
+|-
+| 슬라이드 표현 || "Main protocol" || "Simple protocol", "another common protocol"
+|-
+| PDU ([[PDU]]) || '''segment''' || '''user datagram'''
+|}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''transport''' — "건너편으로(trans) 나르다(port)". [[network layer]] 가 '''호스트 문 앞'''까지 가져다 놓으면, transport 는 그걸 집 안의 '''정확한 사람(프로그램)'''에게 건넨다. 그래서 이 층의 주소는 '''[[포트 번호|port number]]''' — ''port'' 는 항구/문. 한 호스트(건물)에 문이 여러 개 있고 각 문 뒤에 다른 프로그램이 있다.
+
+{|
+! 층 || 누구와 누구 사이 || 주소
+|-
+| [[network layer|Network]] || host ↔ host || IP 주소 (건물 주소)
+|-
+| '''Transport''' || '''application program ↔ application program''' (end-to-end) || '''port''' (방 번호)
+|}
+
+{analogy}🎭 '''택배 기사 vs 건물 안내 데스크.''' IP(network)는 택배를 '''건물 정문'''까지 가져온다. Transport 는 안내 데스크 — "302호 앞으로 온 상자"를 '''302호에''' 올려 준다. TCP 는 등기(받았다는 서명, 없으면 재발송, 한꺼번에 몰리면 속도 조절), UDP 는 문 앞에 두고 가는 일반 배송(빠르지만 보장 없음).{/analogy}
+
+{quiz}"TCP 와 IP 는 둘 다 인터넷 핵심 프로토콜이니 둘 다 connection-oriented 다." 틀린 곳을 고치시오.{/quiz}
+{answer}'''TCP 만''' connection-oriented(transport layer). '''IP 는 connectionless'''(network layer, "no flow control, no error control, and no congestion control", L1 p.35). UDP 도 connectionless.{/answer}
+
+== 관련 문서 ==
+* [[TCP]] · [[UDP]] · [[포트 번호]] · [[network layer]] · [[application layer]] · [[end-to-end와 hop-to-hop]] · [[CH01 Introduction]]

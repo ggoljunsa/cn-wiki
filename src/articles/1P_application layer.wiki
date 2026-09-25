@@ -1,0 +1,40 @@
+key: application layer
+title: Application Layer (응용 계층, Layer 5)
+category: 1강 Introduction, 용어
+---
+'''Application layer''' 는 Layer 5, 맨 위 — 사용자가 실제로 쓰는 프로그램들이 '''프로세스 대 프로세스'''로 메시지를 주고받는 층 (L1 p.37).
+
+{def}"Exchange messages between two processes / '''Process to process''' communication / HTTP for WWW / SMTP for email / FTP for file transfer / TELNET/SSL for remote access / SNMP for network management / DNS for finding network address / Etc." (L1 p.37)
+두 프로세스가 메시지를 교환한다. process-to-process 통신.{/def}
+
+== 슬라이드의 프로토콜 목록 ==
+{|
+! 프로토콜 || 용도 (p.37) || 풀네임 (참고)
+|-
+| '''HTTP''' || WWW || HyperText Transfer Protocol
+|-
+| '''SMTP''' || email || Simple Mail Transfer Protocol
+|-
+| '''FTP''' || file transfer || File Transfer Protocol
+|-
+| '''TELNET / SSL''' || remote access || (TELNET = teletype network), Secure Sockets Layer
+|-
+| '''SNMP''' || network management || Simple Network Management Protocol
+|-
+| '''DNS''' || finding network address || Domain Name System
+|}
+{info}[[주소 체계]](p.39)에서 이 층의 주소는 '''names''' — www.dgist.ac.kr, soobin.um@dgist.ac.kr. 그 이름을 IP 주소로 바꿔 주는 게 '''DNS''' 다("finding network address"). 포트 예시 80(HTTP), 443(HTTPS), 53(DNS)도 여기 프로토콜들의 번호다 → [[포트 번호]].{/info}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''application''' — "적용, 응용": 네트워크를 '''어디에 써먹느냐'''. 아래 네 층이 전부 "어떻게 나르나"라면 이 층만 "'''무엇을''' 나르나"를 안다. 그래서 이 층의 [[PDU]] 는 가공 전 그대로인 '''message'''.
+
+== OSI 와의 관계 ==
+[[OSI 7계층]]의 Application · Presentation · Session 세 층이 TCP/IP 에서는 이 한 층으로 합쳐졌다 (L1 p.40, "Several application protocols").
+
+{analogy}🎭 '''편지의 내용.''' 아래 층들이 봉투, 우표, 우체국, 트럭이라면 application layer 는 '''편지지에 쓰인 글'''이다. 연애편지(HTTP)든 청구서(SMTP)든 계약서(FTP)든 — 무엇을 쓰느냐에 따라 형식(프로토콜)이 다르다.{/analogy}
+
+{quiz}L1 p.37 의 프로토콜 중 "finding network address" 용도인 것과, 그것이 [[주소 체계]]의 어느 두 주소를 이어 주는지 쓰시오.{/quiz}
+{answer}'''DNS'''. application layer 의 '''names'''(www.dgist.ac.kr)를 network layer 의 '''logical address'''(IP 주소)로 바꿔 준다.{/answer}
+
+== 관련 문서 ==
+* [[transport layer]] · [[OSI 7계층]] · [[포트 번호]] · [[주소 체계]] · [[CH01 Introduction]]

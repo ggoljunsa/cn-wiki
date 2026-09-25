@@ -1,0 +1,42 @@
+key: network layer
+title: Network Layer (네트워크 계층, Layer 3)
+category: 1강 Introduction, 용어, 함정
+---
+'''Network layer''' 는 Layer 3 — 출발지 호스트에서 목적지 호스트까지 '''경로를 골라''' 패킷을 보내는 층. '''[[IP]] 가 사는 곳'''이다 (L1 p.35).
+
+{def}"Creating '''a connection between the source and destination''' and '''choosing the best route''' for each packet / The communication at this layer is '''host-to-host''' / The '''routers''' in the path are responsible for choosing the best route for each packet. / '''Internet Protocol (IP)''': the main protocol of the Internet — Defines the format and the structure of addresses — '''Connectionless''' protocol: no flow control, no error control, and no congestion control / Auxiliary protocols: ICMP, IGMP, DHCP, ARP" (L1 p.35)
+출발지와 목적지 사이 연결을 만들고 패킷마다 최적 경로를 고른다. 통신 범위는 host-to-host. 경로상의 라우터들이 최적 경로 선택을 책임진다. IP 가 인터넷의 주 프로토콜로, 주소의 형식과 구조를 정의하며 connectionless 다(흐름·오류·혼잡 제어 없음). 보조 프로토콜로 ICMP, IGMP, DHCP, ARP.{/def}
+
+{exam}⭐⭐⭐ '''0920 NotebookLM 퀴즈에서 여기서 틀렸다.''' "IP 가 속해 있으며 출발지에서 목적지까지 패킷의 최적 경로를 선택하는 계층"에 '''Transport layer''' 를 골랐다. 정답은 '''Network layer'''. Transport 는 경로가 아니라 '''어느 프로그램에게'''를 책임진다.{/exam}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''network''' — 망(net)을 '''엮는 일(work)'''. 링크 하나(data link)를 넘어 여러 링크·여러 망을 가로질러 '''전체 길'''을 찾는 층이다. 그래서 핵심 동사가 '''route'''(길을 고르다)이고, 그 일을 하는 장치 이름이 '''router''' 다. 이름끼리 연결: network layer ↔ routing ↔ [[라우터]].
+
+== 한눈에 ==
+{|
+! 항목 || 내용
+|-
+| 하는 일 || source–destination 연결 + '''best route''' 선택 (routing)
+|-
+| 범위 || '''host-to-host''' (end-to-end)
+|-
+| [[PDU]] || '''datagram'''
+|-
+| 주소 || '''logical address''' = IP 주소 (192.168.0.1)
+|-
+| 주 프로토콜 || '''[[IP]]''' — '''connectionless''', flow·error·congestion control '''없음'''
+|-
+| 보조 프로토콜 || ICMP, IGMP, DHCP, [[ARP]]
+|-
+| 가진 장치 || host, '''[[라우터]](여기까지가 최상층)'''. [[스위치]]는 없음
+|}
+
+{warn}⭐ '''connection 이라는 단어의 함정.''' 정의 첫 줄에 "creating a '''connection''' between source and destination" 이 있지만 IP 는 '''connectionless''' 다. 앞의 connection 은 "양 끝을 이어 준다"는 일반적 의미, 뒤의 connectionless 는 "보내기 전에 연결을 수립하지 않는다"는 프로토콜 성질. '''connection-oriented 는 [[TCP]] 하나뿐'''이다.{/warn}
+
+{analogy}🎭 '''내비게이션 + 우편 번호.''' 주소(IP 주소) 형식을 정하고, 교차로(라우터)마다 "이 편지는 이쪽 길"을 고른다. 다만 등기우편이 아니라 '''일반 우편'''(connectionless) — 도착 확인도, 분실 재발송도, 우체국 붐빔 조절도 안 한다. 그건 위층 [[TCP]] 의 몫.{/analogy}
+
+{quiz}다음 중 network layer 에 대해 옳은 것을 모두: (a) 통신 범위는 process-to-process (b) IP 는 connectionless (c) 경로 선택은 라우터가 책임 (d) error control 을 제공{/quiz}
+{answer}'''(b), (c)'''. (a) process-to-process 는 [[application layer]](p.37). network 는 host-to-host. (d) IP 는 "no error control".{/answer}
+
+== 관련 문서 ==
+* [[IP]] · [[라우터]] · [[transport layer]] · [[data-link layer]] · [[end-to-end와 hop-to-hop]] · [[CH01 Introduction]] · [[0920 오답 복기]]

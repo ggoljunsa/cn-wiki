@@ -1,0 +1,28 @@
+key: multipoint
+title: Multipoint (다중점 연결)
+category: 1강 Introduction, 용어
+---
+'''Multipoint''' 는 '''셋 이상의 장치가 링크 하나를 나눠 쓰는''' 연결 (L1 p.9).
+
+{def}"'''More than two specific devices share a single link'''" (L1 p.9)
+둘보다 많은 특정 장치들이 하나의 링크를 공유한다.{/def}
+
+[[img:L1-9.png|b. Multipoint — Mainframe 에서 뻗은 Link 하나에 노트북 여러 대가 파란 접속점으로 매달려 있다|large]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''multi'''(여러) '''point'''(끝점). [[point-to-point]] 는 끝점이 둘, multipoint 는 여럿. 끝점이 여럿인데 링크가 하나라면 필연적으로 '''share''' 한다 — 그래서 정의의 동사가 share 다. 나눠 쓰면 "누가 지금 쓰나"를 정해야 하고, 그 답이 CH03 의 [[multiple access protocols]] 다.
+
+== 어디서 쓰이나 ==
+* [[bus 토폴로지]]: 슬라이드가 "'''Multipoint connection'''" 이라고 못 박는다. 긴 backbone 케이블 하나 + drop line + tap.
+* [[LAN]] 의 과거 모습(L1 p.15): "all hosts were connected through a '''common cable'''".
+* CH03 [[point-to-point 링크와 broadcast 링크]] 의 broadcast 링크, [[random access]], [[collision]].
+
+{analogy}🎭 '''단체 카톡방.''' 방(링크)은 하나, 사람(장치)은 여럿. 모두가 같은 방을 보니 편하지만, 여럿이 동시에 말하면 대화가 엉킨다(collision). 그래서 "손 들고 말하기" 같은 규칙이 필요해진다.{/analogy}
+
+{warn}p.9 그림의 파란 작은 네모는 링크에 노드를 붙이는 접속점 — p.12 [[bus 토폴로지]]에서 이름이 붙는 '''tap''' 과 같은 것이다. 0920 퀴즈에서 이 부품을 "Hub 와 Switch" 로 틀렸다.{/warn}
+
+{quiz}Multipoint 연결에서는 point-to-point 에 없던 어떤 문제가 생기는가?{/quiz}
+{answer}여러 장치가 링크 하나를 '''share''' 하므로 동시에 보내면 신호가 겹친다([[collision]]). 그래서 누가 언제 보낼지 정하는 규칙(CH03 [[multiple access protocols]])이 필요하다.{/answer}
+
+== 관련 문서 ==
+* [[point-to-point]] · [[bus 토폴로지]] · [[collision]] · [[CH01 Introduction]]

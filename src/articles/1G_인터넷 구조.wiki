@@ -1,0 +1,38 @@
+key: 인터넷 구조
+title: 인터넷 구조 (The Internet — backbone · provider · customer · peering point)
+category: 1강 Introduction, 용어
+---
+L1 p.20 한 장의 그림: 인터넷은 '''망들의 계층'''이다.
+
+[[img:L1-20.png|The Internet — 가운데 겹친 Backbones, 위아래 Provider network, 가장자리 Customer network, 빨간 Peering point|large]]
+
+{def}The Internet (L1 p.20 그림): '''Backbones''' — '''Provider network''' — '''Customer network''', 그리고 '''Peering point'''.
+가운데 백본, 그 아래 제공자 망, 가장자리의 고객 망. 백본들과 제공자 망들은 피어링 포인트에서 서로 연결된다.{/def}
+
+== 네 요소 ==
+{|
+! 요소 || 정체 || 예
+|-
+| '''Backbones''' || 가장 큰 통신사들의 초고속 기간망 (그림에서 여러 장 겹쳐 있음 = 백본이 여러 개) || 대륙 간 해저 케이블을 가진 대형 ISP
+|-
+| '''Provider network''' || 백본의 서비스를 사서 고객에게 다시 파는 중간 망 || 지역 ISP
+|-
+| '''Customer network''' || 인터넷의 가장자리 — 서비스를 '''쓰는''' 쪽 || DGIST 캠퍼스 [[LAN]], 우리 집
+|-
+| '''Peering point''' || 서로 다른 백본·provider 가 '''만나서 트래픽을 교환'''하는 지점 || 인터넷 교환점(IX)
+|}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''".
+* '''backbone''' — 등뼈. 몸 전체를 지탱하고 모든 신경이 지나는 중심.
+* '''provider''' / '''customer''' — 파는 쪽 / 사는 쪽. 망 사이에 '''돈과 서비스가 흐르는 방향'''이 이름에 들어 있다.
+* '''peer''' — 동등한 상대. peering point 는 '''대등한 망끼리''' 손잡는 곳이다. 위아래(provider–customer)가 아니라 옆과 옆.
+그리고 '''Inter-net''' 자체가 "망(net) 사이(inter)" — 인터넷은 하나의 망이 아니라 '''망들을 이은 것'''이다.
+
+{analogy}🎭 '''도로망.''' Backbone = 전국 고속도로, Provider = 국도·지방도, Customer = 동네 골목과 집 앞 길. Peering point = 서로 다른 도로 회사의 고속도로가 만나는 '''분기점(JC)'''. 집에서 부산까지 가려면 골목 → 지방도 → 고속도로(→ 분기점 → 다른 고속도로) → 지방도 → 골목.{/analogy}
+
+{quiz}Peering point 는 무엇과 무엇을 잇는가? "peer" 라는 단어에서 출발해 설명하시오.{/quiz}
+{answer}Peer = 대등한 상대. Peering point 는 '''대등한 위치의 망들 — 백본끼리, provider 끼리 —''' 이 만나 트래픽을 교환하는 지점이다. L1 p.20 그림에서 점선이 백본들과 provider network 들로 뻗어 있다.{/answer}
+
+== 관련 문서 ==
+* [[LAN]] · [[WAN]] · [[라우터]] · [[CH01 Introduction]]

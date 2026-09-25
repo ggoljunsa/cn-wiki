@@ -1,0 +1,87 @@
+key: CH03 Link-Layer Addressing
+title: CH03 Link-Layer Addressing (8강 — IP 주소가 있는데 왜 또 주소가?)
+category: 8강 Addressing, 메인
+---
+'''CH03 Link-Layer Addressing'''은 L6 덱(`CH03_Data Link Layer (2).pdf`) p.55–63 이다. 분량은 9장뿐이지만 던지는 질문이 중요하다 — '''"[[IP]] 주소만으로는 왜 프레임을 배달할 수 없고, 그래서 [[data-link layer]]는 어떤 주소를 따로 쓰는가?"'''
+답: 링크 하나를 건널 때마다 "'''다음 노드'''"를 지정할 주소가 필요하고, 그것이 [[MAC 주소]](link-layer address, physical address)다. 끝에서 IP 주소를 MAC 주소로 바꿔 주는 [[ARP]]가 예고된다.
+
+페이지 번호는 슬라이드 인쇄 번호다. 녹음본은 아직 없다.
+
+{exam}⭐⭐ 이 강의의 핵심은 p.58 그림 하나다. '''IP 주소는 source–destination 순서로 경로 내내 불변''', '''link-layer 주소는 destination–source 순서로 링크를 건널 때마다 바뀐다.''' → [[IP 주소와 MAC 주소]]{/exam}
+
+{analogy}🎭 '''택배.''' 송장에 적힌 보내는 사람·받는 사람 주소(IP 주소)는 서울에서 부산까지 한 번도 안 바뀐다. 하지만 물건을 실제로 옮기는 트럭 기사에게는 "이번 구간은 서울 허브 → 대전 허브"라는 '''구간 지시서'''(MAC 주소)가 필요하고, 이건 허브마다 새로 써 붙인다. 최종 주소만 알아서는 지금 어느 트럭에 실어야 할지 모른다.{/analogy}
+
+== p.55–57 — 왜 주소가 하나 더 필요한가 ⭐⭐ ==
+
+p.55 섹션 목표: "Introduce link-layer addressing / Mention how a link-layer address can be found using the ARP protocol."
+
+{def}"Identifier at the network layer define the '''exact points in the Internet''' — e.g., IP address." (p.56)
+"'''IP address alone is not sufficient''' for delivery from the source to the dest. Need another addressing mechanism: '''Link address, physical address, or MAC address'''." (p.57){/def}
+
+[[network layer]]의 IP 주소는 '''인터넷 전체에서''' 출발점과 도착점을 정한다. 그런데 datagram 은 [[node와 link|링크]]를 한 번에 하나씩 건너간다. 각 링크 구간에서 "이 프레임을 '''이 링크 위의 누구'''에게 줄지"는 IP 주소로는 알 수 없다 — 목적지 IP 는 Bob 인데 지금 받아야 할 것은 라우터 R1 이다. 그래서 링크 안에서 통하는 주소가 따로 필요하다. 이름이 셋이지만 같은 것이다: '''link address = physical address = MAC address'''.
+
+== p.58 — Alice → Bob 그림 ⭐⭐ ==
+
+[[img:L6-58.png|p.58 Link-Layer Addressing — N: IP address, L: Link-layer address. 프레임 세 개의 L 이 링크마다 바뀐다|large]]
+
+{|
+! 링크 || 프레임 앞부분 (link-layer: dest, src) || datagram 안 (IP: src, dest)
+|-
+| Alice → R1 || '''L₂, L₁''' || N₁, N₈
+|-
+| R1 → R2 || '''L₅, L₄''' || N₁, N₈
+|-
+| R2 → Bob || '''L₈, L₇''' || N₁, N₈
+|}
+
+* 가운데 칸(IP)은 세 링크 모두 '''N₁, N₈''' 로 똑같다 → '''end-to-end'''
+* 왼쪽 칸(MAC)은 링크마다 다르다 → '''hop-to-hop''' ([[end-to-end와 hop-to-hop]])
+* 순서도 반대다: '''IP 는 source–destination''', '''link-layer 는 destination–source'''
+* [[라우터]]는 인터페이스마다 IP·MAC 주소 쌍을 따로 갖는다 (R1: N₂L₂ / N₄L₄ / N₃L₃)
+
+[[anim:node_to_node|프레임이 링크를 건널 때마다 L 두 칸이 갈아끼워지고 N₁, N₈ 은 그대로인 것을 확인하라. 라우터에서 decapsulate → encapsulate 가 일어난다]]
+
+{warn}순서가 '''반대'''라는 점을 헷갈리지 말 것. 프레임 헤더는 '''목적지 MAC 이 먼저'''(수신 측이 첫 필드만 보고 "내 거냐"를 빨리 판단), IP 헤더는 '''출발지가 먼저'''다.{/warn}
+
+== p.59–62 — 주소의 세 종류 ⭐ ==
+
+{|
+! 종류 || 슬라이드 정의 || 예시 (Ethernet, 48 bits, 12 hex digits)
+|-
+| [[unicast|Unicast]] || One-to-one. 링크 안의 '''한 엔티티'''에게만 || Ex 3.13: `A3:34:45:11:92:F1`
+|-
+| [[multicast|Multicast]] || One-to-many. 적용 범위는 '''local (inside the link)''' || Ex 3.14: `A2:34:45:11:92:F1` (둘째 자리 짝수) ⚠️
+|-
+| [[broadcast 주소|Broadcast]] || One-to-All. 링크 안의 '''모든 엔티티'''에게 || Ex 3.15: `FF:FF:FF:FF:FF:FF`
+|}
+
+[[img:L6-61.png|p.61 Example 3.14 — "second digit … even number", A2:34:45:11:92:F1|medium]]
+
+{warn}⚠️ '''p.60–61 예시는 뒤바뀐 오타로 의심된다 (교수 확인 전).''' IEEE 802 규약에서는 첫 바이트의 최하위 비트(I/G bit)가 '''0 이면 unicast, 1 이면 multicast''' 다. 첫 바이트 둘째 16진 자리가 '''짝수'''(A2 → …0010) 이면 LSB = 0 → '''unicast''', '''홀수'''(A3 → …0011) 이면 LSB = 1 → '''multicast'''. 슬라이드는 이것과 반대로 적혀 있다. 시험 전에 교수 설명(녹음본)으로 확인할 것. 자세히는 [[multicast]].{/warn}
+
+== p.63 — ARP ⭐⭐ ==
+
+{def}"'''ARP''' protocol is one of the '''auxiliary protocols defined in the network layer'''. Map an '''IP address to a link-layer address'''." (p.63){/def}
+
+[[img:L6-63.png|p.63 Network layer 안의 ICMP, IGMP, IP, ARP — IP 가 IP address 를 넘기면 ARP 가 link-layer address 를 돌려준다|medium]]
+
+p.58 에서 Alice 는 다음 hop R1 의 '''IP 주소(N₂)'''는 알지만 '''MAC 주소(L₂)'''는 모른다. 그걸 알아내는 것이 [[ARP]]다. 동작 방식은 다음 강의에서 이어진다.
+
+{quiz}IP 주소만 있으면 source 에서 destination 까지 배달할 수 없는 이유를 쓰시오.{/quiz}
+{answer}IP 주소는 인터넷 전체에서의 '''최종 출발지·목적지'''를 정할 뿐이다. datagram 은 링크를 하나씩 건너가는데, 각 링크에서 '''그 링크 위의 다음 노드'''(예: 라우터 R1)를 지정할 주소가 필요하다. 그 역할을 하는 것이 link-layer(MAC) 주소다.{/answer}
+
+{quiz}p.58 에서 R1 → R2 구간의 프레임에 적힌 link-layer 주소 두 개와 IP 주소 두 개를 순서대로 쓰시오.{/quiz}
+{answer}Link-layer (destination–source): '''L₅, L₄'''. IP (source–destination): '''N₁, N₈'''.{/answer}
+
+== 시험 대비 핵심 요약 ==
+# '''IP 주소만으로는 불충분''': IP 는 종단(end-to-end) 식별자라 링크마다 "다음 노드"를 지정하지 못함 → '''link address = physical address = MAC address''' 가 따로 필요.
+# '''p.58''': 프레임에서 '''IP 주소는 source–destination 순서로 불변''', '''MAC 주소는 destination–source 순서로 링크마다 갱신'''. 라우터는 인터페이스마다 IP·MAC 쌍을 가진다.
+# '''주소 3종''': unicast(1:1) / multicast(1:다, local) / broadcast(1:전체, `FF:FF:FF:FF:FF:FF`).
+# Ethernet MAC 주소 = '''48 bits = 6 bytes = 콜론으로 구분한 12자리 16진수'''.
+# p.60–61 unicast/multicast 예시는 IEEE 규약(첫 바이트 LSB 0 = unicast, 1 = multicast)과 반대 — '''오타 의심, 교수 확인 전'''.
+# '''ARP''': network layer 의 보조(auxiliary) 프로토콜, '''IP 주소 → link-layer 주소''' 매핑. 다음 강의로 이어짐.
+
+== 관련 문서 ==
+* 이전 강의: [[CH03 Media Access Control]] · [[CH03 Data-Link Control]]
+* 사전: [[MAC 주소]] · [[IP 주소와 MAC 주소]] · [[unicast]] · [[multicast]] · [[broadcast 주소]] · [[ARP]]
+* 연결: [[IP]] · [[network layer]] · [[data-link layer]] · [[node와 link]] · [[라우터]] · [[주소 체계]] · [[end-to-end와 hop-to-hop]] · [[캡슐화]]

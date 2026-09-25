@@ -1,0 +1,100 @@
+key: CRC
+title: CRC (Cyclic Redundancy Check)
+category: 6강 DLC, 용어
+---
+'''CRC (Cyclic Redundancy Check)''' 는 LAN·WAN 에서 실제로 쓰이는 [[cyclic code]]다. 송신 측은 [[dataword]] 뒤에 0 을 붙여 공유된 [[divisor]]로 '''mod-2 ([[XOR]]) 나눗셈'''을 하고, 그 '''나머지(remainder)'''를 붙여 [[codeword]]를 만든다. 수신 측은 codeword 전체를 같은 divisor 로 나눠 '''[[syndrome]] 이 0 이면 accept'''. L5 p.44–50.
+
+{def}"Cyclic Redundancy Check (CRC): Used in networks such as '''LANs and WANs'''." / "We can see both the '''linear and cyclic''' properties of this code." (p.44)
+"Addition and subtraction in this case are the same: '''XOR'''." / "Should '''all-0s divisor when the leftmost bit is 0'''." (p.46){/def}
+
+{exam}⭐⭐⭐ '''p.46–47 나눗셈을 손으로 재현할 것.''' 1001 → 1001000 ÷ 1011 → 나머지 '''110''' → codeword '''1001110'''. 수신: 1001110 → syndrome '''000''' (accept), 1000110 → syndrome '''011''' (discard).{/exam}
+
+== 이름에서 개념 끌어내기 ==
+* '''Cyclic''' — [[cyclic code]] (회전에 닫힘, 시프트 레지스터로 구현 쉬움)
+* '''Redundancy''' — 덧붙이는 여분 비트 = 나눗셈의 '''나머지''' ([[redundancy]])
+* '''Check''' — 수신 측이 같은 나눗셈으로 검사
+"나눗셈의 나머지를 붙여 보내면, 받은 쪽에서 전체를 나눴을 때 '''딱 나누어 떨어져야''' 한다." 이것이 전부다.
+
+{analogy}🎭 '''9 로 나눠 떨어지게 맞추기.''' 숫자 123 을 보내면서 끝에 한 자리를 붙여 전체가 9 로 나누어 떨어지게 만든다(1+2+3=6 → 3 을 붙여 1233). 받는 쪽이 9 로 나눠 나머지가 0 이 아니면 어디선가 숫자가 바뀐 것이다. CRC 는 이것을 '''이진수와 XOR 나눗셈'''으로 한다 — 뺄셈에 빌림(borrow)이 없어 회로가 단순하다.{/analogy}
+
+== C(7,4) 코드표 (p.44) ==
+[[img:L5-44.png|p.44 dataword 4비트(검정) + remainder 3비트(분홍) = codeword 7비트|medium]]
+
+== Encoder / Decoder 구조 (p.45) ==
+[[img:L5-45.png|p.45 Encoder: a3a2a1a0 + 000 → Generator(÷ Divisor d3d2d1d0) → r2r1r0 / Decoder: b3b2b1b0q2q1q0 → Checker(÷ 같은 Divisor) → Syndrome s2s1s0 → Decision logic|large]]
+
+* 송신: dataword 뒤에 '''0 을 n−k = 3 개''' 붙인다(= divisor 의 차수). 이것이 '''augmented dataword''' = dividend.
+* Generator 가 divisor 로 나눈 '''나머지 3비트'''를 dataword 뒤에 붙인다.
+* 수신: Checker 가 '''7비트 전체'''를 같은 divisor 로 나눠 syndrome 3비트를 얻는다.
+* 송·수신이 '''같은 divisor 를 공유'''한다(그림 가운데 검은 칸).
+
+== Encoder 나눗셈 (p.46) ⭐⭐⭐ ==
+[[img:L5-46.png|p.46 Division in CRC encoder — Leftmost bit 0 인 두 번은 0000 divisor 사용|large]]
+
+<pre class="txt">
+규칙: ① 빼기 = 더하기 = XOR   ② 현재 4비트의 맨 왼쪽이 0 이면 0000 으로 XOR
+
+dividend = 1001 000   (dataword 1001 + 0 세 개)
+divisor  = 1011
+
+단계  현재 4비트   맨 왼쪽   XOR 할 것   결과    몫 비트   다음 비트 내림
+ 1    1001         1         1011        0010    1         0 → 0100
+ 2    0100         0         '''0000'''        0100    0         0 → 1000
+ 3    1000         1         1011        0011    1         0 → 0110
+ 4    0110         0         '''0000'''        0110    0         (끝)
+                                                          나머지 = 뒤 3비트 = '''110'''
+몫 = 1010 (쓰지 않음)
+codeword = 1001 | 110 = '''1001110'''
+</pre>
+
+[[anim:crc_shift|1011 이 한 칸씩 내려오며 XOR 되고, 맨 왼쪽이 0 인 두 번은 0000 이 내려오는 것을 보라. 마지막에 110 이 dataword 뒤에 붙는다]]
+
+== Decoder 나눗셈 (p.47) ⭐⭐⭐ ==
+[[img:L5-47.png|p.47 왼쪽: 오류 없음 → Syndrome 000 → Dataword 1001 accepted / 오른쪽: 1000110 → Syndrome 011 → Dataword discarded|large]]
+
+<pre class="txt">
+[경우 1] 수신 1001110 (오류 없음)
+단계  현재 4비트   XOR 할 것   결과    다음 비트 내림
+ 1    1001         1011        0010    1 → 0101
+ 2    0101         0000        0101    1 → 1011
+ 3    1011         1011        0000    0 → 0000
+ 4    0000         0000        0000
+syndrome = '''000''' → dataword 1001 '''accept'''
+
+[경우 2] 수신 100'''0'''110 (4번째 비트 손상)
+ 1    1000         1011        0011    1 → 0111
+ 2    0111         0000        0111    1 → 1111
+ 3    1111         1011        0100    0 → 1000
+ 4    1000         1011        0011
+syndrome = '''011''' ≠ 000 → dataword '''discard'''
+</pre>
+
+[[sim:crc_division]]
+
+== 다항식으로 보면 (p.48–49) ==
+같은 나눗셈: $(x^6 + x^3) \div (x^3 + x + 1)$ → 몫 $x^3 + x$, 나머지 $x^2 + x$ (= 110). → [[polynomial representation]]
+
+== 표준 divisor (p.50) ==
+CRC-8 (ATM header), CRC-10 (ATM AAL), CRC-16 ([[HDLC]]), CRC-32 (LANs). '''divisor 비트 수 = 차수 + 1'''. → [[CRC 표준 다항식]]
+
+{info}[[HDLC 프레임]]의 [[FCS]] 필드가 바로 이 CRC 나머지다. 프레임 전체를 dataword 로 보고 CRC-16(또는 32) 나머지를 계산해 끝에 붙인다.{/info}
+
+== 예상 문제 ==
+{quiz}'''(계산)''' dataword 0111, divisor 1011 로 CRC codeword 를 구하라.{/quiz}
+{answer}
+<pre class="txt">
+0111000
+0111 → 맨 왼쪽 0 → ⊕0000 = 0111 → 111+0 = 1110
+1110 ⊕ 1011 = 0101 → 101+0 = 1010
+1010 ⊕ 1011 = 0001 → 001+0 = 0010
+0010 → 맨 왼쪽 0 → ⊕0000 = 0010 → 나머지 010
+codeword = 0111'''010'''   (p.44 표와 일치)
+</pre>
+{/answer}
+
+{quiz}'''(개념)''' 송신 측이 dataword 뒤에 붙이는 0 의 개수는 무엇으로 정해지는가? divisor 가 CRC-32 이면?{/quiz}
+{answer}'''divisor 다항식의 차수'''(= divisor 비트 수 − 1 = n − k). CRC-32 는 차수 32 → '''0 을 32개''' 붙이고, 나머지도 32비트.{/answer}
+
+== 관련 문서 ==
+* [[divisor]] · [[syndrome]] · [[polynomial representation]] · [[CRC 표준 다항식]] · [[XOR]]
+* [[cyclic code]] · [[linear block code]] · [[FCS]] · [[CH03 Data-Link Control]]

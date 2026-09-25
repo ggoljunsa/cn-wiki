@@ -1,0 +1,47 @@
+key: OSI 7계층
+title: OSI 7계층 (OSI Model) — OSI vs TCP/IP
+category: 1강 Introduction, 용어
+---
+'''OSI model''' 은 7개 층으로 된 참조 모델이다. 슬라이드에서는 "e.g., OSI 7-layer: a 7-layered protocol suite"(L1 p.22)로 처음 등장하고, 마지막 장(L1 p.40)에서 [[TCP/IP 프로토콜 스위트]]와 나란히 비교된다.
+
+{def}"OSI vs TCP/IP" (L1 p.40): OSI Model — Application / Presentation / Session / Transport / Network / Data link / Physical. TCP/IP 에서는 Application·Presentation·Session 이 '''Application''' 하나("Several application protocols")로, Transport("Several transport protocols"), Network("'''Internet Protocol and some helping protocols'''"), Data link + Physical("'''Underlying LAN and WAN technology'''").
+OSI 는 7층, TCP/IP 는 5층. 위 세 층이 하나로 합쳐졌다.{/def}
+
+[[img:L1-40.png|OSI vs TCP/IP — 왼쪽 OSI 7 층, 오른쪽 TCP/IP 의 커다란 Application 칸이 OSI 의 위 세 층을 덮는다|large]]
+
+== 대응표 ==
+{|
+! OSI (7) || TCP/IP (5) || 슬라이드 설명
+|-
+| 7 Application || '''Application''' || Several application protocols
+|-
+| 6 Presentation || ↑ (Application 에 포함) || 
+|-
+| 5 Session || ↑ (Application 에 포함) || 
+|-
+| 4 Transport || Transport || Several transport protocols ([[TCP]], [[UDP]])
+|-
+| 3 Network || Network || Internet Protocol and some helping protocols ([[IP]], ICMP, IGMP, DHCP, [[ARP]])
+|-
+| 2 Data link || Data link || Underlying LAN and WAN technology
+|-
+| 1 Physical || Physical || Underlying LAN and WAN technology
+|}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''OSI = Open Systems Interconnection'''. '''open''' — 특정 회사 장비끼리만이 아니라 '''누구의 시스템이든''' 서로 잇자는 표준(ISO 가 만듦). 그래서 "모든 기능을 빠짐없이 칸으로 나눈" 이상적인 참조 모델이 됐고, 실제 인터넷은 더 실용적인 TCP/IP 5층으로 굴러간다.
+* '''Presentation''' — "보여 주는 방식": 데이터의 표현(인코딩, 압축, 암호화 형식)을 맞춤
+* '''Session''' — "한 차례의 만남": 대화의 시작·유지·끝 관리
+TCP/IP 는 이 둘을 따로 두지 않고 '''각 application 이 알아서''' 하게 했다.
+
+[[img:L0-5.png|CH00 Focus — "Understanding of OSI 7 layers" 와 TCP/IP 에서 각 층의 대표 프로토콜(telnet, FTP, HTTP, DNS / TCP, UDP / ICMP, ARP, RARP, IP / Ethernet, WiFi)|large]]
+
+{analogy}🎭 '''7코스 정찬 vs 5코스 한정식.''' OSI 는 식전주·전채·수프·생선·고기·샐러드·디저트를 각각 따로 내는 정석 코스(교과서적으로 완벽). TCP/IP 는 앞의 세 코스를 '''한 상 차림'''으로 합쳐 내는 실용 코스. 먹는 순서(아래→위 층 관계)는 같다.{/analogy}
+
+{joke}CH00 의 Focus 슬라이드 제목은 "Understanding of '''OSI 7 layers'''" 인데, CH01 부터 수업의 틀은 TCP/IP 5층이다. 시험에선 "OSI 에만 있고 TCP/IP 에 없는 층 두 개"를 물으면 '''Presentation, Session''' 이 정답.{/joke}
+
+{quiz}OSI 의 어떤 세 층이 TCP/IP 의 Application layer 하나에 대응하는가? 그리고 TCP/IP 의 Data link + Physical 을 L1 p.40 은 뭐라고 부르는가?{/quiz}
+{answer}'''Application, Presentation, Session'''. Data link + Physical = "'''Underlying LAN and WAN technology'''".{/answer}
+
+== 관련 문서 ==
+* [[TCP/IP 프로토콜 스위트]] · [[프로토콜 계층화]] · [[application layer]] · [[CH01 Introduction]]

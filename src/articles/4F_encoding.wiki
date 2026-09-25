@@ -1,0 +1,44 @@
+key: encoding
+title: Encoding (PCM 부호화)
+category: 4강 Digital Transmission, 용어
+---
+'''Encoding'''은 [[PCM]] 의 마지막 단계로, 각 샘플의 [[quantization]] 코드($0 \sim L-1$)를 '''$n_b$비트 codeword'''로 바꾼다. 이 단계에서 PCM 의 '''bit rate''' 가 결정된다. L3 p.57–59.
+
+{def}"Encoding — Each sample is changed to an '''$n_b$-bit codeword'''." "'''Bit rate = sampling rate × number of bits per sample = $f_s \times n_b$'''"{/def}
+
+$$N = f_s \times n_b \ \text{[bps]}, \qquad n_b = \log_2 L$$
+
+== 이름에서 개념 끌어내기 ==
+'''en-code''' = 부호 안으로 넣는다. 레벨 번호(10진수)를 비트(2진수)로 옮겨 적는 일. 기호:
+* $n_b$ — '''n'''umber of '''b'''its per sample. 아래첨자 b = bits.
+* $L$ 개 레벨을 구분하려면 $n_b = \log_2 L$ 비트 필요 ($L = 8 \Rightarrow 3$, $L = 256 \Rightarrow 8$) → [[log₂ 계산법]]
+* 결과 bit rate 는 "초당 샘플 수 × 샘플당 비트 수". 교수: "sample 을 통신의 '''symbol''' 처럼 생각하면 — samples/s 곱하기 bits/sample."
+
+{warn}여기서 '''codeword''' 는 "샘플 하나를 나타내는 $n_b$비트 묶음"이라는 일반적인 뜻이다. CH03 오류 검출의 [[codeword]](dataword + redundancy)와는 문맥이 다르다.{/warn}
+
+{analogy}🎭 '''엘리베이터 층 번호를 스위치로 보내기.''' 8층 건물(L = 8)이면 스위치 3개(n_b = 3)로 0~7층을 모두 표현할 수 있다. 1초에 8000번 층 번호를 보낸다면 초당 8000 × 3 = 24,000번 스위치를 딸깍인다 = bit rate.{/analogy}
+
+== p.55 의 encoded words ==
+[[img:L3-55.png|p.55 맨 아래 두 행 — Quantization code 2 5 7 7 6 2 1 2 2 → Encoded words 010 101 111 111 110 010 001 010 010|large]]
+
+L = 8 이므로 $n_b = 3$: 코드 2 → '''010''', 5 → '''101''', 7 → '''111''', 6 → '''110''', 1 → '''001'''. 9개 샘플 → 27비트.
+
+[[sim:pcm_encoder]]
+
+== Example 2.13 ==
+[[img:L3-59.png|p.59 Sampling rate = 4000 × 2 = 8000 samples/s, Bit rate = 8000 × 8 = 64 kbps|medium]]
+<pre class="txt">
+1. f_max = 4000 Hz → [[sampling rate|f_s]] = 2 × 4000 = 8000 samples/s
+2. n_b = 8 bits/sample
+3. N = f_s × n_b = 8000 × 8 = 64,000 bps = 64 kbps
+</pre>
+
+{quiz}L = 64 레벨로 양자화하고 f_s = 10,000 samples/s 로 샘플링하면 bit rate 는?{/quiz}
+{answer}<pre class="txt">
+1. n_b = log₂ 64 = 6 bits/sample
+2. N = f_s × n_b = 10,000 × 6 = 60,000 bps = 60 kbps
+</pre>{/answer}
+
+== 관련 문서 ==
+* [[quantization]] · [[sampling rate]] · [[PCM]] · [[bit rate]]
+* 이어지는 공식: [[PCM bandwidth]] · [[SNR_dB와 n_b]]

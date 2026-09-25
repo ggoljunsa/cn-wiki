@@ -1,0 +1,36 @@
+key: WAN
+title: WAN (Wide Area Network)
+category: 1강 Introduction, 용어
+---
+'''WAN(Wide Area Network)''' 은 도시·국가·전 세계 범위로 '''연결 장치들을 서로 잇는''' 네트워크 (L1 p.17–19).
+
+{def}"WAN has a '''wider geographical span''': a town, a state, a country, or the world / '''Interconnects''' connecting devices: switches, routers, or modems" (L1 p.17–18)
+WAN 은 더 넓은 지리적 범위(도시, 주, 국가, 세계)를 가지며, 스위치·라우터·모뎀 같은 연결 장치들을 상호 연결한다.{/def}
+
+[[img:L1-18.png|WAN — 스위치 4 개가 굵은 connecting medium 으로 이어지고 사방으로 "To another network"|large]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''Wide''' Area — [[LAN]] 의 Local 과 정확히 대칭. 그런데 정의의 두 번째 줄이 더 중요하다: WAN 이 잇는 대상은 '''호스트가 아니라 connecting device'''(switch, router, modem)다. LAN 이 "컴퓨터들을 잇는 망"이라면 WAN 은 "'''망과 망을 잇는 망'''". 그림의 모든 선이 "To another network" 로 뻗는 이유.
+
+== 한 장에 LAN 과 WAN (p.19) ==
+[[img:L1-19.png|Network Types: an Example — Resident 는 Modem–Modem point-to-point WAN, LAN 은 Router–Router point-to-point WAN, 가운데 Switched WAN|large]]
+
+{|
+! 그림 요소 || 무엇
+|-
+| 노란 상자 || [[LAN]] (스위치 + 호스트)
+|-
+| 초록 상자 || '''Switched WAN''' — 스위치 여러 개가 얽힌 WAN
+|-
+| 점선 || '''[[point-to-point]] WAN''' — 두 장치(모뎀끼리, 라우터끼리)만 잇는 WAN
+|-
+| 경계 장치 || LAN–WAN 사이의 [[라우터]], 가정(Resident)의 modem
+|}
+
+{analogy}🎭 '''동네 골목 vs 고속도로.''' LAN 은 아파트 단지 안 도로(단지 소유, 좁은 범위). WAN 은 단지와 단지, 도시와 도시를 잇는 고속도로(넓은 범위, 나들목 = 라우터·모뎀). 고속도로는 집 앞까지 오지 않는다 — 나들목까지만 온다.{/analogy}
+
+{quiz}L1 p.19 그림에 나오는 WAN 의 두 종류를 쓰고, 각각 어떤 장치 쌍을 잇는지 답하시오.{/quiz}
+{answer}'''Point-to-point WAN''': Modem–Modem(가정), Router–Router(LAN 끼리). '''Switched WAN''': 여러 스위치가 얽힌 가운데 망으로, 여러 point-to-point WAN·라우터를 서로 잇는다.{/answer}
+
+== 관련 문서 ==
+* [[LAN]] · [[인터넷 구조]] · [[라우터]] · [[point-to-point]] · [[CH01 Introduction]]

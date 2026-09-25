@@ -1,0 +1,25 @@
+key: half-duplex
+title: Half-Duplex (반이중)
+category: 1강 Introduction, 용어
+---
+'''Half-duplex''' 는 양쪽 모두 보낼 수 있지만 '''동시에는 안 되는''' data flow (L1 p.6).
+
+{def}"Each station can both transmit and receive / But '''not at the same time''' / E.g., '''Walkie-talkies'''" (L1 p.6)
+각 스테이션이 송신과 수신을 모두 할 수 있으나 같은 시간에는 불가능하다. 예: 무전기.{/def}
+
+[[img:L1-6.png|b. Half-duplex — time 1 에는 → 방향, time 2 에는 ← 방향. 한 시점에는 한 방향뿐|large]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''duplex''' = 두 겹(양방향). '''half''' = 그 절반. 양방향 '''능력'''은 있는데 '''한 번에 절반(한 방향)만''' 쓴다. 그래서 그림에 "at time 1", "at time 2" 로 '''시간'''이 붙어 있다 — 방향을 가르는 기준이 시간이다.
+
+[[anim:data_flow_modes|가운데 줄(half-duplex)에서 화살표가 오른쪽→왼쪽으로 번갈아 가는 순간을 보고, 두 화살표가 한 번도 겹치지 않는지 확인하라]]
+
+{analogy}🎭 '''무전기(walkie-talkie).''' 버튼을 누르고 말하는 동안엔 상대 말이 안 들린다. 그래서 문장 끝마다 "'''오버'''"라고 말해 "이제 네 차례"를 알린다. 이 '''차례 넘기기 약속'''이 곧 [[프로토콜]]이 필요한 이유다. 둘이 동시에 버튼을 누르면? 둘 다 아무것도 못 듣는다 — CH03 의 [[collision]] 과 같은 그림.{/analogy}
+
+{info}Half-duplex 링크를 여러 장치가 나눠 쓰면 "누가 언제 보내나"가 문제가 된다. 이걸 푸는 게 CH03 [[CH03 Media Access Control]] 의 [[random access]] 계열(ALOHA, [[CSMA/CD]]) — CSMA/CD 가 half-duplex 이더넷을 위한 방식인 이유다.{/info}
+
+{quiz}Half-duplex 와 full-duplex 는 둘 다 "양방향"이다. 차이를 슬라이드 원문 단어 하나씩으로 대비하시오.{/quiz}
+{answer}Half-duplex: "'''not at the same time'''". Full-duplex: "'''simultaneously'''".{/answer}
+
+== 관련 문서 ==
+* [[simplex]] · [[full-duplex]] · [[collision]] · [[CH01 Introduction]]

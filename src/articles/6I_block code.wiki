@@ -1,0 +1,44 @@
+key: block code
+title: Block Code (블록 코드)
+category: 6강 DLC, 용어
+---
+'''Block code''' 는 메시지를 '''k 비트 블록([[dataword]])'''으로 자르고 각각을 '''n 비트 블록([[codeword]])'''으로 바꿔 보내는 오류 검출 방식이다($n > k$). 수신자는 valid codeword 목록을 알고 있어서, '''invalid codeword 가 오면 오류'''라고 판단한다. L5 p.23–26.
+
+{def}"Error Detection: The receiver has (or can find) a '''list of valid codewords'''. The original codeword has changed to an '''invalid''' one → '''Error''' occurred." (p.23)
+→ 수신자는 valid codeword 목록을 갖는다. 받은 것이 invalid 면 오류.{/def}
+
+[[img:L5-23.png|p.23 Sender: k bits Dataword → Generator → n bits Codeword → Unreliable transmission → Receiver: Checker → Extract(Dataword) 또는 Discard. 교수 판서 "codebook"|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''block''' — 데이터를 '''같은 크기의 덩어리'''로 잘라 덩어리마다 독립적으로 부호화한다. 앞뒤 블록과 무관하다(그래서 "block").
+* '''Generator''' (송신): dataword 로 redundancy 를 '''생성'''해 codeword 를 만든다.
+* '''Checker''' (수신): codeword 가 valid 인지 '''검사'''한다.
+
+{analogy}🎭 '''암호책(codebook).''' 교수 판서의 "codebook" 이 핵심이다. 송·수신자가 같은 단어장을 갖고 있고, 단어장에 '''없는 단어'''가 도착하면 "오는 도중 글자가 바뀌었다" 고 판단한다. 다만 오류가 '''우연히 단어장의 다른 단어'''로 바꿔 놓으면 속는다(Example 3.1 case 3).{/analogy}
+
+== 숫자 감각 ==
+* 가능한 n비트 패턴: $2^n$ 개. 쓰는 codeword: $2^k$ 개. '''invalid: $2^n - 2^k$ 개'''.
+* Example 3.1 ($k=2, n=3$): 8개 패턴 중 4개 valid(000, 011, 101, 110), 4개 invalid(001, 010, 100, 111).
+
+== Example 3.1 (p.24–26) ⭐ ==
+[[img:L5-24.png|p.24 k=2, n=3 코드표: 00→000, 01→011, 10→101, 11→110. 교수 판서: dataword=k, codeword=n, 표 전체=codebook|medium]]
+
+<pre class="txt">
+송신: dataword 01 → codeword 011
+
+case 1  수신 011 (오류 없음)        → valid   → 01 추출           ✓
+case 2  수신 111 (맨 왼쪽 1비트)    → invalid → discard           ✓ 검출
+case 3  수신 000 (오른쪽 2비트)     → valid!  → 00 을 잘못 추출    ✗ 검출 실패
+</pre>
+
+{exam}'''Implication (p.26): "Distances btw codewords affect error detection capability."''' — case 3 은 011 과 000 사이 거리가 2 라서 2비트 오류로 넘어갈 수 있었다. 이 "거리"가 [[Hamming distance]], 코드 전체의 최소 거리가 [[minimum Hamming distance]].{/exam}
+
+[[sim:hamming_distance]]
+
+== 예상 문제 ==
+{quiz}C(7,4) block code 에서 invalid codeword 는 몇 개인가?{/quiz}
+{answer}$2^7 - 2^4 = 128 - 16 =$ '''112 개'''.{/answer}
+
+== 관련 문서 ==
+* [[dataword]] · [[codeword]] · [[redundancy]] · [[Hamming distance]]
+* [[linear block code]] · [[parity check code]] · [[CRC]] · [[block coding]]

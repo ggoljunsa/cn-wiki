@@ -1,0 +1,57 @@
+key: persistence method
+title: Persistence Method (지속 방식)
+category: 7강 MAC, 용어
+---
+'''Persistence method'''는 [[CSMA]]에서 채널이 '''busy''' 일 때 스테이션이 어떻게 기다리고 언제 보내는지를 정한 규칙이다. 셋이 있다. L6 p.34–40.
+
+{def}"'''What should a station do if the channel is busy?''' 1-persistent / non-persistent method / p-persistent method" (p.34){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''persistent''' = 끈질긴, 집요한. 채널을 '''얼마나 끈질기게 붙들고 듣느냐'''의 정도다.
+* [[1-persistent]] — 확률 1로 끈질김: 계속 듣다가 비는 순간 '''무조건''' 보낸다
+* [[nonpersistent]] — 끈질기지 않음: busy 면 '''자리를 떴다가''' 랜덤 시간 뒤 다시 와서 듣는다
+* [[p-persistent]] — 확률 $p$ 만큼 끈질김: 비는 순간 확률 $p$ 로만 보낸다
+
+== 비교 ==
+{|
+! 방식 || busy 일 때 || idle 을 찾으면 || 장점 || 단점
+|-
+| 1-persistent || 계속 sense || 즉시 전송 (확률 1) || 채널이 안 놂 || 기다리던 여럿이 '''동시에''' 출발 → 충돌↑
+|-
+| nonpersistent || 랜덤 대기 후 재 sense || 즉시 전송 || 충돌↓ || 채널이 비어도 아무도 없을 수 있음(효율↓)
+|-
+| p-persistent || 계속 sense || 확률 $p$ 로 전송, $q = 1-p$ 로 한 슬롯 대기 후 재확인 || 절충 || 슬롯 필요
+|}
+
+[[img:L6-40.png|p.40 Flow diagrams — a. 1-persistent / b. Nonpersistent / c. p-persistent|large]]
+
+== p.40 흐름도 셋 ==
+<pre class="txt">
+a. 1-persistent
+   Channel busy? ─true→ (다시 Channel busy?) … 계속 확인
+                 ─false→ Station can transmit.
+b. Nonpersistent
+   Channel busy? ─true→ Wait randomly → 다시 Channel busy?
+                 ─false→ Station can transmit.
+c. p-persistent
+   Channel busy? ─true→ 계속 확인
+                 ─false→ Generate a random number R (0 to 1)
+   R ≤ p ? ─true→ Station can transmit.
+           ─false→ Wait a slot → Channel busy?
+                      ─false→ 다시 R 생성
+                      ─true→ Use back-off process as though collision occurred.
+</pre>
+
+[[anim:persistence_methods|채널이 busy 에서 idle 로 바뀌는 순간 세 스테이션의 반응 차이 — 즉시 / 랜덤 대기 / 확률 p — 를 비교하라]]
+
+{analogy}🎭 '''화장실 한 칸 앞의 세 사람.'''
+* 1-persistent: 문 앞에 딱 붙어 서서 문이 열리는 순간 들어간다. 이런 사람이 둘이면 문 앞에서 부딪힌다.
+* Nonpersistent: 잠겨 있으면 자리로 돌아가 아무 때나 다시 와 본다. 부딪히진 않지만 화장실이 비어 있는 시간이 생긴다.
+* p-persistent: 문이 열리면 동전을 던져 앞면이면 들어가고 뒷면이면 한 박자 쉰다.{/analogy}
+
+{quiz}CSMA 에서 채널이 busy 일 때 계속 듣다가 idle 이 되자마자 확률 1 로 보내는 방식의 이름과, 대표적 사용 예는?{/quiz}
+{answer}'''1-persistent''', 예: '''Ethernet''' (p.35).{/answer}
+
+== 관련 문서 ==
+* [[1-persistent]] · [[nonpersistent]] · [[p-persistent]]
+* [[CSMA]] · [[CSMA/CD]] (흐름도 첫 단계가 "Apply one of the persistence methods")

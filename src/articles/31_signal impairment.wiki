@@ -1,0 +1,38 @@
+key: signal impairment
+title: Signal Impairment (신호 손상)
+category: 3강 Transmission, 용어
+---
+'''Signal impairment'''는 신호가 매체를 지나며 손상되어 '''보낸 신호와 받은 신호가 달라지는''' 현상이다. 원인은 세 가지: '''[[attenuation]], [[distortion]], [[noise]]'''. L2 p.39–40.
+
+{def}L2 p.39 "Transmission — '''Impairments: attenuation, distortion, and noise'''"
+L2 p.40 "Signal Impairment — Causes of Impairment" (그림: Impairment causes → Attenuation / Distortion / Noise)
+신호 손상의 원인 = 감쇠, 왜곡, 잡음.{/def}
+
+[[img:L2-40.png|p.40 — 손상 원인 트리. 세 가지뿐이다|medium]]
+
+== 이름에서 개념 끌어내기 ==
+'''impair''' = ''im-''(더) + ''pejor''(나쁜) → "더 나쁘게 만들다". 매체가 완벽하지 않아서(imperfect) 신호를 '''나쁘게 만드는''' 모든 것.
+
+{analogy}🎭 '''전화 게임(귓속말 이어 말하기).''' ① 뒤로 갈수록 목소리가 작아진다 — attenuation. ② 발음이 뭉개져 말의 모양이 바뀐다 — distortion. ③ 옆에서 떠드는 소리가 섞인다 — noise. 세 가지는 원인이 다르므로 해결책도 다르다: 크게 말하기(amplifier), 또박또박 말하기(equalizer), 조용한 곳으로 가기(SNR 개선).{/analogy}
+
+[[anim:impairments|세 줄의 파형이 각각 다르게 망가지는 것을 보라. 크기만 변함(attenuation) / 모양이 변함(distortion) / 무언가 더해짐(noise)]]
+
+== 세 원인 비교 ==
+{|
+! 원인 || 무엇이 변하나 || 왜 || 대응 || 슬라이드
+|-
+| [[attenuation]] || '''크기'''(에너지) 감소, 모양 유지 || 매체의 저항 || [[amplifier]] || p.41–43
+|-
+| [[distortion]] || '''모양''' 변화 || [[composite signal]] 성분마다 다른 지연 → out of phase || (equalizer) || p.44
+|-
+| [[noise]] || 원치 않는 신호가 '''더해짐''' || thermal, induced, crosstalk, impulse || [[SNR]] 을 높임 || p.45–46
+|}
+
+{tip}외우는 법: 크기 / 모양 / 덧셈. attenuation 은 '''곱하기 작은 수''', noise 는 '''더하기 쓰레기''', distortion 은 성분별로 '''다르게 밀기'''.{/tip}
+
+{quiz}다음 각 현상은 어떤 impairment 인가? (a) 긴 케이블 끝에서 신호가 1/100 로 약해짐 (b) 옆 케이블의 통화 소리가 들림 (c) 네모난 펄스가 여러 주파수의 도착 시간 차이로 뭉개짐{/quiz}
+{answer}(a) '''attenuation''' (b) '''noise''' (crosstalk) (c) '''distortion'''{/answer}
+
+== 관련 문서 ==
+* [[attenuation]] · [[distortion]] · [[noise]] · [[SNR]] · [[amplifier]] · [[데시벨]]
+* [[CH02 Transmission]]

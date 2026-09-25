@@ -1,0 +1,68 @@
+key: 시험 정보
+title: 시험 정보 — 중간고사 (확정된 것과 아닌 것)
+category: 안내
+---
+CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'''과 '''아직 확인 안 된 것'''을 구분해 적는다. 확인되면 이 문서와 과목 폴더의 `_시험정보.md` 를 함께 갱신한다.
+
+== 확정 (CH00 Course Introduction 슬라이드) ==
+
+[[img:L0-8.png|CH00 p.8 Grading — 출석 10 / 과제 10 / 중간 40 / 기말 40|medium]]
+
+{|
+! 항목 || 비중 || 출처
+|-
+| Attendance || 10% || CH00 p.8
+|-
+| Homework || 10% || CH00 p.8
+|-
+| '''Midterm exam''' || '''40%''' || CH00 p.8
+|-
+| Final exam || 40% || CH00 p.8
+|}
+
+* 정책: 부정행위·표절은 과목 F. '''결석이 전체의 1/4 을 넘으면 F''' (CH00 p.9).
+* 교재: [[Forouzan]], ''Data Communications and Networking with TCP/IP Protocol Suite'', 6e (CH00 p.6).
+* 교수·조교: [[교수 소개]] — Office hours 화 10:30–12:00, E7-213.
+* 수업: 화/목 9시대, 영어 강의.
+
+== 범위 (지금까지 나간 진도 = 이 위키 전체) ==
+
+{|
+! 덱 || 날짜 || 범위 || 위키 메인 문서
+|-
+| CH01 || ~8월 || Introduction 전체 || [[CH01 Introduction]]
+|-
+| CH02 (1) || 9/1 화 || Signals, Transmission (impairment, data rate limits, performance) || [[CH02 Signals]] · [[CH02 Transmission]]
+|-
+| CH02 (2) || 9/8 화 추정 || Digital Transmission (line/block coding, PCM, DM) || [[CH02 Digital Transmission]]
+|-
+| CH02 (3) || 9/10 목 || Analog Transmission (ASK/FSK/PSK/QAM), Multiplexing (FDM/TDM) || [[CH02 Analog Transmission]] · [[CH02 Multiplexing]]
+|-
+| CH03 (1) || 9/15 화 추정 || DLC — framing, error control (Hamming, parity, CRC), HDLC || [[CH03 Data-Link Control]]
+|-
+| CH03 (2) || 9/17~22 추정 || MAC — ALOHA, CSMA, CSMA/CD, controlled access; link-layer addressing, ARP || [[CH03 Media Access Control]] · [[CH03 Link-Layer Addressing]]
+|}
+
+== 미확정 — 교수·조교 공지로 확인할 것 ==
+
+{warn}
+* '''시험 날짜·시간·장소''': 아직 어디에도 기록 없음.
+* '''형식''': 객관식/주관식/계산 비율, 계산기 허용 여부, 공식 제공 여부. 녹음본(9/10)에서 교수가 "'''시험 문제에서 $d$(roll-off factor)는 항상 내가 줄 것'''" 이라고 한 것이 형식에 대한 유일한 단서 → 계산 문제가 나온다는 뜻.
+* '''범위 종료 지점''': CH03 (2) 의 ARP 까지인지, 그 뒤 강의(CH03 (3) 이후)가 포함되는지.
+* 족보·이전 학기 시험지: 이 과목은 2026 Fall 이 교수의 DGIST 첫 개설이라 족보가 없다. 대신 [[계산 문제 모음]] 과 [[0920 오답 복기]] 가 그 역할을 한다.
+{/warn}
+
+== 출제 스타일 추정 ==
+
+녹음본과 슬라이드 구성에서 읽히는 것:
+# '''정의 → 용어 이름''' (교수: "the name itself is very important"). 📖 정의 박스의 영어 원문을 외운다.
+# '''계산 Example 변형''': Nyquist/Shannon (Ex 2.6·2.8·2.9), PCM bit rate (Ex 2.13), FSK 대역폭 (Ex 5), ALOHA (Ex 3.8·3.9·3.11), CSMA/CD 최소 프레임 (Ex 3.12). → [[계산 문제 모음]].
+# '''손으로 절차 재현''': byte/bit stuffing, parity syndrome, '''CRC 나눗셈'''. → 시뮬레이터로 연습 후 백지에.
+# '''비교표''': ASK/FSK/PSK, FDM/TDM, pure/slotted ALOHA, NRM/ABM, 스위치/라우터 계층. → [[공식 모음]].
+
+{analogy}
+🎭 시험 정보는 '''일기예보'''다. 확정된 건 배점(40%)뿐이고 나머지는 구름 모양으로 추정한 것이다. 우산(계산 연습)은 챙기고, 날짜가 발표되면 이 문서를 고친다.
+{/analogy}
+
+== 관련 문서 ==
+* [[main]] · [[읽는 순서]] · [[계산 문제 모음]] · [[공식 모음]] · [[자주 틀리는 함정 모음]]

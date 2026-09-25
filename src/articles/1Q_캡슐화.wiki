@@ -1,0 +1,45 @@
+key: 캡슐화
+title: 캡슐화 (Encapsulation and Decapsulation)
+category: 1강 Introduction, 용어
+---
+'''Encapsulation''' — 보낼 때 층을 내려가며 '''각 층의 헤더를 덧씌우는''' 것. '''Decapsulation''' — 받을 때 올라가며 '''벗기는''' 것 (L1 p.38).
+
+[[img:L1-38.png|Encapsulation and Decapsulation — Legend: 4 = Header at transport, 3 = network, 2 = data-link. Source host 에서 ↓, 라우터에서 ↑↓, Destination host 에서 ↑|large]]
+
+{def}"Encapsulation and Decapsulation" (L1 p.38 그림) — Legend: '''4''' Header at transport layer / '''3''' Header at network layer / '''2''' Header at data-link layer / ↓ Encapsulate / ↑ Decapsulate
+송신 호스트: Message → 4·Message → 3·4·Message → 2·3·4·Message. 라우터: 2 를 벗기고 3·4·Message 를 본 뒤 새 2 를 붙인다. 수신 호스트: 역순으로 벗긴다.{/def}
+
+== 단계별 ==
+<pre class="txt">
+[송신 호스트]  ↓ Encapsulate
+  Application :             Message                 ← [[PDU|message]]
+  Transport   :          [4]Message                 ← segment / user datagram
+  Network     :       [3][4]Message                 ← datagram
+  Data link   :    [2][3][4]Message                 ← frame
+  Physical    :  0101110… (bits)                    ← bits
+                          │ link 1
+[라우터]       ↑ Decapsulate 2 → ↓ Encapsulate 새 2
+  Data link   :    [2][3][4]Message  →  [3][4]Message     (2 벗김)
+  Network     :       [3][4]Message                       (목적지 IP 보고 경로 결정)
+  Data link   :    [2'][3][4]Message                      (다음 링크용 '''새''' 2' 붙임)
+                          │ link 2
+[수신 호스트]  ↑ Decapsulate
+  Data link → Network → Transport → Application : 2, 3, 4 차례로 벗겨 Message
+</pre>
+
+{exam}⭐⭐ [[라우터]]는 '''network layer 까지만''' 올라간다. 그래서 헤더 '''4 는 절대 건드리지 않는다'''. 라우터에서 바뀌는 건 '''헤더 2 뿐'''. [[스위치]]는 data link 까지만 가지고 객체를 바꾸지도 않는다(p.32 "switches … don't change objects"). 0920 퀴즈의 "라우터는 application 메시지를 직접 처리한다"는 '''오답'''.{/exam}
+
+[[anim:layer_stack|message 가 내려가며 4 → 3 → 2 헤더를 차례로 입는 순서를 보고, 라우터에서 2 만 벗겨졌다 다시 입혀지는 순간을 확인한 뒤 아래 시뮬레이터로 한 단계씩 재현하라]]
+
+[[sim:encapsulation]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''en-capsul-ate''' = "캡슐(capsule) 안에(en) 넣다". 알약 가루를 캡슐에 넣듯, 위층 데이터 전체를 '''내용물'''로 보고 자기 헤더라는 껍질을 씌운다. 핵심은 '''아래층은 위층 헤더를 열어 보지 않는다''' — 캡슐 안은 그냥 '''payload'''. '''de-capsulate''' 는 그 반대로 껍질 까기. 헤더 번호가 층 번호와 같다(4 = transport, 3 = network, 2 = data link)는 것도 이름처럼 외울 수 있다.
+
+{analogy}🎭 '''러시아 인형(마트료시카) + 해외 이사.''' 편지(Message)를 봉투(4)에 넣고, 그 봉투를 국제 소포 상자(3)에 넣고, 그 상자를 이번 구간 트럭의 팔레트(2)에 싣는다. 중간 물류센터(라우터)는 팔레트만 풀어 '''상자 겉 주소(3)'''를 보고 다음 트럭 팔레트(2')에 다시 싣는다 — 상자를 뜯어 봉투(4)를 보지 않는다. 받는 집에서 팔레트 → 상자 → 봉투 순으로 풀면 편지가 나온다.{/analogy}
+
+{quiz}송신 호스트에서 data link 층을 막 떠난 패킷의 헤더 순서를 바깥부터 쓰시오. 그리고 라우터를 지난 직후 달라지는 헤더는?{/quiz}
+{answer}바깥부터 '''[2][3][4]Message''' (data-link → network → transport 헤더). 라우터를 지나면 '''헤더 2 만''' 다음 링크용으로 새것(2')이 된다. 3 과 4 는 그대로.{/answer}
+
+== 관련 문서 ==
+* [[PDU]] · [[라우터]] · [[스위치]] · [[TCP/IP 프로토콜 스위트]] · [[논리적 연결]] · [[node와 link]] · [[CH01 Introduction]]

@@ -1,0 +1,50 @@
+key: PSK
+title: PSK (Phase Shift Keying, 위상 편이 변조)
+category: 5강 Analog Transmission, 용어
+---
+'''PSK'''는 비트에 따라 [[carrier|반송파]]의 '''위상'''을 바꾸는 [[digital-to-analog conversion]] 방식이다. 진폭과 주파수는 그대로. 대역폭은 [[ASK]] 와 '''똑같이''' $B = (1+d)S$. L4 p.44–45.
+
+{def}"The '''phase''' is varied to represent two or more different signal elements."
+그림: $r = 1$, $S = N$, $B = (1 + d)S${/def}
+
+== 이름에서 개념 끌어내기 ==
+'''P'''hase '''S'''hift '''K'''eying — [[phase|위상]]을 전환한다. 교수: "here the varying part is '''phase''', not amplitude and frequency."
+
+Binary PSK (BPSK): 비트 1 → 위상 0° 의 사인파, 비트 0 → 위상 '''180°''' (π 만큼 밀림 = 위아래가 뒤집힌 파형). p.44 그림은 두 위상을 빨강/검정으로 칠해 구분했다.
+
+[[img:L4-44.png|p.44 BPSK — 1 0 1 1 0, 0 구간(검정)은 파형이 뒤집힘. 스펙트럼은 f_c 중심 한 봉우리, B = (1+d)S|large]]
+
+{analogy}🎭 '''줄넘기 박자.''' 두 사람이 같은 빠르기(주파수), 같은 높이(진폭)로 줄을 돌리는데, 0 을 보낼 때만 '''반 바퀴 늦게''' 돌린다. 멀리서 보면 똑같이 도는 줄 같지만, 박자를 아는 사람에겐 "어, 뒤집혔다"가 보인다. 크기에 정보가 없으니 소리가 작아져도(감쇠) 헷갈리지 않는다.{/analogy}
+
+[[anim:ask_fsk_psk|세 번째 줄 PSK 파형에서 0 구간이 위아래로 뒤집히는 순간을 보라]]
+
+== PSK = "ASK with −1" ⭐⭐⭐ ==
+{exam}🎯 교수: "PSK … could be understood as '''essentially the case of binary ASK but mapping +1 and −1 of amplitude''' to the bit. … In the previous example of binary ASK we mapped 0 to amplitude 0, but in this case PSK can be equivalently expressed with ASK with '''−1'''. So the bandwidth should be equal, right?"{/exam}
+
+수식으로: $-1 \cdot \sin(2\pi f_c t) = \sin(2\pi f_c t + 180°)$. 진폭에 −1 을 곱하는 것과 위상을 180° 미는 것은 '''같은 파형'''이다. 그래서
+* 대역폭이 ASK 와 같다: $B = (1+d)S$ — "essentially we use a waveform with '''one frequency'''" ([[FSK]] 처럼 반송파가 둘이 아니므로 $2\Delta f$ 없음)
+* 구현도 ASK 와 같은 '''곱셈기'''다. 입력만 [[unipolar NRZ와 polar NRZ|polar NRZ]] (1 → +1, 0 → −1)
+
+[[img:L4-45.png|p.45 BPSK 구현 — polar NRZ × Oscillator 반송파. 0 구간(−1)에서 출력이 뒤집힌 회색 파형|large]]
+
+{|
+! || [[ASK]] || '''PSK'''
+|-
+| 곱셈기 입력 || unipolar NRZ (1 → 1, 0 → '''0''') || polar NRZ (1 → +1, 0 → '''−1''')
+|-
+| 0 일 때 출력 || 아무것도 없음 || 뒤집힌 반송파
+|-
+| 대역폭 || $(1+d)S$ || $(1+d)S$ (같음)
+|-
+| 잡음 내성 || 약함 (진폭에 정보) || 강함 (진폭 일정)
+|}
+
+{quiz}PSK 의 대역폭이 ASK 와 같고 FSK 보다 작은 이유를 설명하시오.{/quiz}
+{answer}PSK 는 '''반송파 주파수 하나'''만 쓰고, binary PSK 는 ASK 의 진폭 값을 {0, 1} 대신 {−1, +1} 로 쓴 것과 동치이기 때문에 스펙트럼 모양이 ASK 와 같다: $B = (1+d)S$. FSK 는 반송파가 둘($f_1$, $f_2$)이라 두 봉우리 사이 간격 $2\Delta f$ 가 추가된다.{/answer}
+
+{quiz}$S = 10$ kbaud, $d = 0.2$ 인 BPSK 의 대역폭은?{/quiz}
+{answer}$B = (1 + 0.2) \times 10 = 12$ kHz. (ASK 로 보내도 같다.){/answer}
+
+== 관련 문서 ==
+* [[ASK]] · [[FSK]] · [[QAM]] · [[unipolar NRZ와 polar NRZ]] · [[변조 대역폭]]
+* [[phase]] · [[modulation]] · [[carrier]]

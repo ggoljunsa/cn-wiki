@@ -1,0 +1,77 @@
+key: Nyquist bit rate
+title: Nyquist Bit Rate (나이퀴스트 비트율)
+category: 3강 Transmission, 용어, 핵심
+---
+'''Nyquist bit rate'''는 '''잡음 없는(noiseless) 채널'''의 이론적 최대 bit rate 다. 핵심 아이디어: '''대역폭 $B$ 인 채널은 초당 $2B$ 개의 심볼만 실어 나를 수 있다.''' 심볼 하나에 $\log_2 L$ 비트를 싣으면 $\text{BitRate} = 2B\log_2 L$. L2 p.49–52.
+
+{def}L2 p.49–50 "Noiseless Channel: Nyquist Bit Rate"
+"'''2B symbols / sec are all a channel of bandwidth B can carry.'''
+$$\text{BitRate} = 2 \times \text{Bandwidth} \times \log_2 L$$
+Bandwidth: the bandwidth of the channel / L: the number of signal levels used to represent data / $\log_2 L$: the number of bits of one symbol / BitRate: the bit rate in bps"{/def}
+
+[[img:L2-50.png|p.50 — Nyquist bit rate 공식과 각 기호의 뜻|large]]
+
+== 공식 해부 ==
+$$\underbrace{\text{BitRate}}_{\text{bps}} = \underbrace{2 \times B}_{\text{초당 심볼 수}} \times \underbrace{\log_2 L}_{\text{심볼당 비트 수}}$$
+* [[bandwidth|B]] — 채널 대역폭, 단위 '''Hz''' (bps 아님! → [[bps와 Hz]])
+* [[signal level|L]] — 데이터를 표현하는 signal level 의 수
+* $\log_2 L$ — 심볼 하나가 담는 비트 수 → [[log₂ 계산법]]
+
+== 이름에서 개념 끌어내기 ==
+[[Harry Nyquist]] (Bell Labs, 1928) 의 이름. 그가 보인 것: 대역폭 $B$ 인 채널로 보낸 펄스들이 서로 섞이지 않고 구별되려면 '''초당 $2B$ 개'''가 한계다. '''bit rate''' 가 붙은 것은 이 "펄스(심볼) 한계"에 "펄스당 비트"를 곱해 bit 단위로 바꿨기 때문이다.
+
+{analogy}🎭 '''깃발 신호.''' 1초에 깃발을 $2B$ 번까지만 흔들 수 있다(팔 속도 = bandwidth). 깃발 색이 2가지면 한 번에 1비트, 4가지면 2비트, 8가지면 3비트. 흔드는 속도는 못 바꾸니 '''색을 늘리면''' 더 많이 보낸다. 안개(noise)가 없는 한 색은 몇 개든 구별 가능 — 이게 "noiseless" 가정이다. 현실에서는 비슷한 색이 안개 속에서 헷갈린다 → [[Shannon capacity]].{/analogy}
+
+== Example 2.6 (p.51–52) ==
+[[img:L2-52.png|p.52 — 265,000 = 2 × 20,000 × log₂L → log₂L = 6.625 → L = 2^6.625 = 98.7 levels|large]]
+
+'''문제''': '''265 kbps''' 를 대역폭 '''20 kHz''' 인 '''noiseless''' 채널로 보내려면 signal level 이 몇 개 필요한가?
+<pre class="txt">
+1. noiseless → Nyquist:  BitRate = 2 × B × log₂L
+2. 단위 맞추기:          265 kbps = 265,000 bps,  20 kHz = 20,000 Hz
+3. 대입:                 265,000 = 2 × 20,000 × log₂L = 40,000 × log₂L
+4. log₂L 구하기:         log₂L = 265,000 / 40,000 = '''6.625'''
+5. L 구하기:             L = 2^6.625 = 2^6 × 2^0.625
+                          2^0.625 ≈ 1.54  (2^0.5 ≈ 1.414, 2^0.75 ≈ 1.68 사이)
+                          L ≈ 64 × 1.54 ≈ '''98.7 levels'''
+6. 해석:                 "Should use '''6-7 bits''' for one signal"
+                          → 7비트(128 level) 로 올리거나, 6비트(64 level) 로 쓰고 bit rate 를 낮춘다
+</pre>
+[[sim:nyquist_shannon]]
+
+{warn}L 은 정수이고 보통 2 의 거듭제곱이어야 한다. 98.7 은 "이론상 최소 필요량". 답을 "98.7 개"로만 쓰지 말고 '''"6~7 비트/심볼 (64 또는 128 level)"'''까지 해석을 붙여라.{/warn}
+
+== Example 2.9 의 뒷부분 (p.60) ==
+Shannon 으로 상한 6 Mbps 를 구하고 4 Mbps 를 고른 뒤:
+<pre class="txt">
+1. 4 Mbps = 2 × 1 MHz × log₂L
+2. log₂L = 4×10⁶ / 2×10⁶ = 2
+3. L = 2² = '''4'''
+</pre>
+Nyquist 는 "주어진 bit rate 를 내려면 '''level 이 몇 개 필요한가'''" 를 설계하는 도구다.
+
+== 빠른 예 ==
+{|
+! $B$ || $L$ || BitRate
+|-
+| 3000 Hz || 2 || $2\times3000\times1 = 6000$ bps
+|-
+| 3000 Hz || 4 || 12,000 bps
+|-
+| 1 MHz || 4 || 4 Mbps (Ex 2.9)
+|-
+| 20 kHz || 98.7 || 265 kbps (Ex 2.6)
+|}
+
+{info}'''$L$ 을 무한히 늘리면 bit rate 도 무한?''' 공식상으로는 그렇다. 하지만 level 간격이 좁아지면 [[noise]] 때문에 수신기가 구별하지 못한다. 그래서 잡음이 있는 현실 채널에는 [[Shannon capacity]] 라는 천장이 따로 있다. (또 하나 주의: 이 $2B$ 는 [[Nyquist sampling theorem]] 의 "최고 주파수의 2배로 샘플링"과 같은 Nyquist 에서 나왔지만 '''다른 공식'''이다.){/info}
+
+{quiz}대역폭 4 kHz noiseless 채널로 16-level 신호를 보낸다. 최대 bit rate 는?{/quiz}
+{answer}$2 \times 4000 \times \log_2 16 = 8000 \times 4 = $ '''32,000 bps = 32 kbps'''.{/answer}
+
+{quiz}대역폭 200 kHz noiseless 채널로 1.2 Mbps 를 보내려면 L 은?{/quiz}
+{answer}$1.2\times10^6 = 2 \times 200\times10^3 \times \log_2 L$ → $\log_2 L = 3$ → $L = $ '''8'''.{/answer}
+
+== 관련 문서 ==
+* [[Shannon capacity]] · [[data rate limits]] · [[signal level]] · [[bandwidth]]
+* [[Harry Nyquist]] · [[log₂ 계산법]] · [[bps와 Hz]] · [[Nyquist sampling theorem]] · [[baud]]
+* [[CH02 Transmission]] · [[계산 문제 모음]]

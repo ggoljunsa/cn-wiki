@@ -1,0 +1,55 @@
+key: parity check code
+title: Parity Check Code (패리티 검사 코드)
+category: 6강 DLC, 용어
+---
+'''Simple parity-check code''' 는 k 비트 [[dataword]]에 '''parity bit 1개'''를 붙여 $n = k + 1$ 비트 [[codeword]]를 만드는 [[linear block code]]다. parity bit 는 codeword 전체의 '''1 의 개수가 짝수(even)'''가 되도록 고른다. $d_{min} = 2$ → '''single-bit error 검출 코드'''이며, 더 일반적으로 '''홀수 개의 오류는 모두 검출, 짝수 개는 검출 불가'''. L5 p.37–42.
+
+{def}"A $k$-bit dataword is changed to an $n$-bit codeword where $n = k + 1$." / "The extra bit, called '''parity bit''', is selected to make the total number of 1s in the codeword '''even'''." / "The minimum Hamming distance is $d_{min} = 2$ → The code is a '''single bit error detecting code'''." (p.37)
+"Simple parity check code can detect '''odd number of errors'''." (p.38){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''parity''' = "동등, 짝·홀의 성질". 수학에서 정수의 parity 는 짝수냐 홀수냐다. parity check 는 "'''1 의 개수가 짝수인가?'''" 하나만 검사한다 — 그래서 짝수 개가 동시에 뒤집히면 짝수성이 그대로라 모른다.
+
+{analogy}🎭 '''출석부 인원 확인.''' 반 인원이 항상 짝수가 되도록 짝이 없으면 선생님을 한 명 넣는다(parity bit). 체험학습 후 인원을 세서 '''홀수'''면 누군가 없어진 것(오류 검출). 그런데 '''두 명'''이 동시에 사라지면 여전히 짝수 → 모른다. 세 명이 사라지면 홀수 → 안다.{/analogy}
+
+== C(5,4) 표 (p.38) ==
+[[img:L5-38.png|p.38 simple parity-check code C(5,4): 0000→00000, 0001→00011, … 1011→10111, 1111→11110. 모든 codeword 의 1 의 개수가 짝수|medium]]
+
+== Encoder / Decoder (p.39–40) ==
+[[img:L5-39.png|p.39 Generator 가 a3a2a1a0 로 parity bit r0 를 만들고, Checker 가 b3b2b1b0q0 5비트로 syndrome s0 를 만든다. Decision logic 이 accept/discard|large]]
+
+[[modular arithmetic]] (mod 2) 식:
+* Generator: $r_0 = a_3 + a_2 + a_1 + a_0 \pmod 2$
+* Checker: $s_0 = b_3 + b_2 + b_1 + b_0 + q_0 \pmod 2$ ('''5비트 전체''')
+* $s_0$ = '''[[syndrome]]''': 0 → accept, 1 → discard
+
+{tip}mod 2 덧셈 = [[XOR]]. 그러니 $r_0$ 는 "dataword 의 1 이 홀수 개면 1, 짝수 개면 0" — 붙이고 나면 전체는 짝수. 수신 측 $s_0$ 는 "전체 1 이 홀수 개인가?" 를 묻는다.{/tip}
+
+== Example 3.7 (p.41–42) ⭐⭐ ==
+[[img:L5-42.png|p.42 Example 3.7 다섯 경우 원문|large]]
+
+<pre class="txt">
+송신 dataword 1011
+  r0 = 1 + 0 + 1 + 1 = 3 mod 2 = 1  → codeword 10111  (1 이 4개, 짝수 ✓)
+
+         수신     손상 위치           s0 계산                  판정
+case 1   10111    없음                1+0+1+1+1 = 4 → 0        accept → 1011 ✓
+case 2   10011    a1                  1+0+0+1+1 = 3 → 1        discard (검출)
+case 3   10110    r0                  1+0+1+1+0 = 3 → 1        discard (dataword 는 멀쩡)
+case 4   00110    r0, a3   (2개)      0+0+1+1+0 = 2 → '''0'''        '''accept → 0011 ✗ 틀린 값'''
+case 5   01011    a3,a2,a1 (3개)      0+1+0+1+1 = 3 → 1        discard (홀수 개 검출)
+</pre>
+
+{exam}⭐⭐⭐ '''case 4.''' "The simple parity-check decoder '''cannot detect an even number of errors'''. The errors cancel each other out and give the syndrome a value of 0." — 두 오류가 1 의 개수를 +1, −1 해서 짝수성이 유지된다. 반면 case 5: "guaranteed to detect one single error, can also find '''any odd number''' of errors."{/exam}
+
+{warn}'''case 3 의 함정.''' 손상된 것은 parity bit 뿐이라 dataword 1011 은 멀쩡하다. 그래도 버린다 — "the code is not sophisticated enough to show the '''position''' of the corrupted bit." 검출만 하고 위치는 모르는 코드이기 때문.{/warn}
+
+[[sim:parity_check]]
+
+== 예상 문제 ==
+{quiz}dataword 0110 을 C(5,4) 로 보냈다. 수신 codeword 가 01111 이면 syndrome 과 판정은? 실제로 몇 비트가 손상됐을 수 있는가?{/quiz}
+{answer}송신 codeword: 0110 → 1 이 2개 → $r_0 = 0$ → '''01100'''. 수신 01111: $s_0 = 0+1+1+1+1 = 4 \bmod 2 = 0$ → '''accept''', dataword 0111 추출 — 틀린 값. 01100 과 01111 의 거리 = 2 → '''2비트 손상'''(짝수)이라 검출 못 했다.{/answer}
+
+== 관련 문서 ==
+* [[syndrome]] · [[modular arithmetic]] · [[XOR]]
+* [[minimum Hamming distance]] · [[linear block code]] · [[single-bit error]] · [[burst error]] · [[CRC]]

@@ -1,0 +1,34 @@
+key: simplex
+title: Simplex (단방향)
+category: 1강 Introduction, 용어
+---
+'''Simplex''' 는 세 가지 data flow 중 첫 번째 — '''한 방향으로만''' 흐른다 (L1 p.5).
+
+{def}"'''Unidirectional''', one of two devices on a link can transmit, the other can only receive" (L1 p.5)
+단방향. 링크의 두 장치 중 한쪽만 송신할 수 있고 다른 쪽은 수신만 한다.{/def}
+
+[[img:L1-5.png|a. Simplex — Mainframe → Monitor. Direction of data 화살표가 하나뿐|large]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''sim-plex''' = "한(sim, single) 겹(plex, fold)". 흐름이 '''한 겹'''뿐이다. 짝꿍인 '''du-plex''' 는 "두(du) 겹" — 양방향. 그리고 duplex 를 반으로 쪼갠 게 [[half-duplex]], 온전히 쓰는 게 [[full-duplex]]. 이름 셋이 곧 정의다.
+
+[[anim:data_flow_modes|맨 윗줄(simplex)의 화살표가 끝까지 한 방향만 가는 것을 확인하고, 아래 두 줄과 비교하라]]
+
+== 세 모드 비교 ==
+{|
+! 모드 || 방향 || 동시 전송 || 슬라이드 예 || 생활 예
+|-
+| '''simplex''' || '''한 방향''' || — || Mainframe → Monitor || 키보드 → 컴퓨터, 라디오 방송, TV 방송
+|-
+| [[half-duplex]] || 양방향 || '''불가''' (교대) || Walkie-talkies || 무전기, 일차선 교대 통행
+|-
+| [[full-duplex]] || 양방향 || '''가능''' || — || 전화
+|}
+
+{analogy}🎭 '''일방통행 도로.''' 차(데이터)는 한쪽으로만 간다. 반대편 끝(Monitor)에서는 아무리 보내고 싶어도 보낼 차선이 없다. 모니터가 메인프레임에게 "좀 천천히 보내!"라고 말할 방법이 없는 게 simplex 다.{/analogy}
+
+{quiz}Simplex 에서 "링크의 용량(capacity)"은 어떻게 쓰이는가? full-duplex 와 비교해 답하시오.{/quiz}
+{answer}Simplex 는 한 방향만 쓰므로 '''링크 용량 전부를 그 한 방향이''' 쓴다. Full-duplex 는 L1 p.7 대로 "the capacity of the channel must be divided between the two directions" — 두 방향이 나눠 쓴다.{/answer}
+
+== 관련 문서 ==
+* [[half-duplex]] · [[full-duplex]] · [[point-to-point]] · [[CH01 Introduction]]

@@ -1,0 +1,240 @@
+key: CH02 Digital Transmission
+title: CH02 Digital Transmission (디지털 전송)
+category: 4강 Digital Transmission, 메인
+---
+'''Digital Transmission'''은 CH02 Physical Layer (2) 덱의 후반부(L3 p.42–65)로, "'''무엇이든 디지털 신호로 만들어 링크에 싣는 법'''"을 다룬다. 질문은 두 개다.
+# 이미 디지털인 데이터(0101…)를 어떻게 [[디지털 신호]]로 바꾸나? → [[digital-to-digital conversion]] ([[line coding]], [[block coding]])
+# 목소리처럼 연속적인 아날로그 신호를 어떻게 비트로 바꾸나? → [[analog-to-digital conversion]] ([[PCM]], [[delta modulation]])
+
+이번 장의 주인공은 단연 [[PCM]]이다. 교수는 "especially pulse code modulation — '''we would emphasize this one in this course'''"라고 못 박았다. [[sampling]] → [[quantization]] → [[encoding]] 세 단계, [[Nyquist sampling theorem]], Example 2.13 의 64 kbps, 그리고 "디지털화의 대가" [[PCM bandwidth]] 증명이 핵심이다.
+
+{info}페이지 번호는 '''L3(CH02_Physical Layer (2)) 슬라이드 인쇄 번호'''다. L3 p.2–41 은 지난 시간([[CH02 Signals]], [[CH02 Transmission]]) 복습이다. 같은 PCM 내용이 다음 덱 L4 p.17–33 에 복습으로 다시 나오며, 그쪽은 [[PCM bandwidth]] 증명을 4장으로 나눠 보여 준다.{/info}
+
+== 한눈에 보는 지도 (p.42) ==
+
+<pre class="ascii">
+                    Digital Transmission  (결과물은 언제나 '디지털 신호')
+                   ┌──────────────┴───────────────┐
+      [[digital-to-digital conversion|digital data → digital signal]]      [[analog-to-digital conversion|analog signal → digital signal]]
+          ┌────────┴────────┐                ┌────────┴────────┐
+    [[line coding]]        [[block coding]]            [[PCM]]            [[delta modulation|DM]]
+    (bit 하나씩)      (m비트 묶음씩)      sampling→quantizing   변화량만 1비트
+                    e.g. [[4B/5B]]+[[NRZ-I]]        →encoding
+</pre>
+
+{analogy}🎭 '''번역 사무소 두 창구.''' 한 창구(D2D)는 이미 한글로 쓰인 편지를 '''글씨체만 바꿔''' 우체국 규격 봉투에 넣는다 — 내용(비트)은 그대로, 모양(전압)만 바뀐다. 다른 창구(A2D)는 '''말로 한 이야기(연속 신호)를 받아 적는''' 속기사다 — 몇 초마다 들을지(sampling), 어느 글자로 적을지(quantization), 어떤 부호로 옮길지(encoding)를 정해야 하고, 받아 적는 순간 약간의 뉘앙스(양자화 오차)는 사라진다.{/analogy}
+
+== Digital-to-Digital Conversion (p.43–47) ==
+
+=== p.43–44 — Line coding ===
+[[digital-to-digital conversion]]은 두 범주로 나뉜다: [[line coding]] 과 [[block coding]].
+
+[[img:L3-44.png|p.44 Line Coding — Encoder 가 비트열을 디지털 신호로, Decoder 가 다시 비트열로|medium]]
+
+{def}"Line coding '''converts a sequence of bits to a digital signal'''" / "'''Decodes''' the digital signal to recreate digital data"
+라인 코딩은 비트 시퀀스를 디지털 신호(전압 파형)로 바꾸고, 수신 측은 그 신호를 해독해 원래 비트를 복원한다.{/def}
+
+교수 설명: "bit 0 은 음(−) 전압, bit 1 은 양(+) 전압처럼 '''one-by-one''' 으로 대응시킨다 — 그래서 '''line''' coding." 한 비트 단위로 매핑하는 게 핵심이다.
+
+=== p.45 — Block coding (mB/nB) ===
+[[img:L3-45.png|p.45 Block Coding — m비트 그룹을 n비트 그룹으로 치환 (mB-to-nB substitution)|medium]]
+
+{def}"Block coding is normally referred to as '''mB/nB coding'''. It '''replaces each m-bit group with an n-bit group'''. n is greater than m (i.e., '''redundancy''')." "Additional bits are used for '''synchronization and error detection'''."{/def}
+
+$n > m$ 이므로 [[redundancy]]가 생긴다. 이 여분 비트가 수신기의 [[NRZ-I|동기(synchronization)]]를 돕고 [[block code|오류 검출]]에도 쓰인다. 교수는 여기서 수업 중 질문("M 과 N 중 뭐가 크냐?")을 던지고, '''coding rate $m/n$''' 이야기로 넘어갔다 — redundancy 를 많이 넣을수록 오류에 강해지지만 느려진다. "'''There is a fundamental trade-off between robustness on the error and the speed of communication.'''"
+
+=== p.46–47 — 4B/5B + NRZ-I ===
+[[img:L3-46.png|p.46 4B/5B encoding → NRZ-I encoding → Link → NRZ-I decoding → 4B/5B decoding|medium]]
+
+[[4B/5B]]는 [[NRZ-I]] 와 '''짝으로''' 쓴다. NRZ-I 는 bit 1 에서만 전압을 뒤집으므로 '''0 이 길게 이어지면 신호가 평평해져 수신기가 비트 경계를 잃는다'''(loss of synchronization). 4B/5B 는 4비트를 "0 이 길게 안 나오는" 5비트로 바꿔 이 문제를 없앤다.
+
+[[img:L3-47.png|p.47 4B/5B Mapping Code — 데이터 16개 + 제어 시퀀스 8개|large]]
+
+[[sim:block_4b5b]]
+
+== Analog-to-Digital Conversion (p.48–65) ==
+
+=== p.48–49 — PCM 개요 ===
+[[analog-to-digital conversion]]의 대표 두 가지: '''Pulse Code Modulation ([[PCM]])''' 과 '''Delta Modulation ([[delta modulation|DM]])'''.
+
+[[img:L3-49.png|p.49 PCM encoder — Sampling(PAM signal) → Quantizing(Quantized signal) → Encoding(Digital data)|large]]
+
+{tip}'''이름이 전부다.''' 교수: "the name has everything on the key characteristics of this strategy". '''Pulse''' = 샘플링 결과가 펄스(막대)들, '''Code''' = 그 펄스를 부호(비트)로 옮김, '''Modulation''' = 신호의 성질을 바꿈. 즉 "펄스를 코드로 바꾸는 변조".{/tip}
+
+[[anim:pcm_pipeline|아날로그 곡선이 PAM 막대 → 8레벨 격자에 스냅(오차 표시) → 3비트 코드로 변하는 순서를 본 뒤, 아래 시뮬레이터로 p.55 표의 값을 한 샘플씩 확인하라]]
+
+=== p.50 — Sampling ===
+[[img:L3-50.png|p.50 a. Analog signal / b. PAM signal — T초마다 진폭을 뽑은 막대|medium]]
+
+아날로그 신호를 '''$T$초마다''' 측정한다. $T$ = sampling interval, 그 역수가 [[sampling rate]] $f_s = 1/T$. 결과물은 높이가 연속값인 막대들 = [[PAM]] 신호. '''시간축(x축)만 이산화'''된 상태다.
+
+=== p.51–53 — Sampling rate와 Nyquist theorem ⭐⭐⭐ ===
+[[img:L3-51.png|p.51 Nyquist rate = 2 × f_max — low-pass 든 bandpass 든 기준은 최고 주파수|medium]]
+
+{def}"'''Nyquist Theorem''': To reproduce the original analog signal, the sampling rate should be at least '''twice the highest frequency''' in the original signal." — Signal should be '''band-limited'''. — Sampling rate must be at least 2 times the '''highest frequency (not bandwidth)'''.{/def}
+
+$$f_s \ge 2 f_{max}$$
+
+{exam}🎯 교수: "'''it is all about maximum frequency, not bandwidth.'''" — 두 번 반복했다. p.51 그림에서 low-pass 신호가 bandpass 신호보다 [[bandwidth]]가 넓어도 둘 다 Nyquist rate 는 $2 f_{max}$ 다. "'''Extremely important in data communication''' because now we are living in the era of digital transmission." → [[Nyquist sampling theorem]]{/exam}
+
+[[img:L3-52.png|p.52 a. Nyquist rate sampling f_s = 2f — 주기당 2점, 이으면 삼각파지만 원 사인파의 좋은 근사|medium]]
+
+[[img:L3-53.png|p.53 b. Oversampling f_s = 4f (redundancy) / c. Undersampling f_s = f (원 파형과 전혀 다름)|medium]]
+
+[[anim:sampling_nyquist|같은 사인파에 f_s = 4f, 2f, f 로 점을 찍고 이었을 때 어느 경우에 원 파형이 사라지는지 보라]]
+
+{|
+! 경우 || $f_s$ || 주기당 샘플 || 결과
+|-
+| Oversampling || $4f$ (2 × Nyquist rate) || 4 || 좋은 근사 + '''redundancy''' (대역 낭비)
+|-
+| Nyquist rate || $2f$ || 2 || 좋은 근사 ✓
+|-
+| Undersampling || $f$ (½ × Nyquist rate) || 1 || '''복원 불가''' — 엉뚱한 저주파
+|}
+
+→ [[oversampling과 undersampling]]. 교수 권장: "Nyquist rate 와 '''비슷하되 약간 높게'''(slightly higher)" — 잡음·왜곡 여유 때문이다.
+
+=== p.54–55 — Quantization ===
+[[img:L3-54.png|p.54 Δ = (V_max − V_min) / L, 각 레벨의 midpoint 에 0 ~ L−1 할당|medium]]
+
+이제 '''y축(진폭)을 이산화'''한다. 진폭 범위 $[V_{min}, V_{max}]$를 [[quantization|L개 레벨]]로 자르면 레벨 높이는
+
+$$\Delta = \frac{V_{max} - V_{min}}{L}$$
+
+각 레벨의 '''midpoint'''에 코드 $0 \sim L-1$을 붙이고, 샘플 값을 그 midpoint 로 반올림한다. 교수: "V 는 '''voltage'''라서 V, Δ 는 수학에서 '''간격·차이'''를 뜻하는 기호라서 Δ — '''there is always reason for using the symbols in mathematics.'''"
+
+[[img:L3-55.png|p.55 L = 8, Δ = 5 (범위 −20 ~ +20) 예시 — PAM 값 → quantized 값 → error → code → 3비트 word|large]]
+
+p.55 표를 그대로 옮기면 (정규화 = 실제 값 ÷ Δ, Δ = 5):
+{|
+! 샘플 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9
+|-
+| 실제 진폭 || −6.1 || 7.5 || 16.2 || 19.7 || 11.0 || −5.5 || −11.3 || −9.4 || −6.0
+|-
+| Normalized PAM || −1.22 || 1.50 || 3.24 || 3.94 || 2.20 || −1.10 || −2.26 || −1.88 || −1.20
+|-
+| Normalized quantized || −1.50 || 1.50 || 3.50 || 3.50 || 2.50 || −1.50 || −2.50 || −1.50 || −1.50
+|-
+| Normalized error || −0.28 || 0 || +0.26 || −0.44 || +0.30 || −0.40 || −0.24 || +0.38 || −0.30
+|-
+| Quantization code || 2 || 5 || 7 || 7 || 6 || 2 || 1 || 2 || 2
+|-
+| Encoded word || 010 || 101 || 111 || 111 || 110 || 010 || 001 || 010 || 010
+|}
+
+[[sim:pcm_encoder]]
+
+=== p.56 — Quantization error ===
+{def}"Quantization yields the error range: $-\Delta/2 \le error \le \Delta/2$." "It impacts $SNR_{dB}$ of the signal, depending on the number of quantization levels $L$ (or the bits per sample $n_b = \log_2 L$): $SNR_{dB} = 6.02\,n_b + 1.76$ [dB]"{/def}
+
+오차는 최대 반 칸($\Delta/2$). 모든 error 값이 $|e| \le 0.5$ 인 것을 p.55 표에서 확인하라. 비트 하나를 더 쓰면($n_b$ +1) $L$ 이 2배 → Δ 가 절반 → [[SNR]] 이 약 6 dB 오른다. → [[quantization error]], [[SNR_dB와 n_b]]. (교수: 이 공식의 '''유도는 수업 범위 밖''', 공식만 기억.)
+
+=== p.57–59 — Encoding과 Example 2.13 ===
+각 샘플을 [[encoding|n_b비트 codeword]]로 바꾼다. 그러면
+
+$$\text{Bit rate} = f_s \times n_b$$
+
+[[img:L3-59.png|p.59 Example 2.13 — 사람 음성 0–4000 Hz, 8 bits/sample → 64 kbps|medium]]
+
+{quiz}'''Example 2.13''' — 사람 목소리(0 ~ 4000 Hz)를 샘플당 8비트로 디지털화할 때 bit rate 는?{/quiz}
+{answer}<pre class="txt">
+1. 최고 주파수 f_max = 4000 Hz   (최저가 0 이든 뭐든 상관없음 — '''highest frequency''')
+2. [[Nyquist sampling theorem|Nyquist]]: f_s = 2 × 4000 = 8000 samples/s
+3. [[encoding|n_b]] = 8 bits/sample
+4. Bit rate = f_s × n_b = 8000 × 8 = 64,000 bps = '''64 kbps'''
+</pre>
+전화 음성(DS0) 한 채널이 64 kbps 인 이유가 바로 이것이다.{/answer}
+
+=== p.60 — PCM decoder ===
+[[img:L3-60.png|p.60 PCM decoder — Connect samples(계단 신호) → Low-pass filter → Analog signal|medium]]
+
+[[PCM decoder]]는 인코더의 역과정: 비트를 레벨로 되돌려 '''계단(connect samples)'''을 만들고, '''low-pass filter'''로 모서리를 뭉개 매끄러운 아날로그 신호로 만든다.
+
+=== p.61–64 — PCM bandwidth: 디지털화의 대가 ⭐⭐⭐ ===
+{def}"'''The price for digitization''': The minimum bandwidth of the digital signal is '''$n_b$ times greater''' than the bandwidth of the analog signal: $B_{min} = n_b \times B_{analog}$"{/def}
+
+[[img:L3-64.png|p.64 PCM Bandwidth 증명 전체 — Nyquist sampling theorem 과 Nyquist bit rate 공식 두 개를 연달아 쓴다|large]]
+
+증명은 L4 덱(p.29–32) 기준 '''4단계'''다. 교수: "step by step 으로 써 두었으니 '''혼자 따라가 보라''' — [[Nyquist sampling theorem]] 과 [[Nyquist bit rate]] formula 를 쓰면 된다."
+<pre class="txt">
+① [[Nyquist sampling theorem]]  :  f_s = 2 B_analog                     [samples/s]
+      (baseband 아날로그 신호: f_max = B_analog)
+② [[encoding|bit rate]]                 :  N = n_b × f_s = 2 n_b B_analog          [bps]
+   [[signal rate와 bit rate|symbol rate]]              :  S = N / r = N = 2 n_b B_analog  (r = 1)  [baud]
+③ [[Nyquist bit rate]] 공식      :  대역폭 B 채널이 실어 나를 수 있는 최대 symbol rate = 2B
+      → S ≤ 2B
+④ 결론                     :  B ≥ S/2 = 2 n_b B_analog / 2 = n_b B_analog
+                               ∴ '''B_min = n_b × B_analog'''  ∎
+</pre>
+→ [[PCM bandwidth]]. 예: 4 kHz 음성을 8비트로 PCM 하면 최소 32 kHz 대역이 필요 — 8배의 대가.
+
+{warn}이 증명 안에 '''Nyquist 가 두 번''' 나온다. ①은 '''sampling''' 정리($f_s \ge 2f_{max}$, 아날로그 신호를 몇 번 찍나), ③은 '''bit rate''' 공식($2B\log_2 L$, 채널이 몇 개 symbol 을 나르나). 둘 다 "2배"가 들어 있어 헷갈린다 → [[Nyquist sampling theorem]] 의 비교표.{/warn}
+
+=== p.65 — Delta modulation ===
+[[img:L3-65.png|p.65 DM — 계단(step d, 간격 T)이 곡선을 쫓아가며 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 생성|large]]
+
+[[delta modulation]]은 값 자체가 아니라 '''직전 샘플 대비 변화'''만 1비트로 보낸다: 올라가야 하면 1(+d), 내려가야 하면 0(−d). 이름의 Δ(delta) = 차이. 단순하지만 '''error propagation''' — 한 비트가 틀리면 그 뒤 계단이 전부 어긋난다. 교수: "in practice we don't use this DM".
+
+[[sim:delta_modulation]]
+
+== 🎙 실제 수업 기록 (9/10 목, 녹음본 기준) ==
+9/10 수업은 [[SNR]] 복습("'''the name itself is very important'''")으로 시작해 이 장 전체를 약 37분 만에 훑고 Analog Transmission 으로 넘어갔다.
+* '''이름에서 시작하라''': "What I first try to do when I learn something is to understand the name or the rationale behind the name." — SNR, PCM(pulse·code·modulation), delta, Δ, V 모두 이름/기호의 이유를 설명했다.
+* '''Block coding 의 trade-off''': "n 을 m 보다 크게 잡는 이유는 오류와 싸우기 위해서(redundancy)" → coding rate 가 떨어진다 → "'''correctness versus speed'''" 는 일상에서도 늘 있는 trade-off.
+* '''PCM 강조''': "They are very famous, especially pulse code modulation. '''We would emphasize this one in this course.'''"
+* '''Sampling rate 선택''': 빨리 찍을수록 복원은 좋지만 [[Nyquist bit rate|Nyquist formula]] 에서 보듯 대역폭이 더 든다. "'''Time and frequency are very important resources''' in data communication. You should remember that."
+* '''Theorem vs conjecture''': "theorem 은 누군가 증명한 수학적 명제다. conjecture 는 아직 증명되지 않은 것." — Nyquist sampling theorem 은 '''사실'''이다.
+* '''최고 주파수 ⭐⭐⭐''': "It is all about '''maximum frequency, not bandwidth'''. … You should remember this, it is very important, '''extremely important''' in data communication because now we are living in the '''era of digital transmission'''."
+* '''실무 권장''': Nyquist rate 보다 "slightly higher" 로 샘플링 — 잡음·주파수 간 왜곡 여유.
+* '''Quantization''': "PCM 은 먼저 시간축을 이산화했고, 남은 것은 y축을 이산화하는 것 = quantization." 오차는 '''inevitable'''. L = 4 면 샘플당 2비트, p.55 는 L = 8 이라 3비트.
+* '''$SNR_{dB} = 6.02n_b + 1.76$''': "derivation 은 어렵고 '''out of the scope of this course'''."
+* '''Example 2.13, PCM bandwidth 증명''': "very simple — do it by your own", "step by step 으로 적어 두었으니 스스로 보라. Nyquist sampling theorem 과 Nyquist bit rate formula 를 쓸 것." → '''혼자 풀 수 있어야 하는 문제'''라는 뜻.
+* '''Price of digitization''': PCM 은 아날로그보다 $n_b$배 넓은 대역이 필요 — "this is why I call this phenomenon the '''price of digitization'''."
+* '''DM 의 약점''': 교수가 "simple mechanisms could bring notorious weaknesses — what?" 하고 물었고 학생이 '''error propagation''' 이라 답함. "그래서 실무에선 DM 을 안 쓴다."
+
+== 시험 대비 핵심 요약 ==
+# Digital transmission = D2D([[line coding]], [[block coding]]) + A2D([[PCM]], [[delta modulation|DM]]).
+# [[block coding]] mB/nB: $n > m$ → [[redundancy]] → synchronization + error detection. 대가는 coding rate $m/n$ 감소.
+# [[4B/5B]] 는 [[NRZ-I]] 와 결합: NRZ-I 의 '''0 연속 → 동기 손실'''을 막는다.
+# [[PCM]] 인코더 3단계: '''sampling → quantizing → encoding''' (중간 산물: [[PAM]] 신호 → quantized 신호 → 비트).
+# ⭐⭐⭐ [[Nyquist sampling theorem]]: $f_s \ge 2 f_{max}$ — '''최고 주파수 기준, bandwidth 아님''', 신호는 band-limited.
+# $f_s = 4f$ oversampling(redundancy) / $2f$ Nyquist rate(OK) / $f$ undersampling(복원 불가).
+# $\Delta = (V_{max}-V_{min})/L$, 코드는 midpoint 에 $0 \sim L-1$, [[quantization error]] $\in [-\Delta/2, \Delta/2]$.
+# $SNR_{dB} = 6.02\,n_b + 1.76$, $n_b = \log_2 L$ — 비트 1개당 약 6 dB.
+# Bit rate $= f_s \times n_b$. Ex 2.13: $2 \times 4000 \times 8 = 64$ kbps.
+# [[PCM decoder]]: connect samples → low-pass filter.
+# ⭐⭐⭐ [[PCM bandwidth]] $B_{min} = n_b B_{analog}$ — Nyquist sampling + Nyquist bit rate 로 4단계 증명.
+# [[delta modulation]]: 증가 1 / 감소 0, 샘플당 1비트, 약점은 error propagation.
+
+== 공식 모음 ==
+{|
+! 이름 || 공식 || 단위 / 비고
+|-
+| [[sampling rate]] || $f_s = 1/T$ || samples/s
+|-
+| [[Nyquist sampling theorem]] || $f_s \ge 2 f_{max}$ || 최고 주파수 기준
+|-
+| 레벨 높이 || $\Delta = (V_{max}-V_{min})/L$ || [[quantization]]
+|-
+| 샘플당 비트 || $n_b = \log_2 L$ || [[log₂ 계산법]]
+|-
+| [[quantization error]] || $-\Delta/2 \le e \le \Delta/2$ ||
+|-
+| [[SNR_dB와 n_b]] || $SNR_{dB} = 6.02\,n_b + 1.76$ || dB
+|-
+| PCM bit rate || $N = f_s \times n_b$ || bps ([[encoding]])
+|-
+| symbol rate || $S = N/r$ || baud ([[signal rate와 bit rate]])
+|-
+| [[PCM bandwidth]] || $B_{min} = n_b \times B_{analog}$ || 디지털화의 대가
+|-
+| [[4B/5B]] overhead || 5/4 = 1.25배 비트 || [[redundancy]]
+|}
+
+== 관련 문서 ==
+* 앞 장: [[CH02 Transmission]] ([[Nyquist bit rate]], [[SNR]], [[데시벨]]), [[CH02 Signals]] ([[bandwidth]], [[디지털 신호]])
+* 다음 장: [[CH02 Analog Transmission]], [[CH02 Multiplexing]]
+* 용어: [[digital-to-digital conversion]] · [[line coding]] · [[block coding]] · [[4B/5B]] · [[NRZ-I]] · [[analog-to-digital conversion]] · [[PCM]] · [[sampling]] · [[sampling rate]] · [[Nyquist sampling theorem]] · [[PAM]] · [[oversampling과 undersampling]] · [[quantization]] · [[quantization error]] · [[encoding]] · [[PCM decoder]] · [[PCM bandwidth]] · [[delta modulation]] · [[SNR_dB와 n_b]]
+* 비슷한 이름 주의: [[block code]] (CH03 오류 검출)
+* [[계산 문제 모음]] · [[공식 모음]]

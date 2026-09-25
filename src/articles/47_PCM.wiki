@@ -1,0 +1,62 @@
+key: PCM
+title: PCM (Pulse Code Modulation, 펄스 부호 변조)
+category: 4강 Digital Transmission, 용어, 핵심
+---
+'''PCM'''은 아날로그 신호를 디지털로 바꾸는 '''가장 흔한''' 기법이다. [[sampling]] → [[quantization]] → [[encoding]] 세 단계. L3 p.49–64. 교수: "They are very famous, especially pulse code modulation. '''We would emphasize this one in this course.'''"
+
+{def}"Pulse Code Modulation (PCM) — '''The most common technique to change an analog signal to digital signal'''."
+PCM encoder: '''Sampling''' (→ PAM signal) → '''Quantizing''' (→ Quantized signal) → '''Encoding''' (→ Digital data).{/def}
+
+[[img:L3-49.png|p.49 PCM encoder 세 블록과 중간 산물(PAM signal, Quantized signal)|large]]
+
+== 이름에서 개념 끌어내기 ==
+교수: "'''the name has everything''' on the key characteristics of this strategy."
+* '''Pulse''' — 샘플링 결과가 가느다란 '''펄스(막대)'''들이다 ([[PAM]]).
+* '''Code''' — 그 펄스의 높이를 '''부호(비트열)로 번역'''한다 ("code means we translate something").
+* '''Modulation''' — 신호의 성질을 바꾸는 일 ("modulation means we change some characteristics").
+→ "펄스를 코드로 바꾸는 변조".
+
+{analogy}🎭 '''체중 일기.''' 몸무게는 하루 종일 연속으로 변하지만(아날로그) ① 매일 아침 7시에만 잰다(sampling, $T$ = 1일) ② 체중계가 0.5 kg 단위라 71.3 kg 을 71.5 로 읽는다(quantization, $\Delta$ = 0.5) ③ 그 눈금 번호를 이진수로 수첩에 적는다(encoding). 수첩(디지털 데이터)만 보고 체중 그래프를 다시 그리면 = [[PCM decoder]].{/analogy}
+
+[[anim:pcm_pipeline|곡선 → PAM 막대 → 8레벨 격자에 스냅(빨간 오차) → 3비트 코드 순서를 본 다음 시뮬레이터로 p.55 표 값을 확인하라]]
+
+== 3단계 ==
+{|
+! 단계 || 하는 일 || 결과물 || 핵심 공식
+|-
+| 1. [[sampling]] || $T$초마다 진폭 측정 (시간 이산화) || [[PAM]] 신호 || $f_s = 1/T \ge 2f_{max}$ ([[Nyquist sampling theorem]])
+|-
+| 2. [[quantization]] || 진폭을 $L$개 레벨 midpoint 로 반올림 (값 이산화) || quantized 신호 (코드 $0 \sim L-1$) || $\Delta = (V_{max}-V_{min})/L$, 오차 $\le \Delta/2$
+|-
+| 3. [[encoding]] || 코드를 $n_b$비트로 || 비트열 || $n_b = \log_2 L$, bit rate $= f_s \times n_b$
+|}
+
+[[sim:pcm_encoder]]
+
+== Example 2.13 (p.58–59) ==
+[[img:L3-59.png|p.59 Example 2.13 풀이 — 8000 samples/s × 8 bits = 64 kbps|medium]]
+<pre class="txt">
+문제: 사람 음성 0–4000 Hz, 8 bits/sample → bit rate?
+1. f_max = 4000 Hz
+2. [[sampling rate|f_s]] = 2 × f_max = 8000 samples/s        ([[Nyquist sampling theorem]])
+3. bit rate = f_s × [[encoding|n_b]] = 8000 × 8 = 64,000 bps = '''64 kbps'''
+</pre>
+
+== 디지털화의 대가 ==
+PCM 신호의 최소 대역폭은 원래 아날로그 대역폭의 $n_b$배: $B_{min} = n_b \times B_{analog}$ → [[PCM bandwidth]] (4단계 증명). 교수: "'''price of digitization'''".
+
+{exam}🎯 PCM 은 교수가 "이 과목에서 강조하겠다"고 한 유일한 A2D 기법이다. ① 3단계 이름과 순서 ② Nyquist rate = $2f_{max}$ ③ bit rate = $f_s \times n_b$ ④ $B_{min} = n_b B_{analog}$ 증명 ⑤ p.55 표 읽기 — 이 다섯이 세트.{/exam}
+
+{quiz}PCM 인코더의 세 블록을 순서대로 쓰고, 첫 두 블록의 출력 신호 이름을 쓰시오.{/quiz}
+{answer}'''Sampling → Quantizing → Encoding'''. Sampling 의 출력은 '''PAM signal''', Quantizing 의 출력은 '''Quantized signal''' (p.49 그림의 두 점선 말풍선).{/answer}
+
+{quiz}음악을 최고 주파수 20 kHz 로 보고 16 bits/sample PCM 하면 bit rate 는?{/quiz}
+{answer}<pre class="txt">
+1. f_s = 2 × 20 kHz = 40,000 samples/s
+2. bit rate = 40,000 × 16 = 640,000 bps = 640 kbps
+</pre>(CD 는 여유를 두어 44.1 kHz 로 샘플링한다 — 교수가 말한 "slightly higher than Nyquist rate".){/answer}
+
+== 관련 문서 ==
+* 단계: [[sampling]] · [[quantization]] · [[encoding]] · [[PCM decoder]]
+* [[Nyquist sampling theorem]] · [[PCM bandwidth]] · [[SNR_dB와 n_b]] · [[PAM]]
+* 대안: [[delta modulation]] · 상위: [[analog-to-digital conversion]] · [[CH02 Digital Transmission]]

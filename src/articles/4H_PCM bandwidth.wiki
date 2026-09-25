@@ -1,0 +1,63 @@
+key: PCM bandwidth
+title: PCM Bandwidth — 디지털화의 대가 (B_min = n_b × B_analog)
+category: 4강 Digital Transmission, 용어, 핵심
+---
+'''PCM bandwidth''' 공식은 "아날로그 신호를 PCM 으로 디지털화하면 필요한 최소 [[bandwidth]] 가 '''$n_b$배'''로 커진다"는 결과다. 교수는 이를 '''price of digitization''' 이라 불렀다. L3 p.61–64 (L4 p.28–32 에서 4단계로 다시).
+
+{def}"'''The price for digitization''': The minimum bandwidth of the digital signal is '''$n_b$ times greater''' than the bandwidth of the analog signal:"
+$$B_{min} = n_b \times B_{analog}$${/def}
+
+[[img:L3-64.png|p.64 PCM Bandwidth — 명제와 증명 전체 (Nyquist Sampling Thm → bit rate·symbol rate → Nyquist Bit Rate formula)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* $B_{analog}$ — 원래 아날로그 신호의 대역폭 (baseband 라 $= f_{max}$)
+* $B_{min}$ — 그 신호를 PCM 한 '''디지털 신호'''를 보내는 데 필요한 '''최소''' 채널 대역폭
+* $n_b$ — 샘플당 비트 수 ([[encoding]])
+"'''price'''" — 디지털화로 얻는 것(잡음 내성, 재생 가능)에 대해 '''대역폭으로 값을 치른다'''는 뜻.
+
+{analogy}🎭 '''편지를 모스 부호로 보내기.''' 말로 하면 1초에 끝날 문장을, 각 글자(샘플)마다 점·선 8개(n_b = 8)로 두드려 보내면 같은 시간 안에 8배 빠르게 두드려야 한다 → 더 넓은 선로(bandwidth)가 필요하다. 대신 점·선은 잡음이 좀 끼어도 알아볼 수 있다.{/analogy}
+
+== 증명 4단계 (L4 p.29–32) ⭐⭐⭐ ==
+<pre class="txt">
+① Nyquist sampling theorem  (L4 p.29)
+     baseband 신호: f_max = B_analog
+     f_s = 2 × f_max = 2 B_analog                         [samples/s]
+
+② bit rate 와 symbol rate  (L4 p.30)
+     N = n_b × f_s = 2 n_b B_analog                        [bps]
+     S = N / r,  r = 1 bit/symbol  →  S = N = 2 n_b B_analog [baud]
+
+③ Nyquist bit rate 공식 인용  (L4 p.31)
+     BitRate = 2 × B × log₂L  ⇔  대역폭 B 채널의 최대 symbol rate = 2B
+     →  S ≤ 2B
+
+④ 결론  (L4 p.32)
+     B ≥ S / 2 = 2 n_b B_analog / 2 = n_b B_analog
+     ∴  B_min = n_b × B_analog   ∎
+</pre>
+단계별 링크: ① [[Nyquist sampling theorem]] ② [[encoding]], [[signal rate와 bit rate]] ③ [[Nyquist bit rate]] ④ 부등식 정리.
+
+{exam}🎯 교수: "step by step 으로 써 두었으니 '''혼자 보고 따라가 보라'''. [[Nyquist sampling theorem]] 과 [[Nyquist bit rate]] formula 를 쓰면 된다." — 수업에서 생략하고 과제처럼 남긴 증명이라, 빈칸 채우기나 "두 정리 이름을 쓰시오" 형태로 나오기 좋다.{/exam}
+
+{warn}증명 속 '''2 가 두 번''' 나온다. ①의 2 는 "최고 주파수의 2배로 '''샘플링'''", ③의 2 는 "대역폭 $B$ 채널은 초당 '''2B symbol'''". 둘이 약분돼서 $n_b$ 만 남는다. 두 Nyquist 를 섞지 말 것 → [[Nyquist sampling theorem]] 비교표.{/warn}
+
+== 숫자로 ==
+{|
+! 신호 || $B_{analog}$ || $n_b$ || $B_{min}$
+|-
+| 전화 음성 (Ex 2.13) || 4 kHz || 8 || '''32 kHz'''
+|-
+| 같은 음성, 3비트 || 4 kHz || 3 || 12 kHz
+|}
+
+{quiz}대역폭 4 kHz 인 음성 신호를 샘플당 8비트 PCM 으로 보낼 때 필요한 최소 대역폭을 증명 순서대로 구하시오.{/quiz}
+{answer}<pre class="txt">
+① f_s = 2 × 4 kHz = 8000 samples/s
+② N = 8 × 8000 = 64,000 bps;  r = 1 → S = 64,000 baud
+③ S ≤ 2B
+④ B ≥ 64,000 / 2 = 32,000 Hz = 32 kHz   (= n_b × B_analog = 8 × 4 kHz ✓)
+</pre>{/answer}
+
+== 관련 문서 ==
+* [[PCM]] · [[Nyquist sampling theorem]] · [[Nyquist bit rate]] · [[signal rate와 bit rate]] · [[baud]]
+* [[bandwidth]] · [[encoding]] · [[CH02 Digital Transmission]]

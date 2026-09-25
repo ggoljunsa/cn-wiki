@@ -1,0 +1,60 @@
+key: Claude Shannon
+title: Claude Shannon (클로드 섀넌)
+category: 3강 Transmission, 용어, 인물
+---
+'''Claude Elwood Shannon''' (1916–2001) — 미국의 수학자·전기공학자, '''정보이론(information theory)의 아버지'''. 1948년 Bell Labs 에서 발표한 논문 ''A Mathematical Theory of Communication'' 으로 디지털 통신의 틀을 세웠다. 이 과목에서는 [[Shannon capacity]] 공식의 주인공. 교수는 9/1 수업에서 약 15분을 들여 그의 업적을 소개했다.
+
+{exam}⭐⭐⭐ 교수(9/1): "His contribution is '''three-folded'''. … '''I will recommend you to remember these three contributions.'''" — 아래 세 가지를 순서대로 말할 수 있어야 한다.{/exam}
+
+== 세 가지 기여 (교수의 설명 순서) ==
+{|
+! # || 기여 || 핵심 한 줄 || 이 과목과의 연결
+|-
+| ① || '''디지털 통신 시스템의 설계''' || '''모든 정보원은 비트열로 바꿀 수 있다''' → 부호화 → 채널 → 복호화 파이프라인 || [[data와 signal]], [[physical layer]] 전체
+|-
+| ② || '''Source coding theorem''' || '''무손실 압축의 한계(entropy)'''가 존재함을 증명 || 압축(zip), Huffman code
+|-
+| ③ || '''Channel coding theorem / channel capacity''' || noisy channel 에서 '''신뢰성 있게 보낼 수 있는 bit rate 의 한계'''가 존재하고, 그 한계까지 가능한 기법이 존재함을 증명 || '''[[Shannon capacity]]''' $C = B\log_2(1+\text{SNR})$
+|}
+
+=== ① 디지털 통신 시스템 ===
+교수: "Shannon 이 보인 것은 '''어떤 정보원이든 — 연속이든 이산이든 — 비트열로 바꿀 수 있다'''는 것이다. 그리고 그 비트를 신호로 부호화해서, 채널에서 생기는 '''randomness 에 강하게(robust)''' 만든다. 채널을 지나면 decoder 가 다시 정보로 되돌린다."
+<pre class="txt">
+information source → [source encoder] → bits → [channel encoder] → signal
+        → channel (noise!) → [decoder] → bits → destination
+</pre>
+"여러분 모두 이 파이프라인에 익숙하지? '''이걸 이 사람이 발명했다.''' 그 전의 통신 시스템은 전부 ad hoc — 저마다 다른 encoder, 다른 receiver, 다른 정보 형식을 가졌다. 그는 그것을 '''한 번에(in one shot) 통일'''했고, 지금은 거의 모든 통신 시스템이 이 구조를 쓴다."
+
+=== ② Source coding theorem ===
+교수: "정보를 '''무손실(lossless)'''로 압축할 수 있는 '''한계'''가 존재함을 수학적으로 증명했다. PPT·PDF 를 zip 으로 압축해도 잃는 게 없는 것 — 그런 무손실 압축의 존재를 증명한 것. 존재를 증명하는 건 극히 어렵다." 그 한계를 '''entropy''' 라 부른다 — "물리의 entropy 가 아니라, 정보 통신에서 entropy 는 '''무손실 압축의 근본 한계'''다." JPEG·MPEG 같은 손실 압축도 이 무손실 압축 위에 세워졌다. 그러나 그는 한계에 '''도달하는 방법'''은 주지 않았고, 이후 '''David Huffman''' 등(Huffman code)이 뒤를 이었다.
+
+=== ③ Channel coding theorem · channel capacity ===
+교수: "이 physical layer 맥락에서 '''가장 중요한''' 것. 잡음이 있는 채널에서 reliable communication 이 가능한 '''bit rate 에는 한계가 있다'''. 그리고 그 한계까지 신뢰성 있게 보내는 기법이 '''존재함'''을 증명했다. 그 양이 '''channel capacity'''." — 이때 교수는 슬라이드를 넘겨 p.53 을 보여주며 "'''this limit is the one that Shannon put'''" 이라고 했다.
+"그러나 역시 capacity 를 달성하는 '''구체적 기법'''은 주지 않았다. 존재만 증명했다."
+
+[[img:L2-53.png|p.53 — 교수가 9/1 Shannon 이야기 도중 넘겨서 보여준 슬라이드. "this limit is the one that Shannon put"|large]]
+
+== 이름에서 개념 끌어내기 ==
+[[Shannon capacity]] 는 "Shannon 이 정한 채널의 '''그릇 크기'''". 그리고 교수의 말로는 요즘 모두가 쓰는 생성형 AI 챗봇 '''Claude''' 도 이 사람 이름을 딴 것이라고 한다 — "Have you ever heard of this guy? Maybe you should have heard of Claude, right?"
+
+{analogy}🎭 '''"여기까지는 반드시 갈 수 있다"는 지도만 그려 준 탐험가.''' Shannon 은 "이 산(채널)의 정상(capacity)은 해발 몇 m 이고, 거기까지 가는 길이 '''분명히 있다'''"는 것을 증명했지만 '''길 자체'''는 알려 주지 않았다. 후대 등반가들이 수십 년 동안 그 길을 찾았다 — 압축 쪽은 비교적 빨리(Huffman), 채널 쪽은 아주 늦게.{/analogy}
+
+== 후일담 — capacity 를 달성하는 코드 ==
+교수(9/1): "entropy 를 달성하는 코드(entropy code)는 비교적 일찍 나왔다. 사람들은 채널 쪽도 금방 될 줄 알고 흥분했지만 훨씬 어려웠다. '''최초의 capacity-achieving code 는 2008년'''에야 나왔고, 그걸 만든 사람은 '''20년'''을 썼다. 그마저도 fading 이나 attenuation 없이 '''가우시안 잡음만 있는 단순한 채널'''([[AWGN]])에서다. 우리가 매일 쓰는 무선 환경에서 capacity 를 달성하는 기법은 '''지금도 모른다'''."
+{info}교수가 말한 2008년 코드는 Erdal Arıkan 의 '''polar code''' 로 보인다(2008년 발표, 2009년 논문). 참고로 Huffman code 는 1952년으로, 교수가 말한 "1960~70년대"보다 이르다. 둘 다 녹음본 기준 교수 발언이며 시험 범위는 아니다.{/info}
+
+{joke}교수의 여담 (9/1):
+* "한국에선 사람 이름을 빨간 글씨로 쓰면 안 되는데…" — 칠판에 Shannon 이름을 쓰면서.
+* "그는 이 논문을 쓸 때 '''박사 학위도 없었던''' 걸로 기억한다 — 확실하진 않다(I don't remember if it was his PhD thesis or not)." → 사실 확인: 1948년 논문 당시 Shannon 은 이미 MIT 박사(1940, 주제는 이론 유전학)였다. 박사 학위 '''전'''에 쓴 유명한 논문은 1937년 '''석사 논문'''(릴레이 회로를 Boolean algebra 로 분석 — 디지털 회로 설계의 출발점)이다. 교수가 둘을 섞어 기억한 듯.
+* 교수는 연도를 "around 1949" 라고 했지만 논문은 '''1948년''' (Bell System Technical Journal).
+* 저글링과 외발자전거를 즐겼고, 복도에서 외발자전거를 타며 저글링했다는 일화가 유명하다.{/joke}
+
+{quiz}교수가 "remember" 하라고 한 Shannon 의 세 가지 기여를 쓰고, 그중 이 과목의 공식과 직접 연결되는 것을 고르시오.{/quiz}
+{answer}① 디지털 통신 시스템 설계(모든 정보 → 비트열 → 부호화 → 채널 → 복호화) ② '''source coding theorem''' (무손실 압축 한계 = entropy) ③ '''channel coding theorem / channel capacity''' (noisy channel 의 신뢰성 있는 전송률 한계). 공식과 연결: '''③ → [[Shannon capacity]]''' $C = B\log_2(1+\text{SNR})$.{/answer}
+
+{quiz}Shannon 은 channel capacity 를 달성하는 구체적인 부호화 기법을 제시했는가?{/quiz}
+{answer}'''아니다.''' 그런 기법이 '''존재함'''만 증명했다. 교수: "he did not provide a specific or an actual implementable technique … just proved the existence." 실제 capacity-achieving 코드는 훨씬 뒤(교수 말로 2008년)에 나왔다.{/answer}
+
+== 관련 문서 ==
+* [[Shannon capacity]] · [[AWGN]] · [[SNR]] · [[data rate limits]]
+* [[Harry Nyquist]] · [[Nyquist bit rate]] · [[CH02 Transmission]] · [[CH02 Signals]] · [[교수 소개]]

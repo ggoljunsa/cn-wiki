@@ -1,0 +1,65 @@
+key: IP
+title: IP (Internet Protocol)
+category: 1강 Introduction, 용어, 함정
+---
+'''IP(Internet Protocol)''' — [[network layer]] 의 주 프로토콜, "'''the main protocol of the Internet'''" (L1 p.35). TCP/IP 의 "IP".
+
+{def}"Internet Protocol (IP): the main protocol of the Internet / Defines the '''format and the structure of addresses''' / '''Connectionless''' protocol: '''no flow control, no error control, and no congestion control''' / Auxiliary protocols: '''ICMP, IGMP, DHCP, ARP'''" (L1 p.35)
+인터넷의 주 프로토콜. 주소의 형식과 구조를 정의한다. 비연결형으로 흐름·오류·혼잡 제어가 없다. 보조 프로토콜로 ICMP, IGMP, DHCP, ARP 가 있다.{/def}
+
+{exam}⭐⭐⭐ '''0920 NotebookLM 퀴즈에서 틀렸다.''' "IP 가 속해 있으며 최적 경로를 선택하는 계층"에 '''Transport''' 를 골랐다. IP 는 '''Network layer'''. 그리고 IP 는 '''connectionless''' — "TCP/IP 는 한 세트니까 IP 도 연결형이겠지"는 함정이다.{/exam}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''Inter-net Protocol''' — "망(net)과 망 '''사이(inter)'''의 규약". 링크 하나(data link)가 아니라 '''여러 망을 건너''' 목적지까지 가는 규칙이다. 그래서 ① 망을 초월해 통하는 '''주소 체계'''(logical address, 192.168.0.1)를 정의하고 ② 그 주소를 보고 [[라우터]]들이 경로를 고른다.
+
+== 한눈에 ==
+{|
+! 항목 || 내용
+|-
+| 층 || '''[[network layer|Network]]''' (Layer 3)
+|-
+| 하는 일 || 주소의 format/structure 정의, host-to-host 전달 (경로는 라우터가 선택)
+|-
+| 연결 || '''Connectionless'''
+|-
+| Flow / Error / Congestion control || '''셋 다 없음'''
+|-
+| PDU || [[PDU|datagram]]
+|-
+| 주소 || logical address (IP 주소)
+|-
+| Auxiliary || ICMP · IGMP · DHCP · [[ARP]]
+|}
+
+== 보조 프로토콜 네 개 (참고) ==
+{|
+! 이름 || 풀네임 || 하는 일 (한 줄)
+|-
+| ICMP || Internet Control Message Protocol || 오류·상태 보고 (ping 이 이것)
+|-
+| IGMP || Internet Group Management Protocol || 멀티캐스트 그룹 관리
+|-
+| DHCP || Dynamic Host Configuration Protocol || 호스트에 IP 주소 자동 할당
+|-
+| [[ARP]] || Address Resolution Protocol || IP 주소 → [[MAC 주소]] 찾기 (CH03 끝에서 다시)
+|}
+{info}슬라이드는 네 이름만 나열한다. 풀네임·설명은 참고용이고, CH01 시험에서는 "network layer 의 auxiliary protocols = ICMP, IGMP, DHCP, ARP" 를 알아보면 충분하다.{/info}
+
+== connectionless 3형제, connection-oriented 외톨이 ==
+{|
+! 프로토콜 || 층 || 연결
+|-
+| '''IP''' || Network || connectionless
+|-
+| [[UDP]] || Transport || connectionless
+|-
+| [[TCP]] || Transport || '''connection-oriented''' ← 유일
+|}
+
+{analogy}🎭 '''일반 우편.''' 봉투에 주소(IP 주소)를 쓰는 '''형식'''을 정하고, 우체국들(라우터)이 그 주소를 보고 길을 정한다. 하지만 '''보내기 전에 받는 사람과 약속하지 않고'''(connectionless), 분실돼도 다시 보내지 않고(no error control), 받는 사람이 벅차든 말든(no flow control), 우체국이 붐비든 말든(no congestion control) 그냥 보낸다. 확인·재발송이 필요하면 위층 등기 서비스([[TCP]])를 쓴다.{/analogy}
+
+{quiz}IP 가 제공하지 '''않는''' 세 가지 제어를 L1 p.35 표현으로 쓰고, 이것들을 대신 제공하는 프로토콜과 그 층을 쓰시오.{/quiz}
+{answer}'''no flow control, no error control, no congestion control'''. 대신 제공하는 것은 transport layer 의 '''[[TCP]]'''.{/answer}
+
+== 관련 문서 ==
+* [[network layer]] · [[TCP]] · [[UDP]] · [[라우터]] · [[ARP]] · [[주소 체계]] · [[CH01 Introduction]]

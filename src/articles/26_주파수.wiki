@@ -1,0 +1,59 @@
+key: 주파수
+title: 주파수 (Frequency)
+category: 2강 Signals, 용어
+---
+'''주파수(frequency, $f$)'''는 '''1초 동안의 [[주기|period]] 개수'''이며, 더 깊게는 '''시간에 대한 신호의 변화율(rate of change with respect to time)'''이다. 단위 Hz. L2 p.20–24. [[사인파]] 3요소 중 둘째.
+
+{def}L2 p.20 "Period and Frequency"
+"'''Frequency (f)''': The number of periods in 1 second. '''Frequency = 1 / Period''', Period = 1 / Frequency"
+L2 p.22 "More about Frequency"
+"Frequency is the '''rate of change with respect to time'''. High frequency: change in a short span of time. Low frequency: change over a long span of time. '''If a signal is not change at all, its frequency is zero. If a signal changes instantaneously, its frequency is infinite.'''"{/def}
+
+$$f = \frac{1}{T}\ [\text{Hz}],\qquad T = \frac{1}{f}\ [\text{s}]$$
+
+[[img:L2-21.png|p.21 — 1초에 12주기 → 12 Hz(T = 1/12 s), 1초에 6주기 → 6 Hz(T = 1/6 s). amplitude·phase 는 같다|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''frequency''' = ''frequent''(자주) + -cy. "'''얼마나 자주'''" 모양이 바뀌는가. 한국어 '주파수(周波數)'도 "한 바퀴 도는 파(周波)의 수(數)". 둘 다 "1초에 몇 번"이다.
+교수: "frequency 는 period 의 역수라 본질적으로 같은 정보다. 하지만 실제로는 frequency 를 훨씬 많이 쓰니 '''frequency 로 기억하라'''."
+
+{analogy}🎭 '''심장 박동.''' 1분에 60번 뛰면 느긋하고, 180번 뛰면 헐떡인다. 주파수 = '''얼마나 빨리 변하는가'''. 심장이 멈추면(변화 없음) 박동수는 0 이다 — 무한대가 아니다. 반대로 "순간적으로 확 튀는" 움직임은 무한히 빠른 변화 = 무한대 주파수다.{/analogy}
+
+== 0 Hz 와 무한대 ==
+{|
+! 신호 모양 || 변화율 || 주파수 || 예
+|-
+| 전혀 변하지 않음 (평평한 직선) || 0 || '''0 Hz''' || 배터리 1.5 V (Example 2.1) = '''DC'''
+|-
+| 천천히 변함 || 작음 || 낮음 || 미국 가정 전기 60 Hz (Example 2.2)
+|-
+| 빨리 변함 || 큼 || 높음 || 무선 [[carrier]] (MHz~GHz)
+|-
+| '''순간적으로''' 변함 (수직 모서리) || ∞ || '''무한대''' || [[디지털 신호]]의 level 전환 순간
+|}
+
+{warn}⚠️ '''여기서 틀렸다 (0920 NotebookLM).''' "시간에 따라 전혀 변하지 않는 일정 전압(배터리)의 주파수"에 '''무한대(∞)''' 를 골랐다. 정답은 '''0 Hz'''.
+* 주파수 = '''변화율'''. 안 변하면 변화율 0 → 0 Hz.
+* 주기로 생각하면: 영원히 같은 값 = 한 주기가 끝나지 않음 → $T \to \infty$ → $f = 1/T \to 0$.
+* '''무한대는 반대편 극단''' — 신호가 "순간적으로" 바뀔 때(p.22 둘째 줄). "무한히 오래 변하지 않음(T=∞)" 과 "무한히 빨리 변함(f=∞)" 을 헷갈린 것.
+* 슬라이드 원문: Example 2.1 "This constant value can be considered a sine wave (with '''0-freq''')."{/warn}
+
+{exam}⭐⭐⭐ 교수(9/1): 칠판에 수직으로 튀는 신호를 그리며 "this instantaneous change means that this signal has '''infinite frequency components'''". → 이것이 p.36 "[[디지털 신호]]는 무한 [[bandwidth]]" 의 근거다.{/exam}
+
+== Example 2.1 · 2.2 ==
+* '''Example 2.1''' (p.23): 배터리 전압은 일정(예: 1.5 V) → 이 상수 값은 '''주파수 0 인 사인파'''로 볼 수 있다. 교수: "we call it '''DC'''."
+* '''Example 2.2''' (p.24): 미국 가정 전기 — peak 110~120 V 인 주기 신호, 주파수 '''60 Hz'''. (한국은 220 V, 60 Hz.)
+
+[[anim:sine_wave_params|중간 구간에서 frequency 만 올라갈 때 파형이 좌우로 촘촘해지는 것을 보라 — amplitude 와 phase 는 그대로다]]
+
+{quiz}(a) 주기가 0.5 ms 인 신호의 주파수는? (b) 주파수가 60 Hz 인 신호의 주기는?{/quiz}
+{answer}(a) $f = 1/T = 1/(0.5\times10^{-3}) = $ '''2000 Hz = 2 kHz'''
+(b) $T = 1/60 \approx$ '''0.0167 s = 16.7 ms'''{/answer}
+
+{quiz}다음을 짝지으시오: ① 배터리 전압 ② 사각파의 수직 모서리 — (가) 0 Hz (나) 무한대{/quiz}
+{answer}① — '''(가) 0 Hz''' (변하지 않음), ② — '''(나) 무한대''' (순간 변화). 뒤집으면 0920 오답과 같은 실수다.{/answer}
+
+== 관련 문서 ==
+* [[주기]] · [[사인파]] · [[peak amplitude]] · [[phase]]
+* [[bandwidth]] (주파수의 '''범위''') · [[bps와 Hz]] · [[디지털 신호]]
+* [[CH02 Signals]] · [[0920 오답 복기]] · [[자주 틀리는 함정 모음]]

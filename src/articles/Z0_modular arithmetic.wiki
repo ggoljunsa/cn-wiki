@@ -1,0 +1,46 @@
+key: modular arithmetic
+title: Modular Arithmetic (모듈러 산술, mod 2)
+category: 용어, 6강 DLC
+---
+'''Modular arithmetic''' 은 정해진 수(modulus)로 나눈 '''나머지만 남기는''' 산술이다. CH03 에서 쓰는 것은 '''mod 2''' — 결과가 0 또는 1 뿐이고, 덧셈과 뺄셈이 모두 [[XOR]] 과 같다. [[parity check code]]의 식이 이것으로 쓰여 있다. L5 p.40.
+
+{def}"Parity Check Code: Based on '''modular arithmetic'''." / $r_0 = a_3 + a_2 + a_1 + a_0 \pmod 2$ / $s_0 = b_3 + b_2 + b_1 + b_0 + q_0 \pmod 2$ (p.40){/def}
+
+[[img:L5-40.png|p.40 "Based on modular arithmetic" — 송신 r0 와 수신 s0 가 모두 mod 2 합|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''modulus''' = "척도, 단위". 그 단위를 한 바퀴 돌면 0 으로 돌아온다. 시계가 mod 12 산술이다(10시 + 5시간 = 3시). mod 2 는 '''눈금이 0 과 1 두 개뿐인 시계''' — 1 을 더할 때마다 0 ↔ 1 이 뒤집힌다.
+
+{analogy}🎭 '''전등 스위치 세기.''' 꺼진 전등(0)에서 스위치를 누른 횟수를 세되, 결과로는 "지금 켜졌나 꺼졌나" 만 본다. 3번 누르면 켜짐(1), 4번이면 꺼짐(0). 즉 mod 2 합 = '''"1 이 홀수 개인가?"'''. 이것이 parity 다.{/analogy}
+
+== mod 2 규칙 ==
+<pre class="txt">
+0 + 0 = 0
+0 + 1 = 1
+1 + 0 = 1
+1 + 1 = 2 → 2 mod 2 = 0        ← 올림(carry) 없음
+빼기: 1 − 1 = 0, 0 − 1 = −1 → mod 2 = 1  → 빼기 = 더하기 = XOR
+여러 개의 합 mod 2 = (1 의 개수가 홀수면 1, 짝수면 0)
+</pre>
+
+== Example 3.7 에 적용 ==
+<pre class="txt">
+송신 1011:  r0 = 1 + 0 + 1 + 1 = 3 → 3 mod 2 = '''1'''   → codeword 10111
+수신 10111: s0 = 1 + 0 + 1 + 1 + 1 = 4 → 4 mod 2 = '''0'''   → accept
+수신 00110: s0 = 0 + 0 + 1 + 1 + 0 = 2 → 2 mod 2 = '''0'''   → accept (2비트 오류를 놓침)
+수신 01011: s0 = 0 + 1 + 0 + 1 + 1 = 3 → 3 mod 2 = '''1'''   → discard
+</pre>
+짝수 개의 비트가 뒤집히면 합이 짝수만큼 변해 mod 2 결과가 그대로 → [[syndrome]] 0. 이것이 parity 가 짝수 개 오류를 못 잡는 '''수학적 이유'''다.
+
+[[sim:parity_check]]
+
+== 어디서 또 쓰이나 ==
+* [[CRC]] 나눗셈: 계수가 mod 2 인 [[polynomial representation|다항식]] 나눗셈 → 매 단계가 XOR.
+* [[linear block code]]: "선형" 은 mod 2 덧셈(XOR)에 닫혀 있다는 뜻.
+
+== 예상 문제 ==
+{quiz}$1 + 1 + 1 + 0 + 1 \pmod 2$ 는? 이것을 parity 로 해석하면?{/quiz}
+{answer}합 4 → '''0'''. 1 의 개수가 짝수(4개) → even parity 만족 → syndrome 0 → accept.{/answer}
+
+== 관련 문서 ==
+* [[XOR]] · [[parity check code]] · [[syndrome]] · [[polynomial representation]] · [[CRC]]

@@ -1,0 +1,38 @@
+key: digital-to-analog conversion
+title: Digital-to-Analog Conversion (D2A 변환)
+category: 5강 Analog Transmission, 용어
+---
+'''Digital-to-analog conversion'''(D2A)은 디지털 데이터(비트)에 따라 '''아날로그 신호([[carrier|반송파]])의 특성 하나를 바꿔''' 싣는 과정이다. L4 p.35–36. 방식은 [[ASK]], [[FSK]], [[PSK]], [[QAM]].
+
+{def}"The process of '''changing one of the characteristics of an analog signal''' based on the information in digital data."
+디지털 데이터의 정보에 따라 아날로그 신호의 특성 중 하나를 바꾸는 과정.{/def}
+
+[[img:L4-35.png|p.35 Sender → Modulator → Link(Analog signal) → Demodulator → Receiver|medium]]
+
+== 이름에서 개념 끌어내기 ==
+"digital (data) → analog (signal)". [[digital-to-digital conversion|D2D]] 와 달리 링크 위에는 '''사인파 모양의 아날로그 신호'''가 흐른다. 그 사인파의 "characteristics" 란 [[사인파]]의 세 요소 — [[peak amplitude]], [[주파수]], [[phase]] — 이고, 무엇을 바꾸느냐에 따라 방식 이름이 정해진다 → [[modulation]].
+* 송신 장치: '''Modulator''' (변조기) — 비트 → 반송파 특성 변화
+* 수신 장치: '''Demodulator''' (복조기) — 반송파 특성 변화 → 비트
+* 둘을 합친 것이 우리가 아는 '''modem'''(MOdulator-DEModulator)
+
+{analogy}🎭 '''목소리 톤으로 예/아니오 전하기.''' 같은 "음—" 소리(반송파)를 내되, 예(1)면 크게/아니오(0)면 작게(ASK), 예면 높은 음/아니오면 낮은 음(FSK), 예면 "음—" 아니오면 "—음"처럼 박자를 뒤집어(PSK). 소리 자체는 연속적인 아날로그지만 담긴 정보는 0/1 이다.{/analogy}
+
+== 왜 필요한가 ==
+[[bandpass 채널]](무선, 전화선 등)은 0 Hz 근처를 통과시키지 못해 [[디지털 신호]]를 그대로 보낼 수 없다. 그래서 반송파 주파수 $f_c$ 근처로 옮겨 싣는다 = [[broadband 전송]]. 반대로 [[low-pass 채널]]이면 [[baseband 전송]](D2D)으로 충분하다.
+
+{exam}🎯 교수: "digital-to-analog conversion is '''more popular''' than analog-to-analog … the source data is always formed of digital. So '''this part is more important'''."{/exam}
+
+{|
+! 변환 || 링크 위 신호 || 송신/수신 장치 || 문서
+|-
+| D2D || 디지털 (전압 펄스) || Encoder / Decoder || [[line coding]]
+|-
+| '''D2A''' || 아날로그 (변조된 사인파) || '''Modulator / Demodulator''' || 이 문서
+|}
+
+{quiz}D2A 변환의 네 가지 방식과 각각 바꾸는 반송파 특성을 쓰시오.{/quiz}
+{answer}[[ASK]] — 진폭, [[FSK]] — 주파수, [[PSK]] — 위상, [[QAM]] — 진폭 + 위상(ASK 와 PSK 결합).{/answer}
+
+== 관련 문서 ==
+* [[modulation]] · [[carrier]] · [[ASK]] · [[FSK]] · [[PSK]] · [[QAM]]
+* [[broadband 전송]] · [[bandpass 채널]] · [[CH02 Analog Transmission]]

@@ -1,0 +1,37 @@
+key: controlled access
+title: Controlled Access (제어 접근)
+category: 7강 MAC, 용어
+---
+'''Controlled access'''는 [[multiple access protocols]]의 둘째 분류로, 스테이션들이 '''서로 협의해서''' 권한을 받은 쪽만 보내는 방식이다. 충돌이 원천적으로 없다. L6 p.49–54.
+
+{def}"The stations '''consult one another''' to find which station has the right to send. A station '''cannot send unless it has been authorized''' by other stations." (p.49)
+스테이션들이 서로 상의해 누가 보낼 권리가 있는지 정한다. 다른 스테이션의 허가 없이는 보낼 수 없다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''controlled''' = 통제된. [[random access]] 가 "all stations are equal, no station has control over any other" 였다면, 여기서는 '''누군가(예약표·primary·token)가 접근을 통제'''한다. 통제가 있으니 동시에 둘이 보낼 일이 없다.
+
+== 세 방식 ==
+{|
+! 방식 || 권한의 근거 || 슬라이드
+|-
+| [[reservation|Reservation]] || reservation frame 의 '''내 minislot''' 에 1 표시 || p.50
+|-
+| [[polling|Polling]] || '''primary''' 가 Select / Poll 로 지명 || p.51–53
+|-
+| [[token passing|Token passing]] || 링을 도는 '''token''' 소유 || p.54
+|}
+
+[[img:L6-50.png|p.50 Reservation — 예약 프레임(5 4 3 2 1) 뒤에 예약한 스테이션만 데이터 전송|large]]
+
+[[img:L6-51.png|p.51 Polling — Select 와 Poll|large]]
+
+[[anim:controlled_access|reservation → polling → token passing 세 장면에서 '권한을 주는 것'이 예약표 / primary / token 으로 바뀌는 것을 보라]]
+
+{analogy}🎭 '''수업 시간 발언권.''' Random access 가 "아무나 손 안 들고 말하기"라면, controlled access 는 ① 수업 시작 때 발표 신청서에 이름 쓰기(reservation) ② 교수님이 한 명씩 지명하기(polling) ③ 마이크를 돌려 가며 쥔 사람만 말하기(token passing).{/analogy}
+
+{quiz}Random access 와 controlled access 의 가장 큰 차이를 "누가 결정하나"와 "충돌" 관점에서 쓰시오.{/quiz}
+{answer}Random access: 각 스테이션이 매체 상태만 보고 '''혼자''' 결정 → 충돌 가능. Controlled access: 스테이션들이 '''서로 협의'''해 권한을 받은 쪽만 전송 → '''충돌 없음'''.{/answer}
+
+== 관련 문서 ==
+* [[reservation]] · [[polling]] · [[token passing]]
+* [[multiple access protocols]] · [[random access]] · [[channelization]]

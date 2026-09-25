@@ -1,0 +1,45 @@
+key: point-to-point 링크와 broadcast 링크
+title: Point-to-Point Link와 Broadcast Link (링크의 두 종류)
+category: 6강 DLC, 용어
+---
+L5 p.11 은 링크를 두 종류로 나눈다. 이 구분이 곧 [[data-link layer]]를 두 sublayer([[DLC]] / [[MAC sublayer|MAC]])로 나누는 이유가 된다(p.12).
+
+{def}"'''Point-to-point link''': Dedicated to the two devices." / "'''Broadcast link''': Shared between several pairs of devices." (p.11)
+→ point-to-point 링크는 '''두 장치 전용''', broadcast 링크는 '''여러 장치 쌍이 공유'''.{/def}
+
+<pre class="ascii">
+Point-to-point (전용)            Broadcast (공유)
+                                          ┌── ( B )
+  ( A ) ─────────── ( B )        ( A ) ───┼── ( C )
+                                          └── ( D )
+  경쟁자 없음 → MAC 불필요        동시에 말하면 충돌 → MAC 필요
+</pre>
+(교수 판서 p.11 그림과 같은 모양)
+
+== 이름에서 개념 끌어내기 ==
+* '''point-to-point''': 점 하나에서 점 하나로. 선의 양 끝에 딱 두 명.
+* '''broadcast''': "넓게(broad) 던지다(cast)" — 한 장치가 보낸 신호를 '''링크에 붙은 모두가 듣는다'''. 그래서 둘이 동시에 보내면 [[collision]]이 난다.
+
+{analogy}🎭 '''전화 vs 단체 회의실.''' 1:1 전화(point-to-point)는 둘만 쓰니 "누가 말할 차례인가" 규칙이 필요 없다. 회의실(broadcast)은 모두가 같은 공기를 쓰므로 동시에 말하면 아무도 못 알아듣는다 → 발언권 규칙([[MAC sublayer|MAC]], [[CSMA/CD]] 등)이 필요하다.{/analogy}
+
+[[img:L5-12.png|p.12 broadcast link 의 data-link layer 는 DLC + MAC, point-to-point link 는 DLC 만|medium]]
+
+{|
+! || point-to-point || broadcast
+|-
+| 매체 || 두 장치 전용 (dedicated) || 여러 장치 공유 (shared)
+|-
+| sublayer || [[DLC]] 만 || [[DLC]] + [[MAC sublayer|MAC]]
+|-
+| 예 || [[PPP]] 링크, 전용선 WAN || 유선/무선 [[LAN]]
+|-
+| CH01 연결 형태 || [[point-to-point]] || [[multipoint]]
+|}
+
+== 예상 문제 ==
+{quiz}point-to-point 링크의 data-link layer 에는 왜 MAC sublayer 가 없는가?{/quiz}
+{answer}MAC 은 '''공유 매체에 누가 언제 접근하는가'''를 정하는 일인데, point-to-point 링크는 두 장치 '''전용(dedicated)'''이라 다른 장치와 매체를 두고 경쟁할 일이 없다. 그래서 broadcast 링크에만 MAC 이 필요하다(p.12).{/answer}
+
+== 관련 문서 ==
+* [[DLC]] · [[MAC sublayer]] · [[CH03 Data-Link Control]]
+* [[point-to-point]] · [[multipoint]] · [[CH03 Media Access Control]]

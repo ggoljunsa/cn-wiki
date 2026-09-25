@@ -1,0 +1,30 @@
+key: data-link layer 서비스
+title: Services of the Data-Link Layer (데이터링크 계층의 서비스)
+category: 6강 DLC, 용어
+---
+[[data-link layer]]가 위([[network layer]])에 제공하는 서비스는 한 문장이다: '''datagram 을 경로상의 다음 노드까지 전달한다.''' L5 p.10.
+
+{def}"Responsible for delivering a datagram to the '''next node''' in the path." / "Encapsulate the datagram received from the network in a '''frame'''." / "Each intermediate node need to '''both encapsulate and decapsulate''' for the use of different protocols and frame formats." (p.10)
+→ ① 다음 노드까지 전달 ② datagram 을 frame 으로 [[캡슐화|encapsulate]] ③ 중간 노드는 '''encapsulation 과 decapsulation 을 둘 다''' 한다 — 링크마다 프로토콜과 frame format 이 다르므로.{/def}
+
+[[img:L5-10.png|p.10 Source 는 Frame type 1 로 싸서 Link type 1 에 보내고, 라우터는 벗긴 뒤 Frame type 2 로 다시 싸서 Link type 2 에 보낸다. 교수 판서: "protocol & frame format 다름"|large]]
+
+== 왜 중간 노드는 둘 다 해야 하나 ==
+[[라우터]]의 왼쪽 링크가 유선 Ethernet 이고 오른쪽이 무선 LAN 이라면, 두 링크의 frame 은 헤더 형식·길이·[[FCS]] 방식이 다르다. 그래서 라우터는
+# 들어온 Frame type 1 을 '''decapsulate''' → datagram 을 꺼내 [[network layer]]로 올리고 (다음 hop 결정)
+# 나갈 링크의 규칙대로 Frame type 2 로 '''encapsulate''' 한다.
+프레임은 '''링크 하나의 수명'''만 갖는다. datagram 은 끝까지 살아남는다.
+
+{analogy}🎭 '''국제 소포의 환적.''' 한국 우체국 상자에 담긴 소포가 공항에서 항공 화물 컨테이너로 옮겨지고, 미국에서는 USPS 상자로 옮겨진다. 내용물(datagram)은 같지만 '''겉 포장(frame)은 구간마다 그 구간의 규격'''으로 바뀐다. 환적장(라우터)은 풀기와 싸기를 둘 다 해야 한다.{/analogy}
+
+[[anim:node_to_node|라우터에서 프레임이 벗겨졌다 다시 싸이는 순간을 멈춰 보고, 어느 주소가 바뀌고 어느 주소가 유지되는지 확인하라]]
+
+{warn}'''0920 오답 관련.''' "PDU 이름" 문제: data-link layer 의 PDU 는 '''frame''', network layer 는 '''datagram''' — p.10 교수 판서의 "datagram → frame" 화살표가 바로 이 변환이다. → [[PDU]]{/warn}
+
+== 예상 문제 ==
+{quiz}"라우터는 받은 프레임을 그대로 다음 링크로 전달한다" 가 틀린 이유를 p.10 근거로 설명하라.{/quiz}
+{answer}링크마다 '''protocol 과 frame format 이 다를 수 있어서''' 라우터는 들어온 frame 을 decapsulate 해 datagram 을 꺼낸 뒤 다음 링크용 frame 으로 다시 encapsulate 해야 한다. (MAC 주소도 링크마다 새로 쓴다.){/answer}
+
+== 관련 문서 ==
+* [[CH03 Data-Link Control]] · [[node와 link]] · [[DLC]]
+* [[캡슐화]] · [[PDU]] · [[라우터]] · [[MAC 주소]]

@@ -1,0 +1,34 @@
+key: carrier
+title: Carrier (반송파, f_c)
+category: 5강 Analog Transmission, 용어
+---
+'''Carrier'''(반송파)는 정보를 '''실어 나르기 위해''' 송신 측이 만드는 일정한 주파수 $f_c$ 의 [[사인파]]다. [[digital-to-analog conversion]] 과 [[FDM]] 에서 비트나 신호가 이 반송파의 특성을 바꿔 올라탄다. L4 p.38–39, 50.
+
+{def}Slide: "The amplitude of the '''carrier signal''' is varied to create signal elements" (ASK, p.37). 스펙트럼 그림의 $f_c$ = "'''Carrier frequency'''" (p.38). 구현 그림에서 반송파는 '''Oscillator'''(발진기)가 만든다 (p.39).
+Forouzan: 송신 장치가 정보 신호의 기반으로 쓰는 고주파 신호. 수신 측은 같은 주파수의 반송파를 알고 있어서 변화만 읽어 낸다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''carry''' + '''-er''' = '''나르는 것'''. 반송파 자체에는 정보가 없다. 정보는 반송파가 '''어떻게 바뀌었느냐'''(진폭·주파수·위상)에 있다. 한자어 '''반송(搬送)파'''도 "옮겨 보내는 파".
+
+$f_c$ 의 아래첨자 $c$ = '''c'''arrier.
+
+{analogy}🎭 '''택배 트럭.''' 트럭(반송파)은 늘 같은 모양으로 같은 길을 달린다. 물건(정보)은 짐칸에 실린다. 받는 쪽은 트럭을 보는 게 아니라 '''짐칸에 뭐가 달라졌는지'''를 본다. 트럭마다 다른 차로(주파수 $f_1, f_2, f_3$)를 달리게 하면 한 도로에 여러 회사의 물건을 동시에 보낼 수 있다 = [[FDM]].{/analogy}
+
+[[img:L4-39.png|p.39 Oscillator 가 만든 반송파(Carrier signal, 검정)와 비트열을 Multiplier 로 곱해 ASK 신호(파랑)|medium]]
+
+== 쓰이는 곳 ==
+{|
+! 문맥 || 반송파의 역할
+|-
+| [[ASK]] / [[PSK]] || 반송파 하나($f_c$) × 비트 신호 → 대역폭이 $f_c$ 중심으로 $(1+d)S$
+|-
+| [[FSK]] || 반송파 두 개 $f_1$, $f_2$ (간격 $2\Delta f$)
+|-
+| [[FDM]] || 소스마다 다른 반송파 $f_1, f_2, f_3$ → 주파수축의 다른 자리로
+|}
+
+{quiz}ASK 신호의 대역폭 그림(p.38)에서 대역의 중심에 있는 주파수는 무엇인가?{/quiz}
+{answer}'''반송파 주파수 $f_c$'''(carrier frequency). ASK 신호는 비주기 [[composite signal]] 이라 연속 대역을 차지하는데, 그 대역이 $f_c$ 를 중심으로 $(1+d)S$ 폭만큼 펼쳐진다.{/answer}
+
+== 관련 문서 ==
+* [[modulation]] · [[digital-to-analog conversion]] · [[FDM]] · [[사인파]] · [[주파수]]

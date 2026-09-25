@@ -1,0 +1,40 @@
+key: 주기
+title: 주기 (Period, T)
+category: 2강 Signals, 용어
+---
+'''주기(period, $T$)'''는 신호가 '''한 사이클(cycle)을 완성하는 데 걸리는 시간'''(초)이다. L2 p.20. [[주파수]]의 역수: $T = 1/f$.
+
+{def}L2 p.20 "Period and Frequency"
+"'''Period (T)''': The amount of time (in seconds) that a signal needs to complete 1 cycle."
+주기 = 신호가 한 사이클을 완성하는 데 필요한 시간(초).{/def}
+
+$$T = \frac{1}{f}$$
+
+[[img:L2-21.png|p.21 — 빨갛게 칠한 한 조각이 한 주기. 왼쪽은 1/12 s, 오른쪽은 1/6 s|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''period''' — 그리스어 ''peri''(둘레) + ''hodos''(길) = "한 바퀴 도는 길". 원 위를 한 바퀴 도는 데 걸리는 시간이 주기이고, 그 1바퀴가 [[phase]] 로는 360° 다. 그래서 90° = $\frac14 T$, 180° = $\frac12 T$ (L2 p.25).
+
+{analogy}🎭 '''회전목마 한 바퀴.''' 목마가 한 바퀴 도는 데 10초 걸리면 주기 = 10 s, 1초에 1/10 바퀴를 돌므로 frequency = 0.1 Hz. 같은 정보를 "한 바퀴에 몇 초"로 말하느냐(주기) "1초에 몇 바퀴"로 말하느냐(주파수)의 차이일 뿐이다.{/analogy}
+
+== 단위 환산 ==
+{|
+! 주기 || 주파수
+|-
+| 1 s || 1 Hz
+|-
+| 1 ms ($10^{-3}$ s) || 1 kHz
+|-
+| 1 μs ($10^{-6}$ s) || 1 MHz
+|-
+| 1 ns ($10^{-9}$ s) || 1 GHz
+|}
+
+{info}교수는 "period 와 frequency 는 같은 정보지만 실제로는 frequency 를 훨씬 많이 쓴다"고 했다. 주기라는 개념이 다시 빛나는 곳은 '''[[주기 신호와 비주기 신호|periodic 신호]]''' — 주기가 있으면 Fourier 스펙트럼이 이산(discrete), 없으면 연속이 된다(p.29).{/info}
+
+{quiz}어떤 신호의 주파수가 12 Hz 다. 주기는? 이 신호의 phase 가 90° 라면 시간으로 몇 초만큼 밀린 것인가?{/quiz}
+{answer}$T = 1/12$ s $\approx$ '''0.0833 s'''. 90° 는 한 주기의 1/4 이므로 $\frac14 \times \frac1{12} = \frac1{48}$ s $\approx$ '''0.0208 s'''.{/answer}
+
+== 관련 문서 ==
+* [[주파수]] · [[사인파]] · [[phase]] · [[주기 신호와 비주기 신호]]
+* [[bit length]] (비트 한 개가 차지하는 시간 — 같은 "역수" 구조) · [[CH02 Signals]]

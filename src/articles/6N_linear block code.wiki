@@ -1,0 +1,61 @@
+key: linear block code
+title: Linear Block Code (선형 블록 코드)
+category: 6강 DLC, 용어
+---
+'''Linear block code''' 는 '''두 valid codeword 를 [[XOR]] 한 결과도 valid codeword''' 인 [[block code]]다. 오늘날 쓰이는 block code 는 거의 전부 여기에 속한다. 가장 큰 실용적 이득: [[minimum Hamming distance|$d_{min}$]] 을 '''0 이 아닌 codeword 의 최소 1 개수'''로 바로 구할 수 있다. L5 p.34–36.
+
+{def}"Definition: A code where the '''XOR of two valid codewords creates another valid codeword'''." / "Almost all block codes used today belong to linear block codes." / "The minimum Hamming distance for a linear block code: The '''minimum number of 1''' in a codeword in the code set." (p.34)
+→ XOR 에 대해 닫혀 있는 코드. $d_{min}$ = (0 아닌) codeword 중 1 의 개수 최솟값.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''linear''' = "선형". 수학에서 선형이란 '''더해도 같은 집합 안에 머문다'''는 뜻. mod 2 에서 덧셈이 [[XOR]] 이므로, "codeword + codeword = codeword" 가 곧 "XOR 에 닫혀 있다" 이다. 덧붙여 $x \oplus x = 0$ 이니 '''000…0 은 항상 codeword''' 다.
+
+{analogy}🎭 '''짝수들의 모임.''' 짝수 + 짝수 = 짝수. 짝수 집합은 덧셈에 닫혀 있다(선형). Example 3.1 의 codeword 는 "1 이 짝수 개인 3비트" 인데, 짝수 개 + 짝수 개를 XOR 하면 역시 짝수 개 → 닫혀 있다. 반면 홀수 집합은 홀수 + 홀수 = 짝수라 닫혀 있지 않다(비선형).{/analogy}
+
+== Example 3.5 — linear 확인 (p.35) ==
+<pre class="txt">
+코드 {000, 011, 101, 110}
+  011 ⊕ 101 = 110  ✓   ← "2번째 ⊕ 3번째 = 4번째" (슬라이드 예)
+  011 ⊕ 110 = 101  ✓
+  101 ⊕ 110 = 011  ✓
+  x   ⊕ 000 = x    ✓
+  x   ⊕ x   = 000  ✓
+→ 모든 XOR 결과가 코드 안 → '''linear block code'''
+</pre>
+
+== Example 3.6 — d_min 지름길 (p.36) ==
+<pre class="txt">
+0 이 아닌 codeword:  011   101   110
+1 의 개수(weight) :   2     2     2
+d_min = min = '''2'''          (Example 3.3 에서 6쌍을 다 비교한 결과와 같다)
+</pre>
+
+== 왜 지름길이 성립하나 ⭐⭐ ==
+<pre class="txt">
+① d(x, y) = (x ⊕ y) 의 1 의 개수                    ← Hamming distance 정의 (p.28)
+② linear 이면 x ⊕ y 도 codeword (x ≠ y 면 0 아님)  ← linear 정의 (p.34)
+③ 따라서 "모든 쌍의 거리 목록" = "0 아닌 codeword 들의 weight 목록"
+④ d_min = 그 목록의 최솟값 = 0 아닌 codeword 의 최소 weight
+</pre>
+codeword 가 $M$ 개일 때 일반 코드는 $\binom{M}{2} = M(M-1)/2$ 쌍을 비교해야 하지만($O(M^2)$), linear 코드는 codeword 를 한 번 훑으면 된다($O(M)$).
+
+[[img:L5-44.png|p.44 CRC C(7,4) 표 — 이것도 linear. 0 아닌 codeword 의 최소 weight 는 3 (예: 0001011) → d_min = 3|medium]]
+
+{tip}p.44 의 [[CRC]] 표에 지름길을 써 보자: 0001011(3), 0010110(3), 0100111(4), 1000101(3) … 최솟값 '''3''' → $d_{min}=3$ → 2개 검출, 1개 정정. 120쌍($\binom{16}{2}$)을 비교할 필요가 없다.{/tip}
+
+== 가계도 ==
+<pre class="txt">
+block code
+ └ linear block code        (XOR 에 닫힘)
+     ├ parity check code     (C(n, n−1), d_min = 2)
+     └ cyclic code           (+ 회전에 닫힘)
+         └ CRC               (LAN/WAN 에서 사용)
+</pre>
+
+== 예상 문제 ==
+{quiz}코드 {00000, 01011, 10101, 11110} 이 linear 인지 확인하고 $d_{min}$ 을 구하라.{/quiz}
+{answer}01011 ⊕ 10101 = 11110 ✓, 01011 ⊕ 11110 = 10101 ✓, 10101 ⊕ 11110 = 01011 ✓ → linear. 0 아닌 codeword weight: 3, 3, 4 → '''$d_{min} = 3$'''.{/answer}
+
+== 관련 문서 ==
+* [[minimum Hamming distance]] · [[Hamming distance]] · [[XOR]]
+* [[block code]] · [[parity check code]] · [[cyclic code]] · [[CRC]]

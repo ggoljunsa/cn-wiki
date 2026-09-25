@@ -1,0 +1,63 @@
+key: SNR
+title: SNR (Signal-to-Noise Ratio, 신호 대 잡음비)
+category: 3강 Transmission, 용어, 핵심
+---
+'''SNR'''(Signal-to-Noise Ratio)은 '''평균 신호 전력 ÷ 평균 잡음 전력'''이다. 무단위 비율이며 dB 로도 쓴다: $\text{SNR}_{dB} = 10\log_{10}\text{SNR}$. L2 p.46. [[Shannon capacity]] 공식의 핵심 입력.
+
+{def}L2 p.46 "Signal-to-Noise Ratio (SNR)"
+"The ratio of the signal power to the noise power
+$$\text{SNR} = \frac{\text{Average Signal Power}}{\text{Average Noise Power}}$$
+$\text{SNR}_{dB} = 10\log_{10}\text{SNR}$ — Described in decibel units"
+SNR = 신호 전력 대 잡음 전력의 비. 데시벨로 나타내면 10 log₁₀ SNR.{/def}
+
+[[img:L2-46.png|p.46 — SNR 정의와 SNR_dB|medium]]
+
+== 이름에서 개념 끌어내기 ==
+{exam}⭐⭐⭐ 교수(9/10 복습): "SNR 은 '''very important''' — 우리가 훨씬 더 익숙해져야 할 개념이다. 그냥 신호와 잡음의 비율이다. 나는 늘 말한다, '''the name itself is very important in learning something'''. 무언가를 배울 때 내가 제일 먼저 하는 건 '''그 이름, 이름 뒤의 이유를 이해하는 것'''이다. 근본은 이름에 있다. Signal-to-Noise Ratio 가 그 예다 — 정의가 이름에 전부 있다. '''Please remember to understand the name or the definition when you learn something.'''"{/exam}
+
+'''Signal''' - '''to''' - '''Noise''' '''Ratio''' — 그대로 읽으면 공식이다: '''signal''' 을 '''noise''' 에 대해(to) 나눈 '''비율'''. 분자 = signal, 분모 = noise. 순서도 이름 그대로.
+* SNR 이 '''크다''' → 신호가 잡음보다 훨씬 세다 → '''좋은''' 채널
+* SNR 이 '''작다''' (1 근처) → 신호가 잡음에 묻힌다 → '''나쁜''' 채널
+* SNR = 0 → 신호가 없다 → [[Shannon capacity]] = 0
+
+{analogy}🎭 '''시끄러운 곳에서의 대화.''' 내 목소리 크기 ÷ 주변 소음 크기. 도서관에서 속삭여도(작은 signal) 조용하면(더 작은 noise) SNR 이 높아 잘 들리고, 콘서트장에서 소리쳐도(큰 signal) 음악이 더 크면(큰 noise) SNR 이 낮아 안 들린다. '''절대 크기가 아니라 비율'''이 중요하다.{/analogy}
+
+== dB 로 바꾸기 ==
+$$\text{SNR}_{dB} = 10\log_{10}\text{SNR}\qquad\Longleftrightarrow\qquad \text{SNR} = 10^{\text{SNR}_{dB}/10}$$
+{|
+! SNR (비율) || SNR_dB
+|-
+| 1 || 0 dB (신호 = 잡음)
+|-
+| 10 || 10 dB
+|-
+| 63 || ≈ 18 dB (Example 2.9)
+|-
+| 100 || 20 dB
+|-
+| 1000 || 30 dB
+|-
+| 3162 || ≈ 35 dB (Example 2.8 전화선)
+|}
+<pre class="txt">
+Example 2.8 의 SNR = 3162 를 dB 로:
+1. SNR_dB = 10 log₁₀ 3162
+2. 3162 ≈ 10^3.5  (√10 ≈ 3.162 이므로 10^3 × 10^0.5 = 3162)
+3. SNR_dB = 10 × 3.5 = '''35 dB'''
+</pre>
+[[sim:db_calc]]
+
+== 어디서 쓰이나 ==
+* [[Shannon capacity]]: $C = B\log_2(1 + \text{SNR})$ — '''비율''' 을 넣는다
+* 근사식: $C \approx B \times \text{SNR}_{dB}/3$ — '''dB''' 를 넣는다 (SNR ≫ 1 일 때)
+* [[data rate limits]] 3요소 중 "the quality of the channel (the amount of noise)" 가 SNR
+* PCM 의 quantization 에서도 SNR_dB 가 비트 수 $n_b$ 로 정해진다 → [[SNR_dB와 n_b]]
+
+{warn}공식마다 '''비율인지 dB 인지''' 확인할 것. $B\log_2(1+35)$ 처럼 dB 값을 비율 자리에 넣는 것이 가장 흔한 실수다.{/warn}
+
+{quiz}평균 신호 전력 10 mW, 평균 잡음 전력 1 μW. SNR 과 SNR_dB 는?{/quiz}
+{answer}SNR = $10\times10^{-3} / 1\times10^{-6} = $ '''10,000'''. SNR_dB = $10\log_{10}10^4 = $ '''40 dB'''.{/answer}
+
+== 관련 문서 ==
+* [[noise]] · [[데시벨]] · [[Shannon capacity]] · [[AWGN]] · [[data rate limits]]
+* [[SNR_dB와 n_b]] · [[CH02 Transmission]] · [[계산 문제 모음]]

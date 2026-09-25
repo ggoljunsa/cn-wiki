@@ -1,0 +1,45 @@
+key: star 토폴로지
+title: Star Topology (스타 토폴로지)
+category: 1강 Introduction, 용어, 함정
+---
+'''Star topology''' 는 모든 장치가 '''가운데 hub 하나에만''' 연결되는 토폴로지 (L1 p.11).
+
+{def}"Each device has a dedicated '''point-to-point link only to a central controller''', e.g., '''hub'''. / Less expensive, easy to install/reconfigure, robust, easy fault identification/isolation / '''Dependency of whole topology on the hub'''" (L1 p.11)
+각 장치는 중앙 제어기(예: [[허브|hub]])에만 전용 [[point-to-point]] 링크를 갖는다. 덜 비싸고, 설치·재구성이 쉽고, 견고하며, 고장 식별·격리가 쉽다. 단, 토폴로지 전체가 hub 에 의존한다.{/def}
+
+[[img:L1-11.png|Star — 주황색 Hub 에서 노트북 4 대로 선이 하나씩|large]]
+
+{exam}⭐⭐ '''0920 NotebookLM 퀴즈에서 여기서 틀렸다.''' "각 장치가 '허브(Hub)'라고 불리는 중앙 제어기에만 연결되는 물리적 토폴로지"를 '''Bus''' 라고 답했다. 정답은 '''Star'''. 판별법: '''문제에 hub / central controller 가 나오면 Star''', drop line / tap / backbone cable 이 나오면 [[bus 토폴로지|Bus]].{/exam}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''star''' = 별. 가운데 한 점에서 빛살(링크)이 사방으로 뻗는 모양이다. '''가운데가 있다'''는 게 전부다 — 그리고 가운데가 꺼지면 별 전체가 꺼진다("dependency of whole topology on the hub").
+
+[[anim:topologies|두 번째로 그려지는 star 에서 모든 선이 hub 로 모이는 것을 보고, 마지막 장면에서 hub 가 죽으면 어떤 장치끼리도 통신할 수 없게 되는 것을 확인하라]]
+
+== Star vs Bus — 헷갈린 그 비교 ==
+{|
+! || '''Star''' (p.11) || [[bus 토폴로지|Bus]] (p.12)
+|-
+| 중앙 장비 || '''있다''' — hub (central controller) || '''없다'''
+|-
+| 연결 방식 || hub 와 장치마다 '''point-to-point''' || 케이블 하나를 '''multipoint''' 공유
+|-
+| 부품 || hub + 장치마다 케이블 한 가닥 || backbone 케이블 + '''drop line + tap'''
+|-
+| 장점 || less expensive(mesh 대비), 설치·재구성 쉬움, robust, fault 격리 쉬움 || easy to install
+|-
+| 단점 || '''hub 가 죽으면 전체 마비''' || reconnection·fault isolation 어려움
+|}
+
+== Star 와 Mesh 비교 ==
+장치 $n$ 개일 때 mesh 는 링크 $n(n-1)/2$, star 는 '''$n$ 개'''(장치마다 hub 로 1개). 장치당 포트도 mesh 는 $n-1$, star 는 '''1개'''. 그래서 "less expensive". 링크 하나가 끊기면 그 장치만 떨어져 나가므로 "robust, easy fault isolation".
+
+{info}오늘날 [[LAN]] 은 hub 자리에 [[스위치]]를 둔 star 모양이다 (L1 p.16 "LAN with a switch (today)").{/info}
+
+{analogy}🎭 '''학교 교무실 연락망.''' 학생(장치)은 모두 담임(hub)에게만 연락한다. 학생끼리 직접 연락망이 없어도 담임을 거치면 된다. 학생 한 명 폰이 고장 나도 나머지는 멀쩡(robust). 그런데 '''담임 폰이 꺼지면''' 반 전체 연락이 끊긴다.{/analogy}
+
+{quiz}다음 설명 중 Star 에 해당하는 것을 모두: (a) drop line 과 tap 으로 노드를 붙인다 (b) 전체가 중앙 장비에 의존한다 (c) 장치당 링크가 하나 (d) multipoint 연결{/quiz}
+{answer}'''(b), (c)'''. (a)·(d)는 [[bus 토폴로지|Bus]] 의 특징.{/answer}
+
+== 관련 문서 ==
+* [[bus 토폴로지]] · [[mesh 토폴로지]] · [[ring 토폴로지]] · [[허브]] · [[스위치]] · [[CH01 Introduction]] · [[0920 오답 복기]]

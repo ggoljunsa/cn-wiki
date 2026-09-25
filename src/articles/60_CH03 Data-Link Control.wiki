@@ -1,0 +1,460 @@
+key: CH03 Data-Link Control
+title: CH03 Data-Link Layer (1) — Data-Link Control
+category: 6강 DLC, 핵심
+---
+'''CH03 Data-Link Layer (1)'''은 [[network layer]]가 내려보낸 datagram 을 '''"한 링크 건너편"까지 어떻게 안전하게 옮기는가'''를 다루는 덱이다(L5, 56쪽). 앞부분(p.7–12)은 [[data-link layer]]의 위치와 용어([[node와 link]], [[DLC]] vs [[MAC sublayer|MAC]])를 정의하고, 본론(p.13–56)은 [[DLC]] sublayer 의 두 임무 — '''[[framing]]'''(비트를 프레임으로 묶기)과 '''error control'''(오류 검출: [[block code]], [[Hamming distance]], [[parity check code|parity]], [[CRC]]) — 그리고 대표 프로토콜 [[HDLC]]·[[PPP]] 로 끝난다.
+
+페이지 번호는 슬라이드 인쇄 번호. p.2–6 은 지난 시간([[physical layer]] vs data-link layer) 복습이고 '''새 내용은 p.7 부터'''. 이 덱에 대한 녹음본은 아직 없다.
+
+{exam}⭐⭐⭐ 이 덱의 계산 3종 세트 — ① '''[[Hamming distance]] / [[minimum Hamming distance|d_min]]''' ($d_{min}=s+1$ 검출, $d_{min}=2t+1$ 정정), ② '''Example 3.7 parity 다섯 경우'''(특히 case 4: 2비트 오류가 syndrome 0 으로 통과), ③ '''CRC XOR 나눗셈''' (1001000 ÷ 1011 → 나머지 110, 수신 측 syndrome 000 / 011). 셋 다 손으로 한 줄씩 재현할 수 있어야 한다.{/exam}
+
+{analogy}🎭 '''택배의 "구간 배송".''' 서울→부산 택배는 한 트럭이 끝까지 가지 않는다. 동네 집하장 → 허브 터미널 → 지역 터미널 → 배송 기사로 '''구간마다 다른 트럭, 다른 송장'''을 쓴다. [[data-link layer]]는 바로 이 '''한 구간 배송'''이다. 구간 담당자는 ① 짐을 '''박스에 포장'''하고([[framing]]) ② 받을 때 '''파손 검사'''를 한다(error control). 박스 안의 최종 주소(IP)는 끝까지 그대로지만 겉의 구간 송장([[MAC 주소]])은 터미널마다 새로 붙인다.{/analogy}
+
+----
+
+== Recap (p.2–6) — physical layer vs data-link layer ==
+
+* [[physical layer]]: 프레임의 '''개별 비트'''를 신호(electrical/optical)로 바꿔 매체에 싣는다. 두 physical layer 사이의 논리 단위는 '''bit'''.
+* [[data-link layer]]: datagram 을 받아 '''링크를 건너(across the link)''' 옮기고, datagram 을 '''frame''' 으로 [[캡슐화|encapsulate]] 한다. 링크 종류(wired/wireless LAN, WAN)마다 다른 [[프로토콜]]을 쓸 수 있다.
+* p.6 — data-link layer 는 '''node-to-node''' 전달을 관리하며, 역할은 Physical Addressing · Error Detection · Media Access Control · Flow Control 넷.
+
+== 1. Introduction (p.7–12) ==
+
+=== p.8 — Communication at the data-link layer ===
+[[img:L5-08.png|p.8 Alice(Sky Research) → R2 → R4 → R5 → R7 → Bob(Scientific Books). 호스트는 5계층, 라우터는 Network/Data-link/Physical 3계층만. data-link 층 사이의 논리적 연결은 5개로 끊겨 있다|large]]
+
+Alice 와 Bob 사이 경로에는 '''data-link layer 간 논리적 연결이 5개'''다. 교수의 판서: "data-link 통신: 경로 전체 X, '''링크 구간마다 따로'''", 그리고 이 층의 주소는 "[[MAC 주소|MAC address]] = physical address". 종단 호스트는 5계층 전부, 중간 [[라우터]]는 [[network layer]]까지 3계층만 갖는다.
+
+{warn}'''0920 오답 복기에서 틀린 곳.''' "모든 중간 노드는 5개 계층을 전부 구현해야 한다" 는 '''틀렸다'''. [[라우터]]는 L1–L3, [[스위치]]는 L1–L2 만 갖는다. 5계층 전부는 종단 호스트뿐 — 이 그림에서 R2·R4·R5·R7 옆의 층 상자가 3칸인 것을 확인하라.{/warn}
+
+=== p.9 — Nodes and Links ⭐ ===
+[[img:L5-09.png|p.9 a. 인터넷의 작은 일부(LAN – point-to-point network – LAN …) → b. Node –Link– Node 사슬로 추상화|large]]
+
+data-link layer 의 통신은 '''node-to-node''' — [[transport layer]]·[[application layer]]의 '''end-to-end''' 와 다르다([[end-to-end와 hop-to-hop]]). 호스트와 [[라우터]]를 '''node''', 그 사이의 네트워크 구간을 '''link''' 라 부른다. → [[node와 link]]
+
+[[anim:node_to_node|프레임이 링크 하나를 건널 때마다 라우터에서 벗겨지고(decapsulate) 새 프레임으로 다시 싸이는(encapsulate) 장면, MAC 주소는 갈아끼워지고 IP 주소는 그대로인 것을 보라]]
+
+=== p.10 — Services of the data-link layer ===
+[[img:L5-10.png|p.10 Source 는 Link type 1 용 Frame type 1 로 싸고, 라우터는 이것을 벗겨 Link type 2 용 Frame type 2 로 다시 싼다|large]]
+
+* datagram 을 '''경로상의 다음 노드(next node)'''에 전달.
+* [[network layer]]에서 받은 datagram 을 '''frame''' 에 encapsulate.
+* '''중간 노드는 encapsulation 과 decapsulation 을 둘 다''' 해야 한다 — 링크마다 '''protocol 과 frame format 이 다르기''' 때문(교수 판서: "protocol & frame format 다름"). → [[data-link layer 서비스]]
+
+=== p.11 — Two Categories of Links ===
+* '''Point-to-point link''': 두 장치가 링크를 '''전용(dedicated)'''으로 쓴다.
+* '''Broadcast link''': 링크를 '''여러 장치 쌍이 공유(shared)'''한다.
+→ [[point-to-point 링크와 broadcast 링크]]
+
+=== p.12 — Two Sublayers ⭐ ===
+[[img:L5-12.png|p.12 a. broadcast link 의 data-link layer = DLC + MAC / b. point-to-point link 는 DLC 만 (아래 칸이 회색)|medium]]
+
+{|
+! sublayer || 담당 || 어느 링크
+|-
+| '''[[DLC]]''' (Data Link Control) || framing, error control — 인접 두 노드 간 절차 || '''point-to-point 와 broadcast 모두'''
+|-
+| '''[[MAC sublayer|MAC]]''' (Media Access Control) || 공유 매체를 누가 언제 쓰는가 || '''broadcast 링크에만''' → [[CH03 Media Access Control]]
+|}
+
+{tip}이름에서 끌어내기: MAC 은 '''Media Access''' — 매체(media)에 접근(access)하는 순서를 정하는 것이다. 전용 선([[point-to-point]])에는 경쟁자가 없으니 접근 제어가 필요 없고, 그래서 P2P 의 data-link layer 에는 MAC 칸이 비어 있다.{/tip}
+
+== 2. Data-Link Control (p.13–14) ==
+[[DLC]] 는 '''두 인접 노드(two adjacent nodes)''' 사이의 통신 절차를 다룬다(P2P·broadcast 공통). Key roles 두 가지:
+# '''[[framing|Framing]]''' — [[physical layer]]가 나르는 비트들을 '''어떻게 조직(organize)할 것인가'''
+# '''Error control''' — 통신 중 생긴 '''오류를 검출(detecting)'''
+
+== Framing (p.15–20) ==
+
+=== p.15 — Framing ===
+* data-link layer 는 비트를 '''frame 으로 묶어(pack)''' 프레임끼리 구분 가능하게 한다.
+* 프레임에 '''sender address 와 destination address''' 를 붙여 메시지를 가른다.
+* '''너무 큰 프레임은 flow control·error control 에 비효율적''' → 메시지는 보통 작은 프레임 여럿으로 나뉜다. (1비트만 깨져도 큰 프레임 전체를 버리고 다시 보내야 하니까.)
+
+=== p.16 — Framing Size ⭐ ===
+{|
+! 방식 || 경계 표시 || 예
+|-
+| '''[[fixed-size framing]]''' || '''필요 없음''' — 크기 자체가 경계 || '''ATM WAN''' 의 cell
+|-
+| '''[[variable-size framing]]''' || '''한 프레임의 끝과 다음 프레임의 시작을 정의해야 함''' || '''LAN 에서 일반적(prevalent)'''
+|}
+가변 크기의 경계를 표시하는 방법이 둘: [[character-oriented framing]] / [[bit-oriented framing]].
+
+=== p.17–18 — Character-Oriented Framing & Byte Stuffing ⭐⭐ ===
+[[img:L5-17.png|p.17 Flag – Header – Data(가변 개수의 8-bit character) – Trailer – Flag|medium]]
+
+데이터는 ASCII 같은 '''8-bit characters'''. 프레임 앞뒤에 '''8-bit [[flag]]''' 를 붙여 구분한다. 문제는 데이터 안에 flag 와 '''같은 패턴'''의 문자가 있으면 수신자가 프레임 끝으로 착각한다는 것.
+
+해결 = '''[[byte stuffing]]''': 데이터 구역에 flag 또는 [[ESC]] 와 같은 패턴이 나타나면 그 '''앞에 ESC 바이트를 하나 끼운다'''. ESC(escape character)는 미리 정한 비트 패턴.
+
+[[img:L5-18.png|p.18 데이터 속 Flag 앞에 ESC, 데이터 속 ESC 앞에도 ESC → "Two extra bytes". 수신 측은 unstuffing 으로 제거|large]]
+
+<pre class="txt">
+상위 계층 데이터 :   [ ] [Flag] [ ] [ ] [ESC] [ ]
+                          ↑ flag 모양 → 앞에 ESC     ↑ ESC 모양 → 앞에 ESC
+송신 프레임 데이터:   [ ] '''[ESC]''' [Flag] [ ] [ ] '''[ESC]''' [ESC] [ ]     ← Two extra bytes
+수신 측 규칙      :   ESC 를 만나면 버리고, 바로 다음 바이트는 "그냥 데이터"로 취급
+복원된 데이터     :   [ ] [Flag] [ ] [ ] [ESC] [ ]
+</pre>
+
+[[sim:byte_stuffing]]
+
+{warn}'''왜 ESC 앞에도 ESC 를 넣나?''' 데이터 속 ESC 를 그냥 두면 수신자는 "다음 바이트는 데이터" 라는 신호로 읽고 뒤 바이트를 삼켜 버린다. 그래서 flag 뿐 아니라 '''ESC 자신도 escape''' 해야 한다. p.18 그림의 extra byte 2개가 정확히 이 두 경우다.{/warn}
+
+=== p.19–20 — Bit-Oriented Framing & Bit Stuffing ⭐⭐ ===
+[[img:L5-19.png|p.19 flag 01111110 (가운데 1이 6개 — 교수 판서 "6") – Header – 가변 개수의 bits – Trailer – flag|medium]]
+
+데이터 구역은 '''비트의 나열'''. 특수 8비트 패턴 '''[[flag]] = 01111110''' 을 delimiter 로 쓴다. 데이터 속에 01111110 이 생기면 flag 로 오인되므로 '''[[bit stuffing]]''':
+
+{def}"'''Adding one extra 0 whenever five consecutive 1s follow a 0 in the data''', so that the receiver does not mistake the pattern 01111110 for a flag." (p.20)
+→ 데이터에서 '''0 다음에 1이 다섯 개 연속'''되면 그 뒤에 '''0 을 하나 강제 삽입'''한다.{/def}
+
+[[img:L5-20.png|p.20 0001111111001111101000 → 000111110110011111001000 (빨간 0 두 개, "Two extra bits")|large]]
+
+<pre class="txt">
+입력 (22 bits)  : 000 11111 11 00 11111 0 1000
+                  0 뒤 1 다섯 개 ↑        ↑ 0 뒤 1 다섯 개
+1st 삽입        : 000 11111 '''0''' 11 00 ...
+2nd 삽입        :                   ... 0 11111 '''0''' 0 1000
+송신 (24 bits)  : 000111110110011111001000        ← Two extra bits
+수신 unstuffing : 0 + 11111 다음의 0 은 버린다 → 0001111111001111101000
+</pre>
+
+[[anim:bit_stuffing_anim|연속 1 카운터가 0→5 로 오르다 5 에서 0 이 강제로 끼워지는 순간을 보고, 왜 데이터에 1 이 여섯 개 연속으로 나올 수 없는지 설명해 보라]]
+
+[[sim:bit_stuffing]]
+
+{tip}핵심 논리: flag 는 1 이 '''여섯 개'''(0'''111111'''0). stuffing 후 데이터에는 1 이 '''최대 다섯 개'''까지만 연속될 수 있다. 그러니 수신자는 1 여섯 개를 보면 무조건 flag 다.{/tip}
+
+== Error control (p.21–51) ==
+
+=== p.21 — Types of Errors ⭐ ===
+[[img:L5-21.png|p.21 a. single-bit error — 1비트만 바뀜 / b. burst error — 손상 4비트가 8비트 구간에 걸쳐 있으므로 length = 8 bits|large]]
+
+* '''[[single-bit error]]''': 데이터 단위에서 '''딱 1비트'''만 바뀜.
+* '''[[burst error]]''': '''2비트 이상'''이 바뀜. burst 의 '''길이 = 첫 손상 비트 ~ 마지막 손상 비트'''(사이의 멀쩡한 비트 포함). 그림은 손상 4개인데 길이는 '''8'''.
+
+=== p.22 — Redundancy ⭐ ===
+[[img:L5-22.png|p.22 Sender 는 Data 뒤에 redundancy(1011101)를 붙여 보내고, Receiver 는 OK? 검사 후 Yes 면 데이터 추출, No 면 reject|medium]]
+
+'''[[redundancy|여분(redundant) 비트]]'''를 데이터에 붙여 보내 오류를 검출·정정한다. CH02 의 [[block coding]]([[4B/5B]])이 동기화를 위해 비트를 늘렸다면, 여기서는 '''오류 검출'''을 위해 늘린다.
+
+=== p.23 — Block Coding ⭐⭐ ===
+[[img:L5-23.png|p.23 Encoder: k-bit Dataword → Generator → n-bit Codeword / unreliable transmission / Decoder: Checker → Extract 또는 Discard|large]]
+
+'''[[block code]]''': '''k 비트 [[dataword]] → n 비트 [[codeword]]''' ($n > k$). 가능한 n비트 패턴은 $2^n$ 개인데 실제로 쓰는 codeword 는 $2^k$ 개뿐 → 나머지 $2^n - 2^k$ 개는 '''invalid'''.
+* 수신자는 '''valid codeword 목록'''(교수 판서: "'''codebook'''")을 갖고 있다.
+* 받은 codeword 가 '''invalid''' 로 바뀌어 있으면 → '''오류 발생''' → Checker 가 discard.
+
+=== p.24–26 — Example 3.1 ⭐ ===
+[[img:L5-24.png|p.24 Example 3.1 코드표 (k=2, n=3) — 교수 판서: dataword 는 k, codeword 는 n, 표 전체가 codebook|medium]]
+
+{|
+! Dataword || Codeword
+|-
+| 00 || 000
+|-
+| 01 || 011
+|-
+| 10 || 101
+|-
+| 11 || 110
+|}
+
+송신자가 dataword 01 → codeword '''011''' 을 보냈을 때:
+<pre class="txt">
+case 1: 수신 011 → valid   → dataword 01 추출            ✓ 정상
+case 2: 수신 111 → invalid → discard                      ✓ 1비트 오류 검출
+case 3: 수신 000 → valid!  → dataword 00 을 '''잘못''' 추출    ✗ 2비트 오류 검출 실패
+</pre>
+
+'''Implication (p.26): codeword 들 사이의 거리(distance)가 오류 검출 능력을 결정한다.''' 011 에서 2비트만 바뀌면 다른 valid codeword(000)에 도착해 버리기 때문. → 그 "거리"를 재는 자가 [[Hamming distance]].
+
+=== p.27–28 — Hamming Distance ⭐⭐⭐ ===
+{def}"The number of differences between the corresponding bits in two words of the same size." — $d(x, y)$
+"The Hamming distance between the received and sent codewords is the '''number of bits that are corrupted''' during transmission." (p.27)
+→ 같은 길이 두 word 에서 '''대응 비트가 다른 자리의 개수'''. 송신·수신 codeword 사이의 거리 = 손상된 비트 수.{/def}
+
+'''계산법 (p.28 Note): $d(x,y)$ = $x \oplus y$ 의 1 의 개수''' ([[XOR]]: 같으면 0, 다르면 1).
+
+<pre class="txt">
+Example 3.2
+  d(000, 011):     000
+                 ⊕ 011
+                 -----
+                   011   → 1 이 2개 → '''d = 2'''
+
+  d(10101, 11110): 10101
+                 ⊕ 11110
+                 -------
+                   01011 → 1 이 3개 → '''d = 3'''
+</pre>
+
+=== p.29–32 — Minimum Hamming Distance for Error Detection ⭐⭐⭐ ===
+[[img:L5-29.png|p.29 valid codeword x 를 중심으로 반지름 s 인 원 = 1~s개 오류로 손상된 codeword 들. d_min > s 이면 원이 y 에 닿지 않는다|large]]
+
+'''[[minimum Hamming distance|$d_{min}$]]''' = '''모든 codeword 쌍 중 가장 작은 Hamming distance'''.
+
+{exam}⭐⭐⭐ '''검출''': 최대 $s$ 개 오류를 모든 경우에 검출하려면 $d_{min} = s + 1$.
+이유: $x$ 에서 1~$s$ 비트가 바뀐 결과는 모두 반지름 $s$ 원 안에 있다. 가장 가까운 다른 valid codeword $y$ 가 $s+1$ 이상 떨어져 있으면 원 안의 어떤 점도 $y$ 가 아니다 → 반드시 invalid → 검출.{/exam}
+
+[[anim:hamming_sphere|반지름 s 의 원(검출)이 y 에 닿지 않는 조건 d_min=s+1 과, 두 반지름 t 영역(정정)이 겹치지 않는 조건 d_min=2t+1 을 차례로 보고, 왜 정정 쪽에만 2 가 붙는지 말해 보라]]
+
+<pre class="txt">
+Example 3.3  (Example 3.1 의 코드: 000, 011, 101, 110)
+  모든 쌍의 거리: d(000,011)=2  d(000,101)=2  d(000,110)=2
+                  d(011,101)=2  d(011,110)=2  d(101,110)=2
+  → d_min = 2 → s = d_min − 1 = '''1''' → single error 검출만 보장
+
+  101 전송, 1비트 오류: 001 / 111 / 100 → 어느 것도 valid 아님 → 검출 ✓
+  101 전송, 2비트 오류: 예) 앞 두 비트 → 011 → valid! → 검출 실패 ✗
+
+Example 3.4
+  d_min = 4 → d_min = s + 1 → '''s = 3''' → 최대 3개 오류 검출 보장
+</pre>
+
+[[sim:hamming_distance]]
+
+=== p.33 — Minimum Hamming Distance for Error Correction ⭐⭐⭐ ===
+[[img:L5-33.png|p.33 x 와 y 각각의 Territory(반지름 t). 두 영역이 겹치지 않으려면 d_min > 2t|large]]
+
+{exam}⭐⭐⭐ '''정정''': 최대 $t$ 개 오류를 모든 경우에 정정하려면 $d_{min} = 2t + 1$.
+정정 = "받은 word 를 '''가장 가까운''' valid codeword 로 되돌리기". $x$ 의 영역(반지름 $t$)과 $y$ 의 영역(반지름 $t$)이 겹치면 어느 쪽으로 되돌릴지 모른다 → 두 반지름의 합 $2t$ 보다 멀어야 함 → $d_{min} > 2t$ → $d_{min} = 2t+1$.
+'''검출은 반지름 하나(s), 정정은 반지름 둘(t + t).'''{/exam}
+
+=== p.34–36 — Linear Block Codes ⭐⭐ ===
+{def}"A code where the '''XOR of two valid codewords creates another valid codeword'''." (p.34) — 오늘날 쓰이는 block code 는 거의 전부 linear block code.{/def}
+
+[[linear block code]] 의 $d_{min}$ 지름길: '''0 이 아닌 codeword 중 1 의 개수의 최솟값''' (minimum weight).
+* 왜? $d(x,y)$ = $x \oplus y$ 의 1 개수인데, linear 이면 $x \oplus y$ '''자체가 codeword''' → "모든 쌍의 거리" = "0 아닌 codeword 들의 weight". 쌍 $\binom{n}{2}$ 개를 비교할 필요 없이 codeword 를 한 번 훑으면 끝 ($O(n^2) \to O(n)$).
+
+<pre class="txt">
+Example 3.5  linear 확인
+  011 ⊕ 101 = 110  ✓ (2번째 ⊕ 3번째 = 4번째)
+  011 ⊕ 110 = 101  ✓     101 ⊕ 110 = 011  ✓     x ⊕ 000 = x  ✓
+
+Example 3.6  d_min 지름길
+  0 이 아닌 codeword: 011  101  110
+  1 의 개수         :  2    2    2
+  → d_min = min(2,2,2) = '''2'''   (Example 3.3 의 결과와 일치)
+</pre>
+
+=== p.37–40 — Parity Check Code ⭐⭐ ===
+[[img:L5-38.png|p.38 simple parity-check code C(5,4): 4비트 dataword 16개 → 5비트 codeword. 1 의 개수가 항상 짝수|medium]]
+
+'''[[parity check code]]''': k 비트 dataword → '''n = k + 1''' 비트 codeword. 추가 1비트(parity bit)는 codeword 의 '''1 의 총 개수가 짝수(even)'''가 되도록 고른다. $d_{min} = 2$ → '''single-bit error 검출 코드'''(정정 불가). 그리고 '''홀수 개 오류는 모두 검출'''된다(p.38).
+
+[[img:L5-39.png|p.39 Encoder: a3a2a1a0 → Generator → parity bit r0 / Decoder: b3b2b1b0q0 → Checker → syndrome s0 → Decision logic (Accept/Discard)|large]]
+
+[[modular arithmetic|mod 2]] 식 (p.40):
+* Generator: $r_0 = a_3 + a_2 + a_1 + a_0 \pmod 2$
+* Checker (5비트 전체): $s_0 = b_3 + b_2 + b_1 + b_0 + q_0 \pmod 2$
+* $s_0$ = '''[[syndrome]]''' — 0 이면 accept, 1 이면 discard.
+
+=== p.41–42 — Example 3.7 ⭐⭐ ===
+[[img:L5-42.png|p.42 Example 3.7 — 1011 → 10111 전송 시 다섯 경우 (원문)|large]]
+
+<pre class="txt">
+송신: dataword 1011 → 1 이 3개(홀수) → r0 = 1+0+1+1 mod 2 = 1 → codeword 10111
+
+case  수신     손상 비트       s0 = 전체 합 mod 2      결과
+ 1    10111    없음            1+0+1+1+1 = 4 → 0      accept, 1011 ✓
+ 2    10011    a1              1+0+0+1+1 = 3 → 1      discard (검출 ✓)
+ 3    10110    r0              1+0+1+1+0 = 3 → 1      discard (dataword 는 멀쩡하지만 위치를 모름)
+ 4    00110    r0, a3 (2개)    0+0+1+1+0 = 2 → '''0'''      '''accept, 0011 ← 틀린 dataword!''' ✗
+ 5    01011    a3,a2,a1 (3개)  0+1+0+1+1 = 3 → 1      discard (홀수 개 → 검출 ✓)
+</pre>
+
+{exam}⭐⭐⭐ '''case 4 가 단골.''' 짝수 개의 오류는 서로 상쇄되어 syndrome 이 0 이 된다 → '''simple parity-check 는 짝수 개 오류를 검출하지 못한다.''' 반대로 case 5 처럼 '''홀수 개'''면 몇 개든 잡는다.{/exam}
+
+[[sim:parity_check]]
+
+=== p.43 — Cyclic Codes ⭐ ===
+'''[[cyclic code]]''' = linear block code + 성질 하나: codeword 를 '''cyclic shift(회전)''' 해도 codeword. 예: 1011000 이 codeword 면 왼쪽으로 한 칸 돌린 '''0110001''' 도 codeword. 쓰는 이유: '''Easy to implement!''' (시프트 레지스터 + XOR 게이트).
+
+=== p.44–45 — CRC ⭐⭐ ===
+[[img:L5-44.png|p.44 CRC C(7,4) 코드표: dataword 4비트 + remainder 3비트(분홍). linear·cyclic 성질을 모두 확인할 수 있다|medium]]
+
+'''[[CRC]] (Cyclic Redundancy Check)''': LAN·WAN 에서 실제로 쓰는 cyclic code. 표에서 1011 → 1011'''000''', 0110 → 0110'''001''' — 앞의 cyclic shift 예가 바로 이 표의 두 줄이다.
+
+[[img:L5-45.png|p.45 Encoder: dataword 뒤에 000 을 붙여 Generator 가 divisor d3d2d1d0 로 나눔 → remainder r2r1r0 / Decoder: 7비트 전체를 같은 divisor 로 나눔 → syndrome s2s1s0|large]]
+
+* 송신: dataword $a_3a_2a_1a_0$ 뒤에 '''0 을 n−k = 3 개''' 붙인 것(augmented dataword)을 '''[[divisor]]''' 로 나눈다 → 나머지 $r_2r_1r_0$ 를 붙여 codeword.
+* 수신: 받은 7비트 전체를 '''같은 divisor''' 로 나눈다 → '''[[syndrome]] $s_2s_1s_0$'''. 모두 0 이면 accept.
+
+=== p.46 — Division in CRC Encoder ⭐⭐⭐ ===
+[[img:L5-46.png|p.46 1001000 ÷ 1011. 최상위 비트가 0 인 두 번은 0000 으로 나눈다. 나머지 110 → codeword 1001110|large]]
+
+규칙 두 개: ① 덧셈과 뺄셈은 같다 = '''[[XOR]]''' ② '''나머지의 맨 왼쪽 비트가 0 이면 0000 divisor 를 쓴다'''.
+
+<pre class="txt">
+dataword 1001, divisor 1011 (3차 → 0 을 3개 붙임)
+dividend (augmented dataword) = 1001'''000'''
+
+        1 0 1 0          ← quotient (버림)
+      ┌──────────────
+ 1011 │ 1 0 0 1 0 0 0
+        1 0 1 1          ← 맨 왼쪽 1 → 1011
+        -------
+          0 1 0 0        ← 010 에 다음 비트 0 을 내림
+          0 0 0 0        ← 맨 왼쪽 0 → '''0000'''
+          -------
+            1 0 0 0      ← 100 에 다음 비트 0 을 내림
+            1 0 1 1      ← 맨 왼쪽 1 → 1011
+            -------
+              0 1 1 0    ← 011 에 마지막 비트 0 을 내림
+              0 0 0 0    ← 맨 왼쪽 0 → '''0000'''
+              -------
+                '''1 1 0'''  ← remainder (3비트)
+
+codeword = dataword + remainder = 1001 '''110'''
+</pre>
+
+=== p.47 — Division in the CRC Decoder ⭐⭐⭐ ===
+[[img:L5-47.png|p.47 왼쪽: 1001110 ÷ 1011 → syndrome 000 → accept / 오른쪽: 1000110(4번째 비트 손상) → syndrome 011 → discard|large]]
+
+<pre class="txt">
+경우 1 — 오류 없음: 1001110 ÷ 1011          경우 2 — 오류: 100'''0'''110 ÷ 1011
+  1001 ⊕ 1011 = 0010 → 0101                   1000 ⊕ 1011 = 0011 → 0111
+  0101 ⊕ 0000 = 0101 → 1011                   0111 ⊕ 0000 = 0111 → 1111
+  1011 ⊕ 1011 = 0000 → 0000                   1111 ⊕ 1011 = 0100 → 1000
+  0000 ⊕ 0000 = 000                           1000 ⊕ 1011 = 011
+  syndrome '''000''' → dataword 1001 accept         syndrome '''011''' ≠ 0 → discard
+</pre>
+
+(각 줄: 현재 4비트 ⊕ divisor = 결과, 결과의 앞 0 을 떼고 다음 비트를 내린 새 4비트.)
+
+[[anim:crc_shift|1011 이 한 칸씩 내려오며 XOR 되고 나머지 110 이 dataword 뒤에 붙는 과정, 그리고 수신 측이 같은 나눗셈으로 000 을 얻는 과정을 본 뒤 시뮬레이터로 세 모드를 모두 돌려 보라]]
+
+[[sim:crc_division]]
+
+=== p.48–49 — Polynomial Representation ⭐ ===
+[[img:L5-48.png|p.48 1000011 → 1x⁶+0x⁵+0x⁴+0x³+0x²+1x¹+1x⁰ → short form x⁶+x+1|medium]]
+
+'''[[polynomial representation]]''': 비트 $a_i$ 를 $x^i$ 의 계수로. 1000011 = $x^6 + x + 1$. 0 인 항은 생략.
+
+[[img:L5-49.png|p.49 같은 나눗셈의 Binary / Polynomial 버전. (x⁶+x³) ÷ (x³+x+1) → 나머지 x²+x = 110|large]]
+
+<pre class="txt">
+dataword 1001 = x³ + 1          divisor 1011 = x³ + x + 1
+augmented     = (x³ + 1)·x³ = x⁶ + x³
+
+  x⁶ + x³
+− x³·(x³+x+1) = x⁶ + x⁴ + x³     → 몫 항 x³
+  -----------------
+  x⁴                              (x⁶, x³ 상쇄 — mod 2 에서 빼기 = 더하기)
+− x·(x³+x+1)  = x⁴ + x² + x       → 몫 항 x
+  -----------------
+  '''x² + x'''                         → remainder = 110 (binary 결과와 일치)
+
+몫 = x³ + x (= 1010), codeword = x⁶ + x³ + x² + x (= 1001110)
+</pre>
+
+=== p.50 — Standard Divisors for CRC ⭐ ===
+[[img:L5-50.png|p.50 CRC-8(ATM header) · CRC-10(ATM AAL) · CRC-16(HDLC) · CRC-32(LANs). divisor 비트 수 = 차수 + 1|medium]]
+
+'''divisor 의 비트 수는 항상 다항식 차수보다 1 크다''': CRC-8 → 9 bits, CRC-32 → 33 bits. → [[CRC 표준 다항식]]
+
+=== p.51 — Checksum ===
+'''[[checksum]]''': 임의 길이 메시지에 쓰는 error-detecting 기법. 주로 [[network layer]]·[[transport layer]]에서 쓰이며 '''나중에 network layer 에서''' 다룬다(예고만).
+
+== DLC Protocols — HDLC, PPP (p.52–56) ==
+
+=== p.52–53 — Two DLC Protocols ===
+* '''[[HDLC]]''' (High-level Data-Link Control): P2P 와 [[multipoint]] 링크용. LAN 용 프로토콜 다수의 '''기반(base)'''. '''bit-oriented''' 프로토콜([[bit-oriented framing]]).
+* '''[[PPP]]''' (Point-to-Point Protocol): '''HDLC 에서 파생''', P2P 링크용.
+
+=== p.54–55 — NRM / ABM ===
+[[img:L5-55.png|p.55 NRM: Primary 가 Command, Secondary 가 Response (a. P2P, b. Multipoint) / ABM: 양쪽 Combined 가 Command/response 를 주고받음 (P2P only)|large]]
+
+{|
+! 모드 || 스테이션 || 링크
+|-
+| '''[[NRM]]''' (Normal Response Mode) || '''Primary''' 가 command, '''Secondary''' 가 response (주종) || '''P2P 와 multipoint'''
+|-
+| '''[[ABM]]''' (Asynchronous Balanced Mode) || 양쪽 모두 '''Combined''' (command/response 둘 다) || '''P2P only'''
+|}
+
+=== p.56 — HDLC Frames ⭐ ===
+[[img:L5-56.png|p.56 I-frame(User information) / S-frame(정보 필드 없음) / U-frame(Management information). 공통: Flag – Address – Control – … – FCS – Flag|large]]
+
+{|
+! 종류 || 이름 || 운반하는 것
+|-
+| '''I-frame''' || information || 사용자 데이터 + 관련 제어 정보 ('''[[piggybacking]]''')
+|-
+| '''S-frame''' || supervisory || 제어 정보만
+|-
+| '''U-frame''' || unnumbered || 시스템 관리용 (management information)
+|}
+공통 구조 '''Flag | Address | Control | (information) | [[FCS]] | Flag''' → [[HDLC 프레임]]. FCS 는 CRC 로 계산한 검사값이다(p.50 표에서 HDLC 는 CRC-16).
+
+----
+
+== 예상 문제 ==
+{quiz}'''(계산)''' dataword 1101, divisor 1011 로 CRC codeword 를 구하라.{/quiz}
+{answer}
+<pre class="txt">
+1101000 ÷ 1011
+1101 ⊕ 1011 = 0110 → 1100
+1100 ⊕ 1011 = 0111 → 1110
+1110 ⊕ 1011 = 0101 → 1010
+1010 ⊕ 1011 = 001
+remainder 001 → codeword 1101'''001'''
+</pre>
+p.44 표의 1101 → 1101001 과 일치한다.
+{/answer}
+
+{quiz}'''(개념)''' $d_{min} = 4$ 인 코드는 최대 몇 개 오류를 검출하고, 몇 개를 정정할 수 있는가?{/quiz}
+{answer}검출: $s = d_{min} - 1 = 3$ (Example 3.4). 정정: $2t + 1 \le 4$ → $t = 1$ ($t = 1.5$ 는 불가, 내림).{/answer}
+
+{quiz}'''(bit stuffing)''' 데이터 01111110 을 bit stuffing 하면?{/quiz}
+{answer}0 다음 1 다섯 개(0'''11111''')가 나온 직후 0 삽입 → 011111'''0'''10. 결과 '''011111010''' (9비트). 이제 1 이 여섯 개 연속되는 곳이 없어 flag 로 오인되지 않는다.{/answer}
+
+== 공식 모음 ==
+{|
+! 공식 || 뜻 || 예
+|-
+| $d(x,y)$ = $x \oplus y$ 의 1 개수 || [[Hamming distance]] || $d(10101,11110)=3$
+|-
+| $d_{min} = s + 1$ || $s$ 개 오류 '''검출''' 보장 || $d_{min}=4$ → $s=3$
+|-
+| $d_{min} = 2t + 1$ || $t$ 개 오류 '''정정''' 보장 || $d_{min}=3$ → $t=1$
+|-
+| linear: $d_{min}$ = 0 아닌 codeword 의 최소 weight || [[linear block code]] || 011,101,110 → 2
+|-
+| $\binom{n}{2} = n(n-1)/2$ || 일반 코드의 $d_{min}$ 계산 시 비교할 쌍 수 || 4개 → 6쌍
+|-
+| C(n, k), $n = k + 1$ || [[parity check code]] || C(5,4)
+|-
+| $r_0 = a_3+a_2+a_1+a_0 \pmod 2$ || parity bit || 1011 → 1
+|-
+| $s_0 = b_3+b_2+b_1+b_0+q_0 \pmod 2$ || parity [[syndrome]] || 0 → accept
+|-
+| divisor 비트 수 = 차수 + 1 || [[CRC 표준 다항식]] || CRC-32 → 33 bits
+|-
+| 붙이는 0 의 개수 = n − k = divisor 차수 || CRC augmented dataword || 1011(3차) → 000
+|-
+| burst 길이 = 마지막 손상 위치 − 첫 손상 위치 + 1 || [[burst error]] || p.21: 8 bits
+|}
+
+== 시험 대비 핵심 요약 ==
+# '''Data-link layer = node-to-node''' (transport 의 end-to-end 와 대비). Node = 호스트·라우터, Link = 노드 사이 구간. 중간 노드는 링크마다 frame format 이 달라 '''decapsulate + 재encapsulate''' 둘 다 수행.
+# '''두 sublayer''': DLC(P2P·broadcast 공통 — framing, error control) / MAC(broadcast 전용 — 매체 접근). P2P 링크에는 MAC 이 없다.
+# '''Framing''': fixed-size(ATM cell, 경계 정의 불필요) vs variable-size(LAN 에서 일반적, 경계 표시 필요). Character-oriented: flag 바이트 + '''byte stuffing'''(데이터 속 flag/ESC 앞에 ESC). Bit-oriented: flag '''01111110''' + '''bit stuffing'''(0 뒤 1 다섯 개면 0 삽입).
+# '''Hamming distance''' = XOR 결과의 1 개수. '''검출 $d_{min} = s+1$, 정정 $d_{min} = 2t+1$''' 반드시 암기.
+# '''Linear block code''': valid codeword 끼리 XOR 해도 valid. $d_{min}$ = 0 아닌 codeword 의 최소 1 개수.
+# '''Parity check C(k+1, k)''': 1 의 개수를 짝수로. $d_{min}=2$ → 홀수 개 오류만 검출, 짝수 개는 상쇄(Example 3.7 case 4).
+# '''CRC''': cyclic + linear. augmented dataword(뒤에 n−k 개 0)를 divisor 로 XOR 나눗셈 → 나머지를 붙임. 수신 측 syndrome = 0 이면 accept. 맨 왼쪽 비트가 0 이면 0000 으로 나눔.
+# '''다항식 표현''': 비트 → $x$ 의 거듭제곱 계수. divisor 비트 수 = 차수 + 1 (CRC-32 = 33비트, LAN).
+# '''HDLC''': bit-oriented. NRM(Primary/Secondary, P2P+multipoint) vs ABM(Combined, P2P 전용). I(데이터+piggybacking) / S(제어) / U(관리). PPP 는 HDLC 에서 파생.
+
+== 관련 문서 ==
+* 개념: [[node와 link]] · [[data-link layer 서비스]] · [[point-to-point 링크와 broadcast 링크]] · [[DLC]] · [[MAC sublayer]]
+* Framing: [[framing]] · [[fixed-size framing]] · [[variable-size framing]] · [[character-oriented framing]] · [[byte stuffing]] · [[bit-oriented framing]] · [[bit stuffing]] · [[flag]] · [[ESC]]
+* 오류: [[single-bit error]] · [[burst error]] · [[redundancy]] · [[block code]] · [[dataword]] · [[codeword]] · [[Hamming distance]] · [[minimum Hamming distance]] · [[linear block code]] · [[parity check code]] · [[syndrome]]
+* CRC: [[cyclic code]] · [[CRC]] · [[divisor]] · [[polynomial representation]] · [[CRC 표준 다항식]] · [[checksum]] · [[XOR]] · [[modular arithmetic]]
+* 프로토콜: [[HDLC]] · [[NRM]] · [[ABM]] · [[HDLC 프레임]] · [[PPP]] · [[piggybacking]] · [[FCS]]
+* 이전/다음: [[CH02 Multiplexing]] ← → [[CH03 Media Access Control]] · [[CH03 Link-Layer Addressing]]
+* 문맥: [[data-link layer]] · [[캡슐화]] · [[block coding]] · [[계산 문제 모음]] · [[공식 모음]]

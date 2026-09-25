@@ -1,0 +1,57 @@
+key: 교수 소개
+title: 교수 소개 (Prof. Soobin Um, 엄수빈)
+category: 용어, 안내
+---
+[CSE403] Computer Network, Fall 2026 담당 '''Soobin Um(엄수빈)''' 교수. DGIST Department of EECS, Assistant Professor, '''Generative Intelligence & Discovery Lab''' (모든 슬라이드 하단의 그 로고). 출처는 CH00 Course Introduction (L0 p.2–3, p.9).
+
+[[img:L0-3.png|Details on the Instructor — Education, Work Experience, Research Interest, Leading Author Contributions|large]]
+
+== 연락처와 조교 (L0 p.2) ==
+{|
+! || 이름 || 연락
+|-
+| '''Instructor''' || Soobin Um || E7-213, T6351, soobin.um@dgist.ac.kr, https://soobin-um.github.io/ — '''Office hours: Tue 10:30–12:00'''
+|-
+| '''TA''' || Sangwoo Kim || E3-403, sangwoo7755@dgist.ac.kr
+|}
+
+== 약력 (L0 p.3) ==
+{|
+! 기간 || 학력 / 경력
+|-
+| Mar. 2008 – Feb. 2012 || B.S., '''Comm. Engineering''', Hanyang Univ.
+|-
+| Feb. 2012 – Feb. 2014 || M.S., '''Electrical Engineering''', KAIST (Advisor: Wan Choi)
+|-
+| Feb. 2014 – Aug. 2021 || Senior Researcher, '''ADD''' — '''Communication systems for military platforms (e.g., radio, satellite)'''
+|-
+| Aug. 2021 – Aug. 2025 || Ph.D., Graduate School of AI, KAIST (Advisor: Jong Chul Ye)
+|-
+| Sep. 2025 – Aug. 2026 || Assistant Professor, Department of AI, Kookmin Univ.
+|-
+| Aug. 2026 – Present || Assistant Professor, Department of EECS, DGIST
+|}
+* '''Research Interest''': Generative AI (Diffusions, LLMs, GANs) · Trustworthy AI · AI for Science (e.g., '''AI-based comm. sys.''') · Physical AI
+* '''Leading Author Contributions''': 8 top-tier publications — AAAI'23 Oral, ICLR'24, ECCV'24, CVPR'25 Oral (top 0.74%), ICML'25, ICLR'26 / ACS Photonics (JCR 14%)
+
+{info}학부 '''통신공학''' → 석사 '''전기공학''' → 국방과학연구소(ADD)에서 7년간 '''무선·위성 통신 시스템''' → AI 박사. 그래서 이 과목의 CH02(Physical Layer: 신호, [[SNR]], [[Shannon capacity]], [[modulation]])를 특히 공들여 가르친다. 강의 중 입버릇 "'''the name itself is very important'''" — 용어의 이름에서 개념을 끌어내라는 말 — 이 이 위키 모든 사전 문서의 "이름에서 개념 끌어내기" 문단의 출처다.{/info}
+
+== 수업 정책 (L0 p.8–9) ==
+{|
+! 항목 || 내용
+|-
+| 성적 || Attendance '''10%''' · Homework '''10%''' · Midterm '''40%''' · Final '''40%'''
+|-
+| 부정행위 || "Cheating or plagiarism on homework assignments and exams will result in '''course failure'''."
+|-
+| 결석 || "Absence of '''more than 1/4''' of the classes will result in an '''F grade'''."
+|}
+→ 교재·일정은 [[Forouzan]], 시험 관련은 [[시험 정보]].
+
+{analogy}🎭 '''통신병 출신 AI 연구자.''' 전장에서 무전기·위성 링크가 끊기면 안 되는 시스템을 7년 만진 사람이 네트워크를 가르친다 — [[half-duplex]] 의 예가 하필 walkie-talkie 인 게 우연이 아닐지도.{/analogy}
+
+{quiz}이 과목의 성적 구성과, 자동 F 가 되는 결석 기준은?{/quiz}
+{answer}Attendance 10 / Homework 10 / Midterm 40 / Final 40. 결석이 전체 수업의 '''1/4 초과'''면 F.{/answer}
+
+== 관련 문서 ==
+* [[Forouzan]] · [[시험 정보]] · [[CH01 Introduction]]

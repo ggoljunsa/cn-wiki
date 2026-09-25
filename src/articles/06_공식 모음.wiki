@@ -1,0 +1,131 @@
+key: 공식 모음
+title: 공식 모음 — 중간고사 한 장 요약
+category: 안내, 시험
+---
+중간고사 범위의 '''모든 공식과 수치'''를 한 장에 모았다. 각 기호는 사전 문서로 링크돼 있으니 "이 글자가 뭐였지" 싶으면 클릭한다. 시험 전날 이 문서를 보지 않고 백지에 다시 쓴다.
+
+{analogy}
+🎭 '''등산 지도의 범례.''' 지도(메인 문서)를 다 봤어도 범례 없이는 기호를 못 읽는다. 이 문서는 범례다 — 공식은 짧지만, 각 글자가 무엇인지([[bandwidth|B]], [[signal level|L]], [[T_fr]], [[offered load G|G]])는 링크로 확인한다.
+{/analogy}
+
+== CH02 Signals ==
+
+{|
+! 공식 || 뜻 || 문서
+|-
+| $f = 1/T$ || [[주파수]] = 1/[[주기]]. 변화 없음 → 0 Hz, 순간 변화 → ∞ || [[주파수]]
+|-
+| $B = f_{high} - f_{low}$ || [[bandwidth]] (Hz) = 합성 신호의 최고−최저 주파수 || [[bandwidth]]
+|-
+| bits/level $= \log_2 L$ || [[signal level|L]] 개 레벨이면 심볼 하나에 $\log_2 L$ 비트 || [[signal level]]
+|-
+| bit length $= 1/\text{bit rate}$ || 1비트가 차지하는 시간 (Ex 2.4: 0.651 μs) || [[bit length]]
+|}
+
+== CH02 Transmission ==
+
+{|
+! 공식 || 뜻 || 문서
+|-
+| $\mathrm{dB} = 10\log_{10}(P_2/P_1)$ || 감쇠 음수, 증폭 양수. '''−3 dB = 전력 절반''' || [[데시벨]]
+|-
+| $\mathrm{SNR} = P_{signal}/P_{noise}$, $\mathrm{SNR_{dB}} = 10\log_{10}\mathrm{SNR}$ || 신호 대 잡음비 (3162 → 35 dB) || [[SNR]]
+|-
+| '''$\text{BitRate} = 2 B \log_2 L$''' || [[Nyquist bit rate]] — '''무잡음''' 채널. B 채널은 초당 2B 심볼 || [[Nyquist bit rate]]
+|-
+| '''$C = B \log_2(1+\mathrm{SNR})$''' || [[Shannon capacity]] — '''잡음(AWGN)''' 채널 상한 || [[Shannon capacity]]
+|-
+| $C \approx B \times \mathrm{SNR_{dB}}/3$ || SNR 이 클 때의 근사 (dB 값 사용) || [[Shannon capacity]]
+|-
+| Latency = propagation + transmission + queuing + processing || [[propagation time]] = 거리/전파 속도 || [[latency]]
+|-
+| BDP = bandwidth × delay || 링크를 가득 채우는 비트 수 (1 bps × 5 s = 5 bits) || [[bandwidth-delay product]]
+|}
+
+== CH02 Digital Transmission ==
+
+{|
+! 공식 || 뜻 || 문서
+|-
+| '''$f_s \ge 2 f_{max}$''' || [[Nyquist sampling theorem]] — 최고 주파수의 2배 (대역폭 아님) || [[Nyquist sampling theorem]]
+|-
+| $\Delta = (V_{max} - V_{min})/L$ || 양자화 레벨 높이 || [[quantization]]
+|-
+| $-\Delta/2 \le e \le \Delta/2$ || 양자화 오차 범위 || [[quantization error]]
+|-
+| $\mathrm{SNR_{dB}} = 6.02\,n_b + 1.76$ || 비트 1개당 약 6 dB 개선 || [[SNR_dB와 n_b]]
+|-
+| '''bit rate $= f_s \times n_b$''' || Ex 2.13: 8000 × 8 = 64 kbps || [[encoding]]
+|-
+| $B_{min} = n_b \times B_{analog}$ || 디지털화의 대가 (증명 4단계) || [[PCM bandwidth]]
+|-
+| $N = n_b f_s = 2 n_b B_{analog}$, $S = N/r$ || 비트율과 심볼율 (PCM 증명 중간 단계) || [[PCM bandwidth]]
+|}
+
+== CH02 Analog Transmission ==
+
+{|
+! 방식 || 바꾸는 것 || 인코딩 || 대역폭 || 구현
+|-
+| [[ASK]] || 진폭 || 1 = 반송파 켬, 0 = 끔 || $B = (1+d)S$ || 곱셈기 (unipolar NRZ × 반송파)
+|-
+| [[FSK]] || 주파수 || 0 → $f_1$, 1 → $f_2$ || '''$B = (1+d)S + 2\Delta f$''' || [[VCO]]
+|-
+| [[PSK]] || 위상 || 1 = 0°, 0 = 180° || $B = (1+d)S$ || 곱셈기 (polar NRZ × 반송파)
+|-
+| [[QAM]] || 진폭 + 위상 || ASK + PSK || — || —
+|}
+* $S$ = [[signal rate와 bit rate|signal rate]] ([[baud]]), $N$ = bit rate (bps), $r$ = 심볼당 비트, $S = N/r$ (binary 면 $r=1$, $S=N$). $d$ = [[roll-off factor]] ($0 \le d \le 1$, 시험에서 준다).
+* Example 5: 100 kHz, $d=1$, $2\Delta f = 50$ kHz → $2S + 50 = 100$ → $S = 25$ kbaud → $N = 25$ kbps.
+* [[FDM]] = 주파수를 나눔 (아날로그, [[guard band]]) / [[TDM]] = 시간을 나눔 (디지털, 슬롯).
+
+== CH03 DLC ==
+
+{|
+! 공식 || 뜻 || 문서
+|-
+| $d(x,y)$ = $x \oplus y$ 의 1 개수 || [[Hamming distance]] — XOR 로 계산 || [[Hamming distance]] · [[XOR]]
+|-
+| '''검출 $s$ 개 ⟺ $d_{min} = s + 1$''' || 최대 $s$ 개 오류를 항상 검출 || [[minimum Hamming distance]]
+|-
+| '''정정 $t$ 개 ⟺ $d_{min} = 2t + 1$''' || 최대 $t$ 개 오류를 항상 정정 || [[minimum Hamming distance]]
+|-
+| linear code: $d_{min}$ = 0 아닌 codeword 의 최소 weight || 쌍 비교 없이 $O(n)$ || [[linear block code]]
+|-
+| parity: $r_0 = a_3+a_2+a_1+a_0 \pmod 2$, $s_0 = b_3+b_2+b_1+b_0+q_0 \pmod 2$ || $s_0 = 0$ accept. $d_{min}=2$, 홀수 개만 검출 || [[parity check code]] · [[syndrome]]
+|-
+| CRC: augmented dataword (뒤에 $n-k$ 개 0) ÷ divisor → remainder || 수신: codeword ÷ divisor → syndrome 0 이면 accept || [[CRC]] · [[divisor]]
+|-
+| divisor 비트 수 = 차수 + 1 || CRC-8 → 9 비트, CRC-32 → 33 비트 || [[CRC 표준 다항식]]
+|-
+| bit stuffing: 0 뒤 1 ×5 → 0 삽입 || flag = 01111110 || [[bit stuffing]]
+|-
+| byte stuffing: flag/ESC 앞에 ESC || || [[byte stuffing]]
+|}
+
+== CH03 MAC ==
+
+{|
+! 프로토콜 || [[vulnerable time]] || [[ALOHA throughput|Throughput]] || 최대 효율 || 비고
+|-
+| [[pure ALOHA]] || '''$2T_{fr}$''' || $S = Ge^{-2G}$ || '''0.184''' ($G = 1/2$) || 언제든 전송
+|-
+| [[slotted ALOHA]] || '''$T_{fr}$''' || $S = Ge^{-G}$ || '''0.368''' ($G = 1$) || 슬롯 시작에만
+|-
+| [[CSMA]] || '''$T_p$''' || — || persistence 에 따라 || sense before transmit
+|-
+| [[CSMA/CD]] || — || — || — || '''$T_{fr} \ge 2T_p$''', 충돌 시 abort + jam
+|}
+* [[T_p]] = 최대 propagation time (Ex 3.8: 600 km / 3×10⁸ = 2 ms). [[T_fr]] = 프레임 전송 시간 (Ex 3.9: 200 bits / 200 kbps = 1 ms).
+* [[offered load G]] = $T_{fr}$ 동안 생성되는 평균 프레임 수 = (frames/s) × $T_{fr}$.
+* [[binary exponential backoff]]: $R \in \{0, \dots, 2^K - 1\}$, $T_B = R \times T_p$, $K_{max} = 15$. Ex 3.8: $K=2$ → $T_B \in \{0, 2, 4, 6\}$ ms.
+* Ex 3.11 (slotted, $T_{fr}$=1 ms): 1000 f/s → $G=1$ → 368 / 500 → 151 / 250 → 49 프레임 생존.
+* [[최소 프레임 크기]] Ex 3.12: $2 \times 25.6\,\mu s = 51.2\,\mu s$ × 10 Mbps = '''512 bits = 64 bytes'''.
+* [[energy level]]: idle 0 / normal / 충돌 = 정상의 2배.
+
+== CH03 Addressing ==
+* [[MAC 주소]] 48 bits = 12 hex, 콜론 구분. [[broadcast 주소]] = FF:FF:FF:FF:FF:FF.
+* 프레임 안: IP = source–destination (불변), MAC = destination–source (링크마다 갱신). → [[IP 주소와 MAC 주소]]
+
+== 관련 문서 ==
+* [[계산 문제 모음]] · [[자주 틀리는 함정 모음]] · [[log₂ 계산법]] · [[bps와 Hz]]

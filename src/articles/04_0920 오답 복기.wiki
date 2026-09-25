@@ -1,0 +1,147 @@
+key: 0920 오답 복기
+title: 0920 오답 복기 — NotebookLM 퀴즈 8문항
+category: 안내, 시험
+---
+2026-09-20 에 NotebookLM 으로 푼 객관식 퀴즈에서 '''틀린 8문항'''을 개념부터 다시 푼다. 객관식은 보기가 힌트라 인출이 약하므로, 여기서는 '''주관식으로 바꿔''' 답을 접어 두었다. 원본은 `노트북lm_문제푼거/0920_오답.md`, 주관식 재시험은 `내가만드는문제/0920_재시험.md`.
+
+{exam}
+8문항 중 '''6문항이 CH01''' 이고 그중 4문항이 '''계층(layer) 구조''' 다. 시험에서 CH01 은 "쉬운 장" 이지만 나에게는 가장 약한 장이다. 아래 A 표를 백지에 채울 수 있을 때까지 반복한다.
+{/exam}
+
+{analogy}
+🎭 '''오답노트는 X-ray 사진이다.''' 어디가 부러졌는지(계층 구조) 보여 줄 뿐 치료는 아니다. 치료는 해당 문서([[TCP/IP 프로토콜 스위트]], [[PDU]], [[스위치]], [[라우터]])를 다시 읽고 백지 표를 채우는 것.
+{/analogy}
+
+== A. 백지 표 (먼저 이것부터) ==
+
+{quiz}
+아무것도 보지 않고 채우기: 계층 5개 × (PDU 이름 / 주소 / 대표 프로토콜 / 스위치가 구현? / 라우터가 구현?). 그리고 end-to-end 인 계층과 hop 단위인 계층을 나누기.
+{/quiz}
+{answer}
+{|
+! 계층 || PDU || 주소 || 대표 프로토콜 || 스위치 || 라우터
+|-
+| [[application layer|Application]] || Message || 이름 (www.dgist.ac.kr) || HTTP, SMTP, FTP, DNS || ✗ || ✗
+|-
+| [[transport layer|Transport]] || Segment / User datagram || [[포트 번호]] (80, 443, 53) || [[TCP]], [[UDP]] || ✗ || ✗
+|-
+| [[network layer|Network]] || Datagram || 논리 주소 ([[IP]]) || IP (+ICMP, IGMP, DHCP, [[ARP]]) || ✗ || ✅
+|-
+| [[data-link layer|Data link]] || Frame || 링크 주소 ([[MAC 주소]]) || — || ✅ || ✅
+|-
+| [[physical layer|Physical]] || Bits || 없음 || — || ✅ || ✅
+|}
+end-to-end: Application / Transport / Network. hop(링크) 단위: Data link / Physical. → [[end-to-end와 hop-to-hop]], [[주소 체계]] (CH01 p.31·32·39)
+{/answer}
+
+== 1. 데이터 통신 4대 특성 (CH01 p.3) ==
+
+'''틀린 내용''': Jitter 를 빠뜨리고 Encryption 을 골랐다.
+
+{quiz}
+데이터 통신 시스템의 효과를 좌우하는 4가지 특성을 '''영어 이름'''으로 쓰고 한 줄씩 설명하라. Encryption 이 왜 아닌지도.
+{/quiz}
+{answer}
+'''Delivery'''(올바른 목적지에) / '''Accuracy'''(변형 없이) / '''Timeliness'''(제때) / '''Jitter'''(패킷 도착 시간의 변동). Encryption 은 '''보안(security)''' 기법이지 통신 효과성의 특성이 아니다. → [[데이터 통신 4대 특성]] · [[jitter]]
+{/answer}
+
+== 2. 허브에 연결되는 토폴로지 (CH01 p.11) ==
+
+'''틀린 내용''': Bus 라고 답함. 정답 Star.
+
+{quiz}
+Star 와 Bus 를 ① 중앙 제어기 유무 ② 연결 방식 ③ 노드를 붙이는 부품 ④ 대표 단점으로 비교하라.
+{/quiz}
+{answer}
+{|
+! || Star || Bus
+|-
+| 중앙 제어기 || '''있음'''(허브) || 없음
+|-
+| 연결 || 허브에만 전용 point-to-point || 백본 케이블 multipoint
+|-
+| 부품 || 허브 || '''drop line + tap'''
+|-
+| 단점 || 허브 죽으면 전체 마비 || 재연결·결함 격리 어려움
+|}
+→ [[star 토폴로지]] · [[bus 토폴로지]] · [[허브]]
+{/answer}
+
+== 3. Bus 토폴로지의 접속 부품 (CH01 p.12) ==
+
+'''틀린 내용''': "Hub 와 Switch" 라고 답함. 정답 drop line 과 tap. Hub/Switch 는 Star 계열의 '''중앙 장비'''다. → [[bus 토폴로지]]
+
+== 4. 중간 노드의 계층 (CH01 p.31) ==
+
+'''틀린 내용''': 정답 2개("스위치는 L1–L2", "라우터는 L1–L3")를 모두 놓치고 오답 2개("라우터가 application 메시지를 처리", "모든 중간 노드가 5계층 구현")를 골랐다. '''가장 약한 문항.'''
+
+{quiz}
+스위치와 라우터는 각각 어디까지 구현하는가? "모든 중간 노드가 5계층을 구현해야 한다" 가 왜 틀렸는지 한 문장으로.
+{/quiz}
+{answer}
+스위치 = Physical + Data link. 라우터 = Physical + Data link + Network. 5계층 전부는 '''종단 호스트'''만. 중간 노드는 메시지의 '''최종 수신자가 아니므로''' 상위 계층 서비스가 필요 없고, 그만큼 단순하게 만들어 빠르게 전달한다. → [[스위치]] · [[라우터]] · [[캡슐화]]
+{/answer}
+
+[[anim:layer_stack|스위치는 frame 을 열어 보지 않고, 라우터는 datagram 까지만 열어 본다. 각 노드의 스택 높이를 보라]]
+
+== 5. PDU 이름 (CH01 p.32) ==
+
+'''틀린 내용''': 보기 4개가 전부 옳은 짝인데 하나만 골랐다.
+
+{quiz}
+5계층의 PDU 를 위에서부터 순서대로.
+{/quiz}
+{answer}
+Message → Segment(user datagram) → Datagram → Frame → Bits. → [[PDU]]
+{/answer}
+
+== 6. IP 가 속한 계층 (CH01 p.35) ==
+
+'''틀린 내용''': Transport 라고 답함. 정답 Network.
+
+{quiz}
+(a) IP 는 어느 계층? (b) 그 계층의 책임 두 가지와 통신 단위는? (c) IP 는 connection-oriented 인가?
+{/quiz}
+{answer}
+(a) '''Network layer'''. (b) 출발지–목적지 연결 생성 + '''각 패킷의 최적 경로 선택(routing)'''; 단위는 host-to-host. (c) '''connectionless''' — 흐름·오류·혼잡 제어 없음. → [[network layer]] · [[IP]]
+{/answer}
+
+== 7. connection-oriented 전송 프로토콜 (CH01 p.36) ==
+
+'''틀린 내용''': UDP 라고 답함. 정답 TCP.
+
+{quiz}
+TCP 와 UDP 를 연결 방식과 제어 기능으로 구분하라. 전송 계층의 논리 연결은 무엇과 무엇 사이인가?
+{/quiz}
+{answer}
+'''TCP''': connection-oriented, 두 호스트의 전송 계층 간 논리 연결, '''흐름·오류·혼잡 제어 모두'''. '''UDP''': connectionless, 셋 다 없음. 전송 계층은 end-to-end (출발지 응용 ↔ 목적지의 대응 응용). 묶어서 외우기: '''connection-oriented 는 TCP 하나뿐''' (IP 도 UDP 도 아님). → [[TCP]] · [[UDP]] · [[transport layer]]
+{/answer}
+
+== 8. 배터리 전압의 주파수 (CH02 p.22–23) ==
+
+'''틀린 내용''': 무한대라고 답함. 정답 0 Hz. 0 과 ∞ 를 '''정반대로''' 적용했다.
+
+{quiz}
+(a) 전혀 변하지 않는 신호의 주파수 (b) 순간적으로 변하는 신호의 주파수 (c) 주파수의 정의에서 출발해 둘을 설명.
+{/quiz}
+{answer}
+(a) '''0 Hz''' (b) '''∞''' (c) 주파수 = '''시간에 대한 변화율'''. 변화 없음 → $T \to \infty$ → $f = 1/T = 0$. 순간 변화 → $T \to 0$ → $f \to \infty$. Example 2.1 의 1.5 V 배터리 = 0-frequency 신호. → [[주파수]]
+{/answer}
+
+== 9. 정현파의 3요소 (CH02 p.18) ==
+
+'''틀린 내용''': Frequency 를 빠뜨리고 Bandwidth 를 골랐다.
+
+{quiz}
+정현파를 완전히 기술하는 3요소를 쓰고, Bandwidth 가 왜 못 들어가는지.
+{/quiz}
+{answer}
+'''Peak amplitude / Frequency / Phase'''. Bandwidth 는 단일 사인파의 속성이 아니라 '''composite signal''' 의 최고−최저 주파수. 단일 사인파는 성분이 하나라 bandwidth 0. → [[사인파]] · [[bandwidth]] · [[composite signal]]
+{/answer}
+
+== 다음 복습 ==
+* 두 번 연속 맞힌 문항은 지우고, 새로 틀린 것만 남긴다. 특히 '''A · 4 · 6'''.
+* 새 퀴즈를 풀면 이 문서 아래에 날짜별 절을 추가한다.
+
+== 관련 문서 ==
+* [[자주 틀리는 함정 모음]] · [[CH01 Introduction]] · [[CH02 Signals]] · [[읽는 순서]]

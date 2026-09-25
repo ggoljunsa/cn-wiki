@@ -1,0 +1,36 @@
+key: character-oriented framing
+title: Character-Oriented Framing (문자 기반 프레이밍)
+category: 6강 DLC, 용어
+---
+'''Character-oriented framing''' 은 데이터를 ASCII 같은 '''8-bit 문자(character)'''의 나열로 보고, 프레임 앞뒤에 '''8-bit [[flag]]''' 문자를 붙여 경계를 표시하는 [[variable-size framing]] 방식이다. L5 p.17–18. (byte-oriented framing 이라고도 한다.)
+
+{def}"Data to be carried are '''8-bit characters''' from a coding system such as ASCII." / "To separate one frame from the next, an '''8-bit flag is added at the beginning and the end''' of a frame." (p.17)
+→ 데이터 = 8비트 문자들. 프레임의 시작과 끝에 8비트 flag.{/def}
+
+[[img:L5-17.png|p.17 Flag – Header – Data from upper layer(Variable number of characters) – Trailer – Flag|large]]
+
+== 프레임 구조 ==
+<pre class="txt">
+| Flag | Header | Data (가변 개수의 8-bit 문자) | Trailer | Flag |
+  ↑ 시작 표시   ↑ 주소 등             ↑ 오류 검출 등    ↑ 끝 표시
+</pre>
+
+== 이름에서 개념 끌어내기 ==
+'''character-oriented''' — '''문자(=바이트) 중심'''. 모든 처리 단위가 바이트이므로, 경계 표시도 바이트(flag 문자)이고, 데이터 속 가짜 flag 대책도 '''바이트를 끼워 넣는''' [[byte stuffing]]이다. 반대편 [[bit-oriented framing]]은 모든 게 비트 단위.
+
+{analogy}🎭 '''따옴표로 감싼 문자열.''' 프로그래밍에서 `"hello"` 의 `"` 가 문자열의 시작·끝(flag)이다. 문자열 안에 `"` 를 넣고 싶으면 `\"` 처럼 '''앞에 백슬래시(ESC)'''를 붙인다 — 이것이 정확히 [[byte stuffing]]이다. 백슬래시 자체를 넣으려면 `\\` — ESC 앞에도 ESC.{/analogy}
+
+== 문제와 해결 ==
+데이터가 텍스트만이 아니라 그림·음성 같은 '''임의의 바이너리'''라면, 데이터 속에 flag 와 똑같은 비트 패턴의 바이트가 나올 수 있다 → 수신자가 프레임이 끝났다고 착각. 해결은 [[byte stuffing]]: 그 바이트 앞에 [[ESC]] 를 넣는다.
+
+[[img:L5-18.png|p.18 byte stuffing — Flag 와 ESC 앞에 각각 ESC 를 넣어 Two extra bytes|large]]
+
+[[sim:byte_stuffing]]
+
+== 예상 문제 ==
+{quiz}character-oriented framing 의 프레임 구성 요소를 순서대로 쓰고, 데이터 속에 flag 와 같은 패턴이 나오면 어떻게 하는지 쓰라.{/quiz}
+{answer}'''Flag – Header – Data – Trailer – Flag'''. 데이터 속 flag(또는 ESC) 패턴 앞에 '''ESC 바이트를 삽입'''한다(byte stuffing). 수신 측은 ESC 를 제거(unstuffing).{/answer}
+
+== 관련 문서 ==
+* [[byte stuffing]] · [[ESC]] · [[flag]]
+* [[bit-oriented framing]] · [[variable-size framing]] · [[framing]]

@@ -1,0 +1,62 @@
+key: 프로토콜 계층화
+title: 프로토콜 계층화 (Protocol Layering)
+category: 1강 Introduction, 용어
+---
+'''Protocol layering''' — 통신이라는 복잡한 일을 '''층(layer)으로 쪼개''' 각 층에 전담 기능을 맡기는 설계 방식 (L1 p.22–26). CH01 후반부의 뼈대이고, [[TCP/IP 프로토콜 스위트]]와 [[OSI 7계층]]이 모두 이 생각의 산물이다.
+
+{def}"For data communication, it is often designed to contain '''layers''' where each layer has its '''dedicated function'''." (L1 p.22)
+Features (L1 p.25–26):
+* "'''Divides a complex task''' into several smaller, simpler tasks"
+* "'''Modularity''': A layer (module) can be defined as a '''black box''' with inputs and outputs."
+* "'''Separation of service from implementation''': A layer can use a service from a lower layer '''without knowing how it is implemented'''."
+* "'''Intermediate nodes can be simpler''' than end nodes. End users: application, transport, network, datalink, physical / Router: network, datalink, physical"{/def}
+
+== 예시 ① — single layer (p.23) ==
+[[img:L1-23.png|First Scenario — Maria 와 Ann 이 Air 를 통해 Listen/Talk. 층이 하나뿐|large]]
+마주 보고 대화하는 두 사람. 층은 '''Layer 1: Listen/Talk''' 하나. 규칙(= [[프로토콜]])은 greeting, confine vocabulary, listening/speaking, dialog/monolog 등.
+
+== 예시 ② — three layers (p.24) ==
+[[img:L1-24.png|Second Scenario — 멀리 떨어진 두 사람의 비밀 편지. Layer 3 Listen/Talk(Plaintext), Layer 2 Encrypt/Decrypt(Ciphertext), Layer 1 Send/receive mail(Mail), 맨 아래 Postal carrier facility|large]]
+
+{|
+! 층 || Maria 쪽 (↓ 보낼 때) || 그 층 아래의 객체 || Ann 쪽 (↑ 받을 때)
+|-
+| Layer 3 || Talk — 생각을 글로 || '''Plaintext''' || Listen — 글을 읽음
+|-
+| Layer 2 || Encrypt || '''Ciphertext''' || Decrypt
+|-
+| Layer 1 || Send mail || '''Mail''' || Receive mail
+|-
+| (매체) || '''Postal carrier facility''' (US Post) 가 실어 나름 || — || 우체국에서 받아옴
+|}
+각 층 옆의 객체가 양쪽에서 "'''Identical objects'''" 로 이어진다 → [[논리적 연결]].
+
+{info}Layer 2 의 Encrypt/Decrypt 는 '''층 역할의 예시'''다. [[데이터 통신 4대 특성]]에 Encryption 은 없다 (0920 퀴즈 함정).{/info}
+
+== Features 풀어 읽기 ==
+{|
+! Feature || 3계층 편지 예로 보면
+|-
+| '''Divides a complex task''' || "비밀 편지를 멀리 보내기"를 '''쓰기 / 암호화 / 배송''' 세 개로
+|-
+| '''Modularity (black box)''' || 암호화 층은 "평문 넣으면 암호문 나옴"만 정의. 안에서 무슨 알고리즘을 쓰든 위아래는 상관없음 → 암호 방식만 '''갈아 끼울 수''' 있다
+|-
+| '''Separation of service from implementation''' || Layer 2 는 우체국이 트럭으로 가는지 비행기로 가는지 '''몰라도''' "배송"이라는 서비스를 쓴다
+|-
+| '''Intermediate nodes simpler''' || 중간 우체국은 봉투만 보고 넘긴다 — 편지를 열어 암호를 풀 필요가 없다. 네트워크에선 [[라우터]]가 network·datalink·physical 만 가짐
+|}
+
+[[img:L1-26.png|Protocol Layering: Features — 오른쪽 아래 Router–Router–LAN 그림: 중간 노드는 end node 보다 단순해도 된다|large]]
+
+{warn}⭐ '''0920 퀴즈에서 틀린 자리.''' "모든 중간 노드는 5계층을 전부 구현해야 한다"는 '''거짓'''. p.26: End users 는 5개, '''Router 는 network·datalink·physical 3개'''. p.31 에서 [[스위치]]는 더 적은 2개(datalink·physical). → [[end-to-end와 hop-to-hop]]{/warn}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''layer''' = 켜, 층. 케이크 층처럼 '''위아래 순서가 있고, 바로 위·아래 층하고만 맞닿는다'''. 멀리 떨어진 층끼리 직접 만나지 않는다 — 이게 modularity 와 service/implementation 분리를 동시에 보장한다.
+
+{analogy}🎭 '''회사 결재 라인으로 해외에 계약서 보내기.''' 사장(Layer 3)은 계약 내용만 쓰고, 비서(Layer 2)는 봉인하고 서류 형식을 맞추고, 총무팀(Layer 1)은 DHL 에 맡긴다. 사장은 DHL 비행기 노선을 몰라도 되고(service/implementation 분리), 비서가 바뀌어도 사장·총무는 그대로(modularity). 상대 회사에서도 총무 → 비서 → 사장 순으로 거꾸로 푼다.{/analogy}
+
+{quiz}Protocol layering 의 features 네 가지를 슬라이드 키워드로 쓰시오.{/quiz}
+{answer}① Divides a complex task into smaller, simpler tasks ② '''Modularity''' (black box with inputs and outputs) ③ '''Separation of service from implementation''' ④ '''Intermediate nodes can be simpler than end nodes''' (router: network, datalink, physical).{/answer}
+
+== 관련 문서 ==
+* [[논리적 연결]] · [[프로토콜]] · [[TCP/IP 프로토콜 스위트]] · [[OSI 7계층]] · [[캡슐화]] · [[CH01 Introduction]]

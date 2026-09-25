@@ -1,0 +1,50 @@
+key: bus 토폴로지
+title: Bus Topology (버스 토폴로지)
+category: 1강 Introduction, 용어, 함정
+---
+'''Bus topology''' 는 네 topology 중 유일한 '''multipoint''' — 긴 케이블 하나에 모두가 매달린다 (L1 p.12).
+
+{def}"'''Multipoint connection''' / One long cable acts as '''a backbone to link all the devices''' / Nodes are connected to the bus cable by '''drop lines and taps''' / Easy to install / Difficult reconnection and fault isolation" (L1 p.12)
+[[multipoint]] 연결. 긴 케이블 하나가 backbone 역할을 해 모든 장치를 잇는다. 노드는 drop line 과 tap 으로 버스 케이블에 연결된다. 설치는 쉽지만 재연결과 고장 격리가 어렵다.{/def}
+
+[[img:L1-12.png|Bus — Cable end 두 개 사이의 굵은 backbone, 노란 Tap, 노드로 올라가는 Drop line|large]]
+
+{exam}⭐⭐ '''0920 NotebookLM 퀴즈에서 여기서 두 번 틀렸다.'''
+* "버스 토폴로지에서 노드를 백본 케이블에 접속시키는 부품" → '''Hub 와 Switch''' 라고 답했다. 정답은 '''Drop line 과 Tap'''.
+* "hub 에만 연결되는 토폴로지" 에 '''Bus''' 를 골랐다(정답 [[star 토폴로지|Star]]).
+'''Bus 에는 중앙 장비가 없다.''' Hub·Switch 는 star 계열의 중앙 장비다.{/exam}
+
+== 부품 세 개 ==
+{|
+! 부품 || 정체 || 그림에서
+|-
+| '''backbone (bus cable)''' || 모두가 공유하는 긴 케이블 하나 || 가운데 굵은 가로선
+|-
+| '''tap''' || backbone 에 '''구멍을 뚫듯''' 붙여 신호를 빼내는 접속기 || 노란 작은 네모
+|-
+| '''drop line''' || tap 에서 장치까지 '''늘어뜨린'''(drop) 선 || tap 에서 노트북으로 올라가는 세로선
+|-
+| (cable end) || 케이블 양 끝 — 신호가 반사되지 않게 막는 끝마개 || 빨간 네모
+|}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''".
+* '''bus''' — 라틴어 ''omnibus'' "모두를 위한". 시내버스처럼 '''모두가 같은 노선(케이블) 하나를 탄다'''. 개인 전용차(point-to-point)가 아니다.
+* '''tap''' — 수도꼭지, 또는 "(통에 구멍을 내) 뽑아 쓰다". 수도관(backbone)에 꼭지를 달아 물(신호)을 빼 쓰는 모양 그대로다. 도청을 wiretap 이라 부르는 것도 같은 말.
+* '''drop line''' — 위에서 아래로 '''늘어뜨린''' 선. 천장의 전선에서 전등까지 내려오는 줄을 생각하면 된다.
+
+[[anim:topologies|세 번째로 그려지는 bus 에서 가로선 하나에 tap 과 drop line 으로 장치가 매달리는 모양을 보고, 가운데 장비(hub)가 없다는 것을 확인하라]]
+
+{analogy}🎭 '''수도관과 수도꼭지.''' 건물을 가로지르는 굵은 수도관 하나(backbone)에 층마다 꼭지(tap)를 달고, 꼭지에서 호스(drop line)를 늘어뜨려 각 집(노드)에 댄다. 설치는 쉽다(easy to install). 그런데 관 어딘가 새면 어디가 새는지 찾기 어렵고(fault isolation 어려움), 새 집을 중간에 끼우려면 관을 잘라야 한다(reconnection 어려움). 그리고 관이 끊기면 그 뒤로는 물이 안 간다.{/analogy}
+
+== 장단점 ==
+* 장점: '''easy to install''' — 케이블 하나 쭉 깔고 꼭지만 달면 끝. 배선량이 적다.
+* 단점: '''difficult reconnection and fault isolation''' — 새 장치 추가·이동이 까다롭고, backbone 의 결함 한 곳이 전체를 멈추며 어디인지 찾기 어렵다. 또 여럿이 한 케이블을 쓰니 동시 전송 시 [[collision]].
+
+{info}L1 p.15 의 "'''LAN with a common cable (past)'''" 가 바로 bus 모양이다 (빨간 cable tap, 검은 cable end). 오늘날 LAN 은 [[스위치]]를 가운데 둔 star 모양으로 바뀌었다 → [[LAN]].{/info}
+
+{quiz}Bus 토폴로지에서 노드를 backbone 에 연결하는 두 부품의 이름을 영어로 쓰고, 각각이 무엇인지 한 줄로.{/quiz}
+{answer}'''Tap''': backbone 케이블에 붙어 신호를 분기해 내는 접속기. '''Drop line''': tap 에서 장치까지 이어지는 선. (Hub·Switch 아님!){/answer}
+
+== 관련 문서 ==
+* [[star 토폴로지]] · [[multipoint]] · [[mesh 토폴로지]] · [[ring 토폴로지]] · [[LAN]] · [[CH01 Introduction]] · [[0920 오답 복기]]

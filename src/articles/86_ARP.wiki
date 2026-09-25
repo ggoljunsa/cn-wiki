@@ -1,0 +1,34 @@
+key: ARP
+title: ARP (Address Resolution Protocol)
+category: 8강 Addressing, 용어
+---
+'''ARP'''는 '''IP 주소를 link-layer(MAC) 주소로 바꿔 주는''' 프로토콜로, [[network layer]]에 정의된 보조(auxiliary) 프로토콜 중 하나다. L6 p.55, p.63. 자세한 동작은 다음 강의로 이어진다.
+
+{def}"ARP protocol is one of the '''auxiliary protocols defined in the network layer'''. Map an '''IP address to a link-layer address'''." (p.63)
+ARP 는 network layer 에 정의된 보조 프로토콜 중 하나로, IP 주소를 link-layer 주소로 매핑한다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''Address Resolution''' = 주소를 '''풀어낸다(resolve)'''. "IP 주소가 N₂ 인 녀석은 '''이 링크에서''' 실제로 누구냐(MAC 주소가 뭐냐)"를 알아낸다. 방향은 '''IP → MAC''' 한쪽이다.
+
+[[img:L6-63.png|p.63 Network layer 상자 안: ICMP, IGMP, IP, 그리고 ARP. IP 가 IP address 를 주면 ARP 가 Link-layer address 를 돌려준다|large]]
+
+== 왜 필요한가 ==
+[[IP 주소와 MAC 주소|p.58 그림]]에서 Alice 는 첫 프레임을 만들 때 목적지 MAC 칸에 '''L₂'''(R1 의 MAC)를 써야 한다. Alice 가 아는 것은 다음 hop R1 의 '''IP 주소 N₂''' 뿐이다. 그 사이를 메우는 것이 ARP 다.
+<pre class="txt">
+IP 계층:  "다음 hop 은 N₂ 다"
+    ↓ (IP address)
+ARP:      "N₂ 의 link-layer 주소는?" → '''L₂'''
+    ↓ (Link-layer address)
+DLL:      프레임 [ L₂ | L₁ ][ N₁ | N₈ | Data ] 생성
+</pre>
+
+{info}p.63 그림에서 ARP 는 '''network layer 상자 안'''에 있다(ICMP, IGMP 와 함께). link-layer 주소를 다루지만 소속은 network layer 라는 점이 퀴즈 포인트가 될 수 있다. 동작 방식(ARP request 를 [[broadcast 주소|broadcast]] 로, reply 를 [[unicast]] 로)은 다음 강의 내용이다.{/info}
+
+{analogy}🎭 '''전화번호부.''' 이름(IP 주소)은 아는데 전화를 걸려면 번호(MAC 주소)가 필요하다. ARP 는 "홍길동 씨 번호 아시는 분?" 하고 동네(링크)에 물어 번호를 알아내는 절차다.{/analogy}
+
+{quiz}ARP 가 하는 일과 소속 계층을 쓰시오.{/quiz}
+{answer}'''IP 주소 → link-layer(MAC) 주소''' 매핑. 소속은 '''network layer''' (auxiliary protocol, ICMP·IGMP 와 함께).{/answer}
+
+== 관련 문서 ==
+* [[MAC 주소]] · [[IP 주소와 MAC 주소]] · [[broadcast 주소]]
+* [[IP]] · [[network layer]] · [[CH03 Link-Layer Addressing]]

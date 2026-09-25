@@ -1,0 +1,47 @@
+key: T_p
+title: T_p (Maximum propagation time)
+category: 7강 MAC, 용어
+---
+'''$T_p$''' 는 MAC 프로토콜에서 쓰는 '''최대 [[propagation time]]''' — 신호가 매체의 한쪽 끝에서 가장 먼 스테이션까지 가는 데 걸리는 시간이다. L6 p.12 범례, p.13, p.33, p.45–46.
+
+{def}"$T_p$: '''Maximum propagation time'''" (p.12 Legend)
+"The vulnerable time for CSMA is the '''propagation time $T_p$'''." (p.33){/def}
+
+== 이름에서 개념 끌어내기 ==
+아래첨자 '''p''' = '''p'''ropagation(전파). 비트가 '''선 위를 날아가는''' 시간이다. 비트를 '''선에 올리는''' 시간인 [[T_fr]](= [[transmission time]])과 헷갈리지 말 것.
+<pre class="txt">
+T_p  = 거리 / 전파 속도             (선의 '''길이'''가 정한다)
+T_fr = 프레임 크기 / [[bit rate]]     (프레임의 '''크기'''와 속도가 정한다)
+</pre>
+
+== 쓰이는 곳 ==
+{|
+! 어디서 || 식 || 의미
+|-
+| [[ALOHA 절차]] (p.12) || ACK 대기 $= 2T_p$ || 왕복 시간
+|-
+| [[binary exponential backoff]] (p.12) || $T_B = R \times T_p$ || backoff 단위
+|-
+| [[CSMA]] (p.33) || vulnerable time $= T_p$ || 첫 비트가 끝까지 가는 동안만 위험
+|-
+| [[CSMA/CD]] (p.45) || $T_{fr} \geq 2T_p$ || 왕복 동안은 아직 보내고 있어야
+|}
+
+[[img:L6-33.png|p.33 A 의 첫 비트가 D 에 닿을 때까지 걸리는 시간 = T_p = CSMA 의 vulnerable time|large]]
+
+== Example 3.8 (p.13) ==
+<pre class="txt">
+최대 거리 = 600 km = 600 × 10³ m
+전파 속도 = 3 × 10⁸ m/s
+T_p = 600 × 10³ / (3 × 10⁸)
+    = 2 × 10⁻³ s = '''2 ms'''
+</pre>
+
+{analogy}🎭 '''천둥 번개.''' 번개(전송 시작)가 친 뒤 천둥소리(신호)가 내 귀에 닿기까지 걸리는 시간이 $T_p$ 다. 멀리 있을수록 길다. 소리가 아직 안 닿았다면 나는 "조용하네" 하고 착각한다 — 그게 [[CSMA]] 의 충돌 원인이다.{/analogy}
+
+{quiz}스테이션 간 최대 거리가 3 km, 전파 속도가 $2 \times 10^8$ m/s 일 때 $T_p$ 는?{/quiz}
+{answer}$T_p = 3 \times 10^3 / (2 \times 10^8) = 1.5 \times 10^{-5}$ s = '''15 μs'''.{/answer}
+
+== 관련 문서 ==
+* [[propagation time]] · [[T_fr]] · [[transmission time]]
+* [[CSMA]] · [[CSMA/CD]] · [[최소 프레임 크기]] · [[binary exponential backoff]]

@@ -1,0 +1,38 @@
+key: burst error
+title: Burst Error (버스트 오류)
+category: 6강 DLC, 용어
+---
+'''Burst error''' 는 데이터 단위에서 '''2비트 이상'''이 바뀐 오류다. burst 의 '''길이'''는 첫 번째 손상 비트부터 마지막 손상 비트까지의 길이로 잰다 — 사이에 멀쩡한 비트가 있어도 포함한다. L5 p.21.
+
+{def}"Burst error: '''2 or more bits''' in the data unit have changed." (p.21) — 그림: "Length of burst error (8 bits)".
+→ 2비트 이상 변경. 길이 = 첫 손상 비트 ~ 마지막 손상 비트.{/def}
+
+[[img:L5-21.png|p.21 b. 손상된 비트는 4개(빨강)인데, 첫 손상부터 마지막 손상까지 8비트 구간 → Length of burst error = 8 bits|large]]
+
+== p.21 그림 한 칸씩 ==
+<pre class="txt">
+위치     :  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+Sent     :  0 1 0 0 1 1 0 1 0 1  0  0  0  0  1  1
+Received :  0 1 0 '''1''' '''0''' 1 0 '''0''' 0 1  '''1'''  0  0  0  1  1
+손상     :        ^ ^     ^       ^
+첫 손상 = 4, 마지막 손상 = 11
+length  = 11 − 4 + 1 = '''8 bits'''   (손상 비트 수는 4)
+</pre>
+
+{warn}'''길이 ≠ 손상 비트 개수.''' burst length 는 "망가진 구간의 폭"이다. 4비트가 망가졌어도 폭이 8이면 길이 8.{/warn}
+
+== 이름에서 개념 끌어내기 ==
+'''burst''' = "터짐, 한바탕". 잡음이 '''한바탕 몰아쳐서''' 연달아 있는 여러 비트를 망가뜨린 것. 잡음이 지속되는 시간 × data rate 만큼의 비트가 영향권이다 — 예컨대 1/100 s 잡음이 1 kbps 에서는 10비트, 1 Mbps 에서는 10,000비트를 덮는다(Forouzan). 그래서 고속 전송일수록 burst error 가 흔하다.
+
+{analogy}🎭 '''커피를 쏟은 공책.''' 오타 한 글자([[single-bit error]])와 달리 커피 얼룩은 '''한 구역'''을 덮는다. 얼룩 안에서도 멀쩡히 읽히는 글자가 있지만, 얼룩의 폭(첫 번짐~마지막 번짐)이 burst 의 길이다.{/analogy}
+
+== 검출 ==
+* [[parity check code]]: 손상 비트 수가 '''짝수'''면 못 잡는다 → 위 예(4개)는 simple parity 로 검출 불가.
+* [[CRC]]: burst error 에 강하다 — 차수 $r$ 인 divisor 를 쓰는 CRC 는 길이 $\le r$ 인 burst 를 모두 검출한다(Forouzan; 슬라이드 범위 밖 참고).
+
+== 예상 문제 ==
+{quiz}Sent 10000000, Received 10100100 일 때 burst 의 길이와 손상 비트 수는?{/quiz}
+{answer}손상 위치 3, 6 (1-based) → 길이 = 6 − 3 + 1 = '''4 bits''', 손상 비트 수 '''2'''. 짝수 개라 simple parity 로는 검출 못 한다.{/answer}
+
+== 관련 문서 ==
+* [[single-bit error]] · [[parity check code]] · [[CRC]] · [[noise]] · [[CH03 Data-Link Control]]

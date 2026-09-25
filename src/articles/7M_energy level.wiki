@@ -1,0 +1,32 @@
+key: energy level
+title: Energy Level (에너지 레벨)
+category: 7강 MAC, 용어
+---
+'''Energy level'''은 매체 위 신호의 세기로, [[CSMA/CD]] 스테이션이 '''idle / 정상 전송 / 충돌'''을 구별하는 단서다. 충돌 시 에너지는 '''정상의 두 배'''. L6 p.48.
+
+{def}"Energy level during transmission, idleness, or collision. For the collision case, the energy level is '''twice''' the normal one." (p.48)
+전송·유휴·충돌 중의 에너지 레벨. 충돌이면 정상의 두 배다.{/def}
+
+[[img:L6-48.png|p.48 Energy levels — Frame transmission(정상) / Idle(0) / Collision(두 배로 높은 주황 막대)|large]]
+
+== 세 상태 ==
+{|
+! 상태 || 에너지 || 스테이션의 판단
+|-
+| Idle || 0 || 비었다 → (persistence 에 따라) 전송 가능
+|-
+| Frame transmission || 정상 (1배) || 누가 보내는 중 → busy
+|-
+| '''Collision''' || '''2배''' || 둘 이상이 동시에 → 즉시 abort + [[jamming signal]]
+|}
+
+== 이름에서 개념 끌어내기 ==
+'''energy''' = 선 위에 실린 신호의 힘. 두 스테이션의 신호가 같은 선 위에서 겹치면 '''더해진다''' — 그래서 2배. CSMA/CD 가 "보내면서 듣는다"는 말은 구체적으로 '''내가 보내는 것보다 에너지가 크게 들리는지''' 본다는 뜻이다.
+
+{analogy}🎭 '''방 안의 소음 측정기.''' 아무도 말 안 하면 0 dB 근처(idle), 한 사람이 말하면 보통 크기(transmission), 둘이 동시에 말하면 확 커진다(collision). 말하는 중에 측정기가 내 목소리보다 크게 튀면 "누가 겹쳐 말하는구나" 하고 멈춘다.{/analogy}
+
+{quiz}CSMA/CD 스테이션이 충돌을 감지하는 물리적 근거는?{/quiz}
+{answer}매체의 '''energy level''' 이 정상 전송 때의 '''두 배''' 수준으로 올라가는 것. 두 신호가 겹쳐 에너지가 더해지기 때문이다.{/answer}
+
+== 관련 문서 ==
+* [[CSMA/CD]] · [[collision]] · [[jamming signal]] · [[CSMA]]

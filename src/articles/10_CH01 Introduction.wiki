@@ -1,0 +1,276 @@
+key: CH01 Introduction
+title: CH01 Introduction (1강 — 네트워크의 큰 그림)
+category: 1강 Introduction, 메인
+---
+'''CH01 Introduction'''은 [[Forouzan]] 6e 1장을 따라가는 이 과목의 첫 강의다. 슬라이드 40장(L1 p.1–40)이 던지는 질문은 하나다 — '''"두 장치가 데이터를 주고받으려면 무엇이 필요하고, 그 복잡한 일을 어떻게 쪼개서 설계하는가?"'''
+전반부(p.2–20)는 부품과 모양(데이터 통신의 정의·특성·요소, data flow, 연결 방식, topology, LAN/WAN, 인터넷), 후반부(p.21–40)는 설계 철학([[프로토콜 계층화]], [[논리적 연결]], [[TCP/IP 프로토콜 스위트]] 5계층, [[캡슐화]], [[주소 체계]], [[OSI 7계층]])이다.
+
+{exam}⭐⭐⭐ '''0920 NotebookLM 퀴즈에서 CH01 에서만 7문항을 틀렸다.''' 4대 특성(Jitter 누락·Encryption 오답) / Star vs Bus / drop line·tap / 중간 노드의 계층 / PDU 이름 / IP 는 network layer / TCP 가 connection-oriented. 이 문서의 ⭐ 박스가 전부 그 자리다. → [[0920 오답 복기]] · [[자주 틀리는 함정 모음]]{/exam}
+
+페이지 번호는 '''슬라이드 인쇄 번호'''(= PDF 페이지)다. p.1 은 표지.
+
+== p.2–3 — Data Communication ==
+
+{def}"'''Exchange of data between two devices via some form of transmission medium''', i.e., wire cable" (p.2)
+두 장치가 어떤 형태의 전송 매체(예: 유선 케이블)를 통해 데이터를 '''교환'''하는 것.{/def}
+
+→ [[데이터 통신]]. p.3 은 그런 시스템이 '''잘 돌아가는지'''를 가늠하는 네 기준, [[데이터 통신 4대 특성]]을 준다.
+
+{|
+! 특성 || 슬라이드 원문 || 한 줄
+|-
+| '''Delivery''' || Must deliver data to the correct destination || 엉뚱한 곳 말고 '''맞는 곳'''으로
+|-
+| '''Accuracy''' || Must deliver data accurately || '''틀림없이'''
+|-
+| '''Timeliness''' || Must deliver data in a timely manner || '''제때'''
+|-
+| '''Jitter''' || The variation in the packet arrival time || 도착 시간이 '''들쭉날쭉하지 않게'''
+|}
+
+{warn}⭐ '''0920 퀴즈에서 여기서 틀렸다.''' Jitter 를 빠뜨리고 '''Encryption''' 을 골랐다. Encryption 은 보안 기법이지 4대 특성이 아니다. 네 번째 칸은 '''Jitter''' — 3강의 [[jitter]] 와 같은 개념이다.{/warn}
+
+== p.4 — Five Components ==
+
+[[img:L1-4.png|Five Components — 양쪽이 같은 Protocol(Rule 1…n)을 들고 있어야 Message 가 Transmission medium 을 건너 의미를 가진다|large]]
+
+[[데이터 통신 5요소]]: '''Message · Sender · Receiver · Transmission medium · Protocol'''. 그림에서 빨간 규칙표가 '''양쪽에 똑같이''' 있다는 점이 핵심이다. [[프로토콜]]은 "A set of rules that govern data communications".
+
+{analogy}🎭 '''택배.''' Message = 상자, Sender/Receiver = 보내는 사람·받는 사람, Transmission medium = 도로, Protocol = "송장은 이렇게 쓰고 주소는 이 형식으로" 하는 '''약속'''. 도로가 멀쩡해도 송장 형식이 서로 다르면 상자는 영영 안 간다.{/analogy}
+
+== p.5–7 — Data Flow ==
+
+두 장치 사이에서 데이터가 '''어느 방향으로, 동시에 흐를 수 있는가'''.
+
+{|
+! 모드 || 방향 || 동시에? || 슬라이드 예
+|-
+| [[simplex]] (p.5) || '''Unidirectional''' — 한쪽은 송신만, 다른 쪽은 수신만 || — || Mainframe → Monitor
+|-
+| [[half-duplex]] (p.6) || 양방향 가능 || '''not at the same time''' || Walkie-talkies
+|-
+| [[full-duplex]] (p.7) || 양방향 || '''simultaneously''' || (전화) — "capacity of the channel must be divided between the two directions"
+|}
+
+[[anim:data_flow_modes|세 줄의 화살표가 언제 오가는지 보고, "동시에"가 되는 줄이 어느 것인지 스스로 말해 보라]]
+
+== p.8–9 — Types of Connection ==
+
+[[img:L1-9.png|Point-to-point(두 장치 전용 링크) vs Multipoint(Mainframe 하나에 여러 장치가 한 링크를 공유 — 파란 네모가 tap)|large]]
+
+* [[point-to-point]]: '''A dedicated link between two devices''' — 링크 하나를 둘이 독점.
+* [[multipoint]]: '''More than two specific devices share a single link''' — 링크 하나를 여럿이 나눠 씀.
+
+이 구분이 바로 다음 topology 들의 재료다: mesh·star·ring 은 point-to-point 링크를 엮은 것이고, bus 는 multipoint 그 자체다.
+
+== p.10–13 — Physical Topology ==
+
+[[anim:topologies|mesh → star → bus → ring 이 그려지는 순서대로 "링크가 몇 개인가, 무엇이 죽으면 전체가 죽는가"를 짚어 보라]]
+
+{|
+! Topology || 연결 방식 || 장점 || 단점
+|-
+| [[mesh 토폴로지|Mesh]] (p.10) || 모든 장치가 '''모든 다른 장치'''와 point-to-point. 링크 $n(n-1)/2$ || traffic 문제 없음, robust, privacy & security, fault identification/isolation || 배선량 → '''expensive'''
+|-
+| [[star 토폴로지|Star]] (p.11) || 각 장치가 '''중앙 제어기(hub)에만''' point-to-point || less expensive, 설치·재구성 쉬움, robust, fault 격리 쉬움 || '''전체가 hub 에 의존'''
+|-
+| [[bus 토폴로지|Bus]] (p.12) || '''Multipoint''' — 긴 케이블 하나가 backbone, 노드는 '''drop line + tap''' || easy to install || reconnection·fault isolation '''어려움'''
+|-
+| [[ring 토폴로지|Ring]] (p.13) || '''양옆 두 장치하고만''' point-to-point, 신호는 '''한 방향''', 각 장치에 '''repeater''' || 설치·재구성 비교적 쉬움, fault isolation 단순 || '''링 한 곳이 끊기면 전체 마비'''
+|}
+
+[[img:L1-10.png|Mesh — n = 5 이면 10 links. 5×4/2 = 10|medium]]
+
+<pre class="txt">
+Mesh 링크 수:  n 개 장치가 각자 (n-1) 개와 연결 → n(n-1)
+              A–B 와 B–A 는 같은 duplex 링크 → ÷2
+              '''n(n-1)/2'''     n=5 → 5·4/2 = '''10'''     n=10 → 45
+</pre>
+
+{warn}⭐ '''0920 퀴즈에서 두 번 틀렸다.''' ① "hub 라는 중앙 제어기에만 연결" = '''Star''' 인데 Bus 를 골랐다. ② Bus 에서 노드를 backbone 에 붙이는 부품 = '''drop line 과 tap''' 인데 "Hub 와 Switch" 를 골랐다. '''Bus 에는 중앙 장비가 없다.''' Hub 가 보이면 Star.{/warn}
+
+[[img:L1-12.png|Bus — Cable end 사이의 긴 케이블 하나에 Tap 으로 구멍을 내고 Drop line 으로 노드를 매단다|large]]
+
+== p.14–19 — Network Types: LAN, WAN ==
+
+* [[LAN]] (p.14–16): '''Privately owned''', 한 사무실·건물·캠퍼스. 과거(p.15)엔 모든 호스트가 '''common cable'''(= bus 모양)에, 오늘(p.16)은 '''smart connecting switch''' 가 목적지를 알아보고 그 호스트에게만 전달(= star 모양).
+* [[WAN]] (p.17–18): '''wider geographical span''' — 도시·주·국가·전 세계. 스위치·라우터·모뎀 같은 connecting device 들을 '''interconnect'''.
+
+[[img:L1-16.png|LAN: (a) 과거의 common cable vs (b) 오늘의 switch — 모양이 bus 에서 star 로 바뀌었다|large]]
+
+[[img:L1-19.png|Network Types: an Example — Resident 는 modem + point-to-point WAN, LAN 들은 router + point-to-point WAN, 가운데를 switched WAN 이 잇는다|large]]
+
+p.19 그림을 읽는 법: '''노란 상자 = LAN, 초록 = switched WAN, 점선 = point-to-point WAN'''. LAN 과 WAN 의 경계에는 반드시 [[라우터]](또는 modem)가 있다.
+
+== p.20 — The Internet ==
+
+[[img:L1-20.png|The Internet — Backbones 가운데, Provider network, 가장자리에 Customer network. 빨간 원은 Peering point|large]]
+
+[[인터넷 구조]]: '''Backbone → Provider network → Customer network''' 의 계층이고, backbone 과 provider 끼리는 '''peering point''' 에서 만난다. 인터넷은 "하나의 거대한 망"이 아니라 '''망들의 망(network of networks)'''이다.
+
+== p.21–22 — Protocol ==
+
+{def}"'''A set of rules needs to be followed.'''" (p.21) — "For data communication, it is often designed to contain '''layers''' where each layer has its '''dedicated function'''. e.g., OSI 7-layer: a 7-layered protocol suite" (p.22){/def}
+
+→ [[프로토콜]], [[OSI 7계층]].
+
+== p.23–26 — Protocol Layering ==
+
+[[img:L1-24.png|Second Scenario — 3계층 프로토콜. Layer 3 Listen/Talk(Plaintext), Layer 2 Encrypt/Decrypt(Ciphertext), Layer 1 Send/receive mail(Mail). 같은 층끼리 Identical objects|large]]
+
+[[프로토콜 계층화]]의 두 예:
+# '''First Scenario — single layer''' (p.23): Maria 와 Ann 이 공기(Air)를 통해 마주 보고 대화. Layer 1 의 역할 = '''Listen and Talk'''. 규칙은 인사, 어휘 제한, 듣기/말하기 교대, dialog/monolog 등.
+# '''Second Scenario — three-layer''' (p.24): 멀리 떨어져 편지로 비밀 대화. 위에서부터 Listen/Talk → Encrypt/Decrypt → Send/receive mail, 그리고 맨 아래 '''Postal carrier facility'''(우체국).
+
+{info}p.24 의 Layer 2 가 Encrypt/Decrypt 라서 "암호화"가 CH01 에 등장하긴 한다. 그러나 이건 '''계층화 예시 속 한 층의 역할'''이지 [[데이터 통신 4대 특성]]이 아니다. 0920 에서 Encryption 을 고른 건 아마 이 그림의 잔상이다.{/info}
+
+'''Features''' (p.25–26):
+* '''Divides a complex task''' into several smaller, simpler tasks
+* '''Modularity''' — a layer (module) can be defined as a '''black box''' with inputs and outputs
+* '''Separation of service from implementation''' — 아래 층이 '''어떻게''' 구현됐는지 몰라도 그 서비스를 쓴다
+* '''Intermediate nodes can be simpler than end nodes''' — End users: application, transport, network, datalink, physical / '''Router: network, datalink, physical'''
+
+== p.27–29 — Logical Connections ==
+
+[[img:L1-29.png|Logical Connections — 두 원칙이 성립하면 같은 층끼리 점선(logical connection)으로 직접 통신하는 것처럼 볼 수 있다|large]]
+
+[[논리적 연결]]:
+* '''1st Principle''': bidirectional 통신을 위해 각 층은 '''반대 방향의 두 작업'''(Talk ↔ Listen, Encrypt ↔ Decrypt, Send ↔ Receive)을 다 할 수 있어야 한다.
+* '''2nd Principle''': 각 층 '''아래의 두 객체'''는 양쪽에서 '''identical''' 해야 한다(Plaintext 는 Layer 3 아래에서 가공되지 않는다).
+* 그러면 '''logically''' layer-to-layer communication 이 있다고 말할 수 있다 → '''logical connection'''.
+
+== p.30 — TCP/IP Protocol Suite ==
+
+[[img:L1-30.png|TCP/IP 5계층 — Application(5) · Transport(4) · Network(3) · Data link(2) · Physical(1)|medium]]
+
+[[TCP/IP 프로토콜 스위트]]는 "A set of protocols organized in different layers" 이고 '''hierarchical''' — 위층 프로토콜은 아래층 프로토콜의 서비스 위에 선다.
+
+{|
+! 번호 || 계층 || 한 줄 역할 (p.33–37) || PDU (p.32)
+|-
+| 5 || [[application layer]] || process-to-process 메시지 교환 || message
+|-
+| 4 || [[transport layer]] || 응용 프로그램 ↔ 응용 프로그램, '''end-to-end''' || segment / user datagram
+|-
+| 3 || [[network layer]] || '''host-to-host''', 최적 경로 선택, [[IP]] || datagram
+|-
+| 2 || [[data-link layer]] || datagram 을 '''링크 하나''' 건너 옮김 || frame
+|-
+| 1 || [[physical layer]] || 개별 비트를 신호로 바꿔 매체 위로 || bits
+|}
+
+[[anim:layer_stack|호스트 A 에서 message 가 내려가며 옷을 입고, 스위치(L1–L2)·라우터(L1–L3)를 지날 때 어디까지 올라갔다 내려오는지 본 뒤 아래 시뮬레이터로 헤더 스택을 확인하라]]
+
+== p.31 — Logical Connections in TCP/IP ==
+
+[[img:L1-31.png|Logical Connections in TCP/IP — Application·Transport·Network 는 호스트끼리(빨간 점선), Data link·Physical 은 링크마다(검은 점선). Switch 는 2층, Router 는 3층까지|large]]
+
+{warn}⭐ '''0920 퀴즈에서 여기서 틀렸다''' (정답 2개를 놓치고 오답 2개를 골랐다). 정답: '''[[스위치]] = Physical + Data link''', '''[[라우터]] = Physical + Data link + Network'''. 오답: "라우터가 application 메시지를 처리한다", "모든 중간 노드가 5계층을 구현한다". 5계층을 전부 가진 건 '''end host 뿐'''이다.{/warn}
+
+→ [[end-to-end와 hop-to-hop]]: 위 세 층(App/Transport/Network)은 end-to-end, 아래 두 층(Data link/Physical)은 hop-to-hop.
+
+== p.32 — Information Flow in TCP/IP ==
+
+[[img:L1-32.png|Information Flow — 층마다 양쪽이 주고받는 identical object: messages / segment or user datagram / datagram / frame / bits. 스위치는 객체를 바꾸지 않아서 생략|large]]
+
+[[PDU]] 이름을 위에서부터: '''message → segment (or user datagram) → datagram → frame → bits'''. 슬라이드의 Notes: "We have not shown switches because they don't change objects."
+
+{warn}⭐ '''0920 퀴즈에서 여기서 틀렸다.''' "올바르게 짝지어진 것을 모두 고르라"에서 보기 4개(Transport–segment, Network–datagram, Data link–frame, Physical–bits)가 '''전부 정답'''이었는데 frame 하나만 골랐다.{/warn}
+
+== p.33–37 — 각 계층의 역할 ==
+
+* '''[[physical layer|Physical]]''' (p.33): Carrying individual bits in a frame across a physical link. 매체는 bit 가 아니라 '''electrical or optical signals''' 를 나른다. 두 physical layer 사이의 논리 단위는 '''bit'''. → CH02 전체([[CH02 Signals]])가 이 층 이야기다.
+* '''[[data-link layer|Data link]]''' (p.34): Taking the datagram and moving it '''across the link'''. wired/wireless LAN, wired/wireless WAN 무엇이든. datagram 을 '''frame''' 으로 encapsulate. → CH03([[CH03 Data-Link Control]]).
+* '''[[network layer|Network]]''' (p.35): source–destination 연결 생성 + '''choosing the best route''' for each packet. '''host-to-host'''. 경로의 라우터들이 route 를 고른다. '''[[IP]]''' = 인터넷의 main protocol, 주소 형식 정의, '''connectionless''' (no flow / error / congestion control). Auxiliary: ICMP, IGMP, DHCP, [[ARP]].
+* '''[[transport layer|Transport]]''' (p.36): 출발 호스트의 application program → 목적 호스트의 '''대응하는''' application program. '''end-to-end'''. '''[[TCP]]''' = '''connection-oriented''', flow·error·congestion control. '''[[UDP]]''' = connectionless, 제어 없음.
+* '''[[application layer|Application]]''' (p.37): '''process-to-process'''. HTTP(WWW) · SMTP(email) · FTP(file transfer) · TELNET/SSL(remote access) · SNMP(network management) · DNS(finding network address).
+
+{warn}⭐ '''0920 퀴즈에서 두 번 틀렸다.''' ① IP 가 속하고 경로를 고르는 층 = '''Network''' 인데 Transport 를 골랐다. ② connection-oriented + flow/error control = '''TCP''' 인데 UDP 를 골랐다. 묶어서 외우자: '''connectionless 는 IP 와 UDP, connection-oriented 는 TCP 하나뿐.'''{/warn}
+
+== p.38 — Encapsulation and Decapsulation ==
+
+[[img:L1-38.png|Encapsulation/Decapsulation — 헤더 4(transport) · 3(network) · 2(data-link). 라우터는 2 를 벗겨 3 까지 본 뒤 새 2 를 붙인다|large]]
+
+[[캡슐화]]:
+
+<pre class="txt">
+송신 호스트 (↓ Encapsulate)          라우터                 수신 호스트 (↑ Decapsulate)
+Application   Message                                        Message
+Transport     [4]Message                                     [4]Message
+Network       [3][4]Message       ↑[3][4]Message  ↓          [3][4]Message
+Data link     [2][3][4]Message    ↑[2][3][4]Msg   ↓[2'][3][4] [2][3][4]Message
+Physical      bits ──────────────▶ bits           bits ─────▶ bits
+</pre>
+
+라우터는 '''network 층까지만''' 올라가 목적지 주소를 보고 경로를 정한 뒤, 다음 링크용 data-link 헤더를 '''새로''' 붙여 내려보낸다.
+
+[[sim:encapsulation]]
+
+== p.39 — Addressing ==
+
+[[img:L1-39.png|Addressing — 층마다 주소가 다르다. Names / Port numbers / Logical addresses / Link-layer addresses / (Physical 은 없음)|large]]
+
+[[주소 체계]] (Distinct addressing by layers):
+
+{|
+! Packet name || Layer || Address || Example
+|-
+| Message || Application || '''Names''' || www.dgist.ac.kr, soobin.um@dgist.ac.kr
+|-
+| Segment / User datagram || Transport || '''[[포트 번호|Port numbers]]''' || 80, 443, 53
+|-
+| Datagram || Network || '''Logical addresses''' (IP) || 192.168.0.1
+|-
+| Frame || Data-link || '''Link-layer addresses''' ([[MAC 주소|MAC]]) || 00:1A:2B:...
+|-
+| Bits || Physical || — (주소 없음) || —
+|}
+
+== p.40 — OSI vs TCP/IP ==
+
+[[img:L1-40.png|OSI Model 7층 vs TCP/IP 5층 — OSI 의 Application·Presentation·Session 이 TCP/IP 의 Application 하나로|large]]
+
+[[OSI 7계층]]의 '''Application + Presentation + Session''' 세 층이 TCP/IP 에서는 '''Application''' 하나(several application protocols)로 합쳐진다. Transport(several transport protocols), Network(Internet Protocol and some helping protocols), Data link + Physical(underlying LAN and WAN technology)은 1:1.
+
+{joke}교수님 CH00 의 Focus 슬라이드 제목은 "Understanding of '''OSI 7 layers'''" 인데, 실제 강의 뼈대는 TCP/IP '''5층'''이다. 둘 다 외워야 하는 이유.{/joke}
+
+----
+
+{quiz}(1) 데이터 통신 4대 특성을 영어 이름으로. (2) 스위치와 라우터는 각각 어느 층까지 구현하는가? (3) 5계층의 PDU 를 위에서부터.{/quiz}
+{answer}(1) '''Delivery, Accuracy, Timeliness, Jitter''' (Encryption 아님).
+(2) 스위치 = Physical + Data link, 라우터 = Physical + Data link + Network.
+(3) message → segment(user datagram) → datagram → frame → bits.{/answer}
+
+{quiz}장치 6대를 mesh 로 연결하려면 duplex 링크가 몇 개 필요한가? 또 star 로 연결하면?{/quiz}
+{answer}Mesh: $n(n-1)/2 = 6 \cdot 5 / 2 = 15$ 개. Star: 각 장치가 hub 로 1개씩 → '''6개'''(hub 제외 장치 수). star 가 "less expensive" 인 이유가 이 숫자다.{/answer}
+
+{quiz}IP, UDP, TCP 중 connection-oriented 인 것은? 그리고 나머지 둘이 공통으로 제공하지 않는 세 가지는?{/quiz}
+{answer}'''TCP''' 만 connection-oriented. IP 와 UDP 는 connectionless 이고 '''flow control, error control, congestion control''' 을 제공하지 않는다.{/answer}
+
+== 시험 대비 핵심 요약 ==
+# 데이터 통신 = 두 장치가 transmission medium 을 통해 데이터를 교환. 4대 특성 '''Delivery · Accuracy · Timeliness · Jitter''' (p.3)
+# 5요소 '''Message · Sender · Receiver · Transmission medium · Protocol''' (p.4)
+# Data flow: '''simplex'''(단방향) / '''half-duplex'''(교대, walkie-talkie) / '''full-duplex'''(동시, 용량을 두 방향이 나눔)
+# Connection: '''point-to-point'''(전용) vs '''multipoint'''(공유)
+# Topology: Mesh $n(n-1)/2$ 비쌈 / Star '''hub''' 의존 / Bus '''drop line + tap''', fault isolation 어려움 / Ring '''repeater''', 한 곳 끊기면 전체 마비
+# LAN = privately owned, 과거 common cable → 오늘 switch. WAN = 넓은 범위, connecting device 들을 interconnect
+# 인터넷 = backbone – provider – customer, '''peering point'''
+# Layering: 복잡한 일을 쪼갬, '''modularity(black box)''', '''service/implementation 분리''', '''중간 노드는 더 단순'''
+# Logical connection 두 원칙: 각 층은 반대 작업 둘 다 / 각 층 아래 객체는 양쪽에서 identical
+# TCP/IP 5층: Application – Transport – Network – Data link – Physical
+# 스위치 L1–L2, 라우터 L1–L3, end host L1–L5. App/Transport/Network = end-to-end, DL/Physical = hop
+# PDU: message – segment/user datagram – datagram – frame – bits
+# IP = network layer, connectionless. TCP = connection-oriented(flow/error/congestion). UDP = connectionless
+# 주소: names – port – logical(IP) – link-layer(MAC) – 없음
+# OSI 의 Application+Presentation+Session = TCP/IP Application
+
+== 관련 문서 ==
+* [[데이터 통신]] · [[데이터 통신 4대 특성]] · [[데이터 통신 5요소]] · [[프로토콜]]
+* [[simplex]] · [[half-duplex]] · [[full-duplex]] · [[point-to-point]] · [[multipoint]]
+* [[mesh 토폴로지]] · [[star 토폴로지]] · [[bus 토폴로지]] · [[ring 토폴로지]]
+* [[LAN]] · [[WAN]] · [[인터넷 구조]]
+* [[프로토콜 계층화]] · [[논리적 연결]] · [[TCP/IP 프로토콜 스위트]] · [[OSI 7계층]]
+* [[physical layer]] · [[data-link layer]] · [[network layer]] · [[transport layer]] · [[application layer]]
+* [[캡슐화]] · [[PDU]] · [[주소 체계]] · [[end-to-end와 hop-to-hop]]
+* [[스위치]] · [[라우터]] · [[허브]] · [[IP]] · [[TCP]] · [[UDP]] · [[포트 번호]]
+* 다음 강의: [[CH02 Signals]] · 참고: [[교수 소개]] · [[Forouzan]] · [[0920 오답 복기]]

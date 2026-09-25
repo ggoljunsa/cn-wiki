@@ -1,0 +1,33 @@
+key: full-duplex
+title: Full-Duplex (전이중)
+category: 1강 Introduction, 용어
+---
+'''Full-duplex''' 는 양쪽이 '''동시에''' 송수신하는 data flow (L1 p.7).
+
+{def}"Both stations can transmit and receive '''simultaneously''' / The '''capacity of the channel must be divided''' between the two directions" (L1 p.7)
+두 스테이션이 동시에 송신·수신할 수 있다. 채널의 용량은 두 방향으로 나뉘어야 한다.{/def}
+
+[[img:L1-7.png|c. Full-duplex — "Direction of data all the time" 양쪽 화살표|large]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''duplex'''(두 겹 = 양방향)를 '''full'''(온전히) 쓴다. [[half-duplex]] 가 시간으로 방향을 나눴다면(time 1 / time 2), full-duplex 그림의 문구는 "'''all the time'''" 이다. 대가는 두 번째 bullet — '''용량을 나눈다'''. 한 방향이 다 쓰던 도로를 두 방향이 나눠 쓴다.
+
+[[anim:data_flow_modes|맨 아랫줄(full-duplex)에서 두 화살표가 같은 순간에 서로 반대로 지나가는 장면을 보고, 채널 폭이 반씩 나뉘어 표시되는지 확인하라]]
+
+{analogy}🎭 '''양방향 2차선 도로.''' 올라가는 차와 내려가는 차가 동시에 달린다. 대신 도로 폭(capacity)을 두 차선으로 '''나눴다'''. 전화 통화도 같다 — 둘이 동시에 말해도 서로 들린다.{/analogy}
+
+== 용량이 나뉘는 방식 ==
+{|
+! 방식 || 설명
+|-
+| 선을 두 가닥 || 송신용·수신용 링크를 따로 (각 방향이 한 가닥씩)
+|-
+| 한 선을 나눠 || 한 링크의 capacity 를 두 방향이 분할 (CH02 [[multiplexing]] 의 발상)
+|}
+슬라이드는 두 번째 관점을 강조한다: "capacity of the channel must be divided".
+
+{quiz}Full-duplex 링크의 총 용량이 100 Mbps 이고 두 방향이 똑같이 나눠 쓴다면, 한 방향이 최대로 쓸 수 있는 용량은? Simplex 였다면?{/quiz}
+{answer}Full-duplex: 각 방향 '''50 Mbps'''(나눠 쓰므로). Simplex: 한 방향이 '''100 Mbps''' 전부. (실제 이더넷은 송수신 선을 따로 둬서 각 방향이 온전한 속도를 내기도 하지만, 슬라이드의 명제는 "capacity must be divided" 다.){/answer}
+
+== 관련 문서 ==
+* [[simplex]] · [[half-duplex]] · [[multiplexing]] · [[CH01 Introduction]]

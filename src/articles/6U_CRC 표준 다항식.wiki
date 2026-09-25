@@ -1,0 +1,44 @@
+key: CRC 표준 다항식
+title: Standard Divisors for CRC (CRC 표준 다항식)
+category: 6강 DLC, 용어
+---
+실제 네트워크는 [[divisor]]를 아무거나 쓰지 않고 '''표준으로 정해진 다항식'''을 쓴다. L5 p.50 은 네 개를 보여 주고, 한 가지 규칙을 강조한다: '''divisor 의 비트 수는 항상 다항식 차수보다 1 크다.'''
+
+{def}"The number of bits is always '''one more than the degree''' of the polynomial. CRC-8: '''9 bits''', CRC-32: '''33 bits'''." (p.50){/def}
+
+[[img:L5-50.png|p.50 Standard divisors for CRC — CRC-8 / CRC-10 / CRC-16 / CRC-32 의 다항식과 용도|large]]
+
+{|
+! Name || Polynomial || 비트 수 || Application
+|-
+| CRC-8 || $x^8 + x^2 + x + 1$ || 9 || ATM header
+|-
+| CRC-10 || $x^{10} + x^9 + x^5 + x^4 + x^2 + 1$ || 11 || ATM AAL
+|-
+| CRC-16 || $x^{16} + x^{12} + x^5 + 1$ || 17 || [[HDLC]]
+|-
+| CRC-32 || $x^{32} + x^{26} + x^{23} + x^{22} + x^{16} + x^{12} + x^{11} + x^{10} + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1$ || 33 || '''LANs'''
+|}
+
+== 이름에서 개념 끌어내기 ==
+'''CRC-N''' 의 N = '''다항식의 차수''' = 나머지(검사 비트)의 길이. 비트 수가 아니다! CRC-32 는 '''33비트''' divisor 로 '''32비트''' 나머지를 만든다. (최고차 항 $x^{32}$ 에 해당하는 비트까지 세면 33개.)
+
+{analogy}🎭 '''자물쇠 규격.''' 집집마다 다른 모양의 자물쇠를 쓰면 열쇠공(수신 장비)이 곤란하다. 그래서 "ATM 은 8번 규격, HDLC 는 16번, LAN 은 32번" 처럼 '''업계 표준 규격'''을 정했다. 숫자가 클수록 검사 비트가 길어 더 많은 오류(특히 긴 [[burst error]])를 잡는다.{/analogy}
+
+== 비트 수 계산 ==
+<pre class="txt">
+비트 수 = 차수 + 1        (x⁰ 자리까지 세므로)
+  CRC-8   : 차수 8  → 9 bits   → 나머지 8 bits
+  CRC-16  : 차수 16 → 17 bits  → 나머지 16 bits
+  CRC-32  : 차수 32 → 33 bits  → 나머지 32 bits
+  L5 예제 1011 (x³+x+1): 차수 3 → 4 bits → 나머지 3 bits
+</pre>
+
+{warn}'''함정: "CRC-32 divisor 는 32비트다" 는 틀렸다.''' 33비트다. 그리고 송신 측이 붙이는 0 과 나머지는 32비트.{/warn}
+
+== 예상 문제 ==
+{quiz}Ethernet LAN 이 쓰는 CRC 는? 그 divisor 는 몇 비트이고, 프레임에 붙는 검사 비트는 몇 비트인가?{/quiz}
+{answer}'''CRC-32'''. divisor '''33 비트''', 붙는 나머지([[FCS]]) '''32 비트'''.{/answer}
+
+== 관련 문서 ==
+* [[CRC]] · [[divisor]] · [[polynomial representation]] · [[HDLC]] · [[FCS]] · [[fixed-size framing]]

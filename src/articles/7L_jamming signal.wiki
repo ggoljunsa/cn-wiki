@@ -1,0 +1,29 @@
+key: jamming signal
+title: Jamming Signal (재밍 신호)
+category: 7강 MAC, 용어
+---
+'''Jamming signal'''은 [[CSMA/CD]] 에서 충돌을 감지한 스테이션이 전송을 중단한 직후 내보내는 짧은 신호로, '''모든 스테이션에게 충돌이 났음을 확실히''' 알린다. L6 p.46–47.
+
+{def}p.47 흐름도: "Collision detected? → [true] → '''Send a jamming signal''' → K = K + 1 → …"
+p.46: "…ignoring the time needed to send a jamming signal, as we see later…"
+충돌을 감지하면 jamming signal 을 보내고 나서 시도 횟수를 올리고 backoff 로 간다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''jam''' = 막다, 교란하다(전파 방해를 "재밍"이라 한다). 선을 일부러 '''꽉 막는''' 신호를 흘려서, 충돌 조각이 너무 짧아 미처 알아채지 못한 스테이션까지 "지금 이 프레임은 망가졌다"는 것을 알게 한다.
+
+[[img:L6-47.png|p.47 CSMA/CD 흐름도 — Collision detected? true → Send a jamming signal → K = K + 1|large]]
+
+== 왜 필요한가 ==
+* 충돌을 감지한 쪽이 곧바로 끊어 버리면, 반대편 스테이션에는 '''아주 짧은 충돌 조각'''만 도착할 수 있다
+* jamming signal 로 충돌 상태를 조금 더 길게 유지해 '''모든''' 스테이션이 [[energy level]] 상승을 확실히 감지하게 만든다
+* 수신 측도 받던 프레임이 쓰레기임을 알고 버린다
+
+[[anim:csma_cd_abort|충돌 감지 → abort → jamming signal → backoff 순서를 보라]]
+
+{analogy}🎭 '''회의 중 "잠깐!" 외치기.''' 두 사람이 동시에 말을 꺼낸 걸 한 사람이 알아채면, 그냥 입만 다무는 게 아니라 "잠깐만요!"라고 크게 말해서 '''방 안 모두가''' 방금 말이 섞였다는 걸 알게 한다. 그래야 상대도 멈추고, 듣던 사람들도 방금 들은 걸 무시한다.{/analogy}
+
+{quiz}CSMA/CD 흐름도에서 충돌 감지 후 다음 세 동작의 순서를 쓰시오: (가) K = K + 1 (나) jamming signal 전송 (다) T_B 대기{/quiz}
+{answer}'''(나) → (가) → (다)'''. Collision detected → Send a jamming signal → K = K+1 → K < 15 확인 → R 생성 → Wait $T_B$.{/answer}
+
+== 관련 문서 ==
+* [[CSMA/CD]] · [[energy level]] · [[collision]] · [[binary exponential backoff]]

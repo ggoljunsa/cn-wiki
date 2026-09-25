@@ -1,0 +1,31 @@
+key: peak amplitude
+title: Peak Amplitude (최대 진폭)
+category: 2강 Signals, 용어
+---
+'''Peak amplitude'''는 신호가 갖는 '''가장 큰 세기의 절댓값'''이다. 단위는 '''volt(V)'''. L2 p.19. [[사인파]] 3요소 중 첫째.
+
+{def}L2 p.19 "Peak Amplitude"
+"Peak amplitude: '''the absolute value of its highest intensity'''. '''Measured in volts'''."
+최대 진폭 = 가장 높은 세기의 절댓값, 볼트로 측정.{/def}
+
+[[img:L2-19.png|p.19 — (a) high peak amplitude, (b) low peak amplitude. 두 신호는 frequency·phase 가 같고 높이만 다르다|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''amplitude''' — ''ample''(넉넉한, 큰). 흔들림의 '''크기'''.
+* '''peak''' — 봉우리. 그 크기 중에서도 '''꼭대기'''의 값.
+* '''absolute value''' — 음의 쪽 골짜기가 더 깊어도 그 '''크기'''를 잰다는 뜻. 부호는 버린다.
+
+{analogy}🎭 '''파도의 높이.''' 바다 위 파도가 해수면(0 V 축)에서 얼마나 높이 솟는가가 peak amplitude 다. 파도의 간격(frequency)이나 언제 도착하는가(phase)와는 상관없이, 같은 간격의 파도도 태풍 때는 더 높다. 신호도 송신 전력을 올리면 amplitude 가 커지고, 긴 선로를 지나면 [[attenuation]] 으로 작아진다.{/analogy}
+
+== 어디서 쓰이나 ==
+* [[time domain과 frequency domain|Frequency domain]] 그림에서 막대의 '''높이'''가 peak amplitude 다 (p.26: 6 Hz 위치에 높이 5 V).
+* 신호 전력은 amplitude 의 제곱에 비례한다 → [[attenuation]] 은 amplitude(전력)가 줄어드는 것, [[amplifier]] 는 되살리는 것, [[데시벨|dB]] 은 두 전력의 비.
+* [[ASK]] 는 비트를 amplitude 로 표현한다 (1 → 큰 amplitude, 0 → 0).
+* Example 2.2: 미국 가정 전기의 '''peak value''' 는 110~120 V.
+
+{quiz}p.26 의 사인파는 1초에 6번 진동하고 최댓값이 5 V 다. 이 신호의 peak amplitude 와 frequency 를 쓰고, frequency domain 에 어떻게 그려지는지 설명하시오.{/quiz}
+{answer}peak amplitude = '''5 V''', frequency = '''6 Hz'''. Frequency domain 에서는 가로축 6 Hz 위치에 '''높이 5 인 막대 하나'''로 그려진다.{/answer}
+
+== 관련 문서 ==
+* [[사인파]] · [[주파수]] · [[phase]] · [[time domain과 frequency domain]]
+* [[attenuation]] · [[amplifier]] · [[ASK]]

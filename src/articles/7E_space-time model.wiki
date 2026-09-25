@@ -1,0 +1,34 @@
+key: space-time model
+title: Space-Time Model (공간-시간 모델)
+category: 7강 MAC, 용어
+---
+'''Space-time model'''은 가로축에 스테이션의 '''위치(space)''', 세로축에 '''시간(time, 아래로 흐름)'''을 놓고 신호가 퍼져 나가는 모습을 그리는 그림이다. [[CSMA]]·[[CSMA/CD]] 의 충돌을 설명할 때 쓴다. L6 p.32–33, p.42–43.
+
+{def}"'''Space-time model of a collision in CSMA''' — At time $t_2$, C cannot sense the transmission of B." (p.32){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''space''' × '''time''' 두 축을 한 평면에 그린다. 한 스테이션의 세로선 = 그 스테이션이 시간에 따라 겪는 일. 신호는 '''위치를 옮기는 데 시간이 걸리므로''' 기울어진 선(띠)으로 그려진다. 기울기가 곧 전파 속도, 띠가 반대쪽 끝에 닿는 데 걸린 세로 길이가 [[T_p]].
+
+[[img:L6-32.png|p.32 파란 띠 = B 의 신호, 노란 띠 = C 의 신호, 가운데 회색 = 둘이 겹친 충돌 영역|large]]
+
+== 그림 읽는 법 ==
+<pre class="txt">
+가로 = 위치 (A ─ B ───────── C ─ D)
+세로 = 시간 (위 → 아래로 흐름)
+B 가 t₁ 에 전송 시작 → 파란 띠가 B 에서 좌우로 비스듬히 퍼짐
+C 가 t₂ 에 전송 시작 → 이때 파란 띠는 아직 C 의 세로선에 안 닿음 (C: "idle 이네")
+노란 띠도 C 에서 좌우로 퍼짐
+두 띠가 만나는 회색 영역 = '''Area where both signals exist''' = 충돌
+</pre>
+
+[[anim:csma_space_time|B 와 C 의 신호 띠가 퍼져 나가 가운데서 겹치는 과정을 보고, C 가 왜 t₂ 에 idle 로 들었는지 확인하라]]
+
+[[img:L6-42.png|p.42 같은 모델로 그린 CSMA/CD — 첫 비트끼리 충돌, C 는 t₃, A 는 t₄ 에 감지|large]]
+
+{analogy}🎭 '''연못에 돌 두 개.''' 연못의 한 줄(위치)을 옆에서 찍은 연속 사진을 위에서 아래로 쌓으면, 돌이 떨어진 자리에서 물결이 좌우로 비스듬히 퍼지는 V 자가 생긴다. 두 번째 돌을 던진 사람은 첫 번째 물결이 아직 자기 발밑에 안 왔으니 "잔잔하다"고 생각했다. 두 V 가 겹치는 곳이 충돌이다.{/analogy}
+
+{quiz}Space-time 그림에서 신호 띠가 '''기울어져''' 있는 이유는? 만약 전파 속도가 무한대라면 어떻게 그려질까?{/quiz}
+{answer}신호가 다른 위치에 닿는 데 '''시간이 걸리기 때문'''(propagation delay)이다. 전파 속도가 무한대면 띠가 '''수평'''이 되어 모든 스테이션이 같은 순간에 신호를 듣는다 — 그러면 CSMA 에서 "아직 못 들어서 생기는 충돌"은 사라진다($T_p = 0$).{/answer}
+
+== 관련 문서 ==
+* [[CSMA]] · [[CSMA/CD]] · [[T_p]] · [[propagation time]] · [[vulnerable time]]

@@ -1,0 +1,37 @@
+key: AWGN
+title: AWGN (Additive White Gaussian Noise)
+category: 3강 Transmission, 용어
+---
+'''AWGN'''(Additive White Gaussian Noise)은 [[Shannon capacity]] 공식이 전제하는 잡음 모델이다. 신호에 '''더해지고(additive)''', 모든 주파수에 '''고르게 퍼져 있고(white)''', 크기가 '''정규분포(Gaussian)'''를 따르는 잡음. L2 p.53.
+
+{def}L2 p.53 "For '''Additive White Gaussian Noise (AWGN)''' channel, the following formula determines the maximum transmission rate: Capacity = Bandwidth × log₂(1 + SNR)"
+AWGN 채널 = 가산 백색 가우시안 잡음 채널. Shannon capacity 공식은 이 채널에 대한 것이다.{/def}
+
+== 이름에서 개념 끌어내기 (단어 하나씩) ==
+{|
+! 단어 || 뜻 || 수식으로
+|-
+| '''Additive''' || 잡음이 신호에 '''더해진다''' (곱해지거나 모양을 바꾸지 않음) || 받은 신호 $r(t) = s(t) + n(t)$
+|-
+| '''White''' || 모든 주파수에 '''같은 세기'''로 퍼져 있다 — 흰 빛이 모든 색을 고르게 포함하듯 || 스펙트럼이 평평
+|-
+| '''Gaussian''' || 순간 잡음 값이 '''정규분포(종 모양)''' — 작은 값은 흔하고 큰 값은 드묾 || $n \sim \mathcal{N}(0, \sigma^2)$
+|-
+| '''Noise''' || 원치 않는 신호 || → [[noise]]
+|}
+교수의 입버릇 "the name itself is very important" 가 이 용어에 딱 맞는다 — 네 단어가 정의 전부다.
+
+{analogy}🎭 '''TV 채널 사이의 지지직 화면.''' 모든 주파수가 골고루 섞인(white) 무작위 점들이, 대부분 회색이고 가끔 아주 밝거나 어두운(Gaussian) 모습으로, 원래 화면 위에 덧씌워진다(additive). 그게 AWGN 이다. 전선 속 전자의 열운동([[noise|thermal noise]])이 딱 이런 모양이라 가장 기본적인 잡음 모델이 됐다.{/analogy}
+
+[[img:L2-53.png|p.53 — Shannon capacity 의 전제: AWGN channel|medium]]
+
+== 교수의 설명 — fading 이 아니다 ==
+{exam}⭐⭐ 교수(9/10 복습): Shannon 의 noisy channel 은 "'''just adding some Gaussian''' [noise]" 채널이고, 무선 통신에서 흔히 만나는 '''fading channel 이 아니다'''. 그리고 9/1: "capacity 를 달성하는 코드는 '''fading 이나 attenuation 없이''' 가우시안 잡음만 있는 단순한 채널에서나 알려져 있고, 일상의 무선 시나리오에서 capacity-achieving 기법은 '''아직 모른다'''."{/exam}
+* AWGN: 잡음이 '''더해지기만''' 한다 → 분석이 깔끔 → Shannon 공식이 정확히 성립
+* fading: 신호 세기 자체가 시간에 따라 '''곱해져서''' 출렁인다(건물 반사, 이동) → 더 어렵다
+
+{quiz}AWGN 의 네 글자가 각각 무엇을 뜻하는지 한 줄씩 쓰시오.{/quiz}
+{answer}A — '''Additive''': 신호에 더해짐 / W — '''White''': 모든 주파수에 고르게 분포 / G — '''Gaussian''': 크기가 정규분포 / N — '''Noise''': 잡음.{/answer}
+
+== 관련 문서 ==
+* [[Shannon capacity]] · [[noise]] · [[SNR]] · [[Claude Shannon]] · [[CH02 Transmission]]

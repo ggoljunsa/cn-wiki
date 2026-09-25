@@ -1,0 +1,38 @@
+key: NRZ-I
+title: NRZ-I (Non-Return-to-Zero, Invert)
+category: 4강 Digital Transmission, 용어
+---
+'''NRZ-I'''는 '''bit 1 이 오면 전압을 뒤집고, bit 0 이면 그대로 두는''' [[line coding]] 방식이다. 슬라이드(L3 p.46)는 "[[4B/5B]] 는 NRZ-I 와 결합해 쓴다 — 0 이 길게 이어지면 동기화를 잃기 때문"이라는 맥락으로만 등장한다.
+
+{def}Slide: "4B/5B — '''Used in combination with NRZ-I'''. '''Long sequence of 0s can make loss of synchronization'''."
+Forouzan: NRZ-I 에서는 '''다음 비트가 1 이면 신호 레벨이 반전(invert)'''되고, 0 이면 전이가 없다. 정보는 레벨이 아니라 '''전이(transition)의 유무'''에 담긴다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''NRZ''' = Non-Return-to-Zero: 비트 구간 도중에 0 V 로 '''돌아가지 않고''' 레벨을 유지한다.
+* '''I''' = Invert: 1 을 만나면 '''뒤집는다'''.
+따라서 "1 = 뒤집기, 0 = 가만히". 비교로 NRZ-L(Level)은 레벨 자체가 비트(예: 0 = +V, 1 = −V)다.
+
+<pre class="ascii">
+bit        0    1    0    0    1    1    0    0    0    0
+         ─────┐              ┌────┐
+NRZ-I         │              │    │
+              └──────────────┘    └────────────────────────
+전이       -    ✓    -    -    ✓    ✓    -    -    -    -
+                                        └ 0 넷 = 평평한 선: 몇 비트 지났는지 수신기가 헷갈림
+</pre>
+
+{analogy}🎭 '''방 전등 스위치.''' "1 이면 스위치를 딸깍, 0 이면 손대지 않기." 밖에서 창문을 보는 사람은 불이 '''바뀌는 순간'''에만 신호를 읽는다. 0 이 오래 이어지면 불이 한참 그대로라, 그 사이 몇 번의 0 이 지나갔는지는 '''자기 시계만 믿고''' 세야 한다 — 시계가 조금만 틀려도 개수가 틀린다. 이게 '''loss of synchronization'''.{/analogy}
+
+== 약점과 해결 ==
+* 1 이 길게 이어지면 매 비트 전이 → 동기에 유리.
+* '''0 이 길게 이어지면 전이 없음 → 동기 손실''' (슬라이드가 말하는 문제).
+* 해결: 앞에 [[4B/5B]] 를 두어 0 이 3개보다 길게 이어지지 않게 한다. 순서는 '''4B/5B encoding → NRZ-I encoding → Link'''.
+
+[[img:L3-46.png|p.46 4B/5B 와 NRZ-I 가 송신·수신 양쪽에서 짝으로 동작|medium]]
+
+{quiz}NRZ-I 에서 동기 손실을 일으키는 것은 긴 0 의 연속인가, 긴 1 의 연속인가? 이유는?{/quiz}
+{answer}'''긴 0 의 연속.''' NRZ-I 는 1 에서만 신호를 반전하므로 0 이 이어지는 동안은 전이가 없고, 수신기는 비트 경계를 잡을 단서를 잃는다. 1 의 연속은 매 비트 반전이 일어나 오히려 동기에 유리하다.{/answer}
+
+== 관련 문서 ==
+* [[4B/5B]] · [[block coding]] · [[line coding]]
+* 다른 NRZ: [[unipolar NRZ와 polar NRZ]]

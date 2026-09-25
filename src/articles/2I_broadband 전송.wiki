@@ -1,0 +1,37 @@
+key: broadband 전송
+title: Broadband 전송 (Broadband Transmission, 광대역 전송)
+category: 2강 Signals, 용어
+---
+'''Broadband transmission'''은 [[디지털 신호]]를 '''[[modulation|변조(modulation)]]''' 하여 '''[[bandpass 채널]]'''로 보내는 방식이다. L2 p.38. 디지털 → 아날로그로 바꿔 특정 주파수 대역 $f_1$~$f_2$ 에 올리고, 수신 측에서 다시 디지털로 되돌린다.
+
+{def}L2 p.38 "Broadband Transmission"
+"'''Modulation''' of a digital signal for transmission on a '''bandpass''' channel."
+광대역 전송 = 대역통과 채널로 전송하기 위해 디지털 신호를 변조하는 것.{/def}
+
+[[img:L2-38.png|p.38 — Input digital signal → Digital/analog converter → f₁~f₂ 대역의 아날로그 신호 → Bandpass channel(Available bandwidth f₁~f₂) → Analog/digital converter → Output digital signal|large]]
+
+== 그림 읽기 (p.38) ==
+# 왼쪽 위: 입력 디지털 펄스
+# '''Digital/analog converter''' ([[modulation|modulator]]) 를 거쳐
+# 왼쪽 아래: $f_1$~$f_2$ 에만 에너지가 있는 아날로그 신호 (노란 사다리꼴 = 스펙트럼, 파란 파형 = 시간 영역)
+# 가운데: 채널이 허용하는 대역(Available bandwidth) 이 정확히 $f_1$~$f_2$ → '''bandpass'''
+# 오른쪽: '''Analog/digital converter''' (demodulator) 가 원래 디지털 신호를 복원
+
+== 이름에서 개념 끌어내기 ==
+'''broad''' + '''band''' = 넓은 대역. 여기서 "넓다"는 절대적 크기보다 "'''0 Hz 바닥이 아닌, 위쪽의 어떤 대역을 쓴다'''"는 뜻에 가깝다. 핵심 동작은 '''대역 옮기기''' — [[baseband 전송|base band]] 에 있던 신호를 [[carrier]] 에 태워 $f_1$~$f_2$ 로 들어 올린다.
+
+{analogy}🎭 '''택배 트럭에 짐 싣기.''' 공(디지털 신호)을 골목에 굴리는 대신(baseband), 고속도로의 '''지정 차선'''($f_1$~$f_2$, bandpass 채널)을 달리는 트럭([[carrier]])에 싣는다(modulation). 도착지에서 짐을 내린다(demodulation). 고속도로는 여러 차선으로 나눠 여러 회사가 동시에 쓸 수 있다 — 그게 [[FDM]] 이다.{/analogy}
+
+교수(9/1): "우리가 일상에서 쓰는 방식. '''스마트폰 통신이 broadband 의 예'''다. source 디지털 신호를 대응하는 아날로그 신호로 '''modulate''' 해서 어떤 bandwidth 를 갖게 하고 특정 주파수 대역에서 전송한다. 채널은 그 대역을 통과시켜야 하니 '''band-pass''' 라고 부른다. 수신 측은 송신 측이 한 것의 반대를 한다."
+
+== 왜 굳이 변조하나 ==
+* 무선(공기)·전화선 등 많은 채널이 '''0 Hz 부근을 통과시키지 못한다''' → [[bandpass 채널]]
+* 여러 사용자가 대역을 '''나눠 쓰려면''' 각자 다른 $f_1$~$f_2$ 로 옮겨야 한다 → [[multiplexing]]
+* 구체적 방법: [[ASK]] · [[FSK]] · [[PSK]] · [[QAM]] → [[CH02 Analog Transmission]], [[digital-to-analog conversion]]
+
+{quiz}Broadband 전송에서 송신 측과 수신 측에 각각 필요한 장치를 p.38 그림의 이름으로 쓰고, 채널의 종류를 쓰시오.{/quiz}
+{answer}송신: '''Digital/analog converter''' (modulator), 수신: '''Analog/digital converter''' (demodulator). 채널: '''bandpass channel''' ($f_1$~$f_2$).{/answer}
+
+== 관련 문서 ==
+* [[baseband 전송]] · [[bandpass 채널]] · [[low-pass 채널]] · [[modulation]] · [[carrier]]
+* [[digital-to-analog conversion]] · [[CH02 Analog Transmission]] · [[CH02 Signals]]

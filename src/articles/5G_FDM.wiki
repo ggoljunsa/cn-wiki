@@ -1,0 +1,41 @@
+key: FDM
+title: FDM (Frequency-Division Multiplexing, 주파수 분할 다중화)
+category: 5강 Analog Transmission, 용어
+---
+'''FDM'''은 링크의 [[bandwidth|대역폭]]을 '''주파수 띠'''로 잘라 신호마다 한 띠(channel)씩 주는 [[multiplexing]] 이다. '''analog technique'''. 채널 사이에는 [[guard band]]. L4 p.49–51.
+
+{def}"An '''analog technique''' that can be applied when: '''The bandwidth of a link is greater than the combined bandwidths of the signals''' to be transmitted." "Channels can be separated by strips of unused bandwidth = '''guard bands'''."
+"Multiplexing process — Each source '''modulates''' their signals with '''distinct carrier frequencies'''." "Demultiplexing processing — '''Filters''' are used to decompose the multiplexed signal."{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''F'''requency-'''D'''ivision '''M'''ultiplexing = '''주파수를 나눠서''' 겹쳐 싣기. 교수: "for FDM, it is just an analog technique that allows sharing, '''dividing the bandwidth''' to different channels."
+
+[[img:L4-49.png|p.49 한 링크 안의 Channel 1/2/3 가 서로 다른 주파수 띠|medium]]
+
+{analogy}🎭 '''라디오 방송국.''' 공중(링크)에 KBS 는 89.1 MHz, MBC 는 91.9 MHz, SBS 는 107.7 MHz 처럼 '''주파수를 나눠''' 동시에 방송한다. 방송국마다 자기 주파수로 소리를 실어(변조) 공중에서 합쳐지지만, 라디오의 다이얼(필터)을 돌리면 원하는 방송만 골라 들을 수 있다. 방송국 사이 빈 주파수가 [[guard band]].{/analogy}
+
+[[anim:fdm_tdm|왼쪽 FDM 그림에서 세 신호가 f₁ f₂ f₃ 로 옮겨져 guard band 를 사이에 두고 나란히 서는 과정을 보라]]
+
+== 송신 — 변조 + 합산 (p.50) ==
+[[img:L4-50.png|p.50 Baseband analog signal 3개 → Modulator(Carrier f₁/f₂/f₃) → + → 하나의 composite signal|large]]
+# 각 소스의 baseband 아날로그 신호를 서로 다른 [[carrier|반송파]] $f_1, f_2, f_3$ 로 [[modulation|변조]] → 주파수축의 서로 다른 자리로 이동
+# 변조된 신호들을 '''더한다(+)''' → 하나의 [[composite signal]] 이 링크로
+
+== 수신 — 필터 + 복조 (p.51) ==
+[[img:L4-51.png|p.51 composite signal → Filter 로 대역별 분리 → Demodulator(Carrier f₁/f₂/f₃) → 원래 baseband 신호|large]]
+# '''Filter''' 들로 합성 신호를 대역별로 쪼갠다
+# 각 대역을 해당 반송파의 '''Demodulator''' 로 복조 → 원래 baseband 신호
+교수: "don't worry, we can extract each information separately by using some '''signal processing techniques such as filtering'''."
+
+{exam}🎯 FDM 의 세 키워드: '''analog''', '''링크 대역폭 > 신호 대역폭의 합''', '''guard band'''. 그리고 송신은 "distinct carrier frequencies 로 modulate", 수신은 "filters".{/exam}
+
+{quiz}대역폭 4 kHz 음성 채널 3개를 FDM 으로 묶는다. 채널 사이 guard band 를 1 kHz 씩 둔다면 링크에 필요한 최소 대역폭은?{/quiz}
+{answer}<pre class="txt">
+1. 신호 대역 합 = 3 × 4 kHz = 12 kHz
+2. guard band 개수 = 채널 사이 = 3 − 1 = 2개 → 2 × 1 kHz = 2 kHz
+3. 최소 링크 대역폭 = 12 + 2 = 14 kHz
+</pre>(Forouzan Example 과 같은 구조. 슬라이드 조건 "link bandwidth > combined bandwidths" 에 guard band 까지 더한 것.){/answer}
+
+== 관련 문서 ==
+* [[TDM]] · [[guard band]] · [[multiplexing]] · [[MUX와 DEMUX]]
+* [[carrier]] · [[modulation]] · [[composite signal]] · [[CH02 Multiplexing]]

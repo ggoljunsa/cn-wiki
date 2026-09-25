@@ -1,0 +1,38 @@
+key: flag
+title: Flag (프레임 구분자)
+category: 6강 DLC, 용어
+---
+'''Flag''' 는 [[variable-size framing]]에서 '''프레임의 시작과 끝을 표시하는 8비트 구분자(delimiter)'''다. [[character-oriented framing]]에서는 미리 정한 8-bit 문자, [[bit-oriented framing]]에서는 비트 패턴 '''01111110''' 이다. L5 p.17–20, p.56([[HDLC 프레임]]).
+
+{def}"To separate one frame from the next, an '''8-bit flag''' is added at the beginning and the end of a frame." (p.17)
+"Use a special 8-bit pattern flag, '''01111110''', as the '''delimiter''' to define the beginning and the end of the frame." (p.19)
+→ 프레임 앞뒤에 붙는 8비트 표지. bit-oriented 에서는 01111110.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''flag''' = "깃발". 운동장에서 경기 구역의 시작과 끝을 깃발로 꽂듯, 비트 강물 위에 "'''여기부터 프레임, 여기까지 프레임'''" 이라고 꽂아 둔 표지다. 깃발은 '''눈에 띄어야''' 하므로 데이터 안에 똑같이 생긴 것이 있으면 안 된다 → [[byte stuffing]], [[bit stuffing]].
+
+{analogy}🎭 '''책의 챕터 구분 "* * *".''' 소설에서 장면이 바뀔 때 가운데 정렬 별표 세 개를 쓴다. 본문에 우연히 별표 세 개가 나오면 독자가 헷갈린다. 그래서 본문의 별표에는 "그냥 문자" 표시를 붙인다 — 이게 stuffing.{/analogy}
+
+[[img:L5-19.png|p.19 프레임 양 끝의 빨간 01111110 이 flag. 교수 판서 "6": 가운데 1 이 여섯 개|medium]]
+
+== 두 가지 flag ==
+{|
+! 방식 || flag || 데이터 속 가짜 flag 대책
+|-
+| [[character-oriented framing]] || 미리 정한 8-bit 문자 || [[byte stuffing]] — 앞에 [[ESC]]
+|-
+| [[bit-oriented framing]] ([[HDLC]]) || '''0 111111 0''' (1 이 6개) || [[bit stuffing]] — 1 다섯 개 뒤 0
+|}
+
+<pre class="txt">
+HDLC 프레임 (p.56):  '''Flag''' | Address | Control | Information | FCS | '''Flag'''
+                     01111110                                        01111110
+</pre>
+
+== 예상 문제 ==
+{quiz}bit-oriented flag 01111110 에서 1 이 몇 개 연속되는가? 그 수가 bit stuffing 규칙과 어떤 관계인가?{/quiz}
+{answer}'''6개'''. bit stuffing 은 1 이 '''5개''' 연속되면 0 을 넣어 데이터 속 1 연속을 최대 5개로 제한한다 → 1 여섯 개는 flag 에만 나타난다.{/answer}
+
+== 관련 문서 ==
+* [[bit stuffing]] · [[byte stuffing]] · [[ESC]]
+* [[character-oriented framing]] · [[bit-oriented framing]] · [[HDLC 프레임]]

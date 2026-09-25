@@ -1,0 +1,40 @@
+key: oversampling과 undersampling
+title: Oversampling과 Undersampling
+category: 4강 Digital Transmission, 용어
+---
+'''Oversampling'''은 Nyquist rate($2f_{max}$)보다 '''빠르게''', '''undersampling'''은 '''느리게''' 샘플링하는 것이다. L3 p.52–53 이 사인파 하나를 세 속도로 찍어 비교한다.
+
+{def}"Sample a sine wave at three sampling rate: $f_s = 4f$ ('''2 times the Nyquist rate'''), $f_s = 2f$ ('''Nyquist rate'''), $f_s = f$ ('''one half the Nyquist rate''')."
+* "Nyquist rate can create a good approximation of the original sine wave"
+* "'''Oversampling''' can also create a good approximation of the original sine wave '''with redundancy'''"
+* "'''Undersampling''' (below the Nyquist rate) '''does not produce a signal that looks like the original''' sine wave"{/def}
+
+== 이름에서 개념 끌어내기 ==
+기준점은 '''Nyquist rate''' $2f_{max}$. '''over''' = 기준 초과, '''under''' = 기준 미달. 사인파 하나(주파수 $f$)면 $f_{max} = f$ 이므로 기준은 $2f$.
+
+[[img:L3-52.png|p.52 a. Nyquist rate sampling f_s = 2f — 주기당 2점(마루·골)|medium]]
+
+[[img:L3-53.png|p.53 b. Oversampling f_s = 4f — 주기당 4점 / c. Undersampling f_s = f — 주기당 1점, 이으면 훨씬 느린 파형|medium]]
+
+[[anim:sampling_nyquist|세 속도로 찍은 점을 이었을 때 f_s = f 에서만 원 파형이 사라지는 것을 확인하라]]
+
+{|
+! 경우 || $f_s$ || 주기당 샘플 수 || 복원 || 비고
+|-
+| Oversampling || $4f$ || 4 || ✓ 좋은 근사 || '''redundancy''' — 필요 이상 샘플 → bit rate·[[bandwidth]] 낭비
+|-
+| Nyquist rate || $2f$ || 2 || ✓ 좋은 근사 || 이론상 최소
+|-
+| Undersampling || $f$ || 1 || ✗ || 원 파형과 다른 (저주파) 파형 — aliasing
+|}
+
+{analogy}🎭 '''바퀴가 거꾸로 도는 영상.''' 자동차 바퀴를 찍은 영상에서 바퀴가 멈추거나 거꾸로 도는 것처럼 보이는 현상이 undersampling 이다 — 프레임(샘플)이 바퀴 회전(신호 주파수)을 못 따라가서 '''가짜 느린 움직임'''이 생긴다. 반대로 초고속 카메라(oversampling)는 동작을 완벽히 담지만 파일이 쓸데없이 커진다.{/analogy}
+
+교수 설명: "In the perspective of reconstruction, using higher frequency compared to the Nyquist rate is '''not problematic'''. But it could be problematic when we think about the '''resource''' — we don't have to use that much frequency band." → 결론: "slightly higher than Nyquist rate 가 권장".
+
+{quiz}사인파 주파수가 f 일 때 f_s = 4f, 2f, f 중 원 신호를 복원할 수 없는 것은? 나머지 둘의 차이는?{/quiz}
+{answer}'''$f_s = f$ (undersampling)''' 은 Nyquist rate 의 절반이라 복원 불가 — 점을 이으면 원 파형과 전혀 다른 파형이 된다. $4f$ 와 $2f$ 는 둘 다 좋은 근사를 주지만, $4f$ 는 '''redundancy''' 가 있어 같은 신호에 두 배의 샘플(→ 두 배의 bit rate)을 쓴다.{/answer}
+
+== 관련 문서 ==
+* [[Nyquist sampling theorem]] · [[sampling rate]] · [[sampling]] · [[사인파]]
+* [[redundancy]]

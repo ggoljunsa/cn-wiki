@@ -1,0 +1,47 @@
+key: bit-oriented framing
+title: Bit-Oriented Framing (비트 기반 프레이밍)
+category: 6강 DLC, 용어
+---
+'''Bit-oriented framing''' 은 프레임의 데이터 구역을 '''비트의 나열'''로 보고, 특수 8비트 패턴 '''[[flag]] 01111110''' 을 프레임 시작·끝의 delimiter 로 쓰는 [[variable-size framing]] 방식이다. [[HDLC]] 가 이 방식이다. L5 p.19–20.
+
+{def}"The data section of a frame is a '''sequence of bits'''." / "Use a special 8-bit pattern flag, '''01111110''', as the delimiter to define the beginning and the end of the frame." (p.19)
+→ 데이터 = 비트열. 8비트 패턴 01111110 이 프레임의 시작과 끝.{/def}
+
+[[img:L5-19.png|p.19 01111110(Flag) – Header – 가변 개수의 bits – Trailer – 01111110(Flag). 교수 판서: 가운데 1 이 6개|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''bit-oriented''' — '''비트 중심'''. 데이터를 문자로 해석하지 않으므로 텍스트든 그림이든 상관없고, 길이가 8의 배수일 필요도 없다. 경계 표시도 비트 패턴, 가짜 경계 대책도 '''비트 하나(0)를 끼우는''' [[bit stuffing]].
+
+{analogy}🎭 '''모스 부호의 긴 침묵.''' 문장과 문장 사이를 특별히 긴 신호 패턴(01111110)으로 구분한다고 하자. 본문에 그 패턴이 우연히 나오지 않도록, "1 이 다섯 번 연달아 나오면 억지로 0 을 한 번 넣는다" 는 규칙을 둔다. 그러면 본문에는 1 이 여섯 번 연속될 수 없고, 1 여섯 개 = 무조건 구분자.{/analogy}
+
+== flag 와 stuffing 의 관계 ==
+<pre class="txt">
+flag             : 0 '''111111''' 0      ← 1 이 여섯 개
+stuffing 규칙    : 0 다음 1 이 다섯 개 → 그 뒤에 0 삽입
+stuffing 후 데이터 : 1 이 최대 다섯 개까지만 연속
+→ 데이터 안에는 01111110 이 절대 나타나지 않는다
+</pre>
+
+[[anim:bit_stuffing_anim|연속 1 카운터가 5 에 닿을 때마다 0 이 끼워지는 것을 보고, 수신자가 flag 를 어떻게 구분하는지 설명해 보라]]
+
+[[sim:bit_stuffing]]
+
+{|
+! || [[character-oriented framing]] || bit-oriented framing
+|-
+| 데이터 단위 || 8-bit 문자 || 비트
+|-
+| 경계 || flag 문자 (1바이트) || 01111110
+|-
+| 투명성 기법 || [[byte stuffing]] ([[ESC]] 삽입) || [[bit stuffing]] (0 삽입)
+|-
+| 오버헤드 || 바이트 단위 || 비트 단위 (더 작음)
+|}
+
+== 예상 문제 ==
+{quiz}bit-oriented framing 의 flag 는? 데이터 속 flag 패턴을 막는 방법은?{/quiz}
+{answer}flag = '''01111110'''. 데이터에서 '''0 뒤에 1 이 다섯 개 연속되면 0 을 하나 삽입'''하는 bit stuffing 으로 막는다.{/answer}
+
+== 관련 문서 ==
+* [[bit stuffing]] · [[flag]] · [[HDLC]]
+* [[character-oriented framing]] · [[variable-size framing]] · [[framing]]

@@ -1,0 +1,49 @@
+key: 사인파
+title: 사인파 (Sine Wave)
+category: 2강 Signals, 용어
+---
+'''사인파(sine wave)'''는 '''주기 아날로그 신호의 가장 기본적인 형태'''다. L2 p.18. 세 개의 값 — '''[[peak amplitude]], [[주파수|frequency]], [[phase]]''' — 만 정하면 파형이 완전히 결정된다. 모든 복잡한 신호는 사인파의 합이다([[composite signal]], [[Fourier analysis]]).
+
+{def}L2 p.18 "Periodic Analog Signal"
+"'''Sine Wave''': the most fundamental form of a periodic analog signal. Represented by '''peak amplitude, frequency, and phase'''."
+사인파 = 주기 아날로그 신호의 가장 기본형, peak amplitude·frequency·phase 로 표현된다.{/def}
+
+$$s(t) = A\sin(2\pi f t + \phi)$$
+{|
+! 기호 || 요소 || 단위 || 바꾸면
+|-
+| $A$ || [[peak amplitude]] || V (volts) || 파형이 '''위아래로''' 커지거나 작아짐
+|-
+| $f$ || [[주파수|frequency]] (= $1/T$, [[주기]]) || Hz || 파형이 '''좌우로''' 촘촘해지거나 성겨짐
+|-
+| $\phi$ || [[phase]] || 도(°) 또는 rad || 파형 전체가 '''시간축을 따라''' 밀림
+|}
+
+[[img:L2-18.png|p.18 — 사인파. 세로축 Value, 가로축 Time, 오른쪽 •••은 끝없이 반복된다는 뜻(periodic)|medium]]
+
+{warn}⚠️ '''여기서 틀렸다 (0920 NotebookLM).''' "정현파를 완전히 설명하는 3요소"에서 '''Bandwidth''' 를 고르고 '''Frequency''' 를 빠뜨렸다.
+* 3요소는 '''peak amplitude / frequency / phase''' — 슬라이드 원문 그대로.
+* [[bandwidth]] 는 '''composite signal''' 의 속성(최고 주파수 − 최저 주파수). 사인파 하나는 주파수가 하나뿐이라 bandwidth = '''0''' 이다. 0 인 값은 파형을 구별해 주지 못하므로 요소가 될 수 없다.
+* 외우는 법: "'''A-F-P'''" — Amplitude, Frequency, Phase. 공식 $A\sin(2\pi f t+\phi)$ 에 등장하는 글자 셋.{/warn}
+
+[[anim:sine_wave_params|세 손잡이를 하나씩 돌린다: amplitude 는 높이, frequency 는 촘촘함, phase 는 좌우 위치. 다른 둘은 그대로인 채 하나만 바뀌는 걸 확인하라]]
+
+== 이름에서 개념 끌어내기 ==
+'''sine''' 은 삼각함수 $\sin$ 이다. 원 위를 일정한 속도로 도는 점의 '''높이'''를 시간에 따라 그리면 사인파가 된다. 그래서
+* 원의 '''반지름''' = amplitude,
+* '''1초에 몇 바퀴''' 도는가 = frequency,
+* 시각 0 에 점이 '''원의 어디에서 출발'''했는가 = phase (한 바퀴 = 360°).
+
+{analogy}🎭 '''그네.''' 그네가 가장 높이 올라간 높이가 amplitude, 1초에 몇 번 왕복하는가가 frequency, 내가 사진을 찍기 시작한 순간 그네가 어디 있었는가(맨 아래? 맨 위?)가 phase 다. 세 가지를 알면 그네의 움직임을 영원히 예측할 수 있다 — 그게 "주기 신호"다.{/analogy}
+
+== 특별한 사인파 ==
+* $f = 0$ 인 사인파 = '''일정한 값''' (DC). 배터리 1.5 V 가 그 예 — [[주파수|Example 2.1]].
+* frequency domain 에서 사인파 하나는 '''막대 하나'''로 그려진다 → [[time domain과 frequency domain]].
+
+{quiz}두 사인파가 peak amplitude 와 phase 는 같고 주기만 1/12 s 와 1/6 s 로 다르다. 각각의 frequency 는? 이 두 파형을 구분해 주는 요소는 3요소 중 무엇인가?{/quiz}
+{answer}$f = 1/T$ → '''12 Hz''', '''6 Hz''' (L2 p.21). 구분하는 요소는 '''frequency'''. (bandwidth 는 둘 다 0 이라 구분 못 한다.){/answer}
+
+== 관련 문서 ==
+* [[peak amplitude]] · [[주파수]] · [[주기]] · [[phase]]
+* [[composite signal]] · [[Fourier analysis]] · [[bandwidth]] · [[time domain과 frequency domain]]
+* [[CH02 Signals]] · [[0920 오답 복기]]

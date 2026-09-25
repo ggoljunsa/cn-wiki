@@ -1,0 +1,44 @@
+key: Fourier analysis
+title: Fourier Analysis (푸리에 해석)
+category: 2강 Signals, 용어
+---
+'''Fourier analysis'''는 '''어떤 [[composite signal]] 이든 서로 다른 주파수·진폭·위상의 단순 [[사인파]]들의 조합으로 분해할 수 있다'''는 원리이자 도구다. L2 p.28–29, p.36. [[time domain과 frequency domain|time domain 과 frequency domain]] 을 잇는 다리.
+
+{def}L2 p.28 "According to Fourier analysis: '''Any composite signal can be decomposed into a combination of simple sine waves with different frequencies, amplitude, and phases'''."
+L2 p.29 "If the composite signal is '''periodic''', the decomposition gives a series of signals with '''discrete''' frequencies. If the composite signal is '''non-periodic''', the decomposition gives a combination of sine waves with '''continuous''' frequencies."
+푸리에 해석: 모든 합성 신호는 사인파들로 분해된다. 주기 → 이산 주파수, 비주기 → 연속 주파수.{/def}
+
+== 이름에서 개념 끌어내기 ==
+Joseph '''Fourier''' (프랑스 수학자, 1768–1830) 가 열 전도를 풀다가 "어떤 함수든 사인·코사인의 합으로 쓸 수 있다"고 주장한 데서 왔다. '''analysis''' = ''ana-''(풀어서) + ''lysis''(나누다) — 합쳐진 신호를 '''성분으로 풀어 나누는''' 작업이다. 반대 방향(성분 → 합)은 synthesis.
+
+{analogy}🎭 '''프리즘.''' 흰 빛(composite signal)을 프리즘에 통과시키면 빨주노초파남보(주파수 성분)로 갈라진다. 프리즘이 Fourier analysis, 무지개가 frequency domain 그림이다. 다시 모으면 흰 빛이 된다 — 정보는 하나도 사라지지 않는다.{/analogy}
+
+[[img:L2-29.png|p.29 — Fourier 분해의 두 결과. 주기 신호 → 이산 막대(discrete), 비주기 신호 → 연속 면적(continuous)|large]]
+
+{exam}⭐⭐ 교수(9/1): "periodic → discrete, non-periodic → continuous — '''증명하기 어려우니 그냥 외워라'''." 계산법(Fourier series/transform 적분)은 "out of scope". 이 과목에서는 '''결과의 모양'''만 알면 된다.{/exam}
+
+== 어디에 쓰이나 ==
+{|
+! 슬라이드 || Fourier 가 알려주는 것
+|-
+| p.26 || 사인파 하나 = 주파수 영역의 막대 하나
+|-
+| p.28 || 복잡한 파형 = 막대 몇 개 (0, 8, 16 Hz)
+|-
+| p.29 || 주기/비주기 → 이산/연속
+|-
+| p.30 || 분해하고 나서야 [[bandwidth]] (최고−최저) 를 읽을 수 있다
+|-
+| p.36 || '''[[디지털 신호]] 는 무한 bandwidth''' — 사각파를 분해하면 f, 3f, 5f, 7f, … 가 끝없이 나온다 ("Evidenced by Fourier analyses")
+|}
+
+[[anim:composite_fourier|거꾸로 보면 synthesis: f, 3f, 5f 를 더할수록 사각파에 가까워진다. 완벽한 사각파를 만들려면 성분이 무한히 필요하다는 게 p.36 의 결론이다]]
+
+{info}사각파(rectangular pulse)를 Fourier transform 하면 '''sinc''' 모양(p.36 (b) 오른쪽의 점점 줄어드는 물결)이 나온다. 교수: "Signals and Systems 를 들었다면 사각 신호의 Fourier transform 을 기억할 것이다. just remember — '''무한 대역폭'''."{/info}
+
+{quiz}"주기 신호를 Fourier 분해하면 연속 스펙트럼이, 비주기 신호를 분해하면 이산 스펙트럼이 나온다." 옳은가?{/quiz}
+{answer}'''틀렸다 — 반대.''' 주기 → '''이산(discrete)''', 비주기 → '''연속(continuous)''' (L2 p.29). 기억법: 주기 신호는 "한 박자"가 정해져 있어서 그 박자의 정수배(f, 2f, 3f…) 주파수만 나온다.{/answer}
+
+== 관련 문서 ==
+* [[composite signal]] · [[time domain과 frequency domain]] · [[bandwidth]]
+* [[주기 신호와 비주기 신호]] · [[디지털 신호]] · [[CH02 Signals]]

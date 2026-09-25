@@ -1,0 +1,38 @@
+key: 데이터 통신 5요소
+title: 데이터 통신 5요소 (Five Components)
+category: 1강 Introduction, 용어
+---
+[[데이터 통신]] 시스템을 이루는 다섯 부품 (L1 p.4).
+
+{def}"Five Components: '''Message''' / '''Sender''' / '''Receiver''' / '''Transmission medium''': the physical path / '''Protocol''': A set of rules that govern data communications"
+메시지 · 송신자 · 수신자 · 전송 매체(물리적 경로) · 프로토콜(데이터 통신을 규율하는 규칙의 집합).{/def}
+
+[[img:L1-4.png|Five Components — Sender 와 Receiver 위에 똑같은 Protocol(Rule 1…Rule n)이 있다|large]]
+
+== 다섯 부품 ==
+{|
+! 요소 || 정체 || 이어지는 곳
+|-
+| '''Message''' || 전달할 정보 그 자체 (텍스트, 숫자, 그림, 소리, 영상) || [[PDU]] 의 맨 위 이름도 message
+|-
+| '''Sender''' || 보내는 장치 || 
+|-
+| '''Receiver''' || 받는 장치 || 
+|-
+| '''Transmission medium''' || '''the physical path''' — 케이블, 광섬유, 공기 || [[physical layer]]
+|-
+| '''Protocol''' || '''A set of rules''' — 양쪽이 같은 규칙을 가져야 한다 || [[프로토콜]], [[프로토콜 계층화]]
+|}
+
+그림에서 가장 중요한 건 빨간 '''Rule 1…Rule n''' 박스가 '''양쪽에 똑같이''' 그려져 있다는 점이다. medium 이 멀쩡해도 protocol 이 다르면 message 는 도착해도 '''해석이 안 된다'''. (한국어로 쓴 편지를 한국어 못 읽는 사람에게 보낸 상황.)
+
+== 이름에서 개념 끌어내기 ==
+'''medium''' 은 "중간(middle)" 에서 온 말 — sender 와 receiver '''사이에 놓인 것'''. 복수형이 media. 그래서 CH03 에서 여러 장치가 매체 하나를 나눠 쓰는 규칙을 '''Media Access Control'''([[MAC sublayer]])이라 부른다. '''protocol''' 은 원래 외교 의전 — 누가 먼저 인사하고 어디 앉는지 정해 둔 '''약속된 절차'''다.
+
+{analogy}🎭 '''편지 한 통.''' Message = 편지 내용, Sender/Receiver = 보내는 이·받는 이, Transmission medium = 우편 경로(트럭·비행기), Protocol = "봉투 오른쪽 위에 우표, 가운데에 주소, 한국어로 쓴다"는 약속. 다섯 중 하나라도 빠지면 편지가 안 간다.{/analogy}
+
+{quiz}5요소를 쓰고, 그중 '''물리적인 것이 아닌''' 요소 하나를 고르시오.{/quiz}
+{answer}Message, Sender, Receiver, Transmission medium, Protocol. 물리적 실체가 없는 건 '''Protocol'''(규칙의 집합). (Message 도 정보이긴 하지만, 전송될 실체라는 점에서 protocol 과 성격이 다르다.){/answer}
+
+== 관련 문서 ==
+* [[데이터 통신]] · [[데이터 통신 4대 특성]] · [[프로토콜]] · [[CH01 Introduction]]

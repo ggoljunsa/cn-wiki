@@ -1,0 +1,50 @@
+key: HDLC
+title: HDLC (High-level Data-Link Control)
+category: 6강 DLC, 용어
+---
+'''HDLC (High-level Data-Link Control)''' 는 point-to-point 와 [[multipoint]] 링크에서 쓰는 '''bit-oriented''' [[DLC]] 프로토콜이다. LAN 용으로 설계된 많은 프로토콜의 '''기반(base)'''이며, [[PPP]] 가 여기서 파생됐다. 전송 모드는 '''[[NRM]]''' 과 '''[[ABM]]''' 두 가지. L5 p.52–56.
+
+{def}"A protocol for '''P2P and multipoint''' links. '''Base''' of many protocols that have been designed for LANs." (p.52)
+"'''Bit-oriented''' protocol for communication over P2P and multipoint links. Provides two common transfer modes: '''NRM and ABM'''." (p.53){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''High-level Data-Link Control''' — 이 강의에서 배운 [[DLC]] 의 두 임무를 실제로 구현한 "상위 수준" 프로토콜이다.
+* framing → '''bit-oriented''': [[flag]] 01111110 + [[bit stuffing]] ([[bit-oriented framing]])
+* error control → 프레임 끝의 [[FCS]] (CRC-16, p.50 표)
+즉 HDLC 는 CH03 (1) 의 '''종합 문제'''다.
+
+{analogy}🎭 '''교과서 문법 → 실제 문장.''' 앞에서 배운 flag, bit stuffing, CRC 는 문법 규칙이고, HDLC 는 그 규칙으로 쓴 '''표준 편지 양식'''이다. PPP 는 그 양식을 1:1 전용선에 맞게 다듬은 간이판.{/analogy}
+
+[[img:L5-55.png|p.55 HDLC 의 두 전송 모드: NRM(Primary/Secondary, P2P·Multipoint) / ABM(Combined, P2P only)|large]]
+
+== 전송 모드 두 가지 ==
+{|
+! 모드 || 스테이션 || 누가 명령? || 링크
+|-
+| '''[[NRM]]''' (Normal Response Mode) || Primary 1 + Secondary ≥1 || Primary 만 command, Secondary 는 response || '''P2P 와 multipoint'''
+|-
+| '''[[ABM]]''' (Asynchronous Balanced Mode) || Combined 2 || 양쪽 모두 command/response || '''P2P only'''
+|}
+
+== 프레임 ==
+[[img:L5-56.png|p.56 I-frame / S-frame / U-frame. 공통 필드: Flag, Address, Control, FCS, Flag|large]]
+
+I-frame(information, 데이터 + [[piggybacking]]) · S-frame(supervisory, 제어) · U-frame(unnumbered, 관리). → [[HDLC 프레임]]
+
+<pre class="txt">
+Flag      | Address | Control | Information        | FCS    | Flag
+01111110  |         | I/S/U   | (I: user data,     | CRC-16 | 01111110
+                                 U: management,
+                                 S: 없음)
+</pre>
+
+== 예상 문제 ==
+{quiz}HDLC 가 CH03 (1) 의 어떤 framing 방식과 어떤 오류 검출 기법을 쓰는지 쓰라.{/quiz}
+{answer}'''bit-oriented framing''' (flag 01111110 + bit stuffing), 오류 검출은 '''CRC'''(FCS 필드, p.50 에서 HDLC = CRC-16).{/answer}
+
+{quiz}multipoint 링크에서 쓸 수 있는 HDLC 모드는?{/quiz}
+{answer}'''NRM''' 만. ABM 은 P2P only.{/answer}
+
+== 관련 문서 ==
+* [[NRM]] · [[ABM]] · [[HDLC 프레임]] · [[PPP]] · [[piggybacking]] · [[FCS]]
+* [[bit-oriented framing]] · [[CRC 표준 다항식]] · [[DLC]]

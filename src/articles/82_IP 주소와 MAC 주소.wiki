@@ -1,0 +1,44 @@
+key: IP 주소와 MAC 주소
+title: IP 주소와 MAC 주소 (p.58 Alice → Bob)
+category: 8강 Addressing, 용어
+---
+'''IP 주소와 MAC 주소'''는 프레임 하나에 '''동시에''' 실려 가지만 역할이 다르다. IP 주소는 종단 간(end-to-end)으로 '''불변''', MAC 주소는 링크마다(hop-to-hop) '''갱신'''. L6 p.56–58.
+
+{def}p.58 그림 "'''Order of addresses''': IP addresses: '''source-destination''' / link-layer address: '''destination-source'''"
+Legend: "N: IP address / L: Link-layer address"{/def}
+
+{exam}⭐⭐ '''IP 주소(N₁, N₈)는 source–destination 순서로 경로 내내 불변. MAC 주소(L)는 destination–source 순서로 링크를 건널 때마다 바뀐다.''' 해설본 ⭐⭐ + 이 덱의 유일한 큰 그림.{/exam}
+
+[[img:L6-58.png|p.58 Alice(N₁ L₁) → R1 → R2 → Bob(N₈ L₈). 세 프레임의 가운데(N₁ N₈)는 같고 앞쪽 L 두 칸만 다르다|large]]
+
+== 링크별 프레임 ==
+<pre class="txt">
+링크 1  Alice → R1 :  [ L₂ | L₁ ][ N₁ | N₈ | Data ]
+링크 2  R1 → R2    :  [ L₅ | L₄ ][ N₁ | N₈ | Data ]
+링크 3  R2 → Bob   :  [ L₈ | L₇ ][ N₁ | N₈ | Data ]
+                      └ dest, src ┘└ src, dest ┘
+                      '''MAC: 매번 바뀜'''  '''IP: 그대로'''
+</pre>
+
+[[anim:node_to_node|R1, R2 에서 프레임이 벗겨지고(decapsulate) 새 L 을 달고(encapsulate) 나가는 동안 N₁, N₈ 은 한 번도 안 바뀌는 것을 보라]]
+
+== 이름에서 개념 끌어내기 ==
+* '''IP''' (Internet Protocol) 주소 — '''인터넷''' 전체에서의 위치. 출발지와 최종 목적지.
+* '''MAC''' / '''link-layer''' 주소 — '''링크''' 위에서의 위치. 이번 구간의 보내는 쪽과 받는 쪽.
+[[라우터]]는 링크 두 개 이상에 걸쳐 있으므로 '''인터페이스마다''' N·L 쌍이 따로 있다 (R1: N₂L₂, N₃L₃, N₄L₄).
+
+== 왜 순서가 반대인가 ==
+* Link-layer: 수신 측 NIC 가 프레임 첫머리만 보고 "'''내 주소냐'''"를 즉시 판단해 버릴지 받을지 정해야 하므로 '''destination 먼저'''
+* IP: 라우팅은 datagram 을 다 받은 뒤에 하므로 순서가 급하지 않다 — source 먼저
+
+{analogy}🎭 '''이어달리기 바통.''' 바통에 적힌 "출발: 1번 주자 / 도착: 결승선"(IP)은 끝까지 그대로다. 하지만 매 구간 "지금 넘겨받을 사람"(MAC 목적지)과 "넘겨주는 사람"(MAC 출발지)은 구간마다 바뀐다. 바통을 받은 주자(라우터)는 겉의 구간 표시만 떼고 새로 붙여 다음 주자에게 넘긴다.{/analogy}
+
+{quiz}p.58 에서 R2 → Bob 구간 프레임의 link-layer 주소 두 개와 IP 주소 두 개를 '''프레임에 나오는 순서대로''' 쓰시오.{/quiz}
+{answer}Link-layer: '''L₈, L₇''' (destination = Bob, source = R2 의 오른쪽 인터페이스). IP: '''N₁, N₈''' (source = Alice, destination = Bob).{/answer}
+
+{quiz}Alice → Bob 경로에서 한 번도 바뀌지 않는 주소는 무엇이고, 몇 번 바뀌는 주소는 무엇인가?{/quiz}
+{answer}바뀌지 않는 것: '''IP 주소 N₁(source), N₈(destination)'''. 바뀌는 것: '''link-layer 주소''' — 링크 3개를 지나므로 (L₂,L₁) → (L₅,L₄) → (L₈,L₇) 로 링크마다 새로 적힌다.{/answer}
+
+== 관련 문서 ==
+* [[MAC 주소]] · [[IP]] · [[ARP]] · [[CH03 Link-Layer Addressing]]
+* [[end-to-end와 hop-to-hop]] · [[주소 체계]] · [[라우터]] · [[캡슐화]] · [[node와 link]]

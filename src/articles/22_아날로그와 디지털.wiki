@@ -1,0 +1,42 @@
+key: 아날로그와 디지털
+title: 아날로그와 디지털 (Analog and Digital)
+category: 2강 Signals, 용어
+---
+'''Analog'''는 '''연속적인''' 값, '''digital'''은 '''미리 정한 유한 개'''의 값만 갖는다. L2 p.16. [[data와 signal|data 와 signal]] 모두에 적용된다.
+
+{def}L2 p.16 "Analog and Digital"
+* '''Analog data''': continuous information / '''Digital data''': information with discrete states
+* '''Analog signal''': Continuous wave / '''Digital signal''': Pre-defined finite values
+아날로그 = 연속(어떤 값이든 가능), 디지털 = 이산(정해진 몇 개의 값만).{/def}
+
+[[img:L2-16.png|p.16 — (a) 아날로그 신호: 매끄럽게 어떤 값이든 지나간다. (b) 디지털 신호: 네 가지 값 사이를 수직으로 뛴다|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''analog''' — ''analogous''(닮은). 원래 물리량(소리의 압력, 온도)을 '''닮은 모양 그대로''' 연속적으로 따라간다. 시곗바늘, 수은 온도계.
+* '''digital''' — ''digit''(손가락 → 숫자). '''셀 수 있는''' 값으로 표현한다. 전자시계의 숫자판.
+
+{analogy}🎭 '''경사로와 계단.''' 아날로그는 경사로 — 어느 높이에서든 멈출 수 있다. 디지털은 계단 — 1층, 2층, 3층처럼 '''정해진 높이'''에만 설 수 있다. 계단의 층 수가 [[signal level]] $L$ 이고, 층이 많을수록 한 번 발을 디딜 때 더 많은 정보($\log_2 L$ 비트)를 전달한다.{/analogy}
+
+== 비교표 ==
+{|
+! || Analog signal || Digital signal
+|-
+| 값 || 연속 (무한히 많음) || '''유한 개''' ([[signal level|L levels]])
+|-
+| 모양 || 매끄러운 곡선 || 수직 모서리가 있는 계단
+|-
+| 대표 || [[사인파]] (주기 신호) || 비트열 펄스 (보통 비주기)
+|-
+| 주파수 성분 || 유한 [[bandwidth]] 가능 || 수직 모서리 때문에 '''무한 bandwidth''' ([[디지털 신호|p.36]])
+|-
+| 흔한 형태 (p.17) || '''periodic''' analog || '''non-periodic''' digital
+|}
+
+{warn}"디지털 = 0 과 1 두 값"이 아니다. 슬라이드 정의는 '''pre-defined finite values''' — 유한하기만 하면 4 개, 8 개, 98 개([[Nyquist bit rate|Ex 2.6]])여도 디지털이다.{/warn}
+
+{quiz}다음 중 digital signal 의 정의로 가장 정확한 것은? (a) 0 과 1 두 값만 갖는 신호 (b) 미리 정의된 유한 개의 값을 갖는 신호 (c) 주기적인 사각파{/quiz}
+{answer}'''(b)''' "Pre-defined finite values" (L2 p.16). (a) 는 L=2 인 특수한 경우일 뿐이고, (c) 디지털 신호는 오히려 대개 비주기(p.17)다.{/answer}
+
+== 관련 문서 ==
+* [[data와 signal]] · [[디지털 신호]] · [[signal level]] · [[주기 신호와 비주기 신호]]
+* [[CH02 Signals]] · [[analog-to-digital conversion]]

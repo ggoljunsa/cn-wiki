@@ -1,0 +1,44 @@
+key: PDU
+title: PDU (Protocol Data Unit) — message · segment · datagram · frame · bits
+category: 1강 Introduction, 용어, 함정
+---
+'''PDU(Protocol Data Unit)''' — 각 층이 주고받는 데이터 덩어리의 '''이름'''. L1 p.32 에서는 "identical objects", p.39 에서는 "packet names" 로 나온다.
+
+[[img:L1-32.png|Information Flow in TCP/IP — 층마다 Identical objects: messages / segment or user datagram / datagram / frame / bits. Notes: 스위치는 객체를 바꾸지 않아 생략|large]]
+
+{def}"Identical objects (messages) / Identical objects (segment or user datagram) / Identical objects (datagram) / Identical objects (frame) / Identical objects (bits)" — "Notes: We have not shown switches because '''they don't change objects'''." (L1 p.32)
+Packet names (L1 p.39): Message · Segment / User datagram · Datagram · Frame · Bits{/def}
+
+{|
+! 층 || PDU || 누가 만드나 ([[캡슐화]])
+|-
+| [[application layer|Application]] || '''message''' || 응용 프로그램이 만든 원본
+|-
+| [[transport layer|Transport]] || '''segment''' ([[TCP]]) / '''user datagram''' ([[UDP]]) || message + 헤더 4
+|-
+| [[network layer|Network]] || '''datagram''' || segment + 헤더 3
+|-
+| [[data-link layer|Data link]] || '''frame''' || datagram + 헤더 2
+|-
+| [[physical layer|Physical]] || '''bits''' || frame 을 비트열로
+|}
+
+{exam}⭐⭐⭐ '''0920 NotebookLM 퀴즈에서 여기서 틀렸다.''' "각 계층의 PDU 이름이 올바르게 짝지어진 것은?(모두 고르시오)" — 보기 '''Transport–segment, Network–datagram, Data link–frame, Physical–bits 네 개가 전부 정답'''이었는데 frame 하나만 골랐다. "설마 다 맞겠어?" 하고 의심한 것. '''위 표 다섯 줄은 전부 짝이 맞는다.'''{/exam}
+
+{tip}위에서부터 '''"메 · 세 · 데 · 프 · 비"''' (message, segment, datagram, frame, bits).{/tip}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''".
+* '''message''' — 전하려는 말 그 자체. 아직 아무 껍질 없음.
+* '''segment''' — "조각(segment)". 긴 message 를 '''잘라''' 번호를 붙여 보내는 TCP 의 단위. UDP 는 자르지 않고 통째로 → '''user datagram'''.
+* '''datagram''' — data + tele'''gram'''(전보). 전보처럼 '''한 장 한 장이 독립적으로''' 목적지 주소를 달고 간다 — connectionless 한 [[IP]] 에 딱 맞는 이름.
+* '''frame''' — 액자·틀. datagram 을 앞뒤로 '''틀에 끼운''' 것(헤더 + 트레일러). CH03 [[framing]] 으로 이어짐.
+* '''bits''' — 더 쪼갤 수 없는 0/1. 이 층엔 틀이 없다.
+
+{analogy}🎭 '''선물 포장.''' 편지(message) → 편지를 넣은 봉투에 "302호 앞"(segment) → 봉투를 넣은 택배 상자에 "대구 달성군 …"(datagram) → 상자를 올린 이번 구간 트럭 팔레트(frame) → 도로 위를 달리는 트럭의 진동(bits). 단계마다 '''부르는 이름'''이 다를 뿐 안에 든 편지는 같다.{/analogy}
+
+{quiz}(1) UDP 가 쓰는 transport 층 PDU 의 이름은? (2) p.32 그림에 스위치가 없는 이유는?{/quiz}
+{answer}(1) '''user datagram''' (TCP 는 segment). (2) "'''they don't change objects'''" — 스위치는 frame 을 그대로 전달하므로 identical object 흐름에 아무 변화를 주지 않는다.{/answer}
+
+== 관련 문서 ==
+* [[캡슐화]] · [[주소 체계]] · [[TCP/IP 프로토콜 스위트]] · [[논리적 연결]] · [[CH01 Introduction]] · [[0920 오답 복기]]

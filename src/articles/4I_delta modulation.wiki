@@ -1,0 +1,48 @@
+key: delta modulation
+title: Delta Modulation (DM, 델타 변조)
+category: 4강 Digital Transmission, 용어
+---
+'''Delta modulation'''(DM)은 [[PCM]] 보다 단순한 [[analog-to-digital conversion]] 기법이다. 샘플 값 자체가 아니라 '''직전 샘플 대비 올라갔는지(1) 내려갔는지(0)'''만 보낸다. L3 p.65.
+
+{def}"'''DM encodes the change from the previous sample''' — '''1 for an increase, 0 for a decrease'''."{/def}
+
+[[img:L3-65.png|p.65 계단(step d, 간격 T)이 빨간 곡선을 쫓아가며 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 생성|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''delta(Δ)''' = 차이. 교수: "It is called delta because '''it depends on the difference with respect to the previous time step'''. … As I told you, there is everything on its name." [[quantization|Δ]] 가 "레벨 간격"이었던 것처럼 여기서도 Δ 는 '''차이'''다.
+
+작동 규칙 (p.65 그림):
+# 매 $T$ 초마다 현재 계단 높이와 아날로그 곡선을 비교
+# 곡선이 계단보다 '''위'''면 → 비트 '''1''', 계단을 $+d$ 올림
+# 곡선이 계단보다 '''아래'''면 → 비트 '''0''', 계단을 $-d$ 내림
+샘플당 '''1비트'''뿐이라 회로가 매우 간단하다.
+
+{analogy}🎭 '''눈 감고 따라가는 술래.''' 술래는 친구 위치를 직접 듣지 못하고, 매 초 "더 위!"(1) 또는 "더 아래!"(0) 한마디만 듣고 '''한 걸음(d)씩''' 움직인다. 간단하지만, 한 번 잘못 들으면(비트 오류) 그 뒤 모든 걸음이 한 칸씩 어긋난 채로 쌓인다 — '''error propagation'''. 친구가 너무 빨리 움직이면 한 걸음씩으로는 못 따라간다(slope overload).{/analogy}
+
+[[sim:delta_modulation]]
+
+== 약점 — error propagation ==
+교수가 수업에서 "Simple mechanisms could bring some notorious weaknesses. '''What should be these weaknesses?'''" 하고 물었고 학생이 답한 것이 '''error propagation''':
+* 수신기는 비트를 받을 때마다 계단을 ±d 누적한다. '''정보가 본질적으로 직전 값에 누적'''되어 있어서 한 비트가 틀리면 '''그 이후 모든 값'''이 어긋난다.
+* 교수: "So in practice '''we don't use this DM'''."
+
+{|
+! || [[PCM]] || '''DM'''
+|-
+| 보내는 것 || 레벨 번호 || 증감 방향
+|-
+| 샘플당 비트 || $n_b$ || 1
+|-
+| 비트 오류 영향 || 그 샘플 하나만 || '''이후 전부''' (누적)
+|-
+| 복잡도 || 높음 (3 블록) || 낮음
+|}
+
+{quiz}p.65 그림의 생성 비트열을 쓰고, 연속된 1 이 끝나고 0 이 시작되는 이유를 곡선 모양으로 설명하시오.{/quiz}
+{answer}'''0 1 1 1 1 1 1 0 0 0 0 0 0 1 1''' (15비트). 곡선이 상승하는 동안 계단이 계속 곡선 아래에 있어 1 이 나오다가, 곡선이 꼭대기를 지나 내려가기 시작하면 계단이 곡선보다 위에 있게 되어 0 이 연속된다. 곡선이 바닥을 찍고 다시 오르면 마지막에 1 이 나온다.{/answer}
+
+{quiz}DM 이 PCM 보다 단순한데도 실무에서 쓰이지 않는 이유는?{/quiz}
+{answer}'''Error propagation.''' DM 은 변화량을 누적해 값을 복원하므로, 전송 중 한 비트가 틀리면 그 뒤의 모든 복원 값이 틀어진다. PCM 은 샘플마다 절대값을 보내므로 오류가 그 샘플에 국한된다.{/answer}
+
+== 관련 문서 ==
+* [[PCM]] · [[analog-to-digital conversion]] · [[quantization]] · [[sampling]]

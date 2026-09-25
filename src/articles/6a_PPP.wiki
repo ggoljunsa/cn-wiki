@@ -1,0 +1,37 @@
+key: PPP
+title: PPP (Point-to-Point Protocol)
+category: 6강 DLC, 용어
+---
+'''PPP (Point-to-Point Protocol)''' 는 [[HDLC]] 에서 파생된 [[DLC]] 프로토콜로, 이름 그대로 '''point-to-point 링크'''에서 쓴다. L5 p.52 에서 HDLC 와 함께 "Two DLC Protocols" 로 소개된다.
+
+{def}"Point-to-Point Protocol: '''Derived from HDLC''' and is used for '''P2P links'''." (p.52){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''Point-to-Point''' — 두 점(장치)만 잇는 전용 링크용. [[MAC sublayer|MAC]] 이 필요 없는 링크이므로 DLC 기능(framing, 오류 검출)만 있으면 된다. 전화 모뎀·DSL 로 ISP 에 접속하던 시절 가정 인터넷의 표준 링크 프로토콜이었다(Forouzan).
+
+{analogy}🎭 '''HDLC 의 개인용 버전.''' HDLC 가 여러 지점(multipoint)을 거느릴 수 있는 회사용 무전 시스템이라면, PPP 는 두 사람만 쓰는 '''전용 인터폰'''이다. 뼈대(프레임 모양)는 물려받았지만 주종 관계·주소 선택이 필요 없게 단순해졌다.{/analogy}
+
+{|
+! || [[HDLC]] || PPP
+|-
+| 링크 || P2P + [[multipoint]] || '''P2P''' 만
+|-
+| 관계 || 원조 || '''HDLC 에서 파생'''
+|-
+| framing || bit-oriented ([[bit stuffing]]) || byte-oriented ([[byte stuffing]], Forouzan)
+|}
+
+<pre class="ascii">
+  [ 집 라우터 ] ─────── 전용 링크 ─────── [ ISP 라우터 ]
+                  (point-to-point, 둘뿐)
+                  → MAC 불필요, PPP 로 framing + 오류 검출
+</pre>
+
+{info}PPP 의 세부(LCP, NCP, 인증 등)는 CH03 (1) 슬라이드 범위 밖이다. 시험 관점에서는 '''"HDLC 에서 파생, P2P 링크용"''' 두 가지.{/info}
+
+== 예상 문제 ==
+{quiz}p.52 의 두 DLC 프로토콜과 각각이 지원하는 링크는?{/quiz}
+{answer}'''HDLC''': P2P 와 multipoint (LAN 프로토콜들의 기반). '''PPP''': HDLC 에서 파생, P2P 링크용.{/answer}
+
+== 관련 문서 ==
+* [[HDLC]] · [[DLC]] · [[point-to-point 링크와 broadcast 링크]] · [[ABM]]

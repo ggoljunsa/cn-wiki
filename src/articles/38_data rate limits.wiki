@@ -1,0 +1,45 @@
+key: data rate limits
+title: Data Rate Limits (데이터율의 한계)
+category: 3강 Transmission, 용어
+---
+채널로 얼마나 빨리(bps) 데이터를 보낼 수 있는가는 '''세 요소'''에 달려 있다: '''가용 [[bandwidth]]''', '''사용하는 [[signal level]] 수''', '''채널 품질(잡음의 양)'''. 이를 계산하는 이론 공식이 두 개 — '''[[Nyquist bit rate]]'''(noiseless) 와 '''[[Shannon capacity]]'''(noisy). L2 p.47–48.
+
+{def}L2 p.47–48 "Data Rate Limits"
+"Data rate depends on three factors: '''The bandwidth available''' / '''The level of the signals we use''' / '''The quality of the channel (the amount of noise)'''.
+Two theoretical formulas to calculate the data rate: '''Nyquist bit rate (for a noiseless channel)''' / '''Shannon capacity (for a noisy channel)'''"{/def}
+
+== 3요소 → 2공식 ==
+{|
+! 요소 || 기호 || [[Nyquist bit rate|Nyquist]] $2B\log_2 L$ || [[Shannon capacity|Shannon]] $B\log_2(1+\text{SNR})$
+|-
+| 가용 bandwidth || $B$ (Hz) || ✔ || ✔
+|-
+| signal level 수 || $L$ || ✔ || ✘
+|-
+| 잡음 (채널 품질) || [[SNR]] || ✘ (noiseless 가정) || ✔
+|-
+| 결과의 의미 || || 이 $L$ 로 낼 수 있는 bit rate || 어떤 방법으로도 넘을 수 없는 '''상한'''
+|}
+
+== 이름에서 개념 끌어내기 ==
+'''data rate''' = 데이터(비트)의 속도 = [[bit rate]]. '''limits''' = 한계 — "여기까지밖에 안 된다"는 '''이론적 천장'''. 교수(9/10): "data rate, 다시 말해 '''speed of communication''' 은 세 가지 중요한 요소에 달려 있다."
+
+{analogy}🎭 '''고속도로 수송량.''' 차선 폭(bandwidth)이 넓을수록, 트럭 한 대에 싣는 짐(level 당 비트)이 많을수록 많이 나른다 — 여기까진 Nyquist. 그런데 안개(noise)가 끼면 트럭 짐칸을 아무리 잘게 나눠도(level 증가) 짐을 구별할 수 없어진다 — Shannon 은 "안개가 이 정도면 '''최대 이만큼'''"이라는 천장을 준다.{/analogy}
+
+[[img:L2-50.png|p.50 — Nyquist: level 이 늘수록 bit rate 가 늘어난다(잡음이 없다면)|medium]]
+[[img:L2-53.png|p.53 — Shannon: level 은 없고 bandwidth 와 SNR 만. 넘을 수 없는 천장|medium]]
+
+== 두 공식을 함께 쓰는 법 (Example 2.9) ==
+# '''Shannon''' 으로 상한 $C$ 를 구한다 (1 MHz, SNR 63 → 6 Mbps)
+# 여유를 두고 그보다 낮은 목표 bit rate 를 고른다 (4 Mbps)
+# '''Nyquist''' 로 그 bit rate 에 필요한 $L$ 을 구한다 ($L = 4$)
+[[sim:nyquist_shannon]]
+
+{exam}⭐⭐ 교수(9/10): "첫째(Nyquist)는 '''noiseless channel''', 둘째(Shannon)는 '''noisy channel''' — 그런데 그 잡음은 가우시안 잡음을 '''더하기만''' 하는 것이지 무선에서 흔한 fading 채널은 아니다." → [[AWGN]]{/exam}
+
+{quiz}data rate 를 결정하는 세 요소를 쓰고, 각 요소가 Nyquist 와 Shannon 공식 중 어디에 나타나는지 쓰시오.{/quiz}
+{answer}① bandwidth — '''둘 다''' ② signal level 수 $L$ — '''Nyquist''' 만 ③ 채널 품질(잡음, SNR) — '''Shannon''' 만.{/answer}
+
+== 관련 문서 ==
+* [[Nyquist bit rate]] · [[Shannon capacity]] · [[bandwidth]] · [[signal level]] · [[SNR]]
+* [[noise]] · [[AWGN]] · [[bit rate]] · [[CH02 Transmission]]

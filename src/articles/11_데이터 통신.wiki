@@ -1,0 +1,33 @@
+key: 데이터 통신
+title: 데이터 통신 (Data Communication)
+category: 1강 Introduction, 용어
+---
+'''데이터 통신(data communication)'''은 CH01 의 첫 정의(L1 p.2)이자 이 과목 이름 절반의 뜻이다. 교재 제목부터 ''Data Communications'' and Networking 이다.
+
+{def}"'''Exchange of data between two devices via some form of transmission medium''', i.e., wire cable" (L1 p.2)
+두 장치가 어떤 형태의 전송 매체(예: 유선 케이블)를 거쳐 데이터를 '''교환'''하는 것.{/def}
+
+== 이름에서 개념 끌어내기 ==
+교수님 말버릇대로 "'''the name itself is very important'''". '''communication''' 은 라틴어 ''communicare'' — "공유하다, 함께 나누다". 한쪽이 일방적으로 쏘는 게 아니라 '''주고받아서 같은 것을 갖게 되는 것'''이다. 그래서 정의의 동사가 send 가 아니라 '''exchange''' 다. 그리고 '''data''' 는 사람이 아니라 '''장치(device)''' 사이에서 오가는 정보다 — 사람의 대화는 [[프로토콜 계층화]]의 비유로만 등장한다.
+
+정의를 세 조각으로 쪼개면 이 강의 전체가 보인다:
+{|
+! 조각 || 이어지는 개념
+|-
+| '''two devices''' || [[데이터 통신 5요소]]의 Sender · Receiver, [[point-to-point]] vs [[multipoint]]
+|-
+| '''exchange''' || 방향: [[simplex]] · [[half-duplex]] · [[full-duplex]]
+|-
+| '''transmission medium''' || [[physical layer]], CH02 의 신호([[data와 signal]])
+|}
+
+{analogy}🎭 '''캐치볼.''' 두 사람(device), 공(data), 둘 사이의 공간(medium). 공을 던지기만 하고 아무도 받지 않으면 캐치볼이 아니다 — '''exchange''' 여야 통신이다. 그리고 공이 '''엉뚱한 사람'''에게 가거나(Delivery), '''찌그러져서''' 가거나(Accuracy), '''한참 뒤에''' 가거나(Timeliness), '''던질 때마다 도착 간격이 제각각'''이면(Jitter) 좋은 캐치볼이 아니다 → [[데이터 통신 4대 특성]].{/analogy}
+
+== 좋은 데이터 통신의 기준 ==
+L1 p.3 은 바로 이어서 효과를 좌우하는 네 특성을 준다 — '''Delivery, Accuracy, Timeliness, Jitter'''. 자세한 건 [[데이터 통신 4대 특성]].
+
+{quiz}데이터 통신의 정의에 들어가는 세 가지 핵심 요소(주어·동작·수단)를 슬라이드 영어 표현으로 쓰시오.{/quiz}
+{answer}'''two devices''' 가 '''exchange of data''' 를 '''via some form of transmission medium''' 으로 한다.{/answer}
+
+== 관련 문서 ==
+* [[CH01 Introduction]] · [[데이터 통신 4대 특성]] · [[데이터 통신 5요소]] · [[프로토콜]]

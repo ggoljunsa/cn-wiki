@@ -1,0 +1,49 @@
+key: ALOHA throughput
+title: ALOHA Throughput (S = Ge^{-2G}, S = Ge^{-G})
+category: 7강 MAC, 용어
+---
+'''ALOHA throughput''' $S$ 는 한 프레임 전송 시간([[T_fr]]) 동안 '''성공적으로 전송되는''' 평균 프레임 수다. L6 p.21–23, p.28–29.
+
+{def}"The '''average number of successfully transmitted frames''' for pure ALOHA: $S = Ge^{-2G}$." (p.21)
+"Throughput of Slotted ALOHA: $S = G \times e^{-G}$ (cf. $S = G \times e^{-2G}$ for pure ALOHA). The maximum throughput $S_{max} = 0.368$ for $G = 1$ (cf. $S_{max} = 0.184$ for $G = 1/2$ for pure ALOHA)." (p.28){/def}
+
+== 이름에서 개념 끌어내기 ==
+[[throughput]] = 실제로 '''통과해 나온''' 양. 들이민 양은 [[offered load G|G]], 통과한 양이 $S$. 공식은 "시도 수 × 성공 확률" 로 읽으면 된다.
+<pre class="txt">
+S  =  G   ×   e^(−2G)            (pure)
+     시도      [[vulnerable time]] 2T_fr 동안 아무도 시작 안 할 확률
+S  =  G   ×   e^(−G)             (slotted)
+     시도      vulnerable time T_fr 동안 아무도 시작 안 할 확률
+</pre>
+지수의 '''2'''와 '''1'''은 vulnerable time 이 $2T_{fr}$ 이냐 $T_{fr}$ 이냐에서 온다.
+
+[[img:L6-22.png|p.22 Throughput of Pure ALOHA — S = Ge^{-2G}, S_max = 0.184 for G = 1/2|medium]]
+
+== 최댓값은 미분 한 줄 ==
+<pre class="txt">
+pure:    dS/dG = e^(−2G)(1 − 2G) = 0  → G = 1/2 → S = (1/2)e^(−1) = 1/(2e) = '''0.184'''
+slotted: dS/dG = e^(−G)(1 − G)   = 0  → G = 1   → S = 1 × e^(−1)   = 1/e    = '''0.368'''
+</pre>
+
+{exam}⭐⭐ pure '''0.184 @ G = 1/2''' (18.4%), slotted '''0.368 @ G = 1''' (36.8%). 둘이 정확히 2배 차이.{/exam}
+
+== Example 3.11 (p.29) ⭐⭐ ==
+Slotted ALOHA, 200-bit 프레임, 200 kbps ([[T_fr]] = 1 ms).
+<pre class="txt">
+a. 1000 frames/s → G = 1   → S = 1 × e^(−1)      = 0.368 → 1000 × 0.368 = '''368 frames'''
+b. 500  frames/s → G = 1/2 → S = 0.5 × e^(−0.5)  = 0.303 → 500 × 0.303  = '''151 frames'''
+c. 250  frames/s → G = 1/4 → S = 0.25 × e^(−0.25) = 0.195 → 250 × 0.195 = '''49 frames'''
+</pre>
+
+[[sim:aloha_throughput]]
+
+{tip}같은 조건을 '''pure ALOHA''' 로 풀면 (교재 Example 3.10): a. $S = e^{-2} = 0.135$ → 135 / b. $S = 0.5e^{-1} = 0.184$ → 92 / c. $S = 0.25e^{-0.5} = 0.152$ → 38. pure 는 $G = 1/2$ 인 b 가 최대 효율이다.{/tip}
+
+{analogy}🎭 '''복권 긁기.''' $G$ 는 산 복권 수, $e^{-2G}$ 는 한 장이 "꽝(충돌)"을 피할 확률. 복권을 많이 살수록 당첨 기대치가 올라갈 것 같지만, 여기서는 '''내가 많이 살수록 서로를 꽝으로 만든다'''. 그래서 어느 지점을 넘으면 $S$ 가 오히려 떨어진다.{/analogy}
+
+{quiz}Pure ALOHA 에서 $G = 1$ 일 때와 $G = 1/2$ 일 때 $S$ 를 각각 구하고 어느 쪽이 나은지 쓰시오.{/quiz}
+{answer}$G = 1$: $S = e^{-2} = 0.135$. $G = 1/2$: $S = 0.5 \times e^{-1} = 0.184$. '''$G = 1/2$ 가 낫다''' — pure 의 최적점. 더 많이 보낸 $G = 1$ 이 오히려 성공이 적다.{/answer}
+
+== 관련 문서 ==
+* [[offered load G]] · [[vulnerable time]] · [[pure ALOHA]] · [[slotted ALOHA]]
+* [[throughput]] · [[계산 문제 모음]] · [[공식 모음]]

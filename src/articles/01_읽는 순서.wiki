@@ -1,0 +1,79 @@
+key: 읽는 순서
+title: 읽는 순서 — 처음부터 끝까지
+category: 안내
+---
+이 문서는 '''수업 순서대로''' 위키를 통독하는 길잡이다. 한 강의는 "메인 문서 1편을 슬라이드 순서로 읽으면서, 모르는 용어가 나올 때마다 링크를 타고 사전 문서에 다녀오는" 방식으로 읽는다. 각 강의 끝의 `시험 대비 핵심 요약` 을 백지에 다시 써 보면 그 강의는 끝이다.
+
+{analogy}
+🎭 '''등산 코스.''' 메인 문서는 능선길이고 사전 문서는 옆으로 빠지는 전망대다. 전망대에 다 들르면 하루가 모자라니, 첫 통독 때는 '''굵게 표시된 링크'''(처음 보는 개념)만 들르고, 두 번째부터는 자기가 헷갈리는 전망대만 간다.
+{/analogy}
+
+== 0. 준비 (10분) ==
+* [[시험 정보]] — 성적 비중(중간 40%), 교재, 아직 확정되지 않은 것.
+* [[Forouzan]] — 챕터 구성. 중간고사는 CH01–CH03.
+* [[log₂ 계산법]] · [[bps와 Hz]] · [[XOR]] — 계산 문제의 손도구 3개. 5분이면 된다.
+
+== 1. CH01 Introduction (1시간) ==
+[[CH01 Introduction]] 을 통독. 반드시 들를 전망대:
+# [[데이터 통신 4대 특성]] — Delivery / Accuracy / Timeliness / '''Jitter''' (Encryption 아님).
+# [[프로토콜 계층화]] → [[논리적 연결]] — Maria·Ann 의 3계층 편지 예시. 여기서 "identical objects" 가 뭔지 이해하면 [[캡슐화]]가 저절로 된다.
+# [[TCP/IP 프로토콜 스위트]] → [[PDU]] → [[주소 체계]] — 5계층 × (PDU 이름, 주소, 대표 프로토콜) 표를 백지에 채울 수 있어야 한다.
+# [[스위치]] / [[라우터]] — 어디까지 구현하나(L1–L2 / L1–L3). [[end-to-end와 hop-to-hop]].
+# 토폴로지 넷: [[mesh 토폴로지]] [[star 토폴로지]] [[bus 토폴로지]] [[ring 토폴로지]] — 부품 이름(허브 / drop line·tap / 리피터)까지.
+
+== 2. CH02 Signals (1시간) ==
+[[CH02 Signals]] 통독. 들를 곳:
+# [[data와 signal]] — What vs How.
+# [[사인파]] 의 3요소 [[peak amplitude]] · [[주파수]] · [[phase]]. [[주파수]]에서 "변하지 않으면 0 Hz, 순간 변하면 ∞" 를 꼭.
+# [[composite signal]] → [[Fourier analysis]] → [[bandwidth]] (= 최고 − 최저). 4000 Hz 예시.
+# [[디지털 신호]] → [[signal level]] ($\log_2 L$) → [[bit rate]] → [[bit length]]. Example 2.3·2.4.
+# [[baseband 전송]] / [[broadband 전송]] — low-pass 채널이냐 bandpass 채널이냐.
+
+== 3. CH02 Transmission (1.5시간, 계산 많음) ==
+[[CH02 Transmission]] 통독. 들를 곳:
+# [[signal impairment]] 셋: [[attenuation]]([[데시벨]], −3 dB = 절반) · [[distortion]] · [[noise]]([[SNR]]).
+# '''[[Nyquist bit rate]] vs [[Shannon capacity]]''' — 무잡음/잡음, 공식, Example 2.6 · 2.8 · 2.9. 시뮬레이터 `nyquist_shannon` 을 세 옵션 다 돌려 본다.
+# [[throughput]] · [[latency]] · [[propagation time]] · [[bandwidth-delay product]] · [[jitter]].
+# 여담으로 [[Claude Shannon]] — 교수가 "세 가지 기여를 기억하라" 고 했다.
+
+== 4. CH02 Digital Transmission (1시간) ==
+[[CH02 Digital Transmission]] 통독. 들를 곳:
+# [[line coding]] / [[block coding]] → [[4B/5B]] + [[NRZ-I]] (왜 붙여 쓰나).
+# '''[[PCM]]''' 3단계: [[sampling]]([[Nyquist sampling theorem]] — 최고 주파수의 2배, [[oversampling과 undersampling]]) → [[quantization]]([[quantization error]]) → [[encoding]]. Example 2.13 (64 kbps).
+# [[PCM bandwidth]] — $B_{min} = n_b B_{analog}$ 증명 4단계. [[SNR_dB와 n_b]].
+# [[delta modulation]].
+
+== 5. CH02 Analog Transmission · Multiplexing (1시간) ==
+[[CH02 Analog Transmission]] → [[CH02 Multiplexing]]. 들를 곳:
+# [[modulation]] — [[carrier]]의 3요소 중 무엇을 바꾸나: [[ASK]] / [[FSK]] / [[PSK]] / [[QAM]].
+# [[baud]] vs bps ([[signal rate와 bit rate]]) — 교수: "terminology is very important".
+# [[변조 대역폭]] — $B=(1+d)S$ 와 FSK 만 $+2\Delta f$. [[roll-off factor]] $d$ 는 시험에서 준다. Example 5 (FSK, 25 kbps).
+# [[FDM]] vs [[TDM]] — 주파수를 나누나 시간을 나누나. [[guard band]].
+
+== 6. CH03 Data-Link Control (2시간, 손계산 많음) ==
+[[CH03 Data-Link Control]] 통독. 들를 곳:
+# [[node와 link]] — node-to-node vs end-to-end. [[DLC]] / [[MAC sublayer]] 의 분업.
+# [[framing]]: [[character-oriented framing]]([[byte stuffing]]) / [[bit-oriented framing]]([[bit stuffing]], flag 01111110).
+# [[block code]] → '''[[Hamming distance]] → [[minimum Hamming distance]]''' ($d_{min}=s+1$, $2t+1$) → [[linear block code]].
+# [[parity check code]] — Example 3.7 다섯 경우, 특히 짝수 개 오류.
+# '''[[CRC]]''' — [[divisor]]로 XOR 나눗셈, [[syndrome]]. 시뮬레이터 `crc_division` 을 손으로 따라 푼다. [[polynomial representation]].
+# [[HDLC]] — [[NRM]]/[[ABM]], [[HDLC 프레임]] I/S/U.
+
+== 7. CH03 Media Access Control (1.5시간) ==
+[[CH03 Media Access Control]] 통독. 들를 곳:
+# [[multiple access protocols]] 3분류.
+# '''[[pure ALOHA]] → [[slotted ALOHA]]''': [[vulnerable time]]($2T_{fr}$ / $T_{fr}$), [[ALOHA throughput]]($Ge^{-2G}$ / $Ge^{-G}$, 0.184 / 0.368), [[binary exponential backoff]]. Example 3.8 · 3.9 · 3.11.
+# [[CSMA]] — 왜 충돌을 못 없애나([[propagation time]]). [[persistence method]] 셋.
+# '''[[CSMA/CD]]''' — [[최소 프레임 크기]] $T_{fr} \ge 2T_p$, Example 3.12 (64 bytes). [[jamming signal]].
+# [[controlled access]]: [[reservation]] / [[polling]] / [[token passing]].
+
+== 8. CH03 Link-Layer Addressing (30분) ==
+[[CH03 Link-Layer Addressing]] → [[IP 주소와 MAC 주소]](순서가 다르다!) → [[unicast]]/[[multicast]]/[[broadcast 주소]] → [[ARP]].
+
+== 마무리 (시험 전날) ==
+# [[공식 모음]] 을 보지 않고 백지에 쓴다.
+# [[계산 문제 모음]] 의 Example 을 전부 다시 푼다 (시뮬레이터는 답 맞출 때만).
+# [[자주 틀리는 함정 모음]] 과 [[0920 오답 복기]] 를 훑는다.
+
+== 관련 문서 ==
+* [[main]] · [[시험 정보]] · [[공식 모음]] · [[계산 문제 모음]]

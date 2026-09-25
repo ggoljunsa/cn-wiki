@@ -1,0 +1,38 @@
+key: PAM
+title: PAM (Pulse Amplitude Modulation) 신호
+category: 4강 Digital Transmission, 용어
+---
+'''PAM 신호'''는 [[sampling]] 의 결과물 — 같은 간격 $T$ 로 늘어선 '''펄스(막대)들의 높이가 원 신호의 진폭'''인 신호다. [[PCM]] 인코더에서 Sampling 블록의 출력. L3 p.49–50.
+
+{def}p.49 그림: Sampling 블록의 출력 = "'''PAM signal'''". p.50 그림 b: "'''PAM signal'''" — "Analog signal is sampled every T seconds".
+PAM = Pulse Amplitude Modulation. 원 신호의 순간 진폭을 펄스의 높이(amplitude)에 싣는다.{/def}
+
+[[img:L3-50.png|p.50 b. PAM signal — 막대 높이가 곡선의 그 순간 값 (음수 포함)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Pulse''' — 폭이 좁은 막대
+* '''Amplitude''' — 그 막대의 '''높이'''에 정보가 있다
+* '''Modulation''' — 원 신호가 펄스열의 높이를 바꿨다(변조)
+[[PCM]] 과 비교하면 "Pulse ___ Modulation" 의 빈칸만 다르다: PAM 은 '''Amplitude'''(높이 그대로), PCM 은 '''Code'''(높이를 비트로 번역). 즉 '''PAM 은 아직 디지털이 아니다''' — 시간은 이산, 값은 연속.
+
+{analogy}🎭 '''주식 종가 막대그래프.''' 하루 종일 연속으로 변하는 주가(아날로그)에서 '''매일 장 마감 값만''' 막대로 세워 둔 것. 날짜는 띄엄띄엄(이산)이지만 막대 높이는 53,217원처럼 아무 값이나 가능(연속). 이걸 1000원 단위로 반올림하면 [[quantization]].{/analogy}
+
+{|
+! 신호 || 시간축 || 진폭축 || 디지털?
+|-
+| 아날로그 신호 || 연속 || 연속 || ✗
+|-
+| '''PAM 신호''' || '''이산''' || 연속 || ✗
+|-
+| Quantized 신호 || 이산 || 이산 ($L$ 레벨) || 거의
+|-
+| 비트열 ([[encoding]] 후) || 이산 || 0/1 || ✓
+|}
+
+p.55 의 "Normalized PAM values" 행(−1.22, 1.50, 3.24, 3.94, …)이 바로 PAM 막대 높이를 $\Delta$ 로 나눈 값이다.
+
+{quiz}PAM 신호가 아직 디지털 신호가 아닌 이유는?{/quiz}
+{answer}시간은 $T$ 간격으로 이산화됐지만 '''펄스 높이(진폭)가 여전히 연속값'''이기 때문. 진폭을 유한한 레벨로 끊는 [[quantization]] 과 비트로 바꾸는 [[encoding]] 이 남아 있다.{/answer}
+
+== 관련 문서 ==
+* [[sampling]] · [[quantization]] · [[PCM]] · [[peak amplitude]]

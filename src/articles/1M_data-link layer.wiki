@@ -1,0 +1,39 @@
+key: data-link layer
+title: Data-Link Layer (데이터링크 계층, Layer 2)
+category: 1강 Introduction, 용어
+---
+'''Data-link layer''' 는 Layer 2 — datagram 을 받아 '''링크 하나를 건너''' 옮기는 층 (L1 p.34). CH03 의 주인공이다.
+
+{def}"Taking the '''datagram''' and moving it '''across the link''' / The link can be a wired LAN with a link-layer switch, a wireless LAN, a wired WAN, or a wireless WAN / Different protocols used with any link type / TCP/IP supports all the standard and proprietary protocols / Takes a datagram and '''encapsulates it in a packet called a frame'''" (L1 p.34)
+datagram 을 받아 링크를 건너 옮긴다. 링크는 스위치가 있는 유선 LAN, 무선 LAN, 유선 WAN, 무선 WAN 무엇이든 될 수 있고 링크마다 다른 프로토콜을 쓴다. TCP/IP 는 표준·독점 프로토콜을 모두 지원한다. datagram 을 frame 이라는 패킷으로 캡슐화한다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''data link''' — "링크 위의 데이터". 키워드는 '''link''' 하나: 이 층의 시야는 '''지금 이 링크 한 구간'''뿐이다. 출발지에서 목적지까지 전체 경로는 [[network layer]] 가 보고, data-link 는 "다음 노드까지만" 책임진다 → hop-to-hop. 그래서 라우터를 지날 때마다 frame 이 '''새로''' 만들어진다([[캡슐화]]).
+
+== 한눈에 ==
+{|
+! 항목 || 내용
+|-
+| 하는 일 || datagram 을 '''frame''' 으로 감싸 링크 하나 건너기
+|-
+| [[PDU]] || '''frame'''
+|-
+| 주소 || '''link-layer address''' = [[MAC 주소]] (00:1A:2B:...)
+|-
+| 가진 장치 || host, [[라우터]], '''[[스위치]](여기까지가 최상층)'''
+|-
+| 범위 || '''hop''' — 링크마다 ([[end-to-end와 hop-to-hop]])
+|-
+| 링크 종류 || wired LAN(link-layer switch) · wireless LAN · wired WAN · wireless WAN
+|}
+
+== CH03 에서 이어지는 것 ==
+CH01 은 한 슬라이드지만 CH03 은 두 덱이다: [[framing]], 오류 검출([[CRC]], [[parity check code]]), [[DLC]] 와 [[MAC sublayer]] 의 두 부분, [[HDLC]], [[random access]]. 시작점: [[CH03 Data-Link Control]], [[data-link layer 서비스]].
+
+{analogy}🎭 '''이어달리기의 한 구간 주자.''' 바통(datagram)을 받아 '''자기 구간만''' 달린다. 구간마다 주자와 조끼 번호(frame 헤더, MAC 주소)는 바뀌지만 바통은 그대로 다음 주자에게. 결승선이 어딘지는 코스 설계자(network layer)의 일이다.{/analogy}
+
+{quiz}Data-link layer 가 datagram 을 감싸 만든 패킷의 이름, 그리고 이 층이 쓰는 주소의 이름은?{/quiz}
+{answer}'''frame''', '''link-layer address'''(MAC 주소).{/answer}
+
+== 관련 문서 ==
+* [[physical layer]] · [[network layer]] · [[스위치]] · [[MAC 주소]] · [[CH03 Data-Link Control]] · [[CH01 Introduction]]

@@ -1,0 +1,46 @@
+key: HDLC 프레임
+title: HDLC Frames (I-frame / S-frame / U-frame)
+category: 6강 DLC, 용어
+---
+[[HDLC]] 는 세 종류의 프레임을 쓴다: 사용자 데이터를 나르는 '''I-frame''', 제어 정보만 나르는 '''S-frame''', 시스템 관리용 '''U-frame'''. 공통 구조는 '''Flag – Address – Control – (Information) – FCS – Flag'''. L5 p.56.
+
+{def}"'''I-frames''': information frames — Transport user data and control information that relates to user data ('''piggybacking''')."
+"'''S-frames''': supervisory frames — Transport control information."
+"'''U-frames''': unnumbered frames — Reserved for system management." (p.56){/def}
+
+[[img:L5-56.png|p.56 I-frame(User information 포함) / S-frame(정보 필드 없음 — 가장 짧다) / U-frame(Management information 포함)|large]]
+
+== 필드 ==
+{|
+! 필드 || 역할
+|-
+| '''[[flag|Flag]]''' || 01111110 — 프레임 시작/끝 ([[bit-oriented framing]])
+|-
+| '''Address''' || Secondary 스테이션 주소 ([[NRM]] multipoint 에서 누구에게/누구로부터인지)
+|-
+| '''Control''' || 프레임 종류(I/S/U) 구분 + 순서 번호 등 제어 정보
+|-
+| '''Information''' || I: User information / U: Management information / S: '''없음'''
+|-
+| '''[[FCS]]''' || Frame Check Sequence — [[CRC]] 나머지 (CRC-16, p.50)
+|}
+
+== 이름에서 개념 끌어내기 ==
+* '''I = Information''' — 정보(사용자 데이터)를 나른다. 가는 김에 ACK 같은 제어 정보도 얹는다([[piggybacking]]).
+* '''S = Supervisory''' — "감독". 데이터 없이 ACK/NAK, 흐름 제어 같은 '''감독용 신호'''만.
+* '''U = Unnumbered''' — "번호 없음". 데이터 흐름의 순서 번호가 필요 없는 '''관리''' 명령(연결 설정·해제 등).
+
+{analogy}🎭 '''택배 트럭의 세 가지 운행.''' I = 물건을 싣고 가면서 "지난번 물건 잘 받았어요" 쪽지도 같이 전달(piggybacking). S = 빈 트럭으로 쪽지만 전달. U = 영업소 개설·폐쇄 같은 운영 업무용 운행(번호표 없음).{/analogy}
+
+<pre class="txt">
+I-frame: | Flag | Address | Control | User information       | FCS | Flag |
+S-frame: | Flag | Address | Control | FCS | Flag |                     ← 정보 필드 없음
+U-frame: | Flag | Address | Control | Management information | FCS | Flag |
+</pre>
+
+== 예상 문제 ==
+{quiz}정보(information) 필드가 없는 HDLC 프레임은? piggybacking 을 하는 프레임은?{/quiz}
+{answer}정보 필드 없음: '''S-frame'''. piggybacking: '''I-frame''' (사용자 데이터와 그 데이터에 관한 제어 정보를 함께).{/answer}
+
+== 관련 문서 ==
+* [[HDLC]] · [[piggybacking]] · [[FCS]] · [[flag]] · [[NRM]] · [[ABM]]

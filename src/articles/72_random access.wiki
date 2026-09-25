@@ -1,0 +1,37 @@
+key: random access
+title: Random Access (랜덤 접근)
+category: 7강 MAC, 용어
+---
+'''Random access'''는 [[multiple access protocols]]의 첫째 분류로, 모든 스테이션이 대등하고 각자 매체 상태를 보고 '''스스로''' 전송 여부를 정하는 방식이다. L6 p.4–5.
+
+{def}"'''All stations are equal''': no station has control over any other. Station makes a decision on whether or not to send. It depends on the state of the medium (idle or busy)." (p.4)
+모든 스테이션이 대등하다 — 누구도 다른 스테이션을 통제하지 않는다. 각 스테이션은 보낼지 말지를 스스로 정하며, 그 기준은 매체의 상태(idle / busy)다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''random''' = 정해진 순서가 없다. 누가 언제 보낼지는 그때그때 각자의 사정(데이터가 생겼는지, 매체가 비었는지)에 달려 있다. 순서가 없으니 '''둘이 동시에''' 보내는 일이 생긴다 → [[collision]] (p.5): "the frames will be either destroyed or modified".
+
+그래서 random access 프로토콜의 역사는 곧 '''"충돌을 어떻게 줄이고, 났을 때 어떻게 수습하나"'''의 역사다.
+
+{|
+! 프로토콜 || 충돌 대책 || [[vulnerable time]]
+|-
+| [[pure ALOHA]] || 없음. 나중에 ACK 로 확인하고 재전송 || $2T_{fr}$
+|-
+| [[slotted ALOHA]] || 시작 시점을 슬롯 경계로 묶음 || $T_{fr}$
+|-
+| [[CSMA]] || 보내기 전에 듣는다 || $T_p$
+|-
+| [[CSMA/CD]] || 보내는 중에도 듣다가 충돌이면 중단 || (최소 프레임 조건 $T_{fr} \geq 2T_p$)
+|}
+
+[[anim:pure_aloha_collision|아무도 통제하지 않을 때 충돌이 어떻게 생기는지 보라]]
+
+{analogy}🎭 '''신호등 없는 교차로.''' 각 운전자가 좌우를 보고(매체 상태) 스스로 진입 여부를 정한다. 교통경찰(controlled access)도 없고, 차선별 전용 시간(channelization)도 없다. 대부분은 잘 되지만, 둘이 동시에 "지금 비었네" 하고 들어가면 사고(collision)가 난다.{/analogy}
+
+{quiz}Random access 에서 스테이션이 "보낼지 말지"를 결정하는 근거는 무엇인가? 그리고 이 방식이 피할 수 없는 문제는?{/quiz}
+{answer}근거는 '''매체의 상태(idle 또는 busy)'''다. 다른 스테이션의 허락은 필요 없다. 피할 수 없는 문제는 둘 이상이 동시에 보내 생기는 '''collision(access conflict)'''이며, 이때 프레임은 파괴되거나 변형된다.{/answer}
+
+== 관련 문서 ==
+* [[multiple access protocols]] · [[controlled access]] · [[channelization]]
+* [[collision]] · [[pure ALOHA]] · [[CSMA]] · [[CSMA/CD]]
+* [[CH03 Media Access Control]]

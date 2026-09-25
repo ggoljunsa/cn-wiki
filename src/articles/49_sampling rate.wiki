@@ -1,0 +1,39 @@
+key: sampling rate
+title: Sampling Rate (표본화율, f_s)
+category: 4강 Digital Transmission, 용어
+---
+'''Sampling rate''' $f_s$ 는 1초에 몇 번 [[sampling]] 하느냐, 즉 sampling interval $T$ 의 역수다. 단위는 '''samples/s'''. L3 p.50–53.
+
+{def}"Sampling rate: '''inverse of sampling interval'''." — $f_s = 1/T$
+"Nyquist Theorem: To reproduce the original analog signal, the sampling rate should be '''at least twice the highest frequency''' in the original signal."{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''rate''' = 단위 시간당 횟수. "sampling rate" = 초당 샘플 수. 교수는 sampling frequency 라고도 불렀다 — "frequency 는 시간의 역수"이므로 같은 뜻이다. 기호의 아래첨자 $s$ 는 '''s'''ampling.
+
+{analogy}🎭 '''시험 감독의 순찰 주기.''' 감독관이 교실을 10분에 한 번 돈다면 순찰 rate 는 시간당 6회. 부정행위(신호의 빠른 변화)가 5분 만에 시작해 끝난다면 10분 간격으로는 절대 못 잡는다. '''가장 빠른 변화보다 두 배 이상 자주''' 돌아야 한다 = [[Nyquist sampling theorem]].{/analogy}
+
+== 어떻게 고르나 — trade-off ==
+{|
+! $f_s$ || 복원 품질 || 대가
+|-
+| $f_s < 2f_{max}$ (undersampling) || '''복원 불가''' || —
+|-
+| $f_s = 2f_{max}$ (Nyquist rate) || 이론상 충분 || 최소 비용
+|-
+| $f_s > 2f_{max}$ (oversampling) || 좋음 + redundancy || bit rate·[[bandwidth]] 증가
+|}
+
+교수 권장: "Nyquist sampling rate 와 '''as similar as possible, but slightly higher''' — 잡음·주파수 간 왜곡이 있으니까." 그리고 이유를 이렇게 댔다: "높은 sampling frequency 를 쓰면 [[Nyquist bit rate|Nyquist formula]] 에서 보듯 '''high bandwidth''' 가 필요하다. All channels have their own limitations in frequency bands. … '''Time and frequency are very important resources.'''"
+
+[[img:L3-53.png|p.53 oversampling(f_s = 4f) 은 좋은 근사 + redundancy, undersampling(f_s = f) 은 원 파형과 딴판|medium]]
+
+== 쓰이는 곳 ==
+* PCM bit rate $= f_s \times n_b$ ([[encoding]])
+* [[PCM bandwidth]] 증명 ①: $f_s = 2B_{analog}$
+
+{quiz}최고 주파수 3.4 kHz 인 신호의 Nyquist rate 는? 교수 권장대로라면 실제로는?{/quiz}
+{answer}Nyquist rate $= 2 \times 3.4 = 6.8$ kHz (6800 samples/s). 실제로는 '''약간 높게''' — 전화망은 8000 samples/s 를 쓴다.{/answer}
+
+== 관련 문서 ==
+* [[sampling]] · [[Nyquist sampling theorem]] · [[oversampling과 undersampling]]
+* [[encoding]] · [[PCM]]

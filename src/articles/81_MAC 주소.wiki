@@ -1,0 +1,45 @@
+key: MAC 주소
+title: MAC 주소 (Link-layer address)
+category: 8강 Addressing, 용어
+---
+'''MAC 주소'''는 [[data-link layer]]가 쓰는 주소로, 한 링크 안에서 노드를 식별한다. 다른 이름: '''link address''', '''physical address''', '''link-layer address'''. Ethernet 에서는 '''48 bits''' 를 '''콜론으로 구분한 12자리 16진수'''로 쓴다. L6 p.57, p.60–62.
+
+{def}"Need another addressing mechanism: '''Link address, physical address, or MAC address'''." (p.57)
+"The unicast link-layer addresses in the most common LAN, Ethernet, are '''48 bits (six bytes)''' that are presented as '''12 hexadecimal digits separated by colons'''." (p.60){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''MAC''' = Media Access Control — 7강에서 배운 [[MAC sublayer]] 의 그 MAC 이다. 매체에 접근하는 계층이 쓰는 주소. '''physical''' address 라고도 부르는 이유는 네트워크 카드(NIC)에 제조 시 '''물리적으로''' 새겨져 나오기 때문이다. 이름이 셋이어도 '''같은 것'''이다.
+
+== 형식 ==
+<pre class="txt">
+A3 : 34 : 45 : 11 : 92 : F1
+└┘   └┘   └┘   └┘   └┘   └┘
+1B   1B   1B   1B   1B   1B     = 6 bytes = 48 bits
+16진수 한 자리 = 4 bits → 12 자리 × 4 = 48 bits
+</pre>
+
+== IP 주소와 무엇이 다른가 ==
+{|
+! || [[IP]] 주소 || MAC 주소
+|-
+| 계층 || [[network layer]] || [[data-link layer]]
+|-
+| 범위 || 인터넷 전체 (end-to-end) || '''한 링크 안''' (hop-to-hop)
+|-
+| 경로 중 변화 || 불변 || '''링크마다 바뀜'''
+|-
+| 프레임/패킷 속 순서 || source–destination || '''destination–source'''
+|}
+
+[[img:L6-58.png|p.58 L₁, L₂, L₄, L₅, L₇, L₈ — 링크마다 프레임의 L 두 칸이 바뀐다|large]]
+
+[[anim:node_to_node|링크를 건널 때마다 프레임 앞의 MAC 주소 두 칸이 갈아끼워지는 것을 보라]]
+
+{analogy}🎭 '''학번과 좌석 번호.''' IP 주소는 학번처럼 어디 가도 나를 가리키는 식별자고, MAC 주소는 '''지금 이 강의실 안에서''' 나를 부르는 좌석 번호 같은 것이다 — 강의실(링크)이 바뀌면 부르는 번호도 그 강의실 기준으로 바뀐다. (엄밀히는 MAC 주소 자체는 카드에 고정돼 있고, '''프레임에 적히는 MAC 주소'''가 링크마다 바뀌는 것이다.){/analogy}
+
+{quiz}Ethernet MAC 주소는 몇 비트이고, 16진수 몇 자리로 표기하는가? `A3:34:45:11:92:F1` 은 몇 바이트인가?{/quiz}
+{answer}'''48 bits''', 16진수 '''12 자리''' (콜론으로 두 자리씩 구분). 두 자리가 1 byte 이므로 '''6 bytes'''.{/answer}
+
+== 관련 문서 ==
+* [[IP 주소와 MAC 주소]] · [[unicast]] · [[multicast]] · [[broadcast 주소]] · [[ARP]]
+* [[MAC sublayer]] · [[주소 체계]] · [[CH03 Link-Layer Addressing]]

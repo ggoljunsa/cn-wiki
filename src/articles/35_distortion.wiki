@@ -1,0 +1,42 @@
+key: distortion
+title: Distortion (왜곡)
+category: 3강 Transmission, 용어
+---
+'''Distortion'''은 신호의 '''모양(form, shape)이 변하는 것'''이다. 여러 주파수로 이루어진 [[composite signal]] 에서 성분마다 매체를 지나는 속도가 달라 '''out of phase''' 가 되면 합의 모양이 일그러진다. L2 p.44.
+
+{def}L2 p.44 "Distortion"
+"The signal '''changes its form or shape'''. Can occur in a '''composite signal made of different frequencies''' — e.g., '''out-of-phase''' in some freq bands."
+왜곡 = 신호의 모양이 변하는 것. 서로 다른 주파수로 된 합성 신호에서 생기며, 예를 들어 일부 주파수 대역의 위상이 어긋난다.{/def}
+
+[[img:L2-44.png|p.44 — At the sender: 세 성분이 in phase → 깔끔한 합성 신호. At the receiver: 같은 세 성분이 out of phase → 합성 신호 모양이 일그러짐|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''distort''' = ''dis-''(벗어나게) + ''torquere''(비틀다) → "'''비틀어 모양을 바꾸다'''". 크기가 줄어드는 게 아니라([[attenuation]]) '''모양'''이 비틀린다. 교수(9/10): "distortion refers to the signal changes '''with respect to different frequencies'''."
+
+{analogy}🎭 '''달리기 반 대항 이어 달리기.''' 한 반(composite signal)의 학생들(주파수 성분)이 나란히 출발했다(in phase). 그런데 학생마다 달리기 속도가 달라(매체가 주파수마다 다른 지연을 줌) 결승선에 들어올 땐 줄이 흐트러져 있다(out of phase). 출발할 때의 대열 모양이 도착할 때 사라진 것 — 그게 distortion.{/analogy}
+
+[[anim:impairments|가운데 줄: 성분들이 조금씩 밀리며(phase 어긋남) 합성 파형의 모양이 변한다. 크기는 그대로다]]
+
+== 왜 composite signal 에서만 ==
+# composite signal = 여러 [[사인파]]의 합 ([[Fourier analysis]])
+# 매체는 주파수마다 전파 속도(지연)가 조금씩 다르다
+# 각 성분의 [[phase]] 가 서로 다르게 밀린다 → '''out of phase'''
+# 각 성분은 멀쩡해도 '''합'''의 모양이 바뀐다
+사인파 '''하나'''라면? 밀려도 시간축 이동일 뿐 모양은 그대로다. 어긋날 짝이 없다.
+
+{|
+! || [[attenuation]] || '''distortion''' || [[noise]]
+|-
+| 변하는 것 || 크기 || '''모양''' || 무언가 더해짐
+|-
+| 원인 || 매체 저항 || 주파수별 다른 지연 || 외부·열 잡음
+|-
+| 조건 || 모든 신호 || '''composite signal''' || 모든 신호
+|}
+
+{quiz}"distortion 은 사인파 하나로 된 신호에서도 모양을 바꾼다." 옳은가?{/quiz}
+{answer}'''틀렸다.''' distortion 은 "composite signal made of different frequencies" 에서 생긴다(p.44). 사인파 하나는 phase 가 밀려도 같은 모양의 사인파다. 여러 성분의 phase 가 '''서로 다르게''' 밀릴 때 합의 모양이 바뀐다.{/answer}
+
+== 관련 문서 ==
+* [[composite signal]] · [[phase]] · [[Fourier analysis]]
+* [[signal impairment]] · [[attenuation]] · [[noise]] · [[CH02 Transmission]]

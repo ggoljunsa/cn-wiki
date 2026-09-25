@@ -1,0 +1,36 @@
+key: low-pass 채널
+title: Low-pass 채널 (저역통과 채널)
+category: 2강 Signals, 용어
+---
+'''Low-pass channel'''은 '''bandwidth 가 0 Hz 부터 시작하는''' 채널, 즉 0 Hz ~ $f_{max}$ 의 낮은 주파수를 통과시키는 채널이다. L2 p.37. [[baseband 전송]]에 필요하다.
+
+{def}L2 p.37 "We need a '''low-pass''' channel, '''a channel with a bandwidth that starts from zero'''."
+저역통과 채널 = 대역폭이 0 부터 시작하는 채널.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''low''' (낮은 주파수를) + '''pass''' (통과시킨다). 교수: "channel allows the '''pass of low frequency''' — so we call it '''low-pass'''." 낮은 쪽은 통과, 어느 한계 $f_{max}$ 위는 막는다. [[bandwidth]] = $f_{max} - 0 = f_{max}$.
+
+{analogy}🎭 '''바닥부터 뚫린 터널.''' 높이 제한이 있는 터널(= $f_{max}$) 을 떠올려라. 바닥(0 Hz)부터 제한 높이까지는 무엇이든 지나가고, 그보다 높은 짐(고주파)은 걸린다. [[디지털 신호]] 펄스는 짐의 대부분이 바닥 쪽에 있어서 이 터널로 잘 지나간다.{/analogy}
+
+[[img:L2-37.png|p.37 — baseband 전송: 디지털 신호를 그대로 low-pass 채널에 싣는다|medium]]
+
+== 비교 ==
+{|
+! || low-pass 채널 || [[bandpass 채널]]
+|-
+| 통과 대역 || $0$ ~ $f_{max}$ || $f_1$ ~ $f_2$ ($f_1 > 0$)
+|-
+| bandwidth || $f_{max}$ || $f_2 - f_1$
+|-
+| 쓰는 전송 방식 || [[baseband 전송]] || [[broadband 전송]]
+|-
+| 예 || 두 컴퓨터를 잇는 전용 케이블 || 무선 대역, 전화선 음성 대역(300~3300 Hz)
+|}
+
+{info}p.36 (b): 비주기 디지털 신호의 스펙트럼은 0 Hz 에서 가장 크다. 그래서 0 을 포함하지 않는 bandpass 채널에 디지털 신호를 그대로 넣으면 핵심 성분이 잘린다 — baseband 에는 low-pass 채널이 필요한 이유.{/info}
+
+{quiz}0 ~ 4000 Hz 를 통과시키는 채널은 low-pass 인가 bandpass 인가? 이 채널의 bandwidth 는?{/quiz}
+{answer}0 부터 시작하므로 '''low-pass'''. bandwidth = $4000 - 0 = $ '''4000 Hz'''.{/answer}
+
+== 관련 문서 ==
+* [[bandpass 채널]] · [[baseband 전송]] · [[broadband 전송]] · [[bandwidth]] · [[CH02 Signals]]

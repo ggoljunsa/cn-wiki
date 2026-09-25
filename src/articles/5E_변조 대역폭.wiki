@@ -1,0 +1,61 @@
+key: 변조 대역폭
+title: 변조 대역폭 (ASK·FSK·PSK 의 B 공식 비교)
+category: 5강 Analog Transmission, 용어, 핵심
+---
+[[digital-to-analog conversion]] 에서 변조된 신호가 차지하는 [[bandwidth|대역폭]] $B$ 의 공식 세 개를 한곳에 모은 문서. 시험에서 가장 계산이 많이 나올 자리다. L4 p.38, 40, 44.
+
+{def}ASK (p.38): "$B = (1 + d) \times S$, $d$ is between 0 and 1 — roll-off factor"
+FSK (p.40): "$r = 1$, $S = N$, $B = (1 + d)S + 2\Delta f$"
+PSK (p.44): "$r = 1$, $S = N$, $B = (1 + d)S$"{/def}
+
+== 비교표 ==
+{|
+! 방식 || 대역폭 || 반송파 수 || 스펙트럼 모양 || 슬라이드
+|-
+| [[ASK]] || $B = (1+d)S$ || 1 ($f_c$) || $f_c$ 중심 봉우리 하나 || p.38
+|-
+| [[PSK]] || $B = (1+d)S$ || 1 ($f_c$) || ASK 와 같음 || p.44
+|-
+| [[FSK]] || $B = (1+d)S + 2\Delta f$ || 2 ($f_1$, $f_2$) || 봉우리 둘, 중심 간격 $2\Delta f$ || p.40
+|}
+기호: $S$ = [[signal rate와 bit rate|signal rate]] ([[baud]]), $d$ = [[roll-off factor]] ($0 \le d \le 1$), $\Delta f$ = 각 반송파와 중심 주파수의 거리, $r$ = bits/symbol (binary 는 1 → $S = N$).
+
+[[img:L4-40.png|p.40 FSK 스펙트럼 — S(1+d) 폭 봉우리 두 개가 2Δf 떨어져 있어 B = S(1+d) + 2Δf|medium]]
+
+== 이름에서 개념 끌어내기 ==
+"변조(modulation)된 신호의 대역폭". 공식의 뼈대는 모두 $(1+d)S$ 다 — '''signal element 를 초당 S 개 바꾸려면 약 S 만큼의 대역'''이 필요하고, 필터가 완만한 만큼($d$) 더 든다. 여기에 "반송파가 몇 개냐"만 추가로 따진다.
+
+== 왜 FSK 만 2Δf 가 붙나 ⭐⭐⭐ ==
+# ASK 와 PSK 는 '''주파수 하나'''($f_c$)만 쓴다. 교수(PSK): "essentially we use a waveform with '''one frequency''' — that is why we use the same [formula] as ASK." → 봉우리 하나, 폭 $(1+d)S$.
+# FSK 는 비트마다 '''다른 주파수'''를 쓰므로 반송파가 '''두 개'''. 교수: "unlike the ASK case, we use '''two different frequencies''' … so the frequency band occupies two different bands."
+# 각 반송파는 ASK 한 개와 같은 폭 $(1+d)S$ 의 봉우리를 만든다 (FSK 를 "$f_1$ 에서의 ASK + $f_2$ 에서의 ASK" 로 볼 수 있다 — Forouzan).
+# 두 봉우리 중심 사이가 $2\Delta f$. 전체 폭 = 왼쪽 반 봉우리 + $2\Delta f$ + 오른쪽 반 봉우리:
+$$\frac{(1+d)S}{2} + 2\Delta f + \frac{(1+d)S}{2} = (1+d)S + 2\Delta f$$
+교수는 그림에서 "the middle one, which is the largest one, is $2\Delta f$ … and adding these two [half bands] is just $S(1+d)$" 라고 구간을 하나씩 짚었다.
+
+{analogy}🎭 '''주차장 칸.''' ASK·PSK 는 차 한 대(반송파 하나)라 칸 하나($(1+d)S$)면 된다. FSK 는 차 '''두 대'''를 $2\Delta f$ 간격으로 세워야 하니, 두 차의 중심 사이 거리 + 양 끝 차의 반쪽 폭씩이 필요하다. 차를 가깝게 붙일수록($\Delta f$ ↓) 주차장은 좁아도 되지만, 너무 붙이면 문이 부딪힌다(두 주파수 구분이 어려움).{/analogy}
+
+[[anim:ask_fsk_psk|세 파형을 보며 FSK 에서만 주파수가 두 개 쓰이는 것을 확인하라 — 그것이 2Δf 의 정체다]]
+
+== 계산 절차 (Example 5 형태) ==
+<pre class="txt">
+1. 방식 확인 → 공식 선택  (ASK/PSK: (1+d)S,  FSK: (1+d)S + 2Δf)
+2. 주어진 B, d, (2Δf) 대입 → S 구하기   [baud]
+3. r 확인 (binary → r = 1)  → N = r × S  [bps]
+4. (FSK) 반송파: 대역 중심 f_c, f₁ = f_c − Δf, f₂ = f_c + Δf
+</pre>
+
+[[sim:fsk_bandwidth]]
+
+{exam}🎯 교수: 대역폭 공식의 '''유도는 범위 밖''', "just remember this". $d$ 는 "'''I will always give you'''". → 공식 세 개를 정확히 외우고 대입·역산을 빠르게.{/exam}
+
+{quiz}같은 대역 100 kHz, $d = 1$ 에서 binary ASK, PSK, FSK($2\Delta f = 50$ kHz)의 최대 bit rate 를 비교하시오.{/quiz}
+{answer}<pre class="txt">
+ASK:  100 = 2S         → S = 50 kbaud → N = 50 kbps
+PSK:  100 = 2S         → S = 50 kbaud → N = 50 kbps
+FSK:  100 = 2S + 50    → S = 25 kbaud → N = 25 kbps   (Example 5)
+</pre>FSK 는 두 반송파 간격만큼 대역을 더 써서 같은 대역에서 bit rate 가 낮다.{/answer}
+
+== 관련 문서 ==
+* [[ASK]] · [[FSK]] · [[PSK]] · [[roll-off factor]] · [[signal rate와 bit rate]] · [[baud]]
+* [[bandwidth]] · [[CH02 Analog Transmission]] · [[계산 문제 모음]] · [[공식 모음]]

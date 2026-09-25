@@ -1,0 +1,30 @@
+key: 1-persistent
+title: 1-Persistent (1-지속)
+category: 7강 MAC, 용어
+---
+'''1-persistent'''는 [[persistence method]] 중 가장 단순하고 공격적인 방식이다. busy 면 계속 듣고, idle 이 되는 순간 '''확률 1로''' 즉시 보낸다. 예: '''Ethernet'''. L6 p.35.
+
+{def}"After the station finds the line idle, it '''send its frame immediately with probability 1'''. e.g., '''Ethernet'''" (p.35)
+회선이 idle 임을 알게 되면 확률 1 로(= 반드시) 즉시 프레임을 보낸다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''1''' = 확률 1. [[p-persistent]] 에서 $p = 1$ 로 놓은 특수한 경우라고 보면 된다. '''persistent''' = 한순간도 눈을 떼지 않고 채널을 계속 듣는다.
+
+[[img:L6-40.png|p.40 a. 1-persistent — Channel busy? 가 true 면 자기 자신으로 돌아와 계속 확인, false 면 전송|medium]]
+
+<pre class="txt">
+loop:
+  Channel busy? → true  → loop (계속 듣기)
+                → false → '''Station can transmit''' (즉시, 확률 1)
+</pre>
+
+== 약점 ==
+채널이 busy 인 동안 '''여러 스테이션이 기다리고 있었다면''', idle 이 되는 바로 그 순간 '''모두가 동시에''' 전송한다 → 충돌 확률이 가장 높다. 대신 채널이 비는 시간은 최소다. Ethernet 은 이 충돌을 [[CSMA/CD]] 로 빨리 감지해 수습한다.
+
+{analogy}🎭 '''세일 매장 개장 대기줄.''' 셔터가 올라가는 순간(idle) 문 앞에 있던 모든 사람이 한꺼번에 뛰어든다. 매장은 1초도 비지 않지만, 입구에서 사람들이 부딪힌다.{/analogy}
+
+{quiz}1-persistent 방식에서 충돌 확률이 높아지는 상황은?{/quiz}
+{answer}채널이 busy 인 동안 '''둘 이상의 스테이션이 대기'''하던 경우. idle 이 되는 순간 모두 확률 1 로 즉시 전송하므로 반드시 충돌한다.{/answer}
+
+== 관련 문서 ==
+* [[persistence method]] · [[nonpersistent]] · [[p-persistent]] · [[CSMA]] · [[CSMA/CD]]

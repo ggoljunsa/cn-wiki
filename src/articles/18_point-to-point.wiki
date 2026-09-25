@@ -1,0 +1,26 @@
+key: point-to-point
+title: Point-to-point (점대점 연결)
+category: 1강 Introduction, 용어
+---
+'''Point-to-point''' 는 두 가지 연결 유형(types of connection) 중 하나 — '''두 장치만의 전용 링크''' (L1 p.8).
+
+{def}"'''A dedicated link between two devices'''" (L1 p.8)
+두 장치 사이의 전용(dedicated) 링크.{/def}
+
+[[img:L1-9.png|위: a. Point-to-point — 노트북 둘 사이 Link 하나. 아래: b. Multipoint|large]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''point'''(한 점) '''to''' '''point'''(다른 한 점). 끝점이 딱 둘이다. 그래서 링크의 전체 용량을 두 장치가 '''독점'''한다 — '''dedicated''' 가 정의의 핵심 단어다. 반대말은 여러 점이 한 링크를 '''share''' 하는 [[multipoint]].
+
+== 어디서 쓰이나 ==
+* 토폴로지의 재료: [[mesh 토폴로지]](모두와 point-to-point), [[star 토폴로지]](hub 와만 point-to-point), [[ring 토폴로지]](양옆 둘과만 point-to-point). 오직 [[bus 토폴로지]]만 multipoint.
+* L1 p.19: 가정(Resident)의 modem 끼리, 라우터끼리 "'''Point-to-point WAN'''" 으로 이어진다 → [[WAN]].
+* CH03: [[point-to-point 링크와 broadcast 링크]] — 링크가 point-to-point 면 매체를 나눠 쓸 일이 없어 [[MAC sublayer]] 가 필요 없다.
+
+{analogy}🎭 '''실 전화기.''' 종이컵 두 개를 실 하나로 이었다. 그 실은 두 사람 전용 — 다른 누구도 끼어들 수 없다. 편하지만 친구가 10 명이면 실을 몇 개 써야 할까? → [[mesh 토폴로지]]의 $n(n-1)/2$.{/analogy}
+
+{quiz}Point-to-point 와 multipoint 를 각각 슬라이드 원문 핵심 단어 하나로.{/quiz}
+{answer}Point-to-point: '''dedicated'''. Multipoint: '''share''' (a single link).{/answer}
+
+== 관련 문서 ==
+* [[multipoint]] · [[mesh 토폴로지]] · [[star 토폴로지]] · [[CH01 Introduction]]

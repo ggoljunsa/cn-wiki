@@ -1,0 +1,337 @@
+key: CH02 Transmission
+title: CH02 Physical Layer (1) — Transmission (전송: 손상·한계·성능)
+category: 3강 Transmission, 핵심
+---
+'''CH02 Physical Layer (1)'''의 뒤 절반(L2 p.39–69)은 "신호를 보내면 무슨 일이 생기고, 얼마나 빨리 보낼 수 있으며, 그걸 어떻게 재는가?"에 답한다. 세 덩어리다: '''① [[signal impairment|Impairments]]''' ([[attenuation]] · [[distortion]] · [[noise]]) → '''② [[data rate limits|Data rate limits]]''' ([[Nyquist bit rate]] · [[Shannon capacity]]) → '''③ Performance metrics''' ([[bandwidth]] · [[throughput]] · [[latency]] · [[bandwidth-delay product]] · [[jitter]]). 계산 문제(Example 2.5, 2.6, 2.8, 2.9)가 집중된 구간이다.
+
+페이지 번호는 '''슬라이드 인쇄 번호'''. 앞 절반 p.13–38 은 [[CH02 Signals]].
+
+{exam}⭐⭐⭐ 이 절의 계산 공식 다섯 개 — $10\log_{10}(P_2/P_1)$, $\text{SNR}_{dB}=10\log_{10}\text{SNR}$, $2B\log_2 L$, $B\log_2(1+\text{SNR})$, $B\cdot\text{SNR}_{dB}/3$ — 를 '''손으로''' 풀 수 있어야 한다. 특히 '''dB 의 log 는 밑이 10, capacity 의 log 는 밑이 2''' (교수 9/10 복습에서 강조). → [[계산 문제 모음]], [[log₂ 계산법]]{/exam}
+
+== 개요 — 이 절의 지도 ==
+{|
+! 슬라이드 || 주제 || 핵심 || 사전 문서
+|-
+| p.39–40 || Impairment 3원인 || attenuation, distortion, noise || [[signal impairment]]
+|-
+| p.41–43 || Attenuation, dB || $10\log_{10}(P_2/P_1)$, −3 dB = 절반 || [[attenuation]], [[데시벨]], [[amplifier]]
+|-
+| p.44 || Distortion || 성분들의 out-of-phase || [[distortion]]
+|-
+| p.45–46 || Noise, SNR || thermal/induced/crosstalk/impulse, $S/N$ || [[noise]], [[SNR]]
+|-
+| p.47–48 || Data rate limits || 3요소, 2공식 || [[data rate limits]]
+|-
+| p.49–52 || Nyquist (noiseless) || $2B\log_2 L$, Ex 2.6 || [[Nyquist bit rate]]
+|-
+| p.53–60 || Shannon (noisy) || $B\log_2(1+\text{SNR})$, Ex 2.8, 2.9 || [[Shannon capacity]], [[AWGN]]
+|-
+| p.61–62 || Bandwidth 두 의미 || Hz vs bps, Ex 2.10 || [[bandwidth]], [[bps와 Hz]]
+|-
+| p.63–64 || Throughput || potential vs actual || [[throughput]]
+|-
+| p.65 || Latency || 4 성분 || [[latency]], [[propagation time]], [[transmission time]]
+|-
+| p.66–68 || Bandwidth-delay product || 파이프 부피 || [[bandwidth-delay product]]
+|-
+| p.69 || Jitter || 지연의 불균일 || [[jitter]]
+|}
+
+{analogy}🎭 '''수도관으로 물 보내기.''' 긴 관을 지나면 수압이 떨어진다(attenuation) → 중간에 펌프(amplifier). 관이 휘어 물줄기 모양이 흐트러진다(distortion). 관 틈으로 흙탕물이 샌다(noise). 관이 굵을수록(bandwidth) 많이 보낼 수 있지만 흙탕물이 많으면 깨끗한 물의 양에 한계가 있다(Shannon). 관의 굵기가 광고된 양(bandwidth)이라면 실제로 받은 물의 양이 throughput, 물이 도착하는 데 걸리는 시간이 latency, 관 속을 가득 채운 물의 양이 bandwidth-delay product 다.{/analogy}
+
+== p.39–40 — Transmission / Signal Impairment ==
+[[img:L2-40.png|p.40 — Impairment causes 는 세 가지: Attenuation, Distortion, Noise|medium]]
+
+신호는 매체를 지나며 '''완벽하지 않은(imperfect)''' 매체 때문에 손상된다. 보낸 것과 받은 것이 다르다. 원인 세 가지를 차례로 본다. → [[signal impairment]]
+
+[[anim:impairments|같은 파형이 세 줄로 손상된다: 위(attenuation — 작아졌다 amplifier 로 회복), 가운데(distortion — 성분의 phase 가 어긋나 모양이 변함), 아래(noise — 지글거림이 더해짐). 셋의 차이를 한 문장씩 말할 수 있게 되면 넘어가라]]
+
+== p.41 — Attenuation ==
+[[img:L2-41.png|p.41 — Point 1(Original) → 매체를 지나 Point 2(Attenuated, 작아짐) → Amplifier → Point 3(Amplified, 원래 크기로)|large]]
+
+{def}"'''Attenuation''': Loss of energy — Signal losses some of its energy in overcoming the resistance of the medium. To tackle this, we often use '''amplifiers'''."{/def}
+모양은 그대로, '''크기만''' 줄어든다. [[amplifier]] 로 다시 키운다. → [[attenuation]]
+
+== p.42–43 — Decibel · Example 2.5 ==
+{def}"'''Decibel (dB)''': To show that a signal has lost or gained strength — '''Relative strengths''' of two signals or one signal at two different points.
+$\text{dB} = 10\log_{10}(P_2/P_1)$ where $P_1$ and $P_2$ are the powers of signals.
+'''Negative''' if a signal is attenuated, '''positive''' if a signal is amplified."{/def}
+
+[[img:L2-43.png|p.43 — Example 2.5: 전력이 절반 → 10 log₁₀ 0.5 = 10 × (−0.3) = −3 dB|large]]
+
+'''Example 2.5''': 매체를 지나며 전력이 '''절반'''으로 줄었다 ($P_2 = 0.5P_1$). 감쇠는?
+<pre class="txt">
+1. [[데시벨|dB]] = 10 log₁₀(P₂ / P₁)
+2.    = 10 log₁₀(0.5 P₁ / P₁)        ← P₁ 약분
+3.    = 10 log₁₀ 0.5
+4.    = 10 × (−0.3)                    ← log₁₀ 2 ≈ 0.3 이므로 log₁₀ 0.5 ≈ −0.3
+5.    = '''−3 dB'''
+</pre>
+{exam}⭐⭐⭐ "'''A loss of 3 dB (−3 dB) is equivalent to losing one-half the power.'''" 반대로 +3 dB = 2배, +10 dB = 10배, +20 dB = 100배. dB 는 '''더하기'''로 합산된다 (−3 + 7 − 3 = +1 dB). → [[데시벨]]{/exam}
+
+[[sim:db_calc]]
+
+== p.44 — Distortion ==
+[[img:L2-44.png|p.44 — 송신 측: 성분 셋이 in phase → 네모난 합성 신호. 수신 측: 성분들이 out of phase → 합성 신호 모양이 일그러짐|large]]
+
+{def}"'''Distortion''': The signal changes its form or shape. Can occur in a '''composite signal''' made of different frequencies — e.g., '''out-of-phase''' in some freq bands."{/def}
+주파수마다 매체를 지나는 속도가 달라 [[phase]]가 어긋나고, 그 합의 모양이 바뀐다. [[사인파]] 하나에는 생기지 않는다 — 어긋날 짝이 없으니까. → [[distortion]]
+
+== p.45 — Noise ==
+[[img:L2-45.png|p.45 — Transmitted 신호 + 매체에서 유입된 Noise → Received 신호는 모양이 변형됨|large]]
+
+{def}"Several types of noise, such as '''thermal noise''', induced noise, crosstalk, and impulse noise."{/def}
+{|
+! 종류 || 원인 (Forouzan)
+|-
+| '''thermal''' || 전선 속 전자의 무작위 열운동 — 항상 존재
+|-
+| induced || 모터·가전 같은 외부 전기 기기
+|-
+| crosstalk || 옆 전선의 신호가 넘어옴
+|-
+| impulse || 번개·전력선의 순간 스파이크
+|}
+→ [[noise]]
+
+== p.46 — SNR ==
+[[img:L2-46.png|p.46 — SNR = Average Signal Power / Average Noise Power, SNR_dB = 10 log₁₀ SNR|medium]]
+
+$$\text{SNR} = \frac{\text{average signal power}}{\text{average noise power}},\qquad \text{SNR}_{dB} = 10\log_{10}\text{SNR}$$
+
+{exam}⭐⭐⭐ 교수(9/10 복습): "SNR 은 '''very important'''. 그냥 신호와 잡음의 비율이다. 나는 늘 말한다 — '''the name itself is very important'''. 무언가를 배울 때 제일 먼저 '''이름과 그 이름의 이유'''를 이해하려 한다. Signal-to-Noise Ratio — 정의가 이름에 전부 들어 있다." → [[SNR]]{/exam}
+
+SNR 이 크다 = 신호가 잡음보다 훨씬 세다 = 좋은 채널. 예: SNR = 3162 → $\text{SNR}_{dB} = 10\log_{10}3162 \approx 35$ dB.
+
+== p.47–48 — Data Rate Limits ==
+{def}"Data rate depends on three factors: '''The bandwidth available''' / '''The level of the signals we use''' / '''The quality of the channel (the amount of noise)'''.
+Two theoretical formulas: '''Nyquist bit rate''' (for a noiseless channel), '''Shannon capacity''' (for a noisy channel)."{/def}
+
+{|
+! 3요소 || 공식 속 기호 || 어느 공식에
+|-
+| 가용 bandwidth || $B$ || 둘 다
+|-
+| 신호 level 수 || $L$ || '''Nyquist'''
+|-
+| 채널 품질(잡음) || SNR || '''Shannon'''
+|}
+→ [[data rate limits]]
+
+== p.49–50 — Nyquist Bit Rate (noiseless) ==
+[[img:L2-50.png|p.50 — BitRate = 2 × Bandwidth × log₂L. Bandwidth = 채널 대역폭, L = 신호 레벨 수, log₂L = 심볼 하나의 비트 수|large]]
+
+{def}"'''2B symbols / sec are all a channel of bandwidth B can carry.'''"
+$$\text{BitRate} = 2 \times \text{Bandwidth} \times \log_2 L$$
+"Bandwidth: the bandwidth of the channel / L: the number of signal levels used to represent data / $\log_2 L$: the number of bits of one symbol / BitRate: the bit rate in bps"{/def}
+
+읽는 법: (초당 심볼 수 $2B$) × (심볼당 비트 수 $\log_2 L$). [[bandwidth|B]] 는 '''Hz''', 결과는 '''bps'''. → [[Nyquist bit rate]], [[signal level]]
+
+== p.51–52 — Example 2.6 ==
+[[img:L2-52.png|p.52 — 265,000 = 2 × 20,000 × log₂L → log₂L = 6.625 → L = 2^6.625 = 98.7 levels. Should use 6-7 bits for one signal|large]]
+
+'''문제''': 대역폭 '''20 kHz''' 인 '''noiseless''' 채널로 '''265 kbps''' 를 보내려면 signal level 이 몇 개 필요한가?
+<pre class="txt">
+1. 잡음 없음 → [[Nyquist bit rate|Nyquist]]:  BitRate = 2 × B × log₂L
+2. 대입:        265,000 = 2 × 20,000 × log₂L
+3. 정리:        log₂L = 265,000 / 40,000 = 6.625
+4. 풀기:        L = 2^6.625 = 2^6 × 2^0.625 ≈ 64 × 1.54 ≈ '''98.7 levels'''
+5. 해석:        심볼당 6.625 비트 → 실제로는 '''6~7 bits'''
+                 (7비트 = 128 level 로 올리거나, 6비트 = 64 level 로 bit rate 를 낮춘다)
+</pre>
+[[sim:nyquist_shannon]]
+
+== p.53 — Shannon Capacity (noisy) ==
+[[img:L2-53.png|p.53 — AWGN 채널의 최대 전송률: Capacity = Bandwidth × log₂(1 + SNR)|large]]
+
+{def}"For '''Additive White Gaussian Noise (AWGN)''' channel, the following formula determines the '''maximum transmission rate'''
+$$\text{Capacity} = \text{Bandwidth} \times \log_2(1 + \text{SNR})$$
+Bandwidth is the bandwidth of the channel / SNR is the signal-to-noise ratio / Capacity is the capacity of the channel in bits per second"{/def}
+
+주의: 이 공식에는 $L$ 이 '''없다'''. 어떤 기술을 쓰든, level 을 몇 개로 하든 넘을 수 없는 '''천장'''이다. SNR 은 '''dB 가 아닌 비율'''을 넣는다. → [[Shannon capacity]], [[AWGN]], [[Claude Shannon]]
+
+== p.54–55 — Example 2.8 ==
+[[img:L2-55.png|p.55 — C = 3000 log₂(1 + 3162) = 3000 × 11.62 = 34,860 bps. 더 빠르게 하려면 bandwidth 를 늘리거나 SNR 을 개선|large]]
+
+'''문제''': 일반 전화선의 이론적 최고 bit rate. 데이터용 대역폭 '''3000 Hz''' (300~3300 Hz), '''SNR = 3162'''.
+<pre class="txt">
+1. 잡음 있음 → [[Shannon capacity|Shannon]]:  C = B log₂(1 + SNR)
+2. 대입:        C = 3000 × log₂(1 + 3162) = 3000 × log₂ 3163
+3. log₂ 계산:   2^11 = 2048, 2^12 = 4096 → 11 과 12 사이
+                log₂ 3163 = log₁₀ 3163 / log₁₀ 2 ≈ 3.500 / 0.301 ≈ 11.62
+4. 곱하기:      C = 3000 × 11.62 = '''34,860 bps'''
+5. 검산(근사식): SNR_dB = 10 log₁₀ 3162 ≈ 35 dB → C ≈ 3000 × 35/3 = 35,000 bps ✓
+</pre>
+"If we want to send data faster than this, we can either '''increase the bandwidth''' of the line or '''improve the signal-to-noise ratio'''." — Shannon 공식의 두 손잡이가 $B$ 와 SNR 뿐이기 때문이다.
+
+== p.56 — Shannon 근사식 ==
+[[img:L2-56.png|p.56 — SNR 이 매우 크면 SNR + 1 ≈ SNR → Capacity ≈ Bandwidth × SNR_dB / 3|medium]]
+
+$$\text{Capacity} \approx \text{Bandwidth} \times \frac{\text{SNR}_{dB}}{3}$$
+왜 3 인가: $\log_2 \text{SNR} = \dfrac{\log_{10}\text{SNR}}{\log_{10}2} = \dfrac{\text{SNR}_{dB}/10}{0.301} \approx \dfrac{\text{SNR}_{dB}}{3.01}$. 즉 '''3 dB 마다 1 bit/s/Hz'''.
+
+== p.57–60 — Example 2.9 ==
+[[img:L2-60.png|p.60 — ① Shannon 으로 상한 6 Mbps ② 여유를 두고 4 Mbps 선택 ③ Nyquist 로 L = 4|large]]
+
+'''문제''': 대역폭 '''1 MHz''', '''SNR = 63''' 인 채널. 적절한 '''bit rate''' 와 '''signal level''' 은?
+<pre class="txt">
+① 상한 (Shannon, p.58)
+1. C = B log₂(1 + SNR) = 10⁶ × log₂(1 + 63) = 10⁶ × log₂ 64
+2.   = 10⁶ × 6 = '''6 Mbps'''  ← upper limit
+
+② 목표 선택 (p.59)
+3. "For better performance we choose something lower" → '''4 Mbps'''
+
+③ level 수 (Nyquist, p.60)
+4. 4 Mbps = 2 × 1 MHz × log₂L
+5. log₂L = 4×10⁶ / 2×10⁶ = 2
+6. L = 2² = '''4'''
+</pre>
+{exam}⭐⭐⭐ '''Shannon = 천장 확인, Nyquist = level 수 설계.''' 순서를 바꾸면 틀린다. Shannon 은 $L$ 을 모르고, Nyquist 는 잡음을 모른다. 두 공식을 함께 써야 "현실적인 설계"가 나온다. (검산: $\text{SNR}_{dB} = 10\log_{10}63 \approx 18$ → 근사식 $10^6 \times 18/3 = 6$ Mbps ✓){/exam}
+
+[[sim:nyquist_shannon]]
+
+== p.61–62 — Performance Metrics: Bandwidth ==
+[[img:L2-62.png|p.62 — Bandwidth in Hertz vs Bandwidth in bps. Example 2.10: 가입자 회선은 4 kHz, 모뎀을 쓰면 데이터 56,000 bps|large]]
+
+{def}"'''Bandwidth in Hertz''': the range of frequencies contained in a composite signal or the range of frequencies a channel can pass.
+'''Bandwidth in bps''': the number of bits per second that a channel, a link, or even a network can transmit."{/def}
+'''Example 2.10''': 가입자 회선(subscriber line)의 bandwidth 는 음성/데이터용 '''4 kHz'''. 이 회선의 데이터 전송 bandwidth 는 정교한 모뎀으로 '''최대 56,000 bps'''.
+{warn}같은 선이 "4 kHz" 이면서 "56 kbps". 한 단어 bandwidth 가 '''두 단위'''로 쓰인다. [[Nyquist bit rate]]·[[Shannon capacity]] 공식의 $B$ 는 '''Hz''' 쪽. → [[bps와 Hz]]{/warn}
+
+== p.63–64 — Throughput ==
+[[img:L2-64.png|p.64 — Bandwidth = potential, Throughput = actual. 1 Mbps 링크라도 단말이 200 kbps 만 처리하면 throughput 은 200 kbps|medium]]
+
+{def}"'''Throughput''': A measure of how fast we can '''actually send data''' through a network. The bandwidth is a '''potential''' measurement of a link. The throughput is an '''actual''' measurement of how fast we can send data."{/def}
+예: 링크 BW '''1 Mbps''', 단말 장치가 '''200 kbps''' 만 처리 → Bandwidth 1 Mbps, '''Throughput 200 kbps'''. 가장 느린 곳(병목)이 throughput 을 정한다. → [[throughput]]
+
+== p.65 — Latency (Delay) ==
+[[img:L2-65.png|p.65 — Latency = propagation time + transmission time + queuing time + processing delay. Propagation time = Distance / Propagation speed|medium]]
+
+{def}"'''Latency''': How long it takes for an '''entire message''' to completely arrive at the destination.
+Latency = propagation time + transmission time + queuing time + processing delay
+'''Propagation time''' = Distance / (Propagation speed) — The time required for a bit to travel from the source to the destination"{/def}
+
+{|
+! 성분 || 식 || 무엇에 좌우되나
+|-
+| [[propagation time]] || 거리 / 전파 속도 || 거리, 매체
+|-
+| [[transmission time]] || 메시지 크기 / bandwidth(bps) (Forouzan) || 메시지 크기, 링크 속도
+|-
+| queuing time || — || 중간 장비([[라우터]])의 대기열 혼잡
+|-
+| processing delay || — || 장비가 헤더를 처리하는 시간
+|}
+→ [[latency]]
+
+== p.66–68 — Bandwidth-Delay Product ==
+[[img:L2-66.png|p.66 — 파이프: 단면적 = bandwidth, 길이 = delay, 부피 = bandwidth × delay|medium]]
+
+{def}"'''Bandwidth-Delay Product''': The product of bandwidth and delay. It defines '''the number of bits that can fill the link'''."{/def}
+
+[[img:L2-67.png|p.67 — Bandwidth 1 bps, Delay 5 s → 1초마다 1비트씩 들어가 5초 뒤 링크에 5비트가 동시에 있다 → BDP = 5 bits|large]]
+[[img:L2-68.png|p.68 — Bandwidth 5 bps, Delay 5 s → 1초마다 5비트 묶음 → 링크에 25비트 → BDP = 25 bits|large]]
+
+<pre class="txt">
+p.67:  BDP = 1 bps × 5 s = '''5 bits'''
+p.68:  BDP = 5 bps × 5 s = '''25 bits'''
+</pre>
+의미: 송신자는 첫 비트가 도착하기 전까지 BDP 만큼의 비트를 '''이미 보낼 수 있다'''. 링크를 놀리지 않으려면 그만큼 보내고 있어야 한다. → [[bandwidth-delay product]]
+
+[[sim:bdp_pipe]]
+
+== p.69 — Jitter ==
+[[img:L2-69.png|p.69 — No Jitter: 패킷 도착 간격 X, X, X 로 일정 / With Jitter: X, Y, Z 로 제각각|large]]
+
+{def}"'''Jitter''': Different packets of data encounter different delays."{/def}
+평균 지연이 작아도 패킷마다 들쭉날쭉하면 음성·영상이 끊긴다. [[CH01 Introduction]] 의 [[데이터 통신 4대 특성]](Delivery, Accuracy, Timeliness, '''Jitter''') 중 하나로 이미 나왔다. → [[jitter]]
+
+== 🎙 실제 수업 기록 (9/1 화, 녹음본 기준) ==
+{warn}⚠️ '''이 절(p.39–69)은 9/1 에 진도가 나가지 않았다.''' 9/1 수업은 p.38(Broadband)에서 끝났고 교수는 "'''On Thursday we should go over transmission parts''', physical layer 는 다음 주 화요일까지 갈 것 같다"고 했다. 실제 강의는 '''9/3(목)''' 이었을 것으로 보이지만 '''그날 녹음본은 없다'''. 아래는 9/1 에 이 절을 미리 언급한 대목과, 9/10(목) 수업 첫 5분의 '''복습'''(`0910_05_컴네.txt`)에서 교수가 다시 강조한 내용이다.{/warn}
+
+=== 9/1 — Shannon 이야기 중 p.53 을 미리 보여줌 ===
+p.35 직후 교수는 "특성을 순서대로 설명하는 건 나도 지루하다"며 약 15분간 [[Claude Shannon]] 의 업적을 이야기했다. 그 중 세 번째 기여(channel coding theorem / '''channel capacity''')를 설명하며 슬라이드를 넘겨 '''p.53 Shannon capacity''' 를 보여주고 "'''this limit is the one that Shannon put'''" 이라고 했다.
+* "noisy channel 에서 '''reliable communication''' 이 가능한 bit rate 에는 '''한계'''가 있다. Shannon 은 그 한계까지 신뢰성 있게 보내는 기법이 '''존재함'''을 증명했다 — 그 양이 channel capacity."
+* "하지만 그 capacity 를 달성하는 '''구체적 기법'''은 주지 않았다. 존재만 증명했다."
+* "'''I will recommend you to remember these three contributions.'''" (시스템 설계 / source coding theorem / channel coding theorem)
+
+=== 9/10 복습 — 교수가 다시 짚은 것 ===
+* '''dB 의 log 밑은 10''' — "I highlighted that the log has the base of 10. '''Not be confused with the base which is two''' for calculating the capacity." (ASR: "the dog has the base of 1") → [[데시벨]] 은 $\log_{10}$, [[Shannon capacity]]·[[Nyquist bit rate]] 는 $\log_2$.
+* '''distortion''' = "signal changes with respect to different frequencies" — 주파수 대역마다 다르게 변한다.
+* '''SNR 은 very important — "the name itself is very important"''': "무언가를 배울 때 제일 먼저 '''그 이름, 이름 뒤의 이유'''를 이해하려 한다. 근본은 이름에 있다. Signal-to-Noise Ratio 가 한 예 — 정의가 이름에 다 있다. '''please remember to understand the name or the definition'''."
+* '''data rate = 통신 속도, 세 가지 요소에 좌우''' (bandwidth, level, noise).
+* '''두 정리''': Nyquist 는 noiseless channel, Shannon 은 noisy channel. 교수: Shannon 의 noisy channel 은 "'''just adding some Gaussian'''" 잡음 — 무선 통신에서 흔히 만나는 '''fading''' 채널이 아니다. → [[AWGN]]
+
+== 예상 문제 ==
+{quiz}신호가 세 구간을 지난다: 구간 1 에서 전력이 절반, 구간 2 의 amplifier 에서 10배, 구간 3 에서 다시 절반. 전체 이득은 몇 dB 인가? (log₁₀2 ≈ 0.3){/quiz}
+{answer}구간별 dB: $-3$ dB, $+10$ dB, $-3$ dB → 합 = '''+4 dB'''. (전력비로 검산: $0.5 \times 10 \times 0.5 = 2.5$ 배, $10\log_{10}2.5 \approx 4$ dB ✓) dB 는 곱셈을 덧셈으로 바꿔 준다.{/answer}
+
+{quiz}대역폭 3000 Hz 인 noiseless 채널에 2 level 신호를 쓰면 최대 bit rate 는? 4 level 이면?{/quiz}
+{answer}Nyquist: $2 \times 3000 \times \log_2 2 = $ '''6000 bps'''. 4 level: $2 \times 3000 \times 2 = $ '''12,000 bps'''.{/answer}
+
+{quiz}SNR 이 0 인 채널(잡음에 비해 신호 전력이 사실상 0)의 Shannon capacity 는? 이 결과가 의미하는 바는?{/quiz}
+{answer}$C = B\log_2(1+0) = B\log_2 1 = $ '''0'''. bandwidth 가 아무리 넓어도 신호가 잡음에 묻혀 있으면 '''어떤 데이터도 신뢰성 있게 보낼 수 없다'''. (Forouzan Example 3.37 과 같은 논리){/answer}
+
+{quiz}대역폭 2 MHz, SNR_dB = 36 dB 인 채널의 capacity 를 근사식으로 구하시오.{/quiz}
+{answer}$C \approx B \times \text{SNR}_{dB}/3 = 2\times10^6 \times 36/3 = $ '''24 Mbps'''. (SNR = $10^{3.6} \approx 3981$ 로 매우 커서 근사식이 잘 맞는다.){/answer}
+
+{quiz}링크의 bandwidth 가 10 Mbps, 한쪽 끝에서 다른 쪽 끝까지 delay 가 2 ms 다. 링크를 가득 채울 수 있는 비트 수는?{/quiz}
+{answer}BDP = $10\times10^6 \times 2\times10^{-3} = $ '''20,000 bits'''.{/answer}
+
+{quiz}"bandwidth 가 1 Mbps 인 링크의 throughput 은 항상 1 Mbps 다." 옳은가?{/quiz}
+{answer}'''틀렸다.''' bandwidth 는 '''potential''', throughput 은 '''actual''' 측정치다. p.64 예: 링크 1 Mbps 라도 단말 장치가 200 kbps 만 처리하면 throughput 은 '''200 kbps'''.{/answer}
+
+== 공식 모음 ==
+{|
+! 공식 || 이름 || 단위 / 주의 || 슬라이드
+|-
+| $\text{dB} = 10\log_{10}(P_2/P_1)$ || [[데시벨]] || 감쇠 −, 증폭 +, '''밑 10''' || p.42
+|-
+| $-3\ \text{dB}$ ⇔ $P_2 = 0.5P_1$ || Example 2.5 || 암기 || p.43
+|-
+| $\text{SNR} = P_{signal}/P_{noise}$ || [[SNR]] || 무단위 비율 || p.46
+|-
+| $\text{SNR}_{dB} = 10\log_{10}\text{SNR}$ || SNR 의 dB 표현 || dB || p.46
+|-
+| $\text{BitRate} = 2 \times B \times \log_2 L$ || [[Nyquist bit rate]] || noiseless, $B$ 는 Hz, '''밑 2''' || p.50
+|-
+| $C = B\log_2(1+\text{SNR})$ || [[Shannon capacity]] || noisy(AWGN), SNR 은 '''비율''' || p.53
+|-
+| $C \approx B \times \text{SNR}_{dB}/3$ || Shannon 근사식 || SNR ≫ 1 일 때 || p.56
+|-
+| Latency = prop. + trans. + queuing + processing || [[latency]] || 4 성분 || p.65
+|-
+| Propagation time = 거리 / 전파 속도 || [[propagation time]] || s || p.65
+|-
+| Transmission time = 메시지 크기 / bandwidth || [[transmission time]] || Forouzan || (p.65 성분)
+|-
+| BDP = bandwidth × delay || [[bandwidth-delay product]] || bits || p.66–68
+|}
+
+== 시험 대비 핵심 요약 ==
+# Impairment 3원인 = '''attenuation, distortion, noise''' (p.40)
+# attenuation = '''에너지 손실''' (매체 저항) → '''amplifier''' 로 대응 (p.41)
+# $\text{dB} = 10\log_{10}(P_2/P_1)$ — 감쇠는 음수, 증폭은 양수. '''−3 dB = 전력 절반''' (p.42–43)
+# distortion = 모양 변화, '''composite signal''' 의 성분들이 '''out of phase''' (p.44)
+# noise 4종 = '''thermal''', induced, crosstalk, impulse (p.45)
+# SNR = 평균 신호 전력 / 평균 잡음 전력, $\text{SNR}_{dB} = 10\log_{10}\text{SNR}$ — "'''이름에서 이해하라'''" (p.46)
+# data rate 3요소 = '''bandwidth, signal level, noise''' (p.47)
+# '''Nyquist''' (noiseless): $2B\log_2 L$ — 대역폭 $B$ 채널은 초당 '''$2B$ 심볼'''. Ex 2.6: '''L ≈ 98.7''' (6~7비트) (p.49–52)
+# '''Shannon''' (noisy, AWGN): $B\log_2(1+\text{SNR})$. Ex 2.8: 전화선 '''34,860 bps''' (p.53–55)
+# 근사식 $B\cdot\text{SNR}_{dB}/3$ (SNR ≫ 1) (p.56)
+# Ex 2.9: Shannon 으로 '''6 Mbps''' 상한 → '''4 Mbps''' 선택 → Nyquist 로 '''L = 4''' (p.57–60)
+# bandwidth 는 '''Hz''' 와 '''bps''' 두 의미. Ex 2.10: 4 kHz = 56 kbps 회선 (p.61–62)
+# throughput = '''actual''' vs bandwidth = '''potential'''. 1 Mbps / 200 kbps (p.63–64)
+# latency = '''propagation + transmission + queuing + processing''' (p.65)
+# BDP = bandwidth × delay = 링크를 채우는 비트 수. '''5 bits / 25 bits''' (p.66–68)
+# jitter = 패킷마다 '''다른 지연''' (p.69)
+# '''dB 는 log₁₀, capacity 는 log₂''' — 헷갈리지 말 것 (교수 9/10)
+
+== 관련 문서 ==
+* 이전: [[CH02 Signals]] (같은 덱 p.13–38) · 다음: [[CH02 Digital Transmission]]
+* 손상: [[signal impairment]] · [[attenuation]] · [[데시벨]] · [[amplifier]] · [[distortion]] · [[noise]] · [[SNR]]
+* 한계: [[data rate limits]] · [[Nyquist bit rate]] · [[Shannon capacity]] · [[AWGN]] · [[signal level]]
+* 성능: [[bandwidth]] · [[bps와 Hz]] · [[throughput]] · [[latency]] · [[propagation time]] · [[transmission time]] · [[bandwidth-delay product]] · [[jitter]]
+* 인물: [[Claude Shannon]] · [[Harry Nyquist]]
+* [[log₂ 계산법]] · [[계산 문제 모음]] · [[공식 모음]] · [[SNR_dB와 n_b]]

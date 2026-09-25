@@ -1,0 +1,36 @@
+key: sampling
+title: Sampling (표본화)
+category: 4강 Digital Transmission, 용어
+---
+'''Sampling'''은 [[PCM]] 의 첫 단계로, 아날로그 신호를 '''$T$초마다 한 번씩 측정'''해 시간축을 이산화하는 것이다. 결과물은 [[PAM]] 신호. L3 p.50.
+
+{def}"Analog signal is '''sampled every T seconds''' (sampling interval)." "'''Sampling rate''': inverse of sampling interval."
+아날로그 신호를 T초(sampling interval)마다 표본화한다. [[sampling rate]]는 sampling interval 의 역수 $f_s = 1/T$.{/def}
+
+[[img:L3-50.png|p.50 a. Analog signal (연속 곡선) → b. PAM signal (같은 간격의 막대, 높이는 곡선 값 그대로)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+'''sample''' = 견본, 표본. 전체(연속 신호)에서 '''일부만 뽑아 본다'''. 교수: "sampling is just '''discrete time''' — making the continuous one to discrete ones." 뽑힌 값 하나하나가 '''a sample'''이고, 교수는 통신에서 sample 을 사실상 '''symbol'''(신호 요소) 단위로 생각해도 된다고 덧붙였다.
+
+기호:
+* $T$ (교수는 $T_s$ 라고도 씀) — '''sampling interval''', 샘플 사이 시간 [s]
+* $f_s = 1/T$ — [[sampling rate]] (sampling frequency) [samples/s]. 교수: "[[주파수|frequency]] 는 [[주기|time]] 의 역수 — 사인파 때 배운 그대로."
+
+{analogy}🎭 '''스톱모션 사진.''' 달리는 사람을 1초에 몇 장 찍을지 정하는 것. 한 장 한 장이 sample, 사진 간격이 $T$, 초당 장수가 $f_s$. 사진만 보고 동작을 재구성하려면 '''충분히 자주''' 찍어야 한다 — 얼마나 자주냐가 [[Nyquist sampling theorem]].{/analogy}
+
+[[anim:sampling_nyquist|사인파 위에 f_s = 4f, 2f, f 로 점이 찍히는 모습을 보라 — 점이 적으면 이은 선이 엉뚱한 파형이 된다]]
+
+== 주의 ==
+* sampling 은 '''시간만''' 이산화한다. [[PAM]] 막대의 '''높이는 아직 연속값'''(예: −6.1, 7.5, 16.2 …). 높이를 레벨로 끊는 건 다음 단계 [[quantization]].
+* $f_s$ 를 올리면 복원은 좋아지지만 bit rate $= f_s \times n_b$ 와 필요한 [[bandwidth]] 가 같이 커진다. 교수: "'''Time and frequency are very important resources''' in data communication."
+
+{quiz}sampling interval 이 125 μs 이면 sampling rate 는? 이 속도로 복원 가능한 신호의 최고 주파수는?{/quiz}
+{answer}<pre class="txt">
+1. f_s = 1 / T = 1 / (125 × 10^-6 s) = 8000 samples/s
+2. [[Nyquist sampling theorem]]: f_s ≥ 2 f_max  →  f_max ≤ f_s / 2 = 4000 Hz
+</pre>
+전화 음성 PCM(Example 2.13)과 같은 숫자다.{/answer}
+
+== 관련 문서 ==
+* [[sampling rate]] · [[Nyquist sampling theorem]] · [[PAM]] · [[oversampling과 undersampling]]
+* 다음 단계: [[quantization]] · 전체: [[PCM]]

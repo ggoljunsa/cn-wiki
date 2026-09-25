@@ -1,0 +1,39 @@
+key: fixed-size framing
+title: Fixed-Size Framing (고정 크기 프레이밍)
+category: 6강 DLC, 용어
+---
+'''Fixed-size framing''' 은 모든 프레임의 크기를 똑같이 정해 두는 [[framing]] 방식이다. 크기 자체가 경계 역할을 하므로 경계를 따로 표시할 필요가 없다. L5 p.16.
+
+{def}"Fixed-size framing: '''No need to define the boundaries''' of frames. ATM WAN – fixed size frame called '''cells'''." (p.16)
+→ 프레임 경계 정의 불필요. 대표 예: '''ATM WAN''' 의 고정 크기 프레임 '''cell'''.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''fixed-size''' — 크기가 '''고정'''. 수신자는 "N 비트마다 한 프레임" 이라고 세기만 하면 된다. 경계 표시([[flag]])도, 그 표시를 보호하는 stuffing 도 필요 없다.
+
+{analogy}🎭 '''달걀판.''' 달걀판은 칸 크기가 모두 같아서 칸막이에 "여기부터 다음 달걀" 이라고 써 둘 필요가 없다. 반대로 크기가 제각각인 짐([[variable-size framing]])은 사이에 구분선을 그어야 한다.{/analogy}
+
+<pre class="ascii">
+fixed-size : |cell|cell|cell|cell|cell|     ← 같은 크기로 세기만 하면 됨
+variable   : F|  frame  |F F|fr|F F|  frame   |F   ← F(flag) 로 경계를 표시해야 함
+</pre>
+
+[[img:L5-16.png|p.16 Framing Size — Fixed-size(경계 불필요, ATM cell) vs Variable-size(끝과 시작 정의 필요, LAN 에서 일반적)|medium]]
+
+{|
+! || fixed-size || variable-size
+|-
+| 경계 표시 || 불필요 || 필요 (끝과 다음 시작)
+|-
+| 예 || ATM WAN 의 cell || LAN
+|-
+| 부가 기법 || 없음 || [[byte stuffing]] / [[bit stuffing]]
+|}
+
+{info}ATM 은 p.50 [[CRC 표준 다항식]] 표에도 등장한다 — ATM header 는 CRC-8, ATM AAL 은 CRC-10.{/info}
+
+== 예상 문제 ==
+{quiz}fixed-size framing 에서 프레임 경계를 정의할 필요가 없는 이유와 대표 예는?{/quiz}
+{answer}모든 프레임 크기가 같으므로 '''크기 자체가 경계'''다. 대표 예는 '''ATM WAN 의 cell'''.{/answer}
+
+== 관련 문서 ==
+* [[framing]] · [[variable-size framing]] · [[CH03 Data-Link Control]] · [[WAN]]

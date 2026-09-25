@@ -1,0 +1,61 @@
+key: quantization
+title: Quantization (양자화)
+category: 4강 Digital Transmission, 용어, 핵심
+---
+'''Quantization'''은 [[PCM]] 의 둘째 단계로, [[PAM]] 막대의 연속 진폭을 '''$L$개의 정해진 레벨 중 하나로 반올림'''하는 것이다. 교수: "PCM 은 먼저 time step 을 discretize 했고, '''남은 것은 y축을 digitize''' 하는 것 — quantization is exactly like that." L3 p.54–56.
+
+{def}"Assume that the original analog signal has instantaneous amplitude between $V_{min}$ and $V_{max}$." "'''Divide the range into L levels, each of height Δ (Delta)'''."
+$$\Delta = \frac{V_{max} - V_{min}}{L}$$
+"'''Assign quantized values of 0 to L−1 to the midpoint of each level'''." "Approximate the value of the sample amplitude to the quantized values."{/def}
+
+[[img:L3-54.png|p.54 Δ = (V_max − V_min) / L|medium]]
+
+== 이름에서 개념 끌어내기 ==
+'''quantum''' = 더 쪼갤 수 없는 최소 단위(양자). quantize = 연속량을 '''최소 단위의 정수배'''로 만든다. 그 최소 단위가 $\Delta$.
+
+교수의 기호 설명:
+* '''$V$''' — "analog signals are often measured in '''voltage''', so we call it V."
+* '''$\Delta$''' — "the symbol of delta in mathematics usually represents some '''interval or difference'''. '''There is always reason for using the symbols in mathematics.'''"
+* '''$L$''' — number of levels. $L = 4$ 면 샘플당 2비트, $L = 8$ 이면 3비트 ($n_b = \log_2 L$, [[log₂ 계산법]]).
+
+{analogy}🎭 '''계단 위에 공 놓기.''' 경사로(연속값) 어디에 공을 놓아도 굴러서 '''가장 가까운 계단 한가운데(midpoint)'''에 멈춘다. 계단 높이가 $\Delta$, 계단 수가 $L$. 공이 원래 있던 자리와 멈춘 자리의 차이 = [[quantization error]], 아무리 커도 계단 반 칸($\Delta/2$).{/analogy}
+
+[[anim:pcm_pipeline|PAM 막대가 8레벨 격자의 midpoint 로 스냅되며 빨간 오차가 생기는 순간을 보라]]
+
+== p.55 예시 (L = 8) ==
+[[img:L3-55.png|p.55 V: −20 ~ +20, L = 8 → Δ = 5. 코드 0~7 은 각 띠의 midpoint(−3.5Δ ~ +3.5Δ)|large]]
+
+<pre class="txt">
+1. V_max = 4Δ = 20, V_min = −4Δ = −20, L = 8
+2. Δ = (20 − (−20)) / 8 = 5
+3. 코드 k 의 midpoint = (k − 3.5)·Δ   →  코드 0: −3.5Δ, 코드 2: −1.5Δ, 코드 7: +3.5Δ
+4. 샘플 −6.1 → −6.1/5 = −1.22 (normalized PAM) → 띠 [−2Δ, −Δ] → midpoint −1.50 → 코드 2
+5. 오차 = −1.50 − (−1.22) = −0.28 (Δ 단위)
+</pre>
+
+{|
+! Normalized PAM || −1.22 || 1.50 || 3.24 || 3.94 || 2.20 || −1.10 || −2.26 || −1.88 || −1.20
+|-
+| Normalized quantized || −1.50 || 1.50 || 3.50 || 3.50 || 2.50 || −1.50 || −2.50 || −1.50 || −1.50
+|-
+| Normalized error || −0.28 || 0 || +0.26 || −0.44 || +0.30 || −0.40 || −0.24 || +0.38 || −0.30
+|-
+| Quantization code || 2 || 5 || 7 || 7 || 6 || 2 || 1 || 2 || 2
+|}
+
+[[sim:pcm_encoder]]
+
+{warn}'''코드 번호 ≠ 진폭 값.''' 코드 0 은 0 V 가 아니라 '''가장 낮은 띠의 midpoint'''(−3.5Δ = −17.5)다. 음수 진폭도 코드는 0 이상의 정수. 그리고 "normalized" 는 실제 값을 $\Delta$ 로 나눈 것이다.{/warn}
+
+{quiz}$V_{min} = -20$, $V_{max} = 20$, $L = 8$ 일 때 진폭 11.0 의 코드와 오차(Δ 단위)를 구하시오.{/quiz}
+{answer}<pre class="txt">
+1. Δ = 40 / 8 = 5
+2. normalized = 11.0 / 5 = 2.20  →  띠 [2Δ, 3Δ]
+3. midpoint = 2.50  →  코드 = 2.50 + 3.5 = 6
+4. 오차 = 2.50 − 2.20 = +0.30
+5. encoded word (3비트) = 110
+</pre>p.55 표의 다섯 번째 열과 같다.{/answer}
+
+== 관련 문서 ==
+* [[quantization error]] · [[SNR_dB와 n_b]] · [[encoding]] · [[PAM]]
+* [[signal level]] (디지털 신호의 레벨 L 과 비교) · [[PCM]]

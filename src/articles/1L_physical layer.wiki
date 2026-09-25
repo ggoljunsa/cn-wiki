@@ -1,0 +1,36 @@
+key: physical layer
+title: Physical Layer (물리 계층, Layer 1)
+category: 1강 Introduction, 용어
+---
+'''Physical layer''' 는 [[TCP/IP 프로토콜 스위트]]의 맨 아래 Layer 1 — 비트를 '''신호로 바꿔 매체 위로''' 보내는 층 (L1 p.33). CH02 세 덱 전체가 이 층 이야기다.
+
+{def}"'''Carrying individual bits''' in a frame across a '''physical link'''. / Two devices are connected by a transmission '''medium''' (cable or air) / Transmission medium '''does not carry bits, but electrical or optical signals''' / The logical unit between two physical layers in two devices is a '''bit'''" (L1 p.33)
+프레임 안의 개별 비트들을 물리 링크 너머로 운반한다. 두 장치는 전송 매체(케이블이나 공기)로 연결된다. 매체는 비트가 아니라 전기·광 신호를 나른다. 두 장치의 physical layer 사이 논리 단위는 bit 다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''physical''' — 만질 수 있는 것. 구리선의 전압, 광섬유의 빛, 공기 중의 전파. 위 네 층이 다루는 건 전부 '''약속'''(헤더, 주소)인데 이 층만 '''물리 현상'''을 다룬다. 그래서 정의의 반전이 핵심: 매체는 '''bit 를 나르지 않는다''' — 0 과 1 은 개념이고, 선 위에 실제로 있는 건 '''signal''' 이다. bit → signal 변환이 CH02 의 [[data와 signal]], [[line coding]], [[modulation]] 이다.
+
+== 한눈에 ==
+{|
+! 항목 || 내용
+|-
+| 하는 일 || individual bits 를 physical link 너머로
+|-
+| 매체 || cable 또는 air — 실제로 나르는 건 electrical / optical signals
+|-
+| [[PDU]] (논리 단위) || '''bits'''
+|-
+| 주소 ([[주소 체계]]) || '''없음''' — 선 하나에 이웃은 정해져 있으니까
+|-
+| 가진 장치 || 전부 (host, [[스위치]], [[라우터]], [[허브]])
+|-
+| 범위 || '''hop''' — 링크 하나 ([[end-to-end와 hop-to-hop]])
+|}
+
+{analogy}🎭 '''모스 부호 손전등.''' 전하고 싶은 건 글자(bit)지만 공중을 날아가는 건 '''빛의 깜빡임'''(signal)이다. 손전등을 켜고 끄는 법, 얼마나 빨리 깜빡일 수 있는지, 안개가 끼면 얼마나 흐려지는지 — 이게 physical layer 의 고민이다(→ CH02 [[bandwidth]], [[attenuation]], [[noise]]).{/analogy}
+
+{quiz}"Transmission medium carries bits" 는 참인가 거짓인가? 이유와 함께.{/quiz}
+{answer}'''거짓.''' L1 p.33: "Transmission medium does '''not''' carry bits, but '''electrical or optical signals'''." bit 는 두 physical layer 사이의 '''논리적''' 단위일 뿐이고, 매체 위에는 신호가 흐른다.{/answer}
+
+== 관련 문서 ==
+* [[data-link layer]] · [[TCP/IP 프로토콜 스위트]] · [[data와 signal]] · [[CH02 Signals]] · [[CH01 Introduction]]

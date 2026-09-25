@@ -1,0 +1,53 @@
+key: ASK
+title: ASK (Amplitude Shift Keying, 진폭 편이 변조)
+category: 5강 Analog Transmission, 용어
+---
+'''ASK'''는 비트에 따라 [[carrier|반송파]]의 '''진폭'''만 바꾸는 [[digital-to-analog conversion]] 방식이다. 주파수와 위상은 그대로. L4 p.37–39.
+
+{def}"The '''amplitude''' of the carrier signal is '''varied''' to create signal elements. But '''both frequency and phase remain constant'''." — Binary ASK
+"Bandwidth of ASK: $B = (1 + d) \times S$ (Signal rate). $d$ is between 0 and 1 — a factor related to the modulation and filtering (i.e., '''roll-off factor''')."{/def}
+
+$$B = (1 + d)\,S$$
+
+== 이름에서 개념 끌어내기 ==
+'''A'''mplitude '''S'''hift '''K'''eying — 진폭([[peak amplitude]])을 전환(shift)한다. 교수: "it has some weird name … just remember the '''varying parts'''. Amplitude shift keying — the varying part of information is '''amplitude'''."
+
+[[img:L4-37.png|p.37 Binary ASK — 1 0 1 1 0 → 진폭 있음/0/있음/있음/0. 1초에 5 signal element: Bit rate 5, Baud 5|medium]]
+
+Binary ASK: 비트 1 → 진폭 1 의 반송파, 비트 0 → 진폭 0 (반송파 끔). 이 방식을 '''OOK'''(On-Off Keying)라고도 한다. 교수: "we often use zero as the baseline, but you can do '''vice versa''' — bit 1 for zero amplitude, bit 0 for meaningful amplitude. It is just one instance." (p.37 판서: 0 → $0 \cdot \sin\omega t$ 도, $-1 \cdot \sin\omega t$ 도 가능 → 후자가 사실상 [[PSK]])
+
+{analogy}🎭 '''손전등 모스 부호.''' 불빛 색(주파수)과 깜빡이는 박자(위상)는 그대로, '''켜짐/꺼짐'''(진폭)만 바꾼다. 가장 단순하지만 안개(잡음)가 끼면 "약하게 켜진 것"과 "꺼진 것"을 헷갈리기 쉽다 — ASK 가 [[noise]] 에 약한 이유.{/analogy}
+
+[[anim:ask_fsk_psk|첫 번째 줄 ASK 파형에서 0 구간의 진폭이 사라지는 것을 확인하고, FSK·PSK 와 무엇이 다른지 비교하라]]
+
+== 대역폭 ==
+[[img:L4-38.png|p.38 r = 1, S = N, B = (1+d)S — 스펙트럼은 f_c 를 중심으로 한 연속 대역 (Non-periodic composite signal → Continuous freq. band)|large]]
+
+<pre class="txt">
+기호          뜻                                          단위
+[[signal rate와 bit rate|S]]            signal rate (초당 signal element 수)            [[baud]]
+[[bit rate|N]]            data rate (초당 비트 수)                         bps
+[[signal rate와 bit rate|r]]            bits / symbol  (binary ASK: r = 1 → S = N)
+[[roll-off factor|d]]            roll-off factor, 0 ≤ d ≤ 1  (시험에서 주어짐)
+[[carrier|f_c]]          carrier frequency — 대역의 중심
+</pre>
+
+ASK 신호는 비트에 따라 켜졌다 꺼졌다 하는 '''non-periodic [[composite signal]]''' 이라 스펙트럼이 선이 아니라 '''연속 대역'''이다. 그 폭이 $(1+d)S$. $d = 0$ 이면 최소 $S$, $d = 1$ 이면 $2S$.
+
+{exam}🎯 교수: "When you have to solve your problems in your exams, '''I will always give you d'''." 그리고 "proving this occupied bandwidth is actually '''out of the scope''' of this course — just remember this." → 공식 암기 + 대입만.{/exam}
+
+== 구현 ==
+[[img:L4-39.png|p.39 unipolar NRZ(1 → 높음, 0 → 0) × Oscillator 의 f_c 반송파 → Multiplier 출력 = ASK|large]]
+
+'''곱셈기(Multiplier)''' 하나로 된다: [[unipolar NRZ와 polar NRZ|unipolar NRZ]] 신호 × 반송파. 1 × 반송파 = 반송파, 0 × 반송파 = 0. 교수: "from the left side comes digital bits, from the bottom there is one oscillating wave, and it is '''multiplied'''."
+
+{quiz}binary ASK 로 1초에 비트 2000 개를 보낸다. $d = 0.5$ 일 때 필요한 대역폭은? 반송파가 50 kHz 라면 대역의 범위는?{/quiz}
+{answer}<pre class="txt">
+1. binary → r = 1 → S = N = 2000 baud
+2. B = (1 + d) S = (1 + 0.5) × 2000 = 3000 Hz = 3 kHz
+3. 대역은 f_c 중심: 50 kHz ± 1.5 kHz → 48.5 kHz ~ 51.5 kHz
+</pre>{/answer}
+
+== 관련 문서 ==
+* [[FSK]] · [[PSK]] · [[QAM]] · [[modulation]] · [[변조 대역폭]]
+* [[roll-off factor]] · [[signal rate와 bit rate]] · [[baud]] · [[unipolar NRZ와 polar NRZ]] · [[carrier]]

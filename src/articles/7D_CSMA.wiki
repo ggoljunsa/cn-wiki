@@ -1,0 +1,40 @@
+key: CSMA
+title: CSMA (Carrier Sense Multiple Access)
+category: 7강 MAC, 용어
+---
+'''CSMA'''는 "보내기 전에 먼저 듣는다(sense before transmit)"를 추가한 [[random access]] 방식이다. 충돌을 줄이지만 없애지는 못한다. L6 p.30–40.
+
+{def}"To minimize the chance of collision and increase the performance. Each station '''first listen to the medium before sending'''." (p.30)
+"CSMA can '''reduce''' the possibility of collision, but it '''cannot eliminate''' it. The possibility of collision still exists because of '''propagation delay'''. A station may sense the medium and find it idle, only because the first bit sent by another station has not yet been received." (p.31){/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''Carrier Sense''' — 매체에 신호(carrier)가 있는지 '''감지'''한다 = 듣는다
+* '''Multiple Access''' — 여럿이 같은 매체에 접근한다
+이름에 "Collision Detection" 이 '''없다'''. 보내기 '''전'''에만 듣고, 보내는 '''중'''에는 듣지 않는다. 보내는 중에도 듣는 것은 [[CSMA/CD]].
+
+== 왜 충돌이 남나 — propagation delay ⭐⭐ ==
+[[img:L6-32.png|p.32 Space-time model — t₂ 에 C 는 아직 B 의 신호를 못 들었다 → 전송 시작 → 회색 충돌 영역|large]]
+
+[[anim:csma_space_time|B 의 신호가 기울어진 띠로 퍼지는 동안, 아직 신호가 닿지 않은 C 가 idle 로 착각하고 전송하는 순간을 보라]]
+
+신호는 빛의 속도로 가지만 '''순간이동은 아니다'''. B 가 $t_1$ 에 보낸 첫 비트가 C 에 닿기 전인 $t_2$ 에 C 가 매체를 들으면 조용하다 → C 도 보낸다 → 가운데서 충돌. → [[space-time model]]
+
+== Vulnerable time = $T_p$ ⭐⭐ ==
+[[img:L6-33.png|p.33 Vulnerable time = propagation time — A 의 첫 비트가 D 에 닿고 나면 모두가 busy 를 안다|large]]
+
+위험한 것은 첫 비트가 매체 끝까지 퍼지는 동안([[T_p]])뿐이다. 그 뒤로는 누구나 busy 를 듣고 기다린다. 보통 $T_p \ll T_{fr}$ 이므로 ALOHA 의 $2T_{fr}$ · $T_{fr}$ 보다 훨씬 짧다. → [[vulnerable time]]
+
+== busy 이면? → persistence method ==
+CSMA 는 "idle 이면 보낸다"만 정한다. busy 일 때 어떻게 기다리느냐가 [[persistence method]] 셋이다: [[1-persistent]] · [[nonpersistent]] · [[p-persistent]].
+
+{analogy}🎭 '''어두운 방에서 말하기 전에 귀 기울이기.''' 조용하면 말을 시작한다. 그런데 방이 아주 넓어서 반대편 사람의 목소리가 내게 닿는 데 1초가 걸린다면? 그 사람이 0.5초 전에 말을 시작했어도 나는 조용하다고 느끼고 말을 시작해 버린다. 방이 넓을수록($T_p$↑) 이런 착각이 잦다.{/analogy}
+
+{quiz}CSMA 는 보내기 전에 듣는데 왜 충돌을 '''완전히''' 없애지 못하는가? (p.31 문장으로){/quiz}
+{answer}'''propagation delay''' 때문이다. "A station may sense the medium and find it idle, only because the first bit sent by another station has not yet been received." 다른 스테이션이 이미 보낸 첫 비트가 아직 도착하지 않았을 뿐인데 idle 로 판단하고 전송해 버린다.{/answer}
+
+{quiz}CSMA 의 vulnerable time 은? pure ALOHA 와 비교하면?{/quiz}
+{answer}CSMA: '''$T_p$''' (propagation time). pure ALOHA: $2T_{fr}$. LAN 에서 보통 $T_p$ 가 $T_{fr}$ 보다 훨씬 작으므로 CSMA 의 위험 창이 훨씬 좁다.{/answer}
+
+== 관련 문서 ==
+* [[CSMA/CD]] · [[space-time model]] · [[persistence method]] · [[vulnerable time]]
+* [[T_p]] · [[propagation time]] · [[random access]] · [[CH03 Media Access Control]]

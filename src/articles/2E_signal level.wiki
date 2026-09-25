@@ -1,0 +1,56 @@
+key: signal level
+title: Signal Level (신호 레벨, L)
+category: 2강 Signals, 용어, 핵심
+---
+'''Signal level''' $L$ 은 [[디지털 신호]]가 가질 수 있는 '''서로 다른 값의 개수'''다. level 이 $L$ 개면 '''level 하나(심볼 하나)에 $\log_2 L$ 비트'''를 싣는다. L2 p.31. [[Nyquist bit rate]] 공식 $2B\log_2 L$ 의 그 $L$ 이다.
+
+{def}L2 p.31 "Digital Signals — Can be more than two levels. We can send more than 1 bit for each time. '''If a signal has $L$ levels, each level need $\log_2 L$ bits'''."
+L2 p.50 "'''L''': the number of signal levels used to represent data. '''$\log_2 L$''': the number of bits of one symbol."
+L 개의 레벨 → 레벨(심볼) 하나에 log₂L 비트.{/def}
+
+$$\text{bits per level} = \log_2 L \qquad\Longleftrightarrow\qquad L = 2^{\text{bits}}$$
+
+== 이름에서 개념 끌어내기 ==
+'''level''' = 높이의 단계, 층. 전압이 멈춰 설 수 있는 '''층의 수'''. 층이 $L$ 개면 "지금 몇 층에 있는가"라는 한 번의 관측이 $L$ 가지 경우 중 하나를 알려주고, $L$ 가지 경우를 구별하려면 $\log_2 L$ 개의 예/아니오 질문(=비트)이 필요하다.
+
+{exam}⭐⭐⭐ 교수(9/1): "수식이 어려우면 '''간단한 예를 만들어 보라'''. 나도 논문에서 복잡한 공식을 보면 바로 예를 만든다."
+* 2 level → 0, 1 → '''1비트''' = $\log_2 2$
+* 4 level → 00, 01, 10, 11 → '''2비트''' = $\log_2 4$
+그러니 $L$ level 이면 $\log_2 L$ 비트. → [[log₂ 계산법]]{/exam}
+
+{analogy}🎭 '''스무고개.''' 상대가 머릿속에 $L$ 개 후보 중 하나를 골랐다. "예/아니오" 질문 하나로 후보를 반으로 줄일 수 있으니, 4 개면 2번, 8 개면 3번, 64 개면 6번 만에 맞힌다. 질문 횟수 = $\log_2 L$ = 그 선택이 담은 비트 수. 전압 level 하나를 보는 것은 스무고개의 답 하나를 한꺼번에 듣는 것과 같다.{/analogy}
+
+[[img:L2-32.png|p.32 — 오른쪽 4 level 신호: Level 4 = 11, Level 3 = 10, Level 2 = 01, Level 1 = 00. 칸 하나에 2비트|large]]
+
+== 표 ==
+{|
+! $L$ || $\log_2 L$ (비트/level) || 비트 패턴
+|-
+| 2 || 1 || 0, 1
+|-
+| 4 || 2 || 00 01 10 11
+|-
+| 8 || 3 || 000 ~ 111
+|-
+| 16 || 4 || 0000 ~ 1111
+|-
+| 64 || 6 || 
+|-
+| 128 || 7 || 
+|}
+
+== 공식 속 L ==
+* '''[[Nyquist bit rate]]''': $\text{BitRate} = 2 \times B \times \log_2 L$ ($B$ = [[bandwidth]]) — level 을 늘리면 bit rate 가 늘어난다.
+** Example 2.6: 265 kbps, 20 kHz → $\log_2 L = 6.625$, $L = 2^{6.625} \approx 98.7$ → 심볼당 6~7비트
+** Example 2.9: 4 Mbps, 1 MHz → $\log_2 L = 2$, '''$L = 4$'''
+* 그런데 level 을 무한히 늘릴 수는 없다: level 간격이 좁아지면 [[noise]] 때문에 구별이 안 된다. 그 한계가 '''[[Shannon capacity]]''' 다. [[data rate limits|data rate 를 결정하는 3요소]] 중 둘째가 바로 "the level of the signals we use".
+
+{warn}$L$ 은 정수여야 하고 보통 2 의 거듭제곱으로 고른다. Example 2.6 의 98.7 은 "이론상 필요한 값"이고, 실제로는 128 level(7비트)을 쓰거나 bit rate 를 낮춰 64 level(6비트)을 쓴다 — 슬라이드의 "Should use 6-7 bits for one signal" 이 그 뜻이다.{/warn}
+
+{quiz}16 level 신호가 초당 1000 개의 level 을 보낸다. bit rate 는? 같은 속도로 bit rate 를 두 배로 하려면 level 이 몇 개 필요한가?{/quiz}
+{answer}$\log_2 16 = 4$ 비트/level → '''4000 bps'''. 두 배(8000 bps)면 level 당 8비트 → $L = 2^8 = $ '''256'''. (level 수를 두 배로 늘리는 게 아니라 '''제곱'''해야 한다 — log 이므로.){/answer}
+
+== 관련 문서 ==
+* [[디지털 신호]] · [[bit rate]] · [[log₂ 계산법]]
+* [[Nyquist bit rate]] · [[Shannon capacity]] · [[data rate limits]]
+* [[signal rate와 bit rate]] · [[QAM]] · [[CH02 Signals]]

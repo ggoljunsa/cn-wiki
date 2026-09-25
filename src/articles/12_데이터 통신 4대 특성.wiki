@@ -1,0 +1,50 @@
+key: 데이터 통신 4대 특성
+title: 데이터 통신 4대 특성 (Delivery · Accuracy · Timeliness · Jitter)
+category: 1강 Introduction, 용어, 함정
+---
+[[데이터 통신]] 시스템이 '''얼마나 효과적인가'''를 좌우하는 네 가지 fundamental characteristics (L1 p.3).
+
+{def}"Four fundamental characteristics affecting the effectiveness of a data communication system:
+* '''Delivery''': Must deliver data to the correct destination
+* '''Accuracy''': Must deliver data accurately
+* '''Timeliness''': Must deliver data in a timely manner
+* '''Jitter''': The variation in the packet arrival time"
+네 개: 올바른 목적지로 / 정확하게 / 제때 / 도착 시간 편차가 작게.{/def}
+
+{exam}⭐⭐⭐ '''0920 NotebookLM 퀴즈에서 여기서 틀렸다.''' "4가지 핵심 특성을 모두 고르라"에서 Delivery · Accuracy · Timeliness 는 맞혔지만 '''Jitter 를 빠뜨리고 Encryption(암호화)을 골랐다.''' 재시험(0920_재시험 5번)에서는 네 개를 다 썼다 — 아는 내용이니 '''영어 이름 네 개를 입으로 말하는 연습'''만 하면 된다.{/exam}
+
+{warn}⭐ '''Encryption 은 4대 특성이 아니다.''' 암호화는 보안(security)을 위한 기법이다. CH01 에서 암호화가 보이는 곳은 [[프로토콜 계층화]]의 3계층 예시(p.24) 속 Layer 2 "Encrypt/Decrypt" 뿐이고, 그건 '''계층의 역할 예시'''일 뿐이다.{/warn}
+
+== 네 특성 한눈에 ==
+{|
+! 특성 || 무엇을 묻나 || 어기면
+|-
+| '''Delivery''' || '''어디로?''' — correct destination || 남의 집에 배달됨
+|-
+| '''Accuracy''' || '''무엇이?''' — 내용이 그대로인가 || 비트가 뒤집혀 도착 → CH03 오류 검출([[CRC]], [[parity check code]])의 존재 이유
+|-
+| '''Timeliness''' || '''언제?''' — 제때 도착했나 || 영상이 10초 늦게 나옴 (늦게 온 실시간 데이터는 쓸모없다)
+|-
+| '''Jitter''' || '''얼마나 고르게?''' — 도착 간격의 변동 || 음성·영상이 뚝뚝 끊김
+|}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". 앞의 셋은 명사 그 자체가 요구사항이다(deliver, accurate, timely). 네 번째 '''jitter''' 만 '''문제의 이름'''이다 — 영어 ''jitter'' 는 "신경이 곤두서 덜덜 떨림". 도착 시각이 '''떨린다'''는 뜻이다. 그래서 요구사항으로 읽으면 "jitter 가 '''작아야''' 한다". 다른 셋은 "있어야 할 것", jitter 는 "없어야 할 것" — 이 비대칭이 암기 포인트다. 3강의 [[jitter]] 문서와 같은 개념이다.
+
+<pre class="ascii">
+패킷 송신 간격 (일정):   |--20ms--|--20ms--|--20ms--|
+도착 간격 (jitter 없음):  |--20ms--|--20ms--|--20ms--|   → 매끄러운 재생
+도착 간격 (jitter 큼):    |-10ms-|----35ms----|-15ms-|  → '''뚝뚝 끊김'''
+</pre>
+
+{analogy}🎭 '''피자 배달 4대 평가.''' 우리 집에 왔나(Delivery) · 주문한 그 피자인가(Accuracy) · 30분 안에 왔나(Timeliness) · '''매주 금요일 주문하는데 어떤 날은 20분, 어떤 날은 70분'''(Jitter). 평균 배달 시간이 같아도 들쭉날쭉하면 저녁 계획을 못 세운다. 실시간 음성·영상이 바로 그 저녁 계획이다.{/analogy}
+
+{quiz}Timeliness 와 Jitter 는 둘 다 "시간" 이야기인데 무엇이 다른가?{/quiz}
+{answer}Timeliness 는 '''각 데이터가 제때(늦지 않게)''' 도착하느냐, Jitter 는 '''패킷들 사이의 도착 시간이 얼마나 들쭉날쭉하냐'''(variation in the packet arrival time)다. 모든 패킷이 똑같이 100 ms 늦으면 jitter 는 0 이지만 timeliness 는 나쁠 수 있다.{/answer}
+
+{quiz}다음 중 L1 p.3 의 4대 특성이 아닌 것은? (a) Delivery (b) Encryption (c) Jitter (d) Timeliness{/quiz}
+{answer}'''(b) Encryption'''. 0920 퀴즈에서 실제로 골랐던 함정 보기다.{/answer}
+
+== 관련 문서 ==
+* [[데이터 통신]] · [[데이터 통신 5요소]] · [[jitter]] · [[CH01 Introduction]]
+* [[0920 오답 복기]] · [[자주 틀리는 함정 모음]]

@@ -1,0 +1,79 @@
+key: 4B/5B
+title: 4B/5B (4 Binary / 5 Binary)
+category: 4강 Digital Transmission, 용어
+---
+'''4B/5B'''는 4비트 데이터를 '''0 이 길게 이어지지 않는 5비트 코드'''로 바꾸는 [[block coding]] 이다. [[NRZ-I]] 와 '''짝으로''' 쓰인다. L3 p.46–47.
+
+{def}"'''4B/5B (4 Binary / 5 Binary)''' — Used in combination with '''NRZ-I'''. '''Long sequence of 0s can make loss of synchronization'''."
+4B/5B 는 NRZ-I 와 결합해 쓰인다. (NRZ-I 에서) 0 이 길게 이어지면 동기화를 잃을 수 있기 때문이다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+4 '''B'''inary → 5 '''B'''inary. 4비트 그룹 하나를 5비트 그룹 하나로. 4비트는 $2^4 = 16$ 가지, 5비트는 $2^5 = 32$ 가지다. 32개 중 '''0 이 적은 16개'''만 골라 데이터에 쓰고, 남는 16개 중 일부(8개)는 '''제어 시퀀스'''로, 나머지는 '''쓰지 않는다'''(받으면 오류). 여기서 [[block coding|error detection]] 능력이 나온다.
+
+[[img:L3-46.png|p.46 4B/5B encoding → NRZ-I encoding → Link → NRZ-I decoding → 4B/5B decoding|medium]]
+
+{analogy}🎭 '''졸음 방지 신호.''' [[NRZ-I]] 수신기는 신호가 '''뒤집힐 때'''만 "아, 비트 하나 지나갔구나" 하고 시계를 맞춘다. 0 은 신호를 안 뒤집으니, 0 이 20개 이어지면 운전자가 20초 동안 아무 표지판도 못 본 것과 같다 — 몇 개 지났는지 헷갈린다. 4B/5B 는 도로에 '''일정 간격 이상 표지판이 비지 않도록''' 코드를 골라 둔 것이다.{/analogy}
+
+== p.47 매핑 표 (전체) ==
+[[img:L3-47.png|p.47 4B/5B Mapping Code — Data Sequence 16개 + Control Sequence 8개|large]]
+
+{|
+! Data Sequence || Encoded Sequence || || Control Sequence || Encoded Sequence
+|-
+| 0000 || 11110 || || Q (Quiet) || 00000
+|-
+| 0001 || 01001 || || I (Idle) || 11111
+|-
+| 0010 || 10100 || || H (Halt) || 00100
+|-
+| 0011 || 10101 || || J (Start delimiter) || 11000
+|-
+| 0100 || 01010 || || K (Start delimiter) || 10001
+|-
+| 0101 || 01011 || || T (End delimiter) || 01101
+|-
+| 0110 || 01110 || || S (Set) || 11001
+|-
+| 0111 || 01111 || || R (Reset) || 00111
+|-
+| 1000 || 10010 || || ||
+|-
+| 1001 || 10011 || || ||
+|-
+| 1010 || 10110 || || ||
+|-
+| 1011 || 10111 || || ||
+|-
+| 1100 || 11010 || || ||
+|-
+| 1101 || 11011 || || ||
+|-
+| 1110 || 11100 || || ||
+|-
+| 1111 || 11101 || || ||
+|}
+
+{tip}데이터 코드 16개를 보면 규칙이 보인다: '''맨 앞 0 은 최대 1개, 맨 뒤 0 은 최대 2개'''. 그래서 두 코드를 아무렇게나 이어 붙여도 '''0 이 3개보다 길게 이어지지 않는다'''(Forouzan). 특히 0000 → '''11110''' — 가장 위험한 입력이 가장 1 이 많은 코드로 바뀐다.{/tip}
+
+교수: "제어 시퀀스는 '''communication channel 을 관리'''하는 데 쓴다 — 예컨대 synchronization 이나 communication 시작." J·K 는 프레임 시작, T 는 끝, I 는 유휴 상태, Q 는 조용(선 끊김), H 는 정지.
+
+[[sim:block_4b5b]]
+
+{quiz}입력 비트열 0000 0000 0000 을 4B/5B 로 인코딩하시오. NRZ-I 로 보냈을 때 동기 문제가 사라지는 이유는?{/quiz}
+{answer}<pre class="txt">
+1. 4비트씩 자르기: 0000 | 0000 | 0000
+2. 표 조회: 0000 → 11110
+3. 결과: 11110 11110 11110   (15비트)
+</pre>
+원래 입력은 0 이 12개 연속 → [[NRZ-I]] 신호가 12비트 동안 한 번도 안 바뀐다(동기 손실). 인코딩 후에는 '''1 이 13번''' 나와 거의 매 비트 신호가 뒤집히므로 수신기가 계속 시계를 맞출 수 있다.{/answer}
+
+{quiz}4B/5B 를 쓰면 100 Mbps 데이터를 보내는 데 선로 위 비트율이 얼마가 되어야 하는가?{/quiz}
+{answer}<pre class="txt">
+1. 4비트마다 5비트 → 비율 5/4 = 1.25
+2. 100 Mbps × 1.25 = 125 Mbps
+</pre>
+25% 는 동기화를 위한 [[redundancy]] 의 대가다. (100 Mbps Fast Ethernet 이 실제로 이렇게 125 Mbaud 로 동작한다 — Forouzan.){/answer}
+
+== 관련 문서 ==
+* [[NRZ-I]] · [[block coding]] · [[line coding]] · [[redundancy]]
+* [[CH02 Digital Transmission]]

@@ -1,0 +1,41 @@
+key: data와 signal
+title: Data와 Signal (What vs How)
+category: 2강 Signals, 용어
+---
+'''Data'''는 보내고 싶은 '''정보 그 자체(What)''', '''signal'''은 그 정보를 매체 위에 싣는 '''물리적 표현(How)'''이다. L2 p.15. [[physical layer]]가 하는 일은 결국 "data 를 signal 로 바꿔 매체에 싣는 것"이다.
+
+{def}L2 p.15 "Data vs. Signal (in our course)"
+* '''Data''': What we want to send / The information itself / Text, numbers, images, audio, video
+* '''Signal''': How we send data / The physical representation that carries data over a medium / Voltage, current, or electromagnetic waves
+* "'''To be transmitted, data must be converted into a signal.'''"
+Data = 무엇을 보내는가(정보), Signal = 어떻게 보내는가(전압·전류·전자기파).{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''data''' — 라틴어 ''datum''(주어진 것)의 복수. "주어진 사실·내용"이다. 형태가 없다.
+* '''signal''' — ''sign''(표시)에서 왔다. 무언가를 '''표시하는 물리적 흔적'''이다. 형태(파형)가 있다.
+교수: "많은 사람이, 심지어 나도 둘을 크게 구분하지 않는다. 하지만 '''in our course''' 에서는 구분한다. signal 은 '''methodology''', 데이터를 보내는 '''approach''' 다."
+
+{analogy}🎭 '''노래 가사(data)와 목소리(signal).''' 가사는 종이에 적혀 있어도, 머릿속에 있어도 같은 가사다. 하지만 상대에게 들려주려면 성대를 울려 '''공기의 진동'''으로 바꿔야 한다. 그 진동이 signal 이다. 같은 가사를 속삭여도(작은 [[peak amplitude|amplitude]]), 고음으로 불러도(높은 [[주파수|frequency]]) 가사는 그대로다 — data 는 같고 signal 만 다르다.{/analogy}
+
+[[img:L2-16.png|p.16 — data 와 signal 은 각각 analog/digital 일 수 있다. 그림은 signal 쪽(연속 파형 vs 계단)|medium]]
+
+== 네 가지 조합 ==
+data 도 signal 도 각각 [[아날로그와 디지털|analog 또는 digital]] 이므로 조합이 넷이고, 이것이 CH02 뒷부분 강의의 목차가 된다.
+{|
+! data → signal || 이름 || 어디서
+|-
+| digital → digital || [[digital-to-digital conversion]] ([[line coding]]) || [[CH02 Digital Transmission]]
+|-
+| analog → digital || [[analog-to-digital conversion]] ([[PCM]]) || [[CH02 Digital Transmission]]
+|-
+| digital → analog || [[digital-to-analog conversion]] ([[ASK]]/[[FSK]]/[[PSK]]) || [[CH02 Analog Transmission]]
+|-
+| analog → analog || analog-to-analog (AM/FM) || Forouzan (슬라이드 범위 밖)
+|}
+
+{quiz}"signal 은 정보 그 자체이고, data 는 그 정보를 전달하는 전압·전류·전자기파다." 옳은가?{/quiz}
+{answer}'''틀렸다 — 정확히 반대.''' data = 정보 그 자체(What), signal = 데이터를 매체 위로 실어 나르는 물리적 표현(How). "To be transmitted, data must be converted into a signal." (L2 p.15){/answer}
+
+== 관련 문서 ==
+* [[CH02 Signals]] · [[아날로그와 디지털]] · [[physical layer]]
+* [[데이터 통신]] · [[digital-to-digital conversion]] · [[digital-to-analog conversion]]

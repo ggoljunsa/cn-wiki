@@ -1,0 +1,41 @@
+key: 논리적 연결
+title: 논리적 연결 (Logical Connection)
+category: 1강 Introduction, 용어
+---
+'''Logical connection''' — 실제로는 위아래로 오르내리며 전달되지만, '''같은 층끼리 직접 대화하는 것처럼''' 볼 수 있는 연결 (L1 p.27–29, p.31).
+
+{def}"'''1st Principle''': For '''bidirectional''' communication, each layer is able to perform '''two opposite tasks''' (e.g., Talk and Listen)
+'''2nd Principle''': '''Two objects under each layer at both sites should be identical''' — e.g., Plaintext is not processed under Layer 3
+'''Logically''', we can say that there is a '''layer-to-layer communication''' → a '''logical connection'''" (L1 p.27–29)
+제1원칙: 양방향 통신을 위해 각 층은 서로 반대인 두 작업을 할 수 있어야 한다. 제2원칙: 양쪽에서 각 층 아래의 두 객체는 동일해야 한다. 그러면 논리적으로 층과 층의 통신이 있다고 말할 수 있다 → 논리적 연결.{/def}
+
+[[img:L1-29.png|Logical Connections — Layer 3 끼리 Plaintext, Layer 2 끼리 Ciphertext, Layer 1 끼리 Mail 이 빨간 점선(Logical connection)으로|large]]
+
+== 두 원칙 ==
+{|
+! 원칙 || 내용 || 편지 예 (p.24)
+|-
+| '''1st''' || 각 층은 '''반대 작업 두 개'''를 다 할 줄 알아야 (bidirectional) || Talk ↔ Listen, Encrypt ↔ Decrypt, Send ↔ Receive mail
+|-
+| '''2nd''' || 각 층 '''아래''' 객체가 양쪽에서 '''identical''' || Maria 의 Layer 2 가 내려보낸 Ciphertext = Ann 의 Layer 2 가 받는 Ciphertext
+|}
+
+2nd Principle 의 슬라이드 예문이 p.28 에선 "Plaintext is '''intact''' under Layer 3", p.29 에선 "Plaintext is '''not processed''' under Layer 3" — 같은 말이다. Layer 3 이 만든 평문은 아래 층들을 거쳐 오는 동안 '''결국 원래 모습으로''' Ann 의 Layer 3 에 도착한다.
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''logical''' 의 반대는 '''physical'''. 물리적으로 선이 이어진 건 맨 아래(Postal carrier, 케이블)뿐이다. 그런데 두 원칙이 서면 Layer 3 입장에선 "내가 쓴 평문이 저쪽 Layer 3 에 그대로 간다" — '''마치''' 직통선이 있는 것 같다. 이 "마치 ~인 것처럼"이 logical 이다.
+
+== TCP/IP 에서 (p.31–32) ==
+[[img:L1-31.png|Logical Connections in TCP/IP — 위 세 층은 Source host ↔ Destination host 빨간 점선, 아래 두 층은 링크마다 검은 점선|large]]
+* Application · Transport · Network 의 logical connection 은 '''source host ↔ destination host''' (end-to-end).
+* Data link · Physical 은 '''링크(hop) 하나마다''' 끊겨 있다 — 스위치·라우터를 만날 때마다 새 연결.
+* 각 층에서 양쪽이 주고받는 identical object 가 곧 [[PDU]] (message / segment / datagram / frame / bits, p.32).
+→ [[end-to-end와 hop-to-hop]]
+
+{analogy}🎭 '''국제 화상회의 통역.''' 한국 사장과 프랑스 사장은 "서로 대화한다"고 느낀다(logical connection). 실제로는 사장 → 통역사 → 인터넷 → 통역사 → 사장. 각 통역사는 한→영, 영→한 양쪽을 다 할 줄 알아야 하고(1st), 두 통역사 사이에 오가는 영어 문장은 양쪽에서 같아야 한다(2nd).{/analogy}
+
+{quiz}TCP/IP 에서 network layer 의 logical connection 은 "source host ↔ destination host" 인데, 실제 경로엔 라우터가 있다. 이 둘이 모순이 아닌 이유는?{/quiz}
+{answer}라우터도 network layer 를 가지고 datagram 을 보지만 '''datagram 을 바꾸지 않고''' 다음 링크로 넘긴다(frame 헤더만 새로 붙임). 그래서 source 의 network layer 가 만든 datagram 이 destination 의 network layer 에 identical 하게 도착 → 2nd Principle 이 성립해 end-to-end logical connection 으로 볼 수 있다. (p.32 그림에서는 라우터 양옆으로 datagram 화살표가 둘로 나뉘어 그려져 있어, "홉마다 전달되는 datagram" 이라는 점도 함께 보여 준다.){/answer}
+
+== 관련 문서 ==
+* [[프로토콜 계층화]] · [[end-to-end와 hop-to-hop]] · [[PDU]] · [[TCP/IP 프로토콜 스위트]] · [[CH01 Introduction]]

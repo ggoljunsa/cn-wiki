@@ -1,0 +1,41 @@
+key: divisor
+title: Divisor (CRC 제수, generator polynomial)
+category: 6강 DLC, 용어
+---
+'''Divisor''' 는 [[CRC]] 나눗셈에서 나누는 수, 즉 '''송신·수신 양쪽이 미리 공유하는 비트 패턴'''이다. L5 예제에서는 '''1011''' ($x^3 + x + 1$). 송신 측은 이것으로 remainder 를, 수신 측은 [[syndrome]]을 만든다. L5 p.45–50.
+
+{def}p.45 그림: Generator 와 Checker 사이 가운데에 "'''Divisor''' $d_3 d_2 d_1 d_0$" — 양쪽 화살표가 같은 divisor 를 가리킨다.
+"Should '''all-0s divisor''' when the leftmost bit is 0." (p.46)
+"The number of bits is always '''one more than the degree''' of the polynomial." (p.50){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''divisor''' = "나누는 수(제수)". 나눗셈 $a \div b$ 에서 $b$. 수학 용어 그대로다. 다항식으로 쓰면 '''generator polynomial''' $g(x)$ 라고도 부른다(Forouzan) — codeword 를 "생성" 하는 다항식.
+
+{analogy}🎭 '''양쪽이 같은 자.''' 목수 둘이 같은 길이의 자(divisor)를 나눠 갖고, 보내는 쪽은 "자로 딱 떨어지게" 판자를 잘라 보낸다(나머지를 붙임). 받는 쪽이 같은 자로 재서 딱 떨어지지 않으면 판자가 변형된 것이다. '''자가 다르면 검사가 무의미'''하니 반드시 공유해야 한다.{/analogy}
+
+[[img:L5-45.png|p.45 가운데 검은 칸 Divisor d3d2d1d0 가 Generator(송신)와 Checker(수신) 양쪽에 연결되어 있다|large]]
+
+== 규칙 ==
+* 비트 수 = 차수 + 1. 1011 은 4비트 = 3차 → 송신 측은 0 을 '''3개''' 붙이고, 나머지·syndrome 은 '''3비트'''.
+* 최상위 비트는 항상 1 (그래야 차수가 정해진다).
+* 나눗셈 중 '''현재 나머지의 맨 왼쪽 비트가 0 이면 divisor 대신 0000''' 으로 XOR (p.46 "Leftmost bit 0: use 0000 divisor").
+
+<pre class="txt">
+p.46 에서 divisor 가 쓰인 방식
+  1001 ⊕ '''1011'''    (맨 왼쪽 1)
+  0100 ⊕ '''0000'''    (맨 왼쪽 0)
+  1000 ⊕ '''1011'''    (맨 왼쪽 1)
+  0110 ⊕ '''0000'''    (맨 왼쪽 0)  → 나머지 110
+  몫 1010 의 각 비트 = 그 단계에 1011 을 썼으면 1, 0000 을 썼으면 0
+</pre>
+
+[[sim:crc_division]]
+
+{tip}왜 0 이면 0000 인가? 일반 나눗셈에서 "몫에 0 을 쓰고 그대로 내린다" 와 같다. 맨 왼쪽이 0 인 수에서 1011 을 빼면 자릿수가 맞지 않는다. 몫 자리 0 × divisor = 0000.{/tip}
+
+== 예상 문제 ==
+{quiz}divisor 가 $x^4 + x + 1$ 이면 비트 패턴은? 송신 측은 0 을 몇 개 붙이는가?{/quiz}
+{answer}$x^4 + 0x^3 + 0x^2 + x + 1$ → '''10011''' (5비트). 차수 4 → 0 을 '''4개''' 붙이고, 나머지도 4비트.{/answer}
+
+== 관련 문서 ==
+* [[CRC]] · [[syndrome]] · [[polynomial representation]] · [[CRC 표준 다항식]] · [[XOR]]

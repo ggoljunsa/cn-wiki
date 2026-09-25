@@ -1,0 +1,35 @@
+key: FCS
+title: FCS (Frame Check Sequence)
+category: 6강 DLC, 용어
+---
+'''FCS (Frame Check Sequence)''' 는 프레임 끝(마지막 [[flag]] 바로 앞)에 붙는 '''오류 검출용 필드'''다. 값은 프레임 내용으로 계산한 [[CRC]] 나머지. [[HDLC 프레임]] 세 종류 모두에 있다. L5 p.56.
+
+{def}p.56 HDLC 프레임 그림: I-frame, S-frame, U-frame 모두 "… | '''FCS''' | Flag". FCS = Frame Check Sequence.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''Frame Check Sequence''' — "프레임을 '''검사'''하는 비트 '''열'''". p.44–47 에서 배운 CRC 의 '''remainder''' 가 실제 프레임에서는 FCS 라는 이름으로 붙는다. 송신 측 remainder = FCS, 수신 측은 프레임 + FCS 전체를 나눠 [[syndrome]] 이 0 인지 본다.
+
+{analogy}🎭 '''택배 상자의 봉인 테이프 번호.''' 상자(프레임) 내용물로 계산한 번호를 테이프에 적어 둔다. 받는 쪽이 같은 계산을 해서 번호가 안 맞으면 도중에 상자가 열리거나 바뀐 것 — 상자를 반송(discard)한다.{/analogy}
+
+[[img:L5-56.png|p.56 세 HDLC 프레임 모두 끝 Flag 바로 앞에 흰색 FCS 칸이 있다|medium]]
+
+<pre class="txt">
+송신: [Address | Control | Information] 을 dataword 로 보고 CRC 계산 → 나머지 = FCS
+      | Flag | Address | Control | Information | '''FCS''' | Flag |
+수신: Address ~ FCS 전체를 같은 divisor 로 나눔 → 나머지 0 이면 accept, 아니면 discard
+</pre>
+
+{|
+! 프로토콜 || FCS 에 쓰는 CRC (p.50)
+|-
+| [[HDLC]] || CRC-16 → FCS 16 bits
+|-
+| LAN (Ethernet) || CRC-32 → FCS 32 bits
+|}
+
+== 예상 문제 ==
+{quiz}FCS 는 무엇의 약자이며, CH03 (1) 의 어떤 기법으로 계산되는가? 수신 측 판정 규칙은?{/quiz}
+{answer}'''Frame Check Sequence'''. '''CRC''' 나머지로 계산된다. 수신 측은 프레임과 FCS 를 함께 divisor 로 나눠 '''syndrome 이 0 이면 accept''', 아니면 discard.{/answer}
+
+== 관련 문서 ==
+* [[CRC]] · [[CRC 표준 다항식]] · [[HDLC 프레임]] · [[syndrome]] · [[redundancy]]

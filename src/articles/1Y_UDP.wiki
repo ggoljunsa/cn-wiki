@@ -1,0 +1,31 @@
+key: UDP
+title: UDP (User Datagram Protocol)
+category: 1강 Introduction, 용어
+---
+'''UDP''' — [[transport layer]] 의 "another common protocol". [[TCP]] 의 정반대: '''connectionless, 제어 없음, 단순''' (L1 p.36).
+
+{def}"'''UDP''' is another common protocol / '''Connectionless''' protocol / '''Simple''' protocol w/o flow/error/congestion controls" (L1 p.36)
+또 하나의 흔한 전송 계층 프로토콜. 비연결형이며, 흐름·오류·혼잡 제어가 없는 단순한 프로토콜.{/def}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''User Datagram Protocol''' — 이 층에서 UDP 의 PDU 이름이 바로 '''user datagram''' 이다([[PDU]], L1 p.32 "segment or user datagram"). ''datagram'' 은 전보처럼 '''한 장씩 독립적으로''' 날아가는 단위 — 연결 없이(connectionless) 던지는 방식과 이름이 맞아떨어진다. 그리고 [[TCP]] 의 이름엔 있는 '''Control''' 이 UDP 이름엔 '''없다'''.
+
+== 왜 굳이 제어 없는 걸 쓰나 ==
+{|
+! TCP 가 주는 것 || UDP 가 얻는 것
+|-
+| 연결 수립 절차 || 준비 없이 '''즉시''' 전송
+|-
+| 오류 시 재전송 || 늦게 온 재전송보다 '''지금 것'''이 중요한 실시간 서비스(음성·영상·게임)에 유리
+|-
+| flow·congestion 조절 || 오버헤드 없음, 헤더가 작음
+|}
+{info}"UDP 가 쓰이는 곳"(DNS, 스트리밍 등)은 슬라이드 범위 밖의 참고다. CH01 시험 포인트는 '''connectionless + no flow/error/congestion control + simple'''.{/info}
+
+{analogy}🎭 '''전단지 뿌리기.''' 받는 사람과 약속하지 않고(connectionless), 받았는지 확인도 안 하고(no error control), 상대가 바쁘든 말든(no flow control) 그냥 돌린다. 빠르고 싸다. 대신 몇 장 날아가도 모른다.{/analogy}
+
+{quiz}UDP 와 IP 의 공통점 두 가지와, 둘의 층 차이를 쓰시오.{/quiz}
+{answer}공통점: 둘 다 '''connectionless''', 둘 다 '''flow/error/congestion control 없음'''. 차이: UDP 는 '''transport''' layer(프로그램 간, port), IP 는 '''network''' layer(호스트 간, IP 주소).{/answer}
+
+== 관련 문서 ==
+* [[TCP]] · [[IP]] · [[transport layer]] · [[PDU]] · [[CH01 Introduction]]

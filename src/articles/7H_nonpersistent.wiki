@@ -1,0 +1,36 @@
+key: nonpersistent
+title: Nonpersistent (비지속)
+category: 7강 MAC, 용어
+---
+'''Nonpersistent'''는 [[persistence method]] 중 가장 소극적인 방식이다. idle 이면 즉시 보내지만, busy 면 '''계속 듣지 않고''' 랜덤 시간 기다렸다가 다시 듣는다. L6 p.36.
+
+{def}"If the line is idle, it sends immediately. If the line is not idle, it '''waits a random amount of time''' and senses the line again." (p.36)
+회선이 idle 이면 즉시 보낸다. idle 이 아니면 랜덤한 시간만큼 기다린 뒤 다시 회선을 sense 한다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''non-persistent''' = 끈질기지 '''않다'''. 채널을 붙들고 있지 않고 자리를 뜬다. 랜덤 대기라서 여러 대기자가 '''서로 다른 시각에''' 돌아온다 → 동시 출발이 줄어든다.
+
+[[img:L6-40.png|p.40 b. Nonpersistent — busy 면 "Wait randomly" 후 다시 확인|medium]]
+
+<pre class="txt">
+loop:
+  Channel busy? → true  → Wait randomly → loop
+                → false → '''Station can transmit'''
+</pre>
+
+== 장단점 ==
+{|
+! || [[1-persistent]] || nonpersistent
+|-
+| 충돌 || 높음 (동시 출발) || '''낮음''' (돌아오는 시각이 흩어짐)
+|-
+| 채널 효율 || 높음 || '''낮음''' — 채널이 비었는데 모두 기다리는 중일 수 있음
+|}
+
+{analogy}🎭 '''전화가 통화 중이면 끊고 나중에 다시 거는 사람.''' 수화기를 들고 계속 기다리지(1-persistent) 않고, 끊었다가 아무 때나 다시 건다. 다른 사람과 동시에 걸 확률은 줄지만, 상대가 통화를 끝낸 직후의 빈 시간은 흘려보낸다.{/analogy}
+
+{quiz}Nonpersistent 가 1-persistent 보다 충돌이 적은 이유와, 대신 잃는 것은?{/quiz}
+{answer}busy 일 때 '''각자 랜덤 시간'''을 기다리므로 대기자들이 idle 순간에 한꺼번에 몰리지 않아 충돌이 적다. 대신 채널이 idle 이 된 뒤에도 모두 대기 중이라 '''채널이 노는 시간'''이 생겨 효율이 떨어진다.{/answer}
+
+== 관련 문서 ==
+* [[persistence method]] · [[1-persistent]] · [[p-persistent]] · [[CSMA]]

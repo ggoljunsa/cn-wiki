@@ -1,0 +1,114 @@
+key: CH02 Multiplexing
+title: CH02 Multiplexing (다중화 — FDM·TDM)
+category: 5강 Analog Transmission, 메인
+---
+'''Multiplexing'''은 CH02 Physical Layer 의 마지막 절(L4 p.46–52)로, "'''하나의 링크를 여러 쌍의 장치가 동시에 나눠 쓰는 법'''"을 다룬다. 나누는 자원에 따라 두 가지: 주파수를 나누는 [[FDM]], 시간을 나누는 [[TDM]].
+
+교수의 한 줄 요약: "This is why '''time and frequency are regarded as resources'''." 이 절이 끝나면 physical layer 가 끝나고 [[CH03 Data-Link Control|data-link layer]] 로 넘어간다.
+
+{info}페이지 번호는 '''L4 슬라이드 인쇄 번호'''. p.46 은 섹션 표지(FDM / TDM).{/info}
+
+== p.47 — Multiplexing 이란 ==
+[[img:L4-47.png|p.47 n Input lines → MUX → 1 link, n channels → DEMUX → n Output lines|large]]
+
+{def}"Whenever the '''bandwidth of a medium''' linking two devices is '''greater than the bandwidth needs of the devices''', the link can be shared."
+"The set of techniques that allow '''the simultaneous transmission of multiple signals across a single data link'''."
+"'''Dividing a link into channels'''."{/def}
+
+전제 조건이 중요하다: 링크의 [[bandwidth]] 가 한 쌍의 장치가 쓰는 것보다 '''클 때''' 남는 부분을 나눠 준다. 교수: "If you have sufficient amount of bandwidth, then you can share that bandwidth with many different applications. That is just the principle of multiplexing."
+
+{analogy}🎭 '''고속도로.''' 차 한 대(장치 한 쌍)가 쓰기엔 8차로 고속도로(링크)가 너무 넓다. [[FDM]] = '''차로를 나눠''' 각 회사 트럭이 자기 차로로만 달리게(차로 사이 흰 선 = [[guard band]]). [[TDM]] = '''차로는 하나지만 출발 시각을 번갈아''' 1번 회사, 2번 회사, 3번 회사, 4번 회사 순으로 트럭을 내보냄. 톨게이트 입구의 합류 = MUX, 출구의 분기 = DEMUX.{/analogy}
+
+== p.48 — 용어 네 개 ==
+[[img:L4-48.png|p.48 MUX(Combines, many to one) / DEMUX(Separate, one to many) / Link(Physical path) / Channel(portion of a link)|medium]]
+
+{|
+! 용어 || 슬라이드 정의 || 한 줄
+|-
+| '''Multiplexer (MUX)''' || "'''Combines''' transmission streams into a single stream" || '''many to one'''
+|-
+| '''Demultiplexer (DEMUX)''' || "'''Separate''' the stream back into its component transmissions" || '''one to many'''
+|-
+| '''Link''' || "Physical path" || 물리적 선로 (1개)
+|-
+| '''Channel''' || "The '''portion of a link''' that carries a transmission between a given pair of lines" || 링크의 일부 ($n$개)
+|}
+→ [[MUX와 DEMUX]]. '''1 link, n channels''' 가 이 절의 공식 같은 문장이다.
+
+[[anim:fdm_tdm|왼쪽 FDM(주파수축에 세 채널이 guard band 를 두고 나란히)과 오른쪽 TDM(시간 슬롯 4 3 2 1 반복)을 번갈아 보며 '무엇을 나누는가'를 한 단어로 말해 보라]]
+
+== p.49–51 — FDM ==
+[[img:L4-49.png|p.49 FDM — 링크 하나를 Channel 1/2/3 의 주파수 띠로 나눔|medium]]
+
+{def}"An '''analog technique''' that can be applied when: '''The bandwidth of a link is greater than the combined bandwidths of the signals''' to be transmitted." "Channels can be separated by strips of unused bandwidth = '''guard bands'''."{/def}
+
+* 조건: 링크 대역폭 > 신호 대역폭들의 '''합''' (+ guard band)
+* 채널 사이 빈 띠 = [[guard band]] → 이웃 채널 간섭 방지
+
+[[img:L4-50.png|p.50 FDM 다중화 — Baseband analog signal 3개를 각각 Carrier f₁ f₂ f₃ 로 Modulator 에 통과 → + 로 합산 → composite signal|large]]
+
+'''송신(p.50)''': "Each source '''modulates''' their signals with '''distinct carrier frequencies'''." 각 신호를 서로 다른 [[carrier|반송파]] $f_1, f_2, f_3$ 로 [[modulation|변조]]해 주파수축의 다른 자리로 옮긴 뒤 '''더한다(+)'''. 결과는 하나의 [[composite signal]].
+
+[[img:L4-51.png|p.51 FDM 역다중화 — Filter 로 대역별 분리 → 각 Carrier 의 Demodulator → 원래 baseband 신호|large]]
+
+'''수신(p.51)''': "'''Filters''' are used to decompose the multiplexed signal." 필터로 대역별로 떼어 낸 뒤 각 반송파의 Demodulator 로 원래 신호를 복원. 교수: "don't worry — we can extract each information separately by using some '''signal processing techniques such as filtering'''."
+
+== p.52 — TDM ==
+[[img:L4-52.png|p.52 TDM — 4 개 입력이 시간 슬롯 1 2 3 4 를 돌아가며 차지, DEMUX 가 순서대로 분배|large]]
+
+{def}"'''Digital process''' that allows several connections to share the high bandwidth of a link." "'''Time is shared''', instead of sharing a portion of the bandwidth (as in FDM)."{/def}
+
+각 입력이 '''시간 슬롯'''을 하나씩 돌아가며 차지한다(그림: 1 2 3 4 | 1 2 3 4 | …, 색은 서로 다른 라운드). 모든 슬롯이 링크의 '''전체 대역폭'''을 쓴다 — 나누는 건 시간뿐. DEMUX 는 슬롯 순서를 알고 있어 각 출력 회선에 돌려준다. 교수: "this communication does not yield some interference … it is safely demuxed."
+
+== FDM vs TDM ==
+{|
+! || [[FDM]] || [[TDM]]
+|-
+| 나누는 자원 || '''주파수''' (대역폭 일부) || '''시간''' (슬롯)
+|-
+| 성격 || '''analog''' technique || '''digital''' process
+|-
+| 각 채널이 쓰는 대역 || 링크의 일부 띠 || 링크 전체
+|-
+| 송신 측 || 서로 다른 반송파로 변조 → 합산 || 슬롯마다 차례로 끼워 넣기
+|-
+| 수신 측 || 필터 → 복조 || 슬롯 순서대로 분배
+|-
+| 간섭 방지 || [[guard band]] || 슬롯 경계 (동기)
+|-
+| 비유 || 라디오 채널 || 회전 초밥 접시
+|}
+
+{exam}🎯 "FDM = '''analog''', TDM = '''digital'''" 과 "FDM 은 '''주파수'''를, TDM 은 '''시간'''을 나눈다"가 짝으로 나오기 쉽다. 교수의 결론 문장: "If you use different frequency bands or different time slots, then you may not be interfered. This is why '''time and frequency are regarded as resources'''."{/exam}
+
+{quiz}FDM 을 적용할 수 있는 조건을 슬라이드 문구로 쓰고, guard band 가 왜 필요한지 설명하시오.{/quiz}
+{answer}조건: "'''The bandwidth of a link is greater than the combined bandwidths of the signals to be transmitted'''." guard band 는 채널 사이에 두는 '''쓰지 않는 대역'''으로, 변조된 신호의 스펙트럼이 완벽히 칼같이 끊기지 않아(예: [[roll-off factor]] 만큼 퍼짐) 이웃 채널과 겹치는 것을 막고, 수신 측 필터가 채널을 깨끗이 분리할 수 있게 한다.{/answer}
+
+{quiz}다음 중 TDM 에 대한 설명으로 틀린 것은? (a) digital process 이다 (b) 각 연결은 링크 대역폭의 일부만 쓴다 (c) 시간을 공유한다 (d) DEMUX 는 슬롯 순서대로 출력 회선에 분배한다{/quiz}
+{answer}'''(b)'''. 링크 대역폭의 일부를 나눠 쓰는 것은 '''FDM''' 이다. TDM 은 "Time is shared, '''instead of''' sharing a portion of the bandwidth" — 각 슬롯 동안은 링크 전체 대역폭을 쓴다.{/answer}
+
+== 🎙 실제 수업 기록 (9/10 목, 녹음본 기준) ==
+수업 마지막 약 9분(1:02:50~). "I'm happy that I can make my goal of this course to '''finish the physical layer part''' in multiplexing."
+* '''정의''': "techniques that allow us to perform '''simultaneous transmissions of multiple signals within a single data link'''."
+* '''원리''': "If you have sufficient amount of bandwidth, then you can share that bandwidth … It is just dividing a link into some channels."
+* '''MUX / DEMUX''': MUX 는 입력 스트림들을 채널에 배정해 합치고(many to one), DEMUX 는 반대로 채널의 신호를 출력 회선으로 분리(one to many). "Link 는 physically wired or wireless, channel 은 a portion of it."
+* '''FDM''': "just an analog technique … dividing the bandwidth to different channels. … If you use different frequency bands from other applications, then you cannot be interfered." 수신 측은 "filtering" 으로 분리 — "signal processing is very important".
+* '''핵심 문장''': "This is why '''time and frequency are regarded as resources'''." (앞서 [[sampling rate]] 에서도 "Time and frequency are very important resources" 라고 했다)
+* '''TDM''': "using time resource to multiplex" — 슬롯 색이 서로 다른 정보, "does not yield interference, safely demuxed".
+* '''일상 예''': "when you use your phone, you are '''implicitly sharing your time or frequencies with others'''."
+* '''full-duplex 여담''': [[full-duplex]] 처럼 '''한 대역·한 시각에''' 송수신을 동시에 하는 것은 "'''extremely difficult''' even in modern communication techniques" — 그래서 시간이나 주파수로 나눈다.
+* 다음 시간: "we will move on to the second part, which is '''link layer'''."
+
+== 시험 대비 핵심 요약 ==
+# Multiplexing = 하나의 데이터 링크로 여러 신호를 '''동시에''' 보내는 기법들 = '''dividing a link into channels'''. 조건: 링크 대역폭 > 장치들이 필요로 하는 대역폭.
+# MUX = combines, '''many to one''' / DEMUX = separates, '''one to many''' / Link = physical path / Channel = portion of a link. '''1 link, n channels.'''
+# ⭐⭐ [[FDM]] = '''analog''', 주파수를 나눔. 조건: 링크 대역폭 > 신호 대역폭의 합. 채널 사이 [[guard band]].
+# FDM 송신: 서로 다른 반송파 $f_1, f_2, f_3$ 로 변조 → 합산. 수신: '''filter''' → demodulator.
+# ⭐⭐ [[TDM]] = '''digital''', '''시간'''을 나눔 (대역폭의 일부를 나누는 FDM 과 대조). 슬롯 순서대로 분배.
+# 교수 결론: "'''time and frequency are resources'''".
+
+== 관련 문서 ==
+* 이전: [[CH02 Analog Transmission]] · [[CH02 Digital Transmission]] · 다음: [[CH03 Data-Link Control]]
+* 용어: [[multiplexing]] · [[MUX와 DEMUX]] · [[FDM]] · [[TDM]] · [[guard band]]
+* 배경: [[bandwidth]] · [[carrier]] · [[modulation]] · [[composite signal]] · [[full-duplex]]
+* 비슷한 발상 (MAC): [[channelization]]

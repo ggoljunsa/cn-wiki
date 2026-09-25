@@ -1,0 +1,68 @@
+key: bandwidth
+title: Bandwidth (대역폭)
+category: 2강 Signals, 용어, 핵심
+---
+'''Bandwidth'''는 [[composite signal]] 에 포함된 '''주파수의 범위''', 즉 '''최고 주파수 − 최저 주파수'''다. L2 p.30. 그런데 L2 p.61 에서 같은 단어가 '''bps''' 단위로도 쓰인다 — 한 단어, 두 의미. 이 과목 공식([[Nyquist bit rate]], [[Shannon capacity]])의 $B$ 는 '''Hz''' 쪽이다.
+
+{def}L2 p.30 "Bandwidth"
+"The range of frequencies contained in a composite signal — The '''difference between the highest and the lowest frequencies''' contained in that signal."
+L2 p.61 "Performance Metrics — Bandwidth: Two different measuring values"
+* "'''Bandwidth in Hertz''': the range of frequencies contained in a composite signal or the range of frequencies a channel can pass."
+* "'''Bandwidth in bps''': the number of bits per second that a channel, a link, or even a network can transmit."{/def}
+
+$$B = f_{high} - f_{low}$$
+
+[[img:L2-30.png|p.30 — 주기 신호(이산 막대)도 비주기 신호(연속 면적)도 1000~5000 Hz → bandwidth = 4000 Hz|large]]
+
+{exam}⭐⭐⭐ 교수(9/1): "'''Please remember this one and it is very important''' — 두 신호의 bandwidth 는 모두 '''4000 Hz''', 간단히 4 kHz. 하나는 discrete, 하나는 continuous 인데도 똑같다." 계산은 모양과 무관하게 '''가장 오른쪽 − 가장 왼쪽'''.{/exam}
+
+== 이름에서 개념 끌어내기 ==
+'''band''' = 띠, '''width''' = 폭. 주파수 축 위에 신호가 차지하는 '''띠의 폭'''. "어디서부터 어디까지"가 아니라 "'''얼마나 넓은가'''"다 — 1000~5000 Hz 와 11000~15000 Hz 는 위치가 달라도 bandwidth 는 같이 4000 Hz.
+
+{analogy}🎭 '''도로의 차선 폭.''' 주파수 축을 도로라고 하면 bandwidth 는 신호가 차지하는 '''차선 폭'''이다. 폭이 넓을수록 한 번에 더 많은 차(심볼)를 보낼 수 있다 — 그래서 [[Nyquist bit rate]] 가 "대역폭 $B$ 인 채널은 초당 $2B$ 개 심볼"이라고 말한다. 사인파 하나는 폭 0 짜리 선 하나라서 아무것도 싣지 못한다.{/analogy}
+
+== ⚠️ 사인파 하나의 bandwidth = 0 ==
+{warn}⚠️ '''여기서 틀렸다 (0920 NotebookLM).''' "정현파 3요소"에 bandwidth 를 골랐다. 하지만
+* bandwidth 는 '''composite signal''' 의 속성이다 (p.30 원문: "contained in a '''composite''' signal").
+* [[사인파]] 하나는 주파수가 하나 → 최고 = 최저 → '''bandwidth = 0'''.
+* 사인파 3요소는 '''peak amplitude, frequency, phase''' (p.18).{/warn}
+
+== 두 가지 의미 — Hz vs bps (p.61–62) ==
+{|
+! || Bandwidth in '''Hertz''' || Bandwidth in '''bps'''
+|-
+| 뜻 || 신호가 포함하는 / 채널이 '''통과시키는''' 주파수 범위 || 채널·링크·네트워크가 '''전송할 수 있는''' 초당 비트 수
+|-
+| 단위 || Hz || bps
+|-
+| 누구의 말 || 신호처리·물리 계층 엔지니어 || 네트워크·ISP ("1 Gbps 요금제")
+|-
+| 공식 속 기호 || [[Nyquist bit rate]], [[Shannon capacity]] 의 $B$ || [[throughput]] 과 비교되는 값, [[bandwidth-delay product]] 의 bandwidth
+|-
+| Example 2.10 || 가입자 회선 = '''4 kHz''' || 같은 회선 = 최대 '''56,000 bps''' (모뎀 사용)
+|}
+
+{warn}같은 회선이 "4 kHz" 이면서 "56 kbps" 다. 둘은 '''단위가 다른 두 측정값'''이지 모순이 아니다. Hz 대역폭이 bps 대역폭의 '''상한을 정한다'''(Nyquist·Shannon). 자세히 → [[bps와 Hz]].{/warn}
+
+== 어디서 다시 나오나 ==
+* [[디지털 신호]] (p.36): 수직 모서리 → 최고 주파수 ∞ → '''bandwidth = ∞'''
+* [[low-pass 채널]] (bandwidth 가 0 부터) vs [[bandpass 채널]] ($f_1$~$f_2$)
+* [[Nyquist bit rate]]: $2 \times B \times \log_2 L$ · [[Shannon capacity]]: $B\log_2(1+\text{SNR})$ — 둘 다 '''Hz 단위 B'''
+* [[throughput]] (p.63): bandwidth(bps) = '''potential''', throughput = '''actual'''
+* [[bandwidth-delay product]] (p.66): 파이프의 '''단면적'''
+* [[FDM]], [[guard band]]: 대역폭을 나눠 쓰기
+
+[[anim:composite_fourier|마지막 장면의 "bandwidth = 최고 − 최저" 화살표를 보라. 막대가 몇 개든 양 끝만 본다]]
+
+{quiz}(a) 어떤 주기 합성 신호가 100, 300, 500, 700, 900 Hz 성분을 갖는다. bandwidth 는? (b) 이 신호의 bandwidth 가 20 Hz 이고 최고 주파수가 60 Hz 라면 최저 주파수는?{/quiz}
+{answer}(a) $900 - 100 = $ '''800 Hz''' (중간 성분은 상관없다)
+(b) $f_{low} = 60 - 20 = $ '''40 Hz'''{/answer}
+
+{quiz}"우리 집 인터넷 bandwidth 는 500 Mbps 다"와 "전화선의 bandwidth 는 3000 Hz 다". 두 문장의 bandwidth 는 각각 어떤 의미인가?{/quiz}
+{answer}앞 문장 = '''bandwidth in bps''' (전송 가능한 초당 비트 수), 뒤 문장 = '''bandwidth in Hertz''' (통과시키는 주파수 범위). L2 p.61.{/answer}
+
+== 관련 문서 ==
+* [[composite signal]] · [[Fourier analysis]] · [[사인파]] · [[주파수]]
+* [[bps와 Hz]] · [[throughput]] · [[bandwidth-delay product]]
+* [[Nyquist bit rate]] · [[Shannon capacity]] · [[low-pass 채널]] · [[bandpass 채널]]
+* [[CH02 Signals]] · [[CH02 Transmission]] · [[0920 오답 복기]]

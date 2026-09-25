@@ -1,0 +1,52 @@
+key: TCP/IP 프로토콜 스위트
+title: TCP/IP Protocol Suite (TCP/IP 5계층)
+category: 1강 Introduction, 용어
+---
+'''TCP/IP protocol suite''' — 오늘날 인터넷이 실제로 쓰는 '''5계층''' 프로토콜 묶음. 이 과목(와 교재 [[Forouzan]])의 뼈대다 (L1 p.30–32).
+
+{def}"TCP/IP is a '''protocol suite''' — A set of protocols organized in different layers / '''Hierarchical''' protocol — Each upper level protocol is supported by the services provided by one or more lower level protocols" (L1 p.30)
+TCP/IP 는 여러 층으로 조직된 프로토콜들의 집합(프로토콜 스위트)이다. 계층적이어서, 위층 프로토콜은 하나 이상의 아래층 프로토콜이 제공하는 서비스의 지원을 받는다.{/def}
+
+[[img:L1-30.png|TCP/IP 5계층 — Application(Layer 5) · Transport(4) · Network(3) · Data link(2) · Physical(1)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''".
+* '''TCP/IP''' — 스위트 안의 대표 두 프로토콜 이름을 붙인 것: [[transport layer]] 의 [[TCP]] 와 [[network layer]] 의 [[IP]]. 스위트 전체가 이 둘로 불릴 만큼 핵심이다.
+* '''suite''' — "한 벌"(정장 한 벌, 호텔 스위트룸). 따로따로가 아니라 '''함께 쓰도록 짜 맞춘 세트'''.
+* '''hierarchical''' — 위계. 위가 아래 위에 '''얹혀''' 있다(supported by).
+
+== 5계층 한 장 요약 ==
+{|
+! # || 계층 || 역할 (p.33–37) || 통신 범위 || PDU (p.32) || 주소 (p.39) || 대표 프로토콜
+|-
+| 5 || [[application layer|Application]] || 프로세스 간 메시지 교환 || process-to-process || message || names || HTTP, SMTP, FTP, DNS…
+|-
+| 4 || [[transport layer|Transport]] || 앱 ↔ 대응 앱 전달 || end-to-end || segment / user datagram || [[포트 번호|port]] || [[TCP]], [[UDP]]
+|-
+| 3 || [[network layer|Network]] || 최적 경로 선택 || host-to-host || datagram || logical (IP) || [[IP]] (+ICMP, IGMP, DHCP, [[ARP]])
+|-
+| 2 || [[data-link layer|Data link]] || 링크 하나 건너기 || hop (link) || frame || link-layer ([[MAC 주소|MAC]]) || 링크별 (Ethernet, WiFi…)
+|-
+| 1 || [[physical layer|Physical]] || 비트 → 신호 || hop (link) || bits || — || —
+|}
+
+== 누가 몇 층을 갖나 (p.31) ==
+[[img:L1-31.png|Logical Connections in TCP/IP — Switch 는 Data link·Physical, Router 는 Network 까지|large]]
+* End host: '''5층 전부'''
+* [[라우터]]: '''Network · Data link · Physical''' (3층)
+* [[스위치]]: '''Data link · Physical''' (2층)
+
+{warn}⭐ '''0920 퀴즈에서 틀렸다''' — 중간 노드의 계층, PDU 이름, IP 의 계층, TCP 의 연결 방식 네 문항이 전부 이 표 안에 있다. 이 표를 백지에 채울 수 있으면 CH01 의 오답 절반이 사라진다. (재시험 A 번 문항과 같은 표){/warn}
+
+[[anim:layer_stack|message 가 호스트 A 의 5층을 내려가 스위치(2층)·라우터(3층)를 거쳐 호스트 B 로 올라가는 동안, 각 장치가 몇 층까지 올라가는지 손가락으로 따라가 보라]]
+
+== 외우는 요령 ==
+{tip}아래에서 위로 "'''피(Physical) 데(Data link) 네(Network) 트(Transport) 앱(Application)'''". PDU 는 위에서 아래로 "'''메(message) 세(segment) 데(datagram) 프(frame) 비(bits)'''".{/tip}
+
+{analogy}🎭 '''5층짜리 물류 회사.''' 5층 기획팀(application)이 제품을 만들고, 4층 고객관리팀(transport)이 "어느 고객의 어느 주문인지" 챙기고, 3층 경로팀(network)이 "서울→부산 어느 길로" 정하고, 2층 구간배송팀(data link)이 "이번 구간 트럭"에 싣고, 1층 도로(physical)를 달린다. 중간 물류센터(라우터)엔 3층까지만 있다 — 제품을 뜯어볼 기획팀이 거기 없다.{/analogy}
+
+{quiz}TCP/IP 가 "hierarchical" 하다는 말을 슬라이드 문장으로 설명하고, transport layer 를 예로 들어 구체화하시오.{/quiz}
+{answer}"Each upper level protocol is '''supported by the services provided by''' one or more lower level protocols." 예: transport layer 의 [[TCP]] 는 network layer 의 [[IP]] 가 제공하는 host-to-host 전달 서비스 위에서, 그 호스트 안의 올바른 프로세스까지 end-to-end 전달을 얹는다.{/answer}
+
+== 관련 문서 ==
+* [[OSI 7계층]] · [[프로토콜 계층화]] · [[논리적 연결]] · [[캡슐화]] · [[PDU]] · [[주소 체계]] · [[CH01 Introduction]]

@@ -1,0 +1,36 @@
+key: VCO
+title: VCO (Voltage-Controlled Oscillator, 전압 제어 발진기)
+category: 5강 Analog Transmission, 용어
+---
+'''VCO'''는 입력 '''전압'''에 따라 '''발진 주파수'''가 바뀌는 발진기다. [[FSK]] 의 구현 장치로 L4 p.43 에 나온다.
+
+{def}"Implementation of FSK" — 디지털 신호 → [ '''VCO''' / '''Voltage-controlled oscillator''' ] → FSK 신호 (p.43 그림){/def}
+
+[[img:L4-43.png|p.43 비트 신호(빨강)가 VCO 에 들어가면 1 구간은 빽빽한, 0 구간은 성긴 파형(파랑)이 나온다|large]]
+
+== 이름에서 개념 끌어내기 ==
+이름을 세 조각으로 읽으면 끝이다.
+* '''Oscillator''' — 발진기, 스스로 사인파를 만들어 내는 장치 ([[ASK]]·[[PSK]] 그림의 "Oscillator" 와 같은 것)
+* '''Controlled''' — 무언가에 의해 조절되는
+* '''Voltage-''' — '''전압'''에 의해
+→ "전압으로 떨림 속도가 조절되는 발진기". 교수: "To be honest, I don't know [much about] voltage-controlled oscillator because I hate electric circuits, but '''it is inherently controlled by voltage for varying the rate of oscillation'''." — 교수도 이름으로만 설명했다. 시험에서도 이름 수준이면 충분하다.
+
+{analogy}🎭 '''가속 페달이 달린 메트로놈.''' 페달(전압)을 밟으면 빠르게 똑딱(높은 주파수), 떼면 느리게 똑딱(낮은 주파수). 비트 1 에서 밟고 0 에서 떼면 그대로 FSK 가 된다.{/analogy}
+
+== ASK/PSK 구현과 비교 ==
+{|
+! 방식 || 구현 장치 || 입력
+|-
+| [[ASK]] || Oscillator + '''Multiplier''' || unipolar NRZ
+|-
+| [[PSK]] || Oscillator + '''Multiplier''' || polar NRZ
+|-
+| [[FSK]] || '''VCO''' (곱셈기 없음) || 디지털 신호 전압
+|}
+ASK·PSK 는 반송파의 '''크기/부호'''를 바꾸니 곱하면 되지만, FSK 는 '''주파수'''를 바꿔야 해서 발진기 자체를 조종해야 한다.
+
+{quiz}FSK 구현에 곱셈기 대신 VCO 를 쓰는 이유는?{/quiz}
+{answer}FSK 는 반송파의 '''주파수'''를 비트에 따라 바꿔야 한다. 고정 주파수 반송파에 무언가를 곱해서는 진폭이나 부호(위상)만 바뀔 뿐 주파수는 바뀌지 않으므로, '''입력 전압으로 발진 주파수 자체를 조절'''하는 VCO 가 필요하다.{/answer}
+
+== 관련 문서 ==
+* [[FSK]] · [[ASK]] · [[PSK]] · [[carrier]]

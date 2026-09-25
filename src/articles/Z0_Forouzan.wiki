@@ -1,0 +1,59 @@
+key: Forouzan
+title: Forouzan (교재 — Data Communications and Networking with TCP/IP Protocol Suite 6e)
+category: 용어, 안내
+---
+이 과목의 교재. '''Behrouz A. Forouzan''', ''Data Communications and Networking with TCP/IP Protocol Suite'', '''6th Edition''', ISE Paperback, McGraw Hill, 2021 (L0 p.6). 슬라이드 그림(Maria 와 Ann, Five Components, Encapsulation …)이 대부분 이 책의 그림이다.
+
+[[img:L0-6.png|Textbook — Data Communications & Networking with TCP/IP Protocol Suite, Sixth Edition, Behrouz A. Forouzan|medium]]
+
+{def}"Data Communications and Networking with TCP/IP Protocol Suite / 6th Edition, ISE Paperback / Behrouz A. Forouzan / McGraw Hill, 2021" (L0 p.6){/def}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''" — 책 제목도 그렇다. '''Data Communications''' ([[데이터 통신]], CH01–CH02 의 physical 쪽) '''and Networking''' (망 엮기, CH03 이후) '''with TCP/IP Protocol Suite''' ([[TCP/IP 프로토콜 스위트]] 5층을 뼈대로). 제목이 곧 목차 순서다: 아래층(데이터 통신)부터 위로 쌓아 올라간다.
+
+== 강의 일정 (L0 p.7, Tentative Schedule) ==
+{|
+! Chapter || 제목 || 이 위키
+|-
+| 1 || Introduction || [[CH01 Introduction]]
+|-
+| 2 || Physical Layer || [[CH02 Signals]] · [[CH02 Transmission]] · [[CH02 Digital Transmission]] · [[CH02 Analog Transmission]] · [[CH02 Multiplexing]]
+|-
+| 3 || Data-Link Layer || [[CH03 Data-Link Control]] · [[CH03 Media Access Control]] · [[CH03 Link-Layer Addressing]]
+|-
+| 4 || Local Area Networks: LANs || (중간고사 이후)
+|-
+| 5 || Wide Area Networks: WANs || 
+|-
+| 6 || (슬라이드 목록에 없음) || 
+|-
+| 7 || Network Layer: Data Transfer || 
+|-
+| 8 || Network Layer: Routing of Packets || 
+|-
+| 9 || Transport Layer || 
+|-
+| 10 || Application Layer || 
+|}
+{info}순서가 '''아래층 → 위층'''(Physical → Data-link → LAN/WAN → Network → Transport → Application)이다. [[TCP/IP 프로토콜 스위트]]를 바닥부터 쌓는 bottom-up 구성. 중간고사 범위는 CH01–CH03 (슬라이드 덱 L1–L6).{/info}
+
+== 성적 (L0 p.8) ==
+{|
+! Attendance || Homework || Midterm exam || Final exam
+|-
+| 10% || 10% || '''40%''' || '''40%'''
+|}
+정책: 부정행위·표절 → course failure, 결석 1/4 초과 → F (L0 p.9). 자세한 건 [[교수 소개]].
+
+== 과목 소개 (L0 p.4–5) ==
+* "This course covers the '''design principles, control algorithms, and networking techniques''', both basic and advanced, that underlie the Internet and modern network systems."
+* "We further examine the core functions and operating principles of each network layer, including the '''transport, routing, and medium access control''' layers."
+* Focus: "Understanding of '''OSI 7 layers''' in Computer Networks and Modern Network Issues." → [[OSI 7계층]]
+
+{analogy}🎭 '''건물 짓기.''' 1장은 조감도(전체 5층 건물 모양), 2장은 기초 공사(physical), 3장은 1층 골조(data-link), 그 뒤로 한 층씩 올린다. 중간고사는 '''조감도 + 기초 + 1층'''까지.{/analogy}
+
+{quiz}L0 p.7 의 일정표가 TCP/IP 5층 중 어느 방향(top-down / bottom-up)으로 진행되는지와, 그 근거가 되는 장 순서를 쓰시오.{/quiz}
+{answer}'''Bottom-up'''. Ch 2 Physical → Ch 3 Data-Link → Ch 4–5 LAN/WAN → Ch 7–8 Network → Ch 9 Transport → Ch 10 Application.{/answer}
+
+== 관련 문서 ==
+* [[교수 소개]] · [[CH01 Introduction]] · [[TCP/IP 프로토콜 스위트]] · [[시험 정보]]

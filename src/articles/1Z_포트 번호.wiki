@@ -1,0 +1,41 @@
+key: 포트 번호
+title: 포트 번호 (Port Number)
+category: 1강 Introduction, 용어
+---
+'''Port number''' — [[transport layer]] 의 주소. 한 호스트 안에서 '''어느 응용 프로그램(프로세스)'''인지 가리킨다 (L1 p.39).
+
+{def}Addressing (L1 p.39): Segment / User datagram — '''Transport layer''' — '''Port numbers''' — Examples: '''80, 443, 53'''
+전송 계층의 주소는 포트 번호이며, 예로 80, 443, 53 이 있다.{/def}
+
+[[img:L1-39.png|Addressing — Transport layer 의 주소는 Port numbers (80, 443, 53)|medium]]
+
+== 슬라이드 예시 세 개 ==
+{|
+! 포트 || 누구의 문인가 (참고) || [[application layer]] 프로토콜 (p.37)
+|-
+| '''80''' || 웹 서버 || HTTP (WWW)
+|-
+| '''443''' || 보안 웹 서버 || HTTPS (HTTP + SSL/TLS)
+|-
+| '''53''' || 이름 서버 || DNS (finding network address)
+|}
+{info}슬라이드엔 숫자만 있다. 어느 서비스의 번호인지는 참고 지식 — 알아 두면 "port = 프로그램을 가리키는 번호"가 선명해진다.{/info}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''port''' = 항구, 문(portal). 배(데이터)가 한 나라(호스트)에 도착해도 '''어느 항구로''' 들어가느냐에 따라 가는 곳이 다르다. IP 주소가 '''나라/건물'''을 정한다면 포트는 '''그 안의 문'''을 정한다. transport 의 정의 "deliver it to the '''corresponding application program'''" 을 실제로 구현하는 게 이 번호다.
+
+{|
+! 주소 || 층 || 가리키는 것
+|-
+| IP 주소 (192.168.0.1) || [[network layer|Network]] || '''호스트''' (host-to-host)
+|-
+| 포트 번호 (80) || [[transport layer|Transport]] || 그 호스트 안의 '''프로세스''' (end-to-end, 앱 ↔ 앱)
+|}
+
+{analogy}🎭 '''아파트 주소와 호수.''' "대구 달성군 테크노중앙대로 333"(IP 주소)까지만 쓰면 택배가 건물 앞에서 멈춘다. "'''E7동 213호'''"(포트)까지 써야 교수님 연구실에 닿는다. 한 건물(서버)에 웹(80호), DNS(53호) 가 따로 산다.{/analogy}
+
+{quiz}한 서버 컴퓨터가 웹 서버와 DNS 서버를 동시에 돌린다. 도착한 segment 를 어느 프로그램에 줄지 무엇으로 구분하는가?{/quiz}
+{answer}'''포트 번호'''(transport layer 주소). 예: 80 이면 웹 서버, 53 이면 DNS 서버. IP 주소는 둘 다 같으므로 IP 로는 구분할 수 없다.{/answer}
+
+== 관련 문서 ==
+* [[주소 체계]] · [[transport layer]] · [[TCP]] · [[UDP]] · [[application layer]] · [[CH01 Introduction]]

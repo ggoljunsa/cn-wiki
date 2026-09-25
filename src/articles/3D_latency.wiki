@@ -1,0 +1,47 @@
+key: latency
+title: Latency (Delay, 지연)
+category: 3강 Transmission, 용어
+---
+'''Latency'''(delay)는 '''메시지 전체가 목적지에 완전히 도착하기까지 걸리는 시간'''이다. 네 성분의 합: '''[[propagation time]] + [[transmission time]] + queuing time + processing delay'''. L2 p.65.
+
+{def}L2 p.65 "Latency (Delay)"
+"How long it takes for an '''entire message''' to '''completely arrive''' at the destination.
+'''Latency = propagation time + transmission time + queuing time + processing delay'''
+Propagation time = Distance / (Propagation speed) — The time required for a bit to travel from the source to the destination"{/def}
+
+[[img:L2-65.png|p.65 — latency 의 네 성분과 propagation time 정의|medium]]
+
+== 네 성분 ==
+{|
+! 성분 || 무엇 || 식 / 좌우 요인
+|-
+| '''[[propagation time]]''' || 비트 '''하나'''가 출발지에서 목적지까지 '''이동'''하는 시간 || 거리 / 전파 속도
+|-
+| '''[[transmission time]]''' || 메시지의 '''모든 비트를 선로에 올려놓는''' 시간 || 메시지 크기 / bandwidth (Forouzan)
+|-
+| '''queuing time''' || 중간 장비([[라우터]])의 '''대기열'''에서 기다리는 시간 || 네트워크 혼잡, 매번 다름
+|-
+| '''processing delay''' || 장비가 패킷을 '''처리'''(헤더 확인, 경로 결정)하는 시간 || 장비 성능
+|}
+
+== 이름에서 개념 끌어내기 ==
+'''latent''' = 숨어 있는, 잠복한. 요청을 보내고 결과가 나타나기까지 "'''숨어 있는 시간'''". 슬라이드는 괄호로 '''(Delay)''' 라고 같은 뜻의 쉬운 말을 붙였다. 정의의 핵심 단어는 "'''entire''' message ... '''completely''' arrive" — 첫 비트 도착이 아니라 '''마지막 비트까지''' 도착해야 끝이다. 그래서 transmission time 이 들어간다.
+
+{analogy}🎭 '''택배.''' ① 물건을 트럭에 싣는 시간(transmission — 짐이 많을수록 오래), ② 트럭이 서울→부산을 달리는 시간(propagation — 거리에 비례), ③ 물류센터에서 차례를 기다리는 시간(queuing — 명절엔 길다), ④ 물류센터에서 송장 확인·분류하는 시간(processing). 네 개를 다 더한 것이 "주문부터 수령까지"의 latency 다.{/analogy}
+
+{warn}propagation time 과 transmission time 을 헷갈리지 말 것.
+* propagation: 비트 '''하나'''가 '''거리'''를 가는 시간 — 링크 속도(bps)와 '''무관'''
+* transmission: '''모든 비트'''를 '''내보내는''' 시간 — 거리와 '''무관'''
+링크를 빠르게(bps↑) 하면 transmission 은 줄지만 propagation 은 그대로다(빛의 속도는 못 바꾼다).{/warn}
+
+== 연결 ==
+* [[bandwidth-delay product]] 의 "delay" 가 이 지연(보통 propagation 쪽)이다
+* 지연이 패킷마다 '''다르면''' → [[jitter]]
+* [[데이터 통신 4대 특성]] 의 Timeliness 는 latency 가 작아야 함을 뜻한다
+
+{quiz}Latency 의 네 성분을 쓰고, 그중 링크의 bit rate 를 높이면 줄어드는 성분은 무엇인가?{/quiz}
+{answer}propagation time + transmission time + queuing time + processing delay. bit rate 를 높이면 '''transmission time''' (= 메시지 크기 / bandwidth) 이 줄어든다. propagation time 은 거리/전파속도라 변하지 않는다.{/answer}
+
+== 관련 문서 ==
+* [[propagation time]] · [[transmission time]] · [[bandwidth-delay product]] · [[jitter]]
+* [[throughput]] · [[T_p]] · [[CH02 Transmission]]

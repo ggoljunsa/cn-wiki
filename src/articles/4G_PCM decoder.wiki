@@ -1,0 +1,24 @@
+key: PCM decoder
+title: PCM Decoder (PCM 복호기)
+category: 4강 Digital Transmission, 용어
+---
+'''PCM decoder'''는 수신한 비트열로 원래 아날로그 신호를 되살리는 장치다. 두 블록: '''Connect samples''' → '''Low-pass filter'''. L3 p.60.
+
+{def}"'''Original signal recovery via PCM Decoder'''" — Digital data (11…1100) → [Connect samples] → [Low-pass filter] → Analog signal.{/def}
+
+[[img:L3-60.png|p.60 PCM decoder — 비트 → 계단형 신호(connect samples) → low-pass filter → 매끄러운 아날로그 곡선|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''de-code''' = 부호를 푼다. [[PCM]] 인코더의 '''역과정'''이다. 교수: "It is fundamentally the '''reverse process''' of the encoder."
+# '''Connect samples''' — 비트를 레벨(midpoint 값)로 되돌려 다음 샘플까지 그 값을 유지 → '''계단 모양''' 신호. 교수: "quantization 의 reverse process".
+# '''Low-pass filter''' — 계단의 날카로운 모서리(고주파 성분)를 걸러 '''매끄럽게(smooth)''' 만든다. 교수: "we make low-pass filter to make the signal smooth, then we can reconstruct them."
+
+{analogy}🎭 '''점 잇기 그림 + 문지르기.''' 번호 붙은 점(샘플 값)을 계단처럼 이어 그린 다음(connect samples), 손가락으로 문질러 각진 부분을 부드럽게(low-pass filter) 만든다. 문질러서 없어지는 건 '''모서리의 고주파 성분'''뿐, 원래 곡선의 저주파 모양은 남는다.{/analogy}
+
+{info}왜 low-pass 인가: 원 신호는 [[Nyquist sampling theorem|band-limited]] 라 $f_{max}$ 이하의 성분만 가졌다. 계단의 모서리는 그보다 높은 주파수 성분([[composite signal]] 관점)이므로, $f_{max}$ 이하만 통과시키면 원 신호에 가까워진다. 단 [[quantization error]] 는 복구할 수 없다 — 인코딩 순간 사라진 정보다.{/info}
+
+{quiz}PCM decoder 의 두 블록을 순서대로 쓰고 각각 무엇을 하는지 한 줄로 쓰시오.{/quiz}
+{answer}① '''Connect samples''' — 비트열을 양자화 레벨로 바꿔 계단형 신호를 만든다. ② '''Low-pass filter''' — 계단의 고주파 모서리를 걸러 매끄러운 아날로그 신호로 복원한다.{/answer}
+
+== 관련 문서 ==
+* [[PCM]] · [[quantization]] · [[quantization error]] · [[low-pass 채널]]

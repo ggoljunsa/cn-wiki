@@ -1,0 +1,35 @@
+key: 허브
+title: 허브 (Hub)
+category: 1강 Introduction, 용어
+---
+'''허브(hub)''' — [[star 토폴로지]]의 '''중앙 제어기(central controller)''' 예시로 등장하는 장치 (L1 p.11).
+
+{def}"Each device has a dedicated point-to-point link only to a '''central controller''', e.g., '''hub'''. … '''Dependency of whole topology on the hub'''" (L1 p.11)
+각 장치는 중앙 제어기(예: 허브)에만 전용 point-to-point 링크를 갖는다. 토폴로지 전체가 허브에 의존한다.{/def}
+
+[[img:L1-11.png|Star — 주황색 Hub 의 포트 4 개에 노트북이 한 대씩|medium]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''hub''' — 수레바퀴의 '''축통'''(바퀴살이 모두 모이는 가운데). 바퀴살(링크)이 전부 hub 로 모이고, 축통이 깨지면 바퀴 전체가 굴러가지 않는다 → "dependency of whole topology on the hub". 항공사의 "허브 공항"도 같은 말.
+
+== 허브 vs 스위치 ==
+{|
+! || '''허브''' || [[스위치]]
+|-
+| CH01 에서의 역할 || star 토폴로지 중심 (p.11) || 오늘날 LAN 중심 (p.16)
+|-
+| 목적지 인식 || (일반적으로) 안 함 — 받은 신호를 모든 포트로 되풀이 || "'''smart''' … to recognize destination" — 해당 포트로만
+|-
+| 층 || Physical 수준의 장치 (참고: 교재 일반론) || Physical + Data link
+|}
+{info}슬라이드는 hub 를 "central controller 의 예" 로만 언급한다. "허브는 physical layer 장치로 모든 포트에 신호를 복사한다"는 교재 일반론이고, 시험에서 CH01 기준으로 물을 가능성이 큰 건 '''"hub = star 의 중앙 장비"'''다.{/info}
+
+{warn}⭐ '''0920 함정.''' Hub 는 [[star 토폴로지|Star]] 의 부품이지 [[bus 토폴로지|Bus]] 의 부품이 아니다. Bus 의 부품은 '''drop line + tap'''. 퀴즈에서 두 번이나 hub 를 bus 에 붙여 틀렸다.{/warn}
+
+{analogy}🎭 '''교실 확성기.''' 누가 말하면(신호) 가운데 확성기(허브)가 '''모든 자리'''에 똑같이 틀어 준다. 스위치는 반장 — 쪽지를 '''해당 학생에게만''' 전달한다.{/analogy}
+
+{quiz}Star 토폴로지에서 hub 가 고장 나면 어떤 일이 생기며, 이를 L1 p.11 은 어떻게 표현하는가?{/quiz}
+{answer}모든 장치가 hub 를 통해서만 통신하므로 '''네트워크 전체가 멈춘다'''. 슬라이드 표현: "'''Dependency of whole topology on the hub'''".{/answer}
+
+== 관련 문서 ==
+* [[star 토폴로지]] · [[스위치]] · [[bus 토폴로지]] · [[CH01 Introduction]]

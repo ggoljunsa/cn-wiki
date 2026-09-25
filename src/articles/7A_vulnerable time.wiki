@@ -1,0 +1,58 @@
+key: vulnerable time
+title: Vulnerable Time (취약 시간)
+category: 7강 MAC, 용어
+---
+'''Vulnerable time'''은 한 프레임이 충돌할 '''가능성이 있는''' 시간 구간의 길이다. 이 값이 짧을수록 프로토콜이 좋다. L6 p.14–19, p.27, p.33.
+
+{def}"'''The length of time in which there is a possibility of collision.'''" (p.14)
+충돌이 일어날 가능성이 있는 시간의 길이.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''vulnerable''' = 취약한, 공격받기 쉬운. 내 프레임이 "얻어맞을 수 있는" 시간 창이다. 이 창 안에서 다른 누가 전송을 시작하면 내 프레임은 죽는다. 창 밖이면 안전하다.
+
+== 세 프로토콜 비교 ⭐⭐⭐ ==
+{exam}⭐⭐⭐ 반드시 외울 표. 해설본 ⭐⭐⭐ (p.19, p.27).
+{|
+! 프로토콜 || Vulnerable time || 왜
+|-
+| [[pure ALOHA|Pure ALOHA]] || '''$2T_{fr}$''' || 앞 프레임 꼬리가 내 머리를 침($T_{fr}$) + 뒤 프레임 머리가 내 꼬리에 부딪힘($T_{fr}$)
+|-
+| [[slotted ALOHA|Slotted ALOHA]] || '''$T_{fr}$''' || 슬롯 시작에만 전송 → 같은 슬롯끼리만 충돌
+|-
+| [[CSMA]] || '''$T_p$''' || 첫 비트가 끝까지 퍼지는 동안만 "idle" 로 오해 가능
+|}{/exam}
+
+== Pure ALOHA: $2T_{fr}$ 유도 (p.16–19) ==
+<pre class="txt">
+B 가 시각 t 에 전송 시작, 모든 프레임 길이 = [[T_fr]]
+A 가 t − T_fr 이후에 시작 → A 의 끝이 B 의 시작과 겹침 → collision
+C 가 t + T_fr 이전에 시작 → B 의 끝이 C 의 시작과 겹침 → collision
+위험 구간 = (t − T_fr) ~ (t + T_fr)
+Vulnerable time = (t + T_fr) − (t − T_fr) = '''2 T_fr'''
+</pre>
+
+[[img:L6-19.png|p.19 Pure ALOHA — A's end collides with B's beginning / B's end collides with C's beginning|large]]
+
+[[anim:vulnerable_time|B 의 전송 앞뒤로 T_fr 씩 위험 구간이 칠해지는 것을 보고, 슬롯이 생기면 앞쪽 절반이 사라지는 것을 확인하라]]
+
+== Slotted ALOHA: $T_{fr}$ (p.27) ==
+[[img:L6-27.png|p.27 Slotted ALOHA — 같은 슬롯에서 시작한 C 만 B 와 충돌, vulnerable time = T_fr|large]]
+
+== CSMA: $T_p$ (p.33) ==
+[[img:L6-33.png|p.33 CSMA — 첫 비트가 D 에 닿을 때까지(= T_p) 만 위험|large]]
+
+'''Example 3.9''' (p.20): 200-bit, 200 kbps pure ALOHA.
+<pre class="txt">
+T_fr = 200 / 200k = 1 ms
+vulnerable time = 2 × 1 ms = '''2 ms'''
+→ 내가 시작하기 1 ms 전부터 + 내가 보내는 1 ms 동안, 아무도 시작하면 안 된다
+</pre>
+
+{analogy}🎭 '''횡단보도를 건너는 시간.''' 내가 길을 건너는 동안(내 $T_{fr}$)만 위험한 게 아니다. 내가 발을 떼기 직전에 출발한 차가 아직 횡단보도 위에 있으면 그것도 위험하다. 그래서 pure ALOHA 의 위험 창은 내 건너는 시간의 '''두 배'''. 신호등(슬롯)이 생기면 "직전에 출발한 차"가 사라져 창이 절반이 된다.{/analogy}
+
+{quiz}슬롯 ALOHA 가 pure ALOHA 보다 throughput 이 정확히 2배인 이유를 vulnerable time 으로 설명하시오.{/quiz}
+{answer}pure 의 vulnerable time 은 $2T_{fr}$, slotted 는 $T_{fr}$ 로 '''절반'''이다. 성공 확률은 위험 구간 동안 아무도 시작하지 않을 확률 $e^{-(\text{구간}/T_{fr}) \cdot G}$ 이므로 pure 는 $e^{-2G}$, slotted 는 $e^{-G}$. 최댓값은 각각 $1/(2e) = 0.184$, $1/e = 0.368$ 로 정확히 2배다.{/answer}
+
+== 관련 문서 ==
+* [[pure ALOHA]] · [[slotted ALOHA]] · [[CSMA]]
+* [[T_fr]] · [[T_p]] · [[ALOHA throughput]] · [[collision]]

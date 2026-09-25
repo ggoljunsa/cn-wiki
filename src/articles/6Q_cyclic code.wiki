@@ -1,0 +1,51 @@
+key: cyclic code
+title: Cyclic Code (순환 코드)
+category: 6강 DLC, 용어
+---
+'''Cyclic code''' 는 [[linear block code]]에 성질이 하나 더 붙은 코드다: '''codeword 를 cyclic shift(회전)해도 codeword'''. 대표가 [[CRC]]. 쓰는 이유는 한 줄 — '''Easy to implement!''' L5 p.43.
+
+{def}"Special linear block codes with one extra property: If a codeword is '''cyclically shifted (rotated)''', the result is another codeword." / "Example: If 1011000 is a codeword and we cyclically left-shift, then 0110001 is also a codeword." / "Why use cyclic codes? '''Easy to implement!'''" (p.43){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''cyclic''' = "원형으로 도는". 비트열을 원 위에 적어 두고 돌리면 끝 비트가 앞으로(또는 앞 비트가 끝으로) 넘어간다. 그렇게 돌려도 여전히 코드 안에 있다.
+
+<pre class="txt">
+cyclic left shift (왼쪽으로 한 칸 회전)
+  1 0 1 1 0 0 0
+  ↓ 맨 왼쪽 1 이 맨 오른쪽으로
+  0 1 1 0 0 0 1     ← 여전히 codeword
+</pre>
+
+{analogy}🎭 '''회전초밥 벨트.''' 접시 7개가 벨트 위에 놓여 한 칸씩 돈다. 어느 순간 사진을 찍어도 "메뉴판에 있는 배열" 이다. 벨트(시프트 레지스터)만 돌리면 되니 기계로 만들기 쉽다.{/analogy}
+
+[[img:L5-44.png|p.44 CRC C(7,4) 표 — 1011000(1011 행)과 0110001(0110 행)이 모두 있다. 회전에 닫혀 있음을 직접 확인할 수 있다|medium]]
+
+== p.44 표로 확인 ==
+<pre class="txt">
+1011000 → 회전 → 0110001  (dataword 0110 의 codeword ✓)
+0110001 → 회전 → 1100010  (dataword 1100 의 codeword ✓)
+1100010 → 회전 → 1000101  (dataword 1000 의 codeword ✓)
+</pre>
+
+== 왜 구현이 쉬운가 ==
+cyclic code 의 부호화·검사는 '''다항식 나눗셈'''([[polynomial representation]])으로 표현되고, mod-2 나눗셈은 '''시프트 레지스터 + XOR 게이트''' 몇 개로 하드웨어에서 비트가 들어오는 속도 그대로 계산된다. [[CRC]] 가 LAN·WAN 의 모든 프레임에 붙을 수 있는 이유다.
+
+== 가계도 ==
+{|
+! 코드 || 닫혀 있는 연산
+|-
+| [[block code]] || —
+|-
+| [[linear block code]] || XOR
+|-
+| cyclic code || XOR + 회전
+|-
+| [[CRC]] || (cyclic code 의 실용판)
+|}
+
+== 예상 문제 ==
+{quiz}0001011 이 cyclic code 의 codeword 라면, 왼쪽으로 두 번 회전한 결과는? p.44 표에서 어느 dataword 의 codeword 인가?{/quiz}
+{answer}0001011 → 0010110 → '''0101100'''. p.44 표에서 dataword '''0101''' 의 codeword(0101100)와 일치한다.{/answer}
+
+== 관련 문서 ==
+* [[CRC]] · [[linear block code]] · [[polynomial representation]] · [[block code]]

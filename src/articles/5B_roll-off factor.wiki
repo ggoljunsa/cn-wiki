@@ -1,0 +1,42 @@
+key: roll-off factor
+title: Roll-off Factor (d)
+category: 5강 Analog Transmission, 용어
+---
+'''Roll-off factor''' $d$ 는 변조 대역폭 공식 $B = (1+d)S$ 에 들어가는 '''0 ~ 1 사이의 계수'''로, 변조와 필터링 방식에 따라 신호 스펙트럼이 얼마나 '''옆으로 퍼지는지'''를 나타낸다. L4 p.38.
+
+{def}"$B$ (bandwidth) $= (1 + d) \times S$ (Signal rate). '''$d$ is between 0 and 1''' — a factor related to the '''modulation and filtering''' (i.e., '''roll-off factor''')."{/def}
+
+$$0 \le d \le 1 \quad\Rightarrow\quad S \le B \le 2S$$
+
+== 이름에서 개념 끌어내기 ==
+'''roll off''' = (가장자리가) 둥글게 굴러 떨어지다. 이상적인 필터는 대역 경계에서 칼같이 끊기지만(직각), 실제 필터는 가장자리가 '''완만하게 굴러 떨어진다'''. 그 완만한 어깨만큼 대역이 더 필요하고, 그 비율이 $d$ 다. p.38·p.44 스펙트럼 그림의 봉우리 모서리가 둥근 게 바로 그 모양이다.
+* $d = 0$ — 이상적(직각) 필터, $B = S$ (최소)
+* $d = 1$ — 가장 완만, $B = 2S$
+
+교수: "a factor that I cannot tell you completely, it is difficult — due to the modulation and filtering. '''You can think of it as some roll-off factor of filter''', so it can be within zero and one … some predefined value."
+
+{analogy}🎭 '''주차 칸의 여유 폭.''' 차 폭(S)만큼만 칸을 그리면(d = 0) 이론상 들어가지만 문을 못 연다. 현실에선 옆으로 여유(d × S)를 준다. 여유를 얼마나 줄지는 차 종류·운전 실력(변조·필터)에 달렸고, 시험에서는 '''관리실이 정해 준다'''(교수가 준다).{/analogy}
+
+{exam}🎯 교수: "When you have to solve your problems in your exams or something, '''I will always give you''' [d]. You don't have to worry about that d. But it is related to some practical implementation." → d 를 스스로 정할 일은 없다. 주어진 값을 대입만.{/exam}
+
+[[img:L4-38.png|p.38 ASK 대역폭 — d 의 정의가 슬라이드 아래쪽, 스펙트럼의 둥근 어깨가 roll-off|medium]]
+
+== 공식에 들어가는 곳 ==
+{|
+! 방식 || 대역폭 || $d = 0$ || $d = 1$
+|-
+| [[ASK]] || $(1+d)S$ || $S$ || $2S$
+|-
+| [[PSK]] || $(1+d)S$ || $S$ || $2S$
+|-
+| [[FSK]] || $(1+d)S + 2\Delta f$ || $S + 2\Delta f$ || $2S + 2\Delta f$
+|}
+
+{quiz}대역폭 10 kHz 채널에서 binary ASK 의 최대 bit rate 를 $d = 0$ 과 $d = 1$ 각각에 대해 구하시오.{/quiz}
+{answer}<pre class="txt">
+d = 0:  10 = (1 + 0) S  →  S = 10 kbaud  →  N = 10 kbps
+d = 1:  10 = (1 + 1) S  →  S = 5 kbaud   →  N = 5 kbps
+</pre>d 가 클수록(필터가 완만할수록) 같은 대역에 실을 수 있는 bit rate 가 줄어든다.{/answer}
+
+== 관련 문서 ==
+* [[변조 대역폭]] · [[ASK]] · [[FSK]] · [[PSK]] · [[signal rate와 bit rate]] · [[bandwidth]]

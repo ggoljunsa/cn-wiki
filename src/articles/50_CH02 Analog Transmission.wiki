@@ -1,0 +1,152 @@
+key: CH02 Analog Transmission
+title: CH02 Analog Transmission (아날로그 전송 — ASK·FSK·PSK·QAM)
+category: 5강 Analog Transmission, 메인
+---
+'''Analog Transmission'''은 CH02 Physical Layer (3) 덱의 새 내용 전반부(L4 p.34–45)로, "'''디지털 데이터를 아날로그 신호(반송파)에 어떻게 싣나'''"를 다룬다. 답은 [[사인파]]의 세 요소 — [[peak amplitude|진폭]], [[주파수]], [[phase|위상]] — 중 '''하나를 비트에 따라 바꾸는''' 것: [[ASK]], [[FSK]], [[PSK]], 그리고 둘을 섞은 [[QAM]].
+
+계산 포인트는 대역폭 공식 세 개와 Example 5 하나다: $B = (1+d)S$ (ASK, PSK), $B = (1+d)S + 2\Delta f$ (FSK).
+
+{info}페이지 번호는 '''L4(CH02_Physical Layer (3)) 슬라이드 인쇄 번호'''. L4 p.2–33 은 복습(→ [[CH02 Digital Transmission]]). 뒤 p.46–52 는 [[CH02 Multiplexing]]. 슬라이드 몇 장(p.37, 38, 40, 42)에는 수업 중 판서(파란 손글씨)가 남아 있다.{/info}
+
+== p.34 — 이번 장의 두 질문 ==
+# digital data → '''analog signal''' : [[digital-to-analog conversion]] (이 문서의 전부)
+# analog data → analog signal : analog-to-analog conversion (AM/FM, 슬라이드 없음)
+
+{exam}🎯 교수: "digital-to-analog conversion is '''more popular''' than analog-to-analog … today we are living in the '''era of digital data''' — the source data is always formed of digital. So '''this part is more important'''." → D2A 가 시험의 중심.{/exam}
+
+== p.35 — Digital-to-Analog Conversion ==
+[[img:L4-35.png|p.35 Digital data → Modulator → Link 위 Analog signal → Demodulator → Digital data|medium]]
+
+{def}"The process of '''changing one of the characteristics of an analog signal''' based on the information in digital data."{/def}
+
+송신 측 장치 = '''Modulator''', 수신 측 = '''Demodulator''' (합쳐서 modem). [[line coding]] 의 Encoder/Decoder 자리에 해당한다. 왜 굳이 아날로그로 바꾸나 — 무선처럼 0 Hz 근처를 못 쓰는 [[bandpass 채널]]에는 [[디지털 신호]]를 그대로 실을 수 없어서다 ([[broadband 전송]]).
+
+{analogy}🎭 '''등대 신호.''' 등대(반송파 = [[carrier]])는 항상 같은 빛을 낸다. 선장에게 메시지를 보내려면 빛의 '''세기'''(ASK), '''깜빡이는 빠르기'''(FSK), '''깜빡임 박자를 반 박자 밀기'''(PSK) 중 하나를 바꾼다. 빛 자체는 아날로그지만 바뀌는 방식이 0/1 에 딱 맞춰져 있다.{/analogy}
+
+== p.36 — 네 가지 방식 ==
+{|
+! 방식 || 이름 || 바꾸는 것 ([[modulation]]) || 고정되는 것
+|-
+| [[ASK]] || Amplitude Shift Keying || '''진폭''' || 주파수, 위상
+|-
+| [[FSK]] || Frequency Shift Keying || '''주파수''' || 진폭, 위상
+|-
+| [[PSK]] || Phase Shift Keying || '''위상''' || 진폭, 주파수
+|-
+| [[QAM]] || Quadrature Amplitude Modulation || '''진폭 + 위상''' || 주파수
+|}
+
+교수: "ASK — amplitude shift keying, '''it has some weird name''', right? 이번엔 이름으로 이해하기 어렵다. So I just recommend you to '''remember the varying parts'''." → 이름의 첫 단어(Amplitude/Frequency/Phase)가 곧 '''바뀌는 부분'''이다.
+
+[[anim:ask_fsk_psk|비트열 1 0 1 1 0 하나로 ASK·FSK·PSK 세 파형이 차례로 그려진다 — 각 파형에서 '무엇이 바뀌고 무엇이 그대로인지'를 말로 설명할 수 있을 때까지 보라]]
+
+== p.37–39 — ASK ==
+[[img:L4-37.png|p.37 Binary ASK — 1 은 반송파, 0 은 진폭 0. Bit rate 5, Baud 5. 판서: 0 을 0·sin ωt 로 할지 −1·sin ωt 로 할지는 선택 가능|medium]]
+
+{def}"The '''amplitude''' of the carrier signal is '''varied''' to create signal elements. But both frequency and phase remain constant." — Binary ASK{/def}
+
+비트 1 → 진폭 1 인 반송파, 비트 0 → 진폭 0. 1초에 비트 5개 = 신호 요소 5개 → '''Bit rate 5, Baud 5'''. 교수: "0 을 amplitude 0 으로 쓰는 건 '''하나의 예'''일 뿐, you can design something else — 1 을 0 진폭으로 해도 된다."
+
+[[img:L4-38.png|p.38 ASK 대역폭 — r = 1, S = N, B = (1+d)S. 스펙트럼은 f_c 를 중심으로 연속 대역(non-periodic composite signal)|large]]
+
+$$B = (1 + d) \times S$$
+
+* $S$ — [[signal rate와 bit rate|signal rate]] (단위 [[baud]]). binary 는 [[signal rate와 bit rate|r]] = 1 bit/symbol 이라 $S = N$.
+* $d$ — [[roll-off factor]], $0 \le d \le 1$, "a factor related to the modulation and filtering".
+* ASK 신호는 '''non-periodic [[composite signal]]''' → '''연속 주파수 대역'''을 차지하고, 그 대역은 [[carrier|반송파 주파수 f_c]] 를 중심으로 펼쳐진다.
+
+{exam}🎯 '''"Terminology is very important."''' 교수: "signal 이라고 하면 unit 이 bit 와 다르다. 두 비트를 한 symbol 에 실으면 symbol rate 가 달라진다. '''Please remember, the terminology is very important.'''" → $S$(baud)와 $N$(bps)을 구분할 것. 판서: "5 bits/sec = S ⟺ 5 samples/sec".{/exam}
+
+{exam}🎯 '''d 는 시험에서 준다.''' 교수: "When you have to solve problems in your exams, '''I will always give you''' [d]. You don't have to worry about that d." 대역폭 공식의 '''증명은 범위 밖'''("I omit the details … I encourage you to just remember this").{/exam}
+
+[[img:L4-39.png|p.39 Binary ASK 구현 — unipolar NRZ 디지털 신호 × Oscillator 의 반송파 f_c = Multiplier 출력|large]]
+
+구현은 '''곱셈기(Multiplier)''' 하나: [[unipolar NRZ와 polar NRZ|unipolar NRZ]](1 → 1, 0 → 0) × 반송파. 1 이면 반송파가 그대로, 0 이면 0. 교수: "Yeah, I hate electric circuits, but I have to introduce you."
+
+== p.40–43 — FSK ==
+[[img:L4-40.png|p.40 FSK — 두 반송파 f₁, f₂. 스펙트럼: 각각 S(1+d) 폭의 두 봉우리, 중심 간격 2Δf → B = (1+d)S + 2Δf|large]]
+
+{def}"Two carrier frequencies $f_1$ and $f_2$ — The first carrier is used for 0 and the second is used for 1."{/def}
+
+$$B = (1 + d)S + 2\Delta f$$
+
+왜 $2\Delta f$ 가 붙나: 반송파가 '''두 개'''라 봉우리도 두 개. 각 봉우리 폭은 ASK 와 같은 $(1+d)S$ 이고, 두 중심($f_1$, $f_2$)이 $2\Delta f$ 떨어져 있다. 전체 폭 = 왼쪽 반 봉우리 + 중심 간격 + 오른쪽 반 봉우리 $= \tfrac{(1+d)S}{2} + 2\Delta f + \tfrac{(1+d)S}{2}$. → [[변조 대역폭]]
+
+{warn}p.40 본문은 "첫째 반송파($f_1$)는 0, 둘째($f_2$)는 1" 이라 쓰여 있지만, 같은 슬라이드 그림과 교수 설명은 '''bit 1 에 더 높은 주파수(빽빽한 파형)'''을 쓴다(판서도 1 위에 $f_1$). 교수: "in this example we assign a higher frequency to bit 1 and a lower frequency to bit 0." '''어느 쪽에 어느 주파수를 주느냐는 설계 선택'''이고, 시험에서 중요한 건 "'''주파수가 바뀐다'''"와 대역폭 공식이다.{/warn}
+
+=== Example 5 (p.41–42) ===
+[[img:L4-42.png|p.42 Example 5 풀이 — 중심 250 kHz, 2Δf = 50 kHz → 2S + 50 = 100 → S = 25 kbaud → N = 25 kbps (판서 포함)|large]]
+
+{quiz}가용 대역폭 100 kHz (200 ~ 300 kHz). FSK, $d = 1$ 로 변조할 때 반송파 주파수와 bit rate 는?{/quiz}
+{answer}<pre class="txt">
+1. 대역의 중간점 = (200 + 300) / 2 = 250 kHz   → 두 반송파를 250 kHz 양옆에 둔다
+2. 2Δf = 50 kHz 로 선택 (슬라이드)             → f₁ = 250 − 25 = 225 kHz, f₂ = 250 + 25 = 275 kHz
+3. [[FSK]] 대역폭 공식: B = (1 + d)S + 2Δf
+4. 대입: 100 = (1 + 1)S + 50
+5. 2S = 50 kHz  →  S = 25 kbaud
+6. binary FSK → r = 1 → N = S = '''25 kbps'''
+</pre>{/answer}
+
+[[sim:fsk_bandwidth]]
+
+[[img:L4-43.png|p.43 FSK 구현 — VCO(Voltage-controlled oscillator): 입력 전압 레벨에 따라 발진 주파수가 바뀜|medium]]
+
+구현은 '''[[VCO]]''' (Voltage-Controlled Oscillator): 입력 전압(0/1)이 발진 속도를 바꾼다. 교수: "to be honest I don't know [much about] voltage-controlled oscillator because I hate electric circuits — but it is inherently '''controlled by voltage''' for varying the rate of oscillation." 이름 그대로.
+
+== p.44–45 — PSK ==
+[[img:L4-44.png|p.44 PSK — 1 은 위상 0°(빨강), 0 은 위상 180°(검정). r = 1, S = N, B = (1+d)S (ASK 와 같은 스펙트럼)|large]]
+
+{def}"The '''phase''' is varied to represent two or more different signal elements."{/def}
+
+$$B = (1 + d)S \quad (\text{ASK 와 동일})$$
+
+교수: "bandwidth 가 ASK 와 같은 이유는 '''essentially we use a waveform with one frequency'''. … 또는 이것은 '''binary ASK 에서 bit 에 amplitude +1 과 −1 을 대응시킨 것과 equivalent''' 하다."
+
+[[img:L4-45.png|p.45 BPSK 구현 — polar NRZ(+1/−1) × 반송파. −1 을 곱하면 파형이 뒤집힘 = 위상 180°|large]]
+
+{exam}🎯 '''PSK = ASK with −1.''' 교수: "In the previous example of binary ASK we mapped 0 to amplitude 0, but in this case PSK can be equivalently expressed with ASK with '''−1'''. So the bandwidth should be equal, right?" → 구현도 ASK 와 같은 곱셈기에 [[unipolar NRZ와 polar NRZ|polar NRZ]](1 → +1, 0 → −1)를 넣은 것. $-\sin\omega t = \sin(\omega t + 180°)$.{/exam}
+
+== QAM ==
+[[QAM]] 은 p.36 목록에만 나온다: '''ASK + PSK''' — 진폭과 위상을 '''동시에''' 바꿔 한 symbol 에 여러 비트($r > 1$)를 싣는다. 슬라이드 계산 문제는 없다.
+
+== 변조 비교표 (해설본 "오늘 공식 모음") ==
+{|
+! 변조 방식 || 바꾸는 것 || 인코딩 (슬라이드 예) || 대역폭 || 구현
+|-
+| '''[[ASK]]''' || 진폭 || 1 = 반송파 켬, 0 = 끔 || $B = (1+d)S$ || 곱셈기 (unipolar NRZ × 반송파)
+|-
+| '''[[FSK]]''' || 주파수 || 두 반송파 $f_1$, $f_2$ || $B = (1+d)S + 2\Delta f$ || [[VCO]]
+|-
+| '''[[PSK]]''' || 위상 || 1 = 0°, 0 = 180° || $B = (1+d)S$ || 곱셈기 (polar NRZ × 반송파)
+|-
+| '''[[QAM]]''' || 진폭 + 위상 || ASK + PSK 결합 || — || —
+|}
+* $d$ = [[roll-off factor]] (0 ~ 1, 시험에서 줌), $S$ = [[signal rate와 bit rate|signal rate]] ([[baud]]), $N$ = [[bit rate]] (bps), $r$ = bits/symbol. binary 면 $r = 1$ 이라 $S = N$.
+
+== 🎙 실제 수업 기록 (9/10 목, 녹음본 기준) ==
+[[CH02 Digital Transmission]] 을 마친 뒤 약 40분 지점부터 이 장을 20분 남짓 다뤘다.
+* '''D2A 가 더 중요''': "digital-to-analog conversion is more popular than analog-to-analog … we are living in the era of digital data. So '''this part is more important'''."
+* '''이름이 이상하다''': "ASK — it has some weird name. 이름이 전부라고 했지만 이번엔 이름으로 이해하기 어렵다. So I just recommend you to '''remember the varying parts'''." (Amplitude / Frequency / Phase)
+* '''ASK 매핑은 설계 선택''': 0 → amplitude 0 이 흔한 baseline 이지만 반대로 해도 되고 다른 진폭도 가능. (p.37 판서: 0·sin ωt 또는 −1·sin ωt)
+* '''Terminology''': "When we say signal in communication, then the unit is different from bit. … '''Please remember, the terminology is very important.''' You should know the meaning of terminologies used throughout this course." — symbol/sample ↔ bit 구분.
+* '''d''': "a factor … related to modulation and filtering, 0 ~ 1, predefined value. '''When you have to solve your problems in your exams, I will always give you [d].'''"
+* '''대역폭 증명은 범위 밖''': "proving this occupied bandwidth is actually out of the scope of this course. I omit the details — just remember this."
+* '''회로''': "I hate electric circuits, but I have to introduce you" (ASK 곱셈기), VCO 도 "controlled by voltage" 로 이름만 이해하면 됨.
+* '''FSK''': 이 예에서는 bit 1 에 higher frequency. 대역폭은 두 봉우리 + 가운데 간격 $2\Delta f$ 를 그림으로 설명. Example 5 는 "'''do it by your own practice'''".
+* '''PSK = ASK with −1''': "the bandwidth is just the same as ASK … because we use a waveform with one frequency … equivalent to binary ASK mapping +1 and −1 of amplitude to the bit."
+
+== 시험 대비 핵심 요약 ==
+# [[digital-to-analog conversion]] = 디지털 데이터에 따라 '''아날로그 신호(반송파)의 특성 하나'''를 바꾸는 것. 장치: Modulator / Demodulator. 교수: A2A 보다 '''더 중요'''.
+# 네 방식은 '''바뀌는 부분'''으로 외운다: ASK = 진폭, FSK = 주파수, PSK = 위상, QAM = 진폭 + 위상.
+# ⭐⭐⭐ ASK 대역폭 $B = (1+d)S$, $0 \le d \le 1$ ([[roll-off factor]], 시험에서 주어짐), 스펙트럼은 $f_c$ 중심.
+# ⭐⭐⭐ FSK 대역폭 $B = (1+d)S + 2\Delta f$ — 반송파 두 개라 중심 간격 $2\Delta f$ 가 더해진다.
+# PSK 대역폭 $B = (1+d)S$ = ASK 와 같음 (반송파 하나, "ASK with −1").
+# binary 변조: $r = 1$ → $S = N$ (Bit rate 5 = Baud 5). '''signal rate(baud) ≠ bit rate(bps)''' 용어 구분.
+# Example 5: $100 = 2S + 50$ → $S = 25$ kbaud → $N = 25$ kbps, 중심 250 kHz.
+# 구현: ASK = unipolar NRZ × 반송파, PSK = '''polar NRZ''' × 반송파, FSK = [[VCO]].
+
+== 관련 문서 ==
+* 이전: [[CH02 Digital Transmission]] · 다음: [[CH02 Multiplexing]]
+* 용어: [[digital-to-analog conversion]] · [[carrier]] · [[modulation]] · [[ASK]] · [[FSK]] · [[PSK]] · [[QAM]] · [[baud]] · [[signal rate와 bit rate]] · [[roll-off factor]] · [[unipolar NRZ와 polar NRZ]] · [[VCO]] · [[변조 대역폭]]
+* 배경: [[사인파]] · [[peak amplitude]] · [[주파수]] · [[phase]] · [[broadband 전송]] · [[bandpass 채널]] · [[composite signal]]
+* [[계산 문제 모음]] · [[공식 모음]]

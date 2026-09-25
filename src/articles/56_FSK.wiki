@@ -1,0 +1,67 @@
+key: FSK
+title: FSK (Frequency Shift Keying, 주파수 편이 변조)
+category: 5강 Analog Transmission, 용어
+---
+'''FSK'''는 비트에 따라 [[carrier|반송파]]의 '''주파수'''를 바꾸는 [[digital-to-analog conversion]] 방식이다. 반송파 두 개($f_1$, $f_2$)를 쓰기 때문에 대역폭에 '''$2\Delta f$''' 가 더 붙는다. L4 p.40–43.
+
+{def}"'''Two carrier frequencies $f_1$ and $f_2$''' — The first carrier is used for 0 and the second is used for 1."
+그림: $r = 1$, $S = N$, $B = (1 + d)S + 2\Delta f${/def}
+
+$$B = (1 + d)S + 2\Delta f$$
+
+== 이름에서 개념 끌어내기 ==
+'''F'''requency '''S'''hift '''K'''eying — [[주파수]]를 전환한다. 교수: "The variable part is in frequency, so we call it frequency shift keying." 진폭과 위상은 고정.
+
+* $f_1$, $f_2$ — 두 반송파 주파수
+* $\Delta f$ — 각 반송파가 가운데 주파수 $f_c$ 에서 떨어진 거리. 두 반송파의 간격은 $2\Delta f$ ($f_1 = f_c - \Delta f$, $f_2 = f_c + \Delta f$)
+
+[[img:L4-40.png|p.40 FSK 파형(1 은 빽빽, 0 은 성김)과 스펙트럼(S(1+d) 폭 봉우리 두 개, 중심 간격 2Δf)|large]]
+
+{warn}p.40 본문은 "첫째 반송파 = 0, 둘째 = 1" 이지만 그림은 '''bit 1 이 빽빽한(높은) 주파수'''다. 교수도 "in this example we assign a '''higher frequency to bit 1''' and a lower frequency to bit 0" 이라 설명했다. 어느 비트에 어느 주파수를 주든 '''설계 선택'''이고, 시험 포인트는 "주파수가 바뀐다" + 대역폭 공식이다.{/warn}
+
+{analogy}🎭 '''휘파람 두 음.''' 높은 음은 1, 낮은 음은 0. 크기(진폭)는 늘 같으니 멀리서 작게 들려도 '''음높이'''만 구분하면 된다 → ASK 보다 잡음에 강하다. 대신 두 음을 모두 낼 수 있을 만큼 '''넓은 음역(대역폭)'''이 필요하다.{/analogy}
+
+[[anim:ask_fsk_psk|두 번째 줄 FSK 파형에서 1 과 0 구간의 주파수 차이를 보라]]
+
+== 왜 2Δf 가 붙나 ==
+<pre class="ascii">
+          ┌─(1+d)S──┐             ┌─(1+d)S──┐
+          │   ▄▄▄▄  │             │   ▄▄▄▄  │
+          │  ██████ │             │  ██████ │
+  ────────┴─────────┴─────────────┴─────────┴──────▶ f
+               f₁          f_c         f₂
+               |◀──────── 2Δf ────────▶|
+          |◀──────── B = (1+d)S + 2Δf ─────▶|
+</pre>
+각 반송파는 [[ASK]] 한 개와 같은 폭 $(1+d)S$ 의 봉우리를 만든다. 전체 폭 = 왼쪽 봉우리 반쪽 + 중심 간격 + 오른쪽 봉우리 반쪽 $= \frac{(1+d)S}{2} + 2\Delta f + \frac{(1+d)S}{2} = (1+d)S + 2\Delta f$. 교수가 그림의 구간을 하나씩 짚으며 설명한 내용이다. → [[변조 대역폭]]
+
+== Example 5 (p.41–42) ==
+[[img:L4-42.png|p.42 Example 5 — 판서: 200–300 kHz 를 250 kHz 중심으로, 양쪽 25 → B = 2S + 50 = 100, 2S = 50, S = 25 kbaud|large]]
+
+<pre class="txt">
+문제: 가용 대역 100 kHz (200 ~ 300 kHz), FSK, d = 1 → carrier frequency, bit rate?
+1. 중간점 = 250 kHz,  2Δf = 50 kHz 선택  → f₁ = 225 kHz, f₂ = 275 kHz
+2. B = (1 + d)S + 2Δf
+3. 100 = 2S + 50
+4. 2S = 50 kHz  →  S = 25 kbaud
+5. r = 1  →  N = S = '''25 kbps'''
+</pre>
+
+[[sim:fsk_bandwidth]]
+
+== 구현 — VCO ==
+[[img:L4-43.png|p.43 FSK 구현 — 디지털 신호가 VCO 에 들어가 전압에 따라 발진 주파수가 바뀜|medium]]
+
+[[VCO]](Voltage-Controlled Oscillator): 입력 전압이 높으면 빠르게, 낮으면 느리게 발진. 비트 신호를 그대로 넣으면 FSK 가 나온다.
+
+{quiz}Example 5 에서 $2\Delta f$ 를 20 kHz 로 바꾸면 bit rate 는?{/quiz}
+{answer}<pre class="txt">
+1. 100 = (1 + 1)S + 20
+2. 2S = 80 kHz  →  S = 40 kbaud
+3. N = S = 40 kbps
+</pre>
+두 반송파를 가깝게 둘수록($2\Delta f$ ↓) 각 봉우리에 줄 수 있는 폭이 커져 bit rate 가 오른다.{/answer}
+
+== 관련 문서 ==
+* [[ASK]] · [[PSK]] · [[변조 대역폭]] · [[VCO]] · [[modulation]]
+* [[roll-off factor]] · [[signal rate와 bit rate]] · [[carrier]] · [[계산 문제 모음]]

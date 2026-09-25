@@ -1,0 +1,37 @@
+key: 스위치
+title: 스위치 (Switch, link-layer switch)
+category: 1강 Introduction, 용어, 함정
+---
+'''스위치(switch)''' — [[physical layer|Physical]] 과 [[data-link layer|Data link]] '''두 층만''' 가진 중간 노드. 오늘날 [[LAN]] 의 중심 장비 (L1 p.16, p.31).
+
+{def}"Today: Use a '''smart connecting switch to recognize destination'''" (L1 p.16)
+L1 p.31 그림: Switch = '''Data link + Physical'''. L1 p.32 Notes: "We have not shown switches because '''they don't change objects'''."
+목적지를 알아보는 똑똑한 연결 장치. 데이터링크·물리 두 층만 가지며, 객체(frame)를 바꾸지 않는다.{/def}
+
+[[img:L1-31.png|Logical Connections in TCP/IP — 초록(Data link)·노랑(Physical) 두 칸만 있는 Switch, 주황(Network)까지 있는 Router|large]]
+
+{exam}⭐⭐⭐ '''0920 NotebookLM 퀴즈에서 여기서 틀렸다.''' "중간 노드에 대해 옳은 것 모두" 에서 '''"스위치는 물리 계층과 데이터링크 계층만 가지고 있다"'''를 고르지 않았다(정답이었음). 동시에 "모든 중간 노드는 5개 계층을 전부 구현해야 한다"(오답)를 골랐다. '''스위치 = L1–L2, 두 층.'''{/exam}
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''switch''' — 선로 전환기(철도의 분기기). 들어온 기차(frame)를 '''어느 선로(포트)로 보낼지만''' 바꾼다. 기차 안 짐(datagram)을 열어 보지 않고, 기차 자체를 바꾸지도 않는다 — 그래서 "don't change objects". 목적지를 알아보는 근거는 frame 에 적힌 [[MAC 주소]](link-layer address)이고, 그래서 정식 이름이 '''link-layer switch'''(L1 p.34).
+
+[[anim:layer_stack|스위치를 지날 때 패킷이 data link 층까지만 올라갔다 곧바로 내려가는 것을 확인하고, 라우터와 높이를 비교하라]]
+
+== 스위치 vs 라우터 vs 허브 ==
+{|
+! 장치 || 가진 층 || 보는 주소 || 객체 변경 || 쓰이는 곳
+|-
+| '''스위치''' || '''L1–L2''' || MAC (link-layer) || '''안 바꿈''' || LAN 안 (p.16), switched WAN (p.19)
+|-
+| [[라우터]] || '''L1–L3''' || IP (logical) || frame 헤더를 새로 (datagram 은 유지) || LAN–WAN 경계, 망과 망 사이
+|-
+| [[허브]] || (L1) || 없음 || — || star 토폴로지 중심 (p.11)
+|}
+
+{analogy}🎭 '''아파트 경비실.''' 택배(frame)에 적힌 동·호수(MAC 주소)를 보고 '''이 단지 안'''의 해당 집에만 가져다준다. 단지 밖 주소는 모른다 — 그건 우체국(라우터)의 일. 상자는 뜯지도, 다시 포장하지도 않는다.{/analogy}
+
+{quiz}p.32 Information Flow 그림에 스위치가 그려지지 않은 이유를 층 개념으로 설명하시오.{/quiz}
+{answer}스위치는 data link 까지만 가지며 받은 '''frame 을 그대로''' 다음 링크로 전달한다. identical object 들의 흐름(frame, bits)에 변화를 주지 않으므로 그림에서 생략했다 — "they don't change objects". (라우터는 frame 을 벗기고 새로 만들기 때문에 그려져 있다.){/answer}
+
+== 관련 문서 ==
+* [[라우터]] · [[허브]] · [[data-link layer]] · [[LAN]] · [[MAC 주소]] · [[end-to-end와 hop-to-hop]] · [[CH01 Introduction]]

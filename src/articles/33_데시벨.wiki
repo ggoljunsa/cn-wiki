@@ -1,0 +1,76 @@
+key: 데시벨
+title: 데시벨 (Decibel, dB)
+category: 3강 Transmission, 용어, 핵심
+---
+'''Decibel(dB)'''은 두 신호(또는 한 신호의 두 지점)의 '''상대적 세기'''를 로그로 나타낸 값이다. $\text{dB} = 10\log_{10}(P_2/P_1)$. 감쇠면 음수, 증폭이면 양수. L2 p.42–43, p.46.
+
+{def}L2 p.42 "Measure of Attenuation — '''Decibel (dB, decibel)'''"
+"To show that a signal has lost or gained strength. '''Relative strengths''' of two signals or one signal at two different points.
+$\text{dB} = 10\log_{10}(p_2/p_1)$ where $p_1$ and $p_2$ are the powers of signals.
+'''Negative''' if a signal is attenuated, '''positive''' if a signal is amplified."{/def}
+
+$$\text{dB} = 10\log_{10}\frac{P_2}{P_1}$$
+
+[[img:L2-43.png|p.43 — Example 2.5: 10 log₁₀ P₂/P₁ = 10 log₁₀ (0.5 P₁)/P₁ = 10 log₁₀ 0.5 = 10 × (−0.3) = −3 dB|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''deci-''' (1/10) + '''bel''' (전화 발명가 Alexander Graham '''Bell''' 의 이름). 원래 단위 bel = $\log_{10}(P_2/P_1)$ 인데 너무 커서 '''1/10 단위'''인 decibel 을 쓴다. 그래서 공식 앞에 '''10''' 이 붙는다: bel 값 × 10 = dB 값.
+
+{analogy}🎭 '''지진 규모(리히터).''' 규모 6 과 7 의 차이는 "1 더 큼"이 아니라 "10배 셈"이다. dB 도 같다 — '''+10 dB = 10배''', '''+20 dB = 100배'''. 로그를 쓰면 1/1000 부터 1000배까지의 엄청난 범위를 −30 ~ +30 이라는 다루기 쉬운 숫자로 줄이고, '''곱셈을 덧셈으로''' 바꿀 수 있다.{/analogy}
+
+== 외울 값 ==
+{|
+! 전력비 $P_2/P_1$ || dB || 의미
+|-
+| 2 || +3 || 두 배
+|-
+| 0.5 || '''−3''' || '''절반''' (Example 2.5)
+|-
+| 10 || +10 || 10배
+|-
+| 0.1 || −10 || 1/10
+|-
+| 100 || +20 || 100배
+|-
+| 1000 || +30 || 1000배
+|-
+| 1 || 0 || 변화 없음
+|}
+
+== Example 2.5 (p.43) ==
+<pre class="txt">
+문제: 매체를 지나며 전력이 절반이 됐다 (P₂ = 0.5 P₁). 감쇠는?
+1. dB = 10 log₁₀(P₂ / P₁)
+2.    = 10 log₁₀(0.5 P₁ / P₁)       ← P₁ 은 약분된다 (절대값 몰라도 됨)
+3.    = 10 log₁₀ 0.5
+4.    = 10 × (−0.3)                   ← log₁₀ 0.5 = −log₁₀ 2 ≈ −0.301
+5.    = '''−3 dB'''
+</pre>
+
+== dB 는 더한다 ==
+여러 구간을 지나면 전력비는 '''곱해지고''', dB 는 '''더해진다''' ($\log(ab) = \log a + \log b$). Forouzan 의 대표 예: 구간 1 감쇠 −3 dB, 구간 2 amplifier +7 dB, 구간 3 감쇠 −3 dB → 전체 '''+1 dB'''.
+<pre class="txt">
+−3 dB + 7 dB − 3 dB = '''+1 dB'''   (신호가 조금 강해져서 도착)
+</pre>
+
+[[sim:db_calc]]
+
+== SNR 을 dB 로 (p.46) ==
+[[SNR]] 도 전력의 비이므로 dB 로 쓴다: $\text{SNR}_{dB} = 10\log_{10}\text{SNR}$.
+<pre class="txt">
+SNR = 3162 (Example 2.8 전화선)
+SNR_dB = 10 log₁₀ 3162 = 10 × 3.5 = '''35 dB'''      (3162 ≈ 10^3.5)
+</pre>
+이 값은 [[Shannon capacity]] 근사식 $C \approx B\cdot\text{SNR}_{dB}/3$ 에 들어간다.
+
+{exam}⭐⭐⭐ 교수(9/10 복습): "'''the log has the base of 10''' — capacity 계산의 밑 '''2''' 와 헷갈리지 말 것." dB 는 $\log_{10}$, [[Nyquist bit rate]]·[[Shannon capacity]] 는 $\log_2$.{/exam}
+
+{warn}[[Shannon capacity]] 공식 $B\log_2(1+\text{SNR})$ 에는 '''dB 값이 아니라 비율'''을 넣어야 한다. SNR_dB = 35 를 그대로 넣으면 완전히 틀린다. dB → 비율: $\text{SNR} = 10^{\text{SNR}_{dB}/10}$.{/warn}
+
+{quiz}(a) 전력이 1/4 로 줄면 몇 dB 인가? (b) SNR_dB 가 20 dB 이면 SNR 은?{/quiz}
+{answer}(a) $10\log_{10}0.25 = 10\times(-0.6) = $ '''−6 dB''' (절반을 두 번 = −3 −3).
+(b) $\text{SNR} = 10^{20/10} = 10^2 = $ '''100'''.{/answer}
+
+== 관련 문서 ==
+* [[attenuation]] · [[amplifier]] · [[SNR]] · [[Shannon capacity]]
+* [[log₂ 계산법]] · [[SNR_dB와 n_b]] · [[CH02 Transmission]] · [[계산 문제 모음]]

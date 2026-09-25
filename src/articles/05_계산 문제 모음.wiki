@@ -1,0 +1,282 @@
+key: 계산 문제 모음
+title: 계산 문제 모음 — 슬라이드 Example 전부 다시 풀기
+category: 안내, 시험
+---
+중간고사 범위에 나온 '''계산 Example 을 전부''' 모아, 문제 → (접힌) 풀이 순서로 배치했다. 시험은 이 Example 의 '''숫자를 바꾼 변형'''이 나올 가능성이 가장 높다. 먼저 손으로 풀고, 답을 펼치고, 틀리면 시뮬레이터로 단계를 확인한다. 이 과목에는 족보가 없으므로 이 문서가 족보를 대신한다.
+
+{analogy}
+🎭 '''운전면허 기능 시험 코스.''' 코스(Example)는 공개돼 있다. 시험장에서는 콘 위치(숫자)만 살짝 바뀐다. 코스를 눈 감고도 돌 수 있을 때까지 반복하는 것이 유일한 준비다.
+{/analogy}
+
+{tip}
+계산 순서는 항상 '''공식 쓰기 → 단위 맞추기 → 대입 → 계산 → 단위 붙여 답'''. [[log₂ 계산법]] 을 먼저 보면 $\log_2 64 = 6$, $\log_2(1+3162) \approx 11.62$ 같은 값이 익숙해진다.
+{/tip}
+
+== CH02 (1) Signals · Transmission ==
+
+=== Example 2.3 — 100 pages/s 의 비트율 ===
+{quiz}
+초당 100 페이지의 텍스트를 다운로드하려면 필요한 [[bit rate]]는? (1 페이지 = 24 줄 × 80 문자, 1 문자 = 8 비트)
+{/quiz}
+{answer}
+<pre class="txt">
+100 pages/s × 24 lines × 80 chars × 8 bits
+= 1,536,000 bps = '''1.536 Mbps'''
+</pre>
+{/answer}
+
+=== Example 2.4 — bit length ===
+{quiz}
+위 채널의 [[bit length]]는?
+{/quiz}
+{answer}
+$1 / 1{,}536{,}000 = 0.000000651\ \text{s} = $ '''0.651 μs'''
+{/answer}
+
+=== Example 2.5 — 전력이 절반이 되면 몇 dB? ===
+{quiz}
+매체를 지나며 신호 전력이 절반으로 줄었다 ($P_2 = 0.5 P_1$). [[데시벨]]로 얼마인가?
+{/quiz}
+{answer}
+<pre class="txt">
+dB = 10 log10(P2/P1) = 10 log10(0.5) = 10 × (−0.3) = '''−3 dB'''
+</pre>
+암기: '''−3 dB = 절반'''. 세 구간이 −3, +7, −3 dB 면 합은 +1 dB (dB 는 더한다).
+{/answer}
+[[sim:db_calc]]
+
+=== Example 2.6 — Nyquist: 필요한 레벨 수 ===
+{quiz}
+[[bandwidth]] 20 kHz 의 '''무잡음''' 채널로 265 kbps 를 보내려면 [[signal level|신호 레벨]]이 몇 개 필요한가?
+{/quiz}
+{answer}
+<pre class="txt">
+[[Nyquist bit rate]]: BitRate = 2 × B × log2 L
+265,000 = 2 × 20,000 × log2 L
+log2 L = 265,000 / 40,000 = 6.625
+L = 2^6.625 ≈ '''98.7 레벨''' → 심볼 하나에 6~7 비트
+</pre>
+{/answer}
+
+=== Example 2.8 — Shannon: 전화선의 이론적 최고 비트율 ===
+{quiz}
+전화선: 데이터용 대역폭 3000 Hz (300~3300 Hz), [[SNR]] 3162. 이론적 최고 비트율은?
+{/quiz}
+{answer}
+<pre class="txt">
+[[Shannon capacity]]: C = B × log2(1 + SNR)
+= 3000 × log2(1 + 3162) = 3000 × log2(3163)
+= 3000 × 11.62 = '''34,860 bps'''
+</pre>
+더 빠르게 하려면 방법은 둘뿐: 대역폭을 늘리거나 SNR 을 개선하거나.
+{/answer}
+
+=== Example 2.9 — Shannon 으로 천장, Nyquist 로 레벨 ===
+{quiz}
+대역폭 1 MHz, SNR = 63 인 채널. 적절한 비트율과 신호 레벨 수는?
+{/quiz}
+{answer}
+<pre class="txt">
+① Shannon 상한: C = 10^6 × log2(1 + 63) = 10^6 × log2 64 = 10^6 × 6 = '''6 Mbps'''
+② 상한보다 낮은 목표 선택 (안정성): '''4 Mbps'''
+③ Nyquist 로 레벨: 4 × 10^6 = 2 × 10^6 × log2 L → log2 L = 2 → '''L = 4'''
+</pre>
+핵심: '''Shannon = 천장 확인, Nyquist = 레벨 설계'''.
+{/answer}
+[[sim:nyquist_shannon]]
+
+=== SNR 을 dB 로 ===
+{quiz}
+SNR = 3162 를 dB 로. 근사식 $C \approx B \cdot \mathrm{SNR_{dB}}/3$ 으로 Example 2.8 을 다시 계산하면?
+{/quiz}
+{answer}
+$\mathrm{SNR_{dB}} = 10 \log_{10} 3162 \approx 35$ dB. $C \approx 3000 \times 35/3 = 35{,}000$ bps (정확값 34,860 과 근접).
+{/answer}
+
+=== Bandwidth-delay product ===
+{quiz}
+(a) 대역폭 1 bps, 지연 5 s (b) 대역폭 5 bps, 지연 5 s. 링크를 채우는 비트 수는?
+{/quiz}
+{answer}
+(a) 1 × 5 = '''5 bits''' (b) 5 × 5 = '''25 bits'''. → [[bandwidth-delay product]]
+{/answer}
+[[sim:bdp_pipe]]
+
+== CH02 (2) Digital Transmission ==
+
+=== Example 2.13 — 음성의 PCM 비트율 ===
+{quiz}
+사람 음성 (0~4000 Hz) 을 샘플당 8 비트로 디지털화하면 비트율은?
+{/quiz}
+{answer}
+<pre class="txt">
+[[Nyquist sampling theorem]]: fs = 2 × fmax = 2 × 4000 = 8000 samples/s
+bit rate = fs × nb = 8000 × 8 = 64,000 bps = '''64 kbps'''
+</pre>
+{/answer}
+
+=== PCM bandwidth ===
+{quiz}
+$n_b = 8$, $B_{analog} = 4$ kHz 일 때 PCM 디지털 신호의 최소 대역폭은?
+{/quiz}
+{answer}
+$B_{min} = n_b \times B_{analog} = 8 \times 4 = $ '''32 kHz'''. → [[PCM bandwidth]] (증명: $f_s = 2B_a$, $N = n_b f_s$, $S = N/r = N$, $S \le 2B$ ⟹ $B \ge n_b B_a$)
+{/answer}
+
+=== Quantization 표 (p.55) ===
+{quiz}
+$L = 8$, 정규화 PAM 값 −1.22 와 3.24 의 양자화 값·오차·코드·비트는?
+{/quiz}
+{answer}
+−1.22 → −1.50 (오차 −0.28) → 코드 2 → '''010'''. 3.24 → 3.50 (오차 +0.26) → 코드 7 → '''111'''. → [[quantization]]
+{/answer}
+[[sim:pcm_encoder]]
+
+=== SNR_dB 와 비트 수 ===
+{quiz}
+샘플당 8 비트일 때 양자화 SNR_dB 는? 비트 하나를 더하면?
+{/quiz}
+{answer}
+$6.02 \times 8 + 1.76 = 49.92$ dB. 비트 1개 추가 → 약 +6 dB. → [[SNR_dB와 n_b]]
+{/answer}
+
+== CH02 (3) Analog Transmission ==
+
+=== Example 5 — FSK 의 반송파와 비트율 ===
+{quiz}
+가용 대역폭 100 kHz (200~300 kHz). [[FSK]], $d = 1$ 로 변조할 때 반송파 주파수와 비트율은?
+{/quiz}
+{answer}
+<pre class="txt">
+중간점 = 250 kHz → 두 반송파를 그 주변에, 2Δf = 50 kHz 선택
+B = (1 + d) S + 2Δf
+100 = 2S + 50 → S = '''25 kbaud'''
+r = 1 (binary) → N = S = '''25 kbps'''
+</pre>
+{/answer}
+[[sim:fsk_bandwidth]]
+
+=== ASK / PSK 대역폭 ===
+{quiz}
+$S = 5$ kbaud, $d = 0$ 일 때 ASK 의 대역폭은? $d = 1$ 이면?
+{/quiz}
+{answer}
+$B = (1+d)S$ → $d=0$: 5 kHz, $d=1$: 10 kHz. PSK 도 같다 (반송파 하나). → [[변조 대역폭]]
+{/answer}
+
+== CH03 (1) DLC ==
+
+=== Example 3.2 — Hamming distance ===
+{quiz}
+$d(000, 011)$ 과 $d(10101, 11110)$ 은?
+{/quiz}
+{answer}
+$000 \oplus 011 = 011$ → '''2'''. $10101 \oplus 11110 = 01011$ → '''3'''. → [[Hamming distance]]
+{/answer}
+
+=== Example 3.3 · 3.4 — $d_{min}$ 과 검출 능력 ===
+{quiz}
+코드 {000, 011, 101, 110} 의 $d_{min}$ 은? 몇 개 오류까지 검출 보장? $d_{min} = 4$ 인 코드는?
+{/quiz}
+{answer}
+$d_{min} = 2$ → $s = d_{min} - 1 = $ '''1 개''' 검출. $d_{min} = 4$ → '''3 개'''. (linear code 라 0 아닌 codeword 의 최소 weight = 2 로 바로 나옴) → [[minimum Hamming distance]]
+{/answer}
+[[sim:hamming_distance]]
+
+=== Example 3.7 — parity 다섯 경우 ===
+{quiz}
+dataword 1011 을 even parity 로 보냈다. 수신이 (1) 10111 (2) 10011 (3) 10110 (4) 00110 (5) 01011 일 때 각각 syndrome 과 판정은?
+{/quiz}
+{answer}
+codeword = 1011'''1'''. (1) s=0 accept ✓ (2) s=1 discard (3) s=1 discard (4) '''s=0 인데 dataword 0011 을 잘못 accept''' — 짝수 개 오류 (5) s=1 discard. → [[parity check code]]
+{/answer}
+[[sim:parity_check]]
+
+=== CRC encoder / decoder (p.46–47) ===
+{quiz}
+dataword 1001, divisor 1011. (a) codeword 는? (b) 수신 1001110 과 1000110 의 syndrome 은?
+{/quiz}
+{answer}
+<pre class="txt">
+(a) augmented dataword 1001'''000''' ÷ 1011 (XOR)
+    1001 ⊕ 1011 = 0010 → 내리기 0100 ⊕ 0000(최상위 0) → 1000 ⊕ 1011 = 0011 → 0110 ⊕ 0000 = 110
+    remainder = '''110''' → codeword = '''1001 110'''
+(b) 1001110 ÷ 1011 → syndrome '''000''' → accept
+    1000110 ÷ 1011 → syndrome '''011''' → discard
+</pre>
+다항식: $(x^6 + x^3) \div (x^3 + x + 1)$ → 나머지 $x^2 + x$ = 110. → [[CRC]] · [[polynomial representation]]
+{/answer}
+[[sim:crc_division]]
+
+=== Bit stuffing ===
+{quiz}
+데이터 0001111111001111101000 을 bit stuffing 하면? 몇 비트가 추가되나?
+{/quiz}
+{answer}
+0 뒤 1 이 5개 연속인 곳 두 군데에 0 삽입 → '''2 비트 추가''' (Two extra bits). → [[bit stuffing]]
+{/answer}
+[[sim:bit_stuffing]]
+
+== CH03 (2) MAC ==
+
+=== Example 3.8 — backoff 시간 ===
+{quiz}
+스테이션 간 최대 거리 600 km, 전파 속도 $3 \times 10^8$ m/s. $K = 2$ 일 때 가능한 backoff 시간 $T_B$ 는?
+{/quiz}
+{answer}
+<pre class="txt">
+Tp = 600 × 10^3 / (3 × 10^8) = '''2 ms'''
+K = 2 → R ∈ {0, 1, 2, 3} → TB = R × Tp ∈ {'''0, 2, 4, 6 ms'''}
+</pre>
+→ [[binary exponential backoff]] · [[T_p]]
+{/answer}
+[[sim:aloha_backoff]]
+
+=== Example 3.9 — pure ALOHA 의 vulnerable time ===
+{quiz}
+200-bit 프레임, 200 kbps 채널. pure ALOHA 에서 충돌 없이 보내려면?
+{/quiz}
+{answer}
+$T_{fr} = 200 / 200{,}000 = 1$ ms → vulnerable time $= 2 T_{fr} = $ '''2 ms'''. 시작 1 ms 전부터 전송 중 1 ms 까지 아무도 시작하면 안 됨. → [[vulnerable time]]
+{/answer}
+
+=== Example 3.11 — slotted ALOHA throughput ===
+{quiz}
+slotted ALOHA, 200-bit 프레임, 200 kbps. 시스템이 초당 (a) 1000 (b) 500 (c) 250 프레임을 만들 때 성공 프레임 수는?
+{/quiz}
+{answer}
+<pre class="txt">
+Tfr = 1 ms. G = frames/s × Tfr
+(a) G = 1   → S = G e^−G = e^−1 = 0.368 → 1000 × 0.368 = '''368'''
+(b) G = 1/2 → S = 0.5 e^−0.5 = 0.303 → 500 × 0.303 = '''151'''
+(c) G = 1/4 → S = 0.25 e^−0.25 = 0.195 → 250 × 0.195 = '''49'''
+</pre>
+pure 였다면 $S = Ge^{-2G}$: (a) 0.135 → 135, (b) 0.184 → 92, (c) 0.152 → 38. → [[ALOHA throughput]]
+{/answer}
+[[sim:aloha_throughput]]
+
+=== Example 3.12 — CSMA/CD 최소 프레임 ===
+{quiz}
+10 Mbps CSMA/CD, 최대 propagation time 25.6 μs. 최소 프레임 크기는?
+{/quiz}
+{answer}
+<pre class="txt">
+최소 Tfr = 2 × Tp = 51.2 μs
+최소 프레임 = 10 Mbps × 51.2 μs = '''512 bits = 64 bytes''' (Standard Ethernet)
+</pre>
+→ [[최소 프레임 크기]]
+{/answer}
+[[sim:csma_cd_minframe]]
+
+== CH01 ==
+
+=== Mesh 링크 수 ===
+{quiz}
+장치 5대를 mesh 로 연결하면 duplex 링크가 몇 개 필요한가? 10대면?
+{/quiz}
+{answer}
+$n(n-1)/2$: 5 → '''10''', 10 → '''45'''. → [[mesh 토폴로지]]
+{/answer}
+
+== 관련 문서 ==
+* [[공식 모음]] · [[자주 틀리는 함정 모음]] · [[log₂ 계산법]] · [[읽는 순서]]

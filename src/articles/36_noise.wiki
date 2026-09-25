@@ -1,0 +1,44 @@
+key: noise
+title: Noise (잡음)
+category: 3강 Transmission, 용어
+---
+'''Noise'''는 전송 중 신호에 '''원치 않는 다른 신호가 더해지는 것'''이다. 종류: '''thermal noise''', induced noise, crosstalk, impulse noise. L2 p.45. 잡음이 신호에 비해 얼마나 큰가를 [[SNR]] 로 잰다.
+
+{def}L2 p.45 "Noise"
+"Several types of noise, such as '''thermal noise''', '''induced noise''', '''crosstalk''', and '''impulse noise'''."
+잡음 종류 = 열잡음, 유도 잡음, 누화, 임펄스 잡음.{/def}
+
+[[img:L2-45.png|p.45 — Point 1 에서 보낸 신호(Transmitted) + 매체에 유입된 Noise → Point 2 에서 받은 신호(Received)는 모양이 변했다|large]]
+
+== 네 종류 ==
+{|
+! 종류 || 원인 (Forouzan) || 특징
+|-
+| '''thermal noise''' || 전선 속 '''전자의 무작위 열운동''' || 항상 존재, 없앨 수 없음. 슬라이드가 '''굵게''' 강조. 모든 주파수에 고르게 퍼짐 → [[AWGN]] 의 모델
+|-
+| induced noise || 모터·가전제품 등 외부 기기 || 기기가 송신 안테나처럼 작동
+|-
+| crosstalk || '''옆 전선'''의 신호가 넘어옴 || 한 선이 송신 안테나, 다른 선이 수신 안테나처럼
+|-
+| impulse noise || 번개, 전력선의 순간 스파이크 || 짧고 강함 (p.45 그림 가운데의 큰 뾰족 봉우리)
+|}
+
+== 이름에서 개념 끌어내기 ==
+'''noise''' = 원래 "시끄러운 소리". 통신에서는 '''내가 보내지 않았는데 섞여 든 모든 것'''. '''thermal''' = 열(therm-) — 온도가 0 K 가 아닌 한 전자는 흔들리고, 그 흔들림이 잡음이다. '''crosstalk''' = cross(건너) + talk(말) = "옆 선의 대화가 건너옴".
+
+{analogy}🎭 '''시끄러운 카페에서 통화하기.''' 상대 목소리(signal)에 카페의 웅성거림(thermal noise, 늘 깔려 있음), 커피 머신 소리(induced), 옆 테이블 대화(crosstalk), 컵 깨지는 소리(impulse)가 섞인다. 목소리가 이 소음보다 충분히 커야(높은 [[SNR]]) 알아듣는다.{/analogy}
+
+[[anim:impairments|맨 아래 줄: 원래 파형 위에 지글거림이 '''더해진다'''. 크기가 줄거나 모양이 비틀리는 것이 아니라 덧셈이다]]
+
+== 수치로 — SNR ==
+$$\text{SNR} = \frac{\text{average signal power}}{\text{average noise power}}$$
+잡음의 크기는 '''신호에 대한 상대값'''으로 의미가 있다. SNR 이 크면 좋은 채널 → [[SNR]]. 그리고 SNR 은 [[Shannon capacity]] 를 통해 '''최대 전송률의 한계'''를 정한다 — [[data rate limits|data rate 3요소]] 중 "the quality of the channel (the amount of noise)".
+
+{warn}잡음이 섞인 뒤에는 [[amplifier]] 로 키워도 신호와 잡음이 '''같이''' 커져 SNR 이 그대로다. noise 대응은 차폐(shielding), twisted pair, 필터, 오류 검출·정정 코드([[CRC]], [[Hamming distance]]) 쪽이다.{/warn}
+
+{quiz}p.45 의 네 가지 noise 중 (a) 옆 케이블의 신호가 넘어오는 것 (b) 전자의 열운동 때문에 항상 있는 것을 고르시오.{/quiz}
+{answer}(a) '''crosstalk''' (b) '''thermal noise'''{/answer}
+
+== 관련 문서 ==
+* [[SNR]] · [[AWGN]] · [[Shannon capacity]] · [[data rate limits]]
+* [[signal impairment]] · [[attenuation]] · [[distortion]] · [[CH02 Transmission]]

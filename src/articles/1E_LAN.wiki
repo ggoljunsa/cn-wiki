@@ -1,0 +1,34 @@
+key: LAN
+title: LAN (Local Area Network)
+category: 1강 Introduction, 용어
+---
+'''LAN(Local Area Network)''' 은 두 network type 중 작은 쪽 — 한 사무실·건물·캠퍼스 안의 '''사설''' 네트워크 (L1 p.14–16).
+
+{def}"Local Area Network (LAN): '''Privately owned'''/connects some hosts in a '''single office, building, or campus'''. / Past: all hosts were connected through a '''common cable''' / Today: Use a '''smart connecting switch''' to recognize destination" (L1 p.14–16)
+사설 소유이고 한 사무실·건물·캠퍼스의 호스트들을 연결한다. 과거에는 모든 호스트가 공용 케이블 하나로 연결됐고, 오늘날은 목적지를 알아보는 스위치를 쓴다.{/def}
+
+[[img:L1-16.png|a. LAN with a common cable (past) — bus 모양 / b. LAN with a switch (today) — star 모양|large]]
+
+== 이름에서 개념 끌어내기 ==
+"'''the name itself is very important'''". '''Local''' '''Area''' — "좁은 지역". 정의의 두 단어를 이름이 그대로 품고 있다: '''local''' 이니 한 건물·캠퍼스 범위, 그리고 그 범위를 한 주체가 가지니 '''privately owned'''. DGIST 캠퍼스망, 우리 집 공유기 아래 기기들이 LAN 이다. 반대편 끝은 '''Wide''' Area 의 [[WAN]].
+
+== 과거와 오늘 (p.15 → p.16) ==
+{|
+! || 과거 (p.15) || 오늘 (p.16)
+|-
+| 모양 || '''common cable''' — [[bus 토폴로지|bus]] 모양 (cable tap, cable end) || '''switch''' 가운데 — [[star 토폴로지|star]] 모양
+|-
+| 보낼 때 || 케이블 위 '''모두'''에게 신호가 퍼짐 → 목적지만 받음. 동시에 보내면 [[collision]] || [[스위치]]가 '''목적지를 알아보고'''(recognize destination) 그 호스트에게만
+|-
+| 단점 || 한 번에 한 쌍만 통신, 충돌 || (스위치가 죽으면 마비 — star 의 숙명)
+|}
+
+{info}"smart" switch 가 목적지를 알아보는 근거는 frame 에 적힌 '''link-layer address''', 즉 [[MAC 주소]]다 ([[주소 체계]], CH03 [[CH03 Link-Layer Addressing]]). 스위치는 [[data-link layer]] 까지만 가진 장치다.{/info}
+
+{analogy}🎭 '''교실 방송 vs 개인 메신저.''' 과거 LAN = 교실 스피커로 "3번 학생, 교무실로" 방송 — 모두가 듣고 3번만 반응하고, 두 선생님이 동시에 방송하면 섞인다. 오늘의 LAN = 반장이 받아서 3번에게만 쪽지를 전달 — 반장(switch)이 누가 누군지 안다.{/analogy}
+
+{quiz}L1 p.14–16 에서 LAN 을 설명하는 세 가지 사실(소유, 범위, 오늘의 연결 장비)을 쓰시오.{/quiz}
+{answer}'''Privately owned''', '''single office, building, or campus''', 오늘날은 목적지를 인식하는 '''smart connecting switch''' 사용(과거엔 common cable).{/answer}
+
+== 관련 문서 ==
+* [[WAN]] · [[스위치]] · [[bus 토폴로지]] · [[star 토폴로지]] · [[인터넷 구조]] · [[CH01 Introduction]]

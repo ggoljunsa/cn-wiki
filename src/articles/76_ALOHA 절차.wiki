@@ -1,0 +1,53 @@
+key: ALOHA 절차
+title: ALOHA 절차 (Procedure for pure ALOHA)
+category: 7강 MAC, 용어
+---
+'''ALOHA 절차'''는 [[pure ALOHA]]에서 프레임을 보내고, 충돌을 판정하고, 재전송하는 흐름도다. L6 p.12. [[CSMA/CD]] 흐름도(p.47)의 뼈대가 된다.
+
+[[img:L6-12.png|p.12 Procedure for pure ALOHA — 범례의 K, T_p, T_fr, T_B, R 을 먼저 읽을 것|large]]
+
+{def}범례 (p.12 Legend):
+* '''$K$''': Number of attempts — 시도 횟수
+* '''$T_p$''': Maximum propagation time — 최대 전파 시간 → [[T_p]]
+* '''$T_{fr}$''': Average transmission time — 평균 프레임 전송 시간 → [[T_fr]]
+* '''$T_B$''': (Backoff time): $R \times T_p$ or $R \times T_{fr}$ — 재전송 전 대기 시간
+* '''$R$''': (Random number): 0 to $2^K - 1${/def}
+
+== 흐름 (한 줄에 한 상자) ==
+<pre class="txt">
+Station has a frame to send
+1. K = 0
+2. Send the frame
+3. Wait (2 × [[T_p]])                ← ACK 가 돌아올 수 있는 최대 시간
+4. ACK received?  → true  → '''Success'''
+                  → false → 5
+5. K = K + 1
+6. K > K_max ?    → true  → '''Abort'''   (K_max = 보통 15)
+                  → false → 7
+7. Choose R  (0 ~ 2^K − 1)
+8. Wait T_B = R × T_p               ← [[binary exponential backoff]]
+9. → 2 로 돌아가 다시 전송
+</pre>
+
+== 왜 $2 \times T_p$ 만큼 기다리나 ==
+내 프레임의 첫 비트가 가장 먼 스테이션까지 가는 데 최대 $T_p$, 그쪽의 ACK 가 돌아오는 데 또 최대 $T_p$. 그러니 왕복 '''$2T_p$''' 가 지나도 ACK 가 없으면 "충돌이 났구나" 하고 판단한다.
+
+[[sim:aloha_backoff]]
+
+'''Example 3.8''' (p.13): 최대 거리 600 km, 전파 속도 $3 \times 10^8$ m/s.
+<pre class="txt">
+T_p = 600 × 10³ / (3 × 10⁸) = 2 ms
+ACK 대기 = 2 × T_p = 4 ms
+K = 2 → R ∈ {0,1,2,3} → T_B ∈ {0, 2, 4, 6} ms
+</pre>
+
+{analogy}🎭 '''문자 보내고 읽음 표시 기다리기.''' 보내고(2) 상대가 확인할 수 있는 최대 시간만큼 기다린다(3). 답이 없으면 실패 횟수를 하나 올리고(5), 너무 많이 실패했으면 포기(6). 아니면 주사위를 굴려 잠깐 쉬었다가(7–8) 다시 보낸다. 실패할수록 주사위 면이 두 배씩 많아져 더 오래 쉴 수도 있게 된다.{/analogy}
+
+{warn}p.12 의 판단은 '''$K > K_{max}$''' 이면 Abort, p.47 CSMA/CD 흐름도는 '''$K < 15$?''' 가 true 면 backoff 로 적혀 있다. 방향만 반대이고 뜻은 같다 — "15번을 넘게 실패하면 포기".{/warn}
+
+{quiz}ALOHA 절차에서 ACK 를 기다리는 시간과, 3번째 실패 직후($K = 3$) 고를 수 있는 $R$ 의 범위를 쓰시오.{/quiz}
+{answer}ACK 대기 = '''$2 \times T_p$'''. $K = 3$ 이면 $R \in \{0, 1, \dots, 2^3 - 1\} = \{0, \dots, 7\}$, 즉 8가지.{/answer}
+
+== 관련 문서 ==
+* [[pure ALOHA]] · [[binary exponential backoff]] · [[T_p]] · [[T_fr]]
+* [[CSMA/CD]] (p.47 흐름도와 비교) · [[collision]]

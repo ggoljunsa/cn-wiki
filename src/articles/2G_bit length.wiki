@@ -1,0 +1,37 @@
+key: bit length
+title: Bit Length (비트 길이)
+category: 2강 Signals, 용어
+---
+'''Bit length'''는 '''비트 하나가 전송 매체 위에서 차지하는 거리(시간)'''다. $\text{bit length} = 1/\text{bit rate}$ ([[bit rate]] 의 역수). L2 p.35.
+
+{def}L2 p.35 "Bit Length"
+"The distance (time) one bit occupies on the transmission medium. '''Bit length = 1 / (bit rate)'''."
+Example 2.4: "The length of the bit in Example 2.3 is 1 / 1,536,000 = 0.000000651s = '''0.651us'''"{/def}
+
+$$\text{bit length (time)} = \frac{1}{\text{bit rate}}$$
+
+== 이름에서 개념 끌어내기 ==
+비트 하나의 "'''길이'''" — 시간축 위에서 재면 초, 선로 위에서 재면 미터. 슬라이드가 "distance (time)" 라고 괄호를 친 이유다. 교수는 "'''the amount of time occupied by one bit''' — 그냥 bit rate 의 역수"라고 시간 쪽으로 설명했다. ([[주기]]가 [[주파수]]의 역수인 것과 같은 구조.)
+
+{info}거리로 바꾸려면 전파 속도를 곱한다: $\text{bit length (m)} = \text{propagation speed} \times \frac{1}{\text{bit rate}}$. 예: 광섬유 속 빛 $2\times10^8$ m/s, 1 Gbps → 비트 하나가 선로 위에서 20 cm. ([[propagation time]] 참고, Forouzan 기준 계산.){/info}
+
+{analogy}🎭 '''기차 칸의 길이.''' 기차(비트열)가 1초에 몇 칸 지나가는가가 bit rate, 한 칸이 지나가는 데 걸리는 시간이 bit length 다. 1초에 4칸이면 한 칸 = 0.25초. 칸이 빨리 지나갈수록(bit rate ↑) 한 칸의 길이는 짧아진다(bit length ↓).{/analogy}
+
+[[img:L2-32.png|p.32 — (a) 1초에 8비트 → 칸 하나(점선 간격)가 1/8 s = bit length|medium]]
+
+== Example 2.4 ==
+<pre class="txt">
+1. Example 2.3 의 [[bit rate]]    = 1,536,000 bps
+2. bit length = 1 / bit rate      = 1 / 1,536,000 s
+3.                                 = 0.000000651 s  (= 6.51 × 10⁻⁷ s)
+4.                                 = '''0.651 μs'''   (μ = 10⁻⁶)
+</pre>
+
+{tip}단위 감각: 1 Mbps → 1 μs, 1 Gbps → 1 ns. 1.536 Mbps 는 1 Mbps 보다 조금 빠르니 1 μs 보다 조금 짧은 0.651 μs — 검산이 된다.{/tip}
+
+{quiz}bit rate 가 100 Mbps 인 링크의 bit length(시간)는?{/quiz}
+{answer}$1 / (100\times10^6) = 10^{-8}$ s = '''10 ns'''.{/answer}
+
+== 관련 문서 ==
+* [[bit rate]] · [[주기]] · [[디지털 신호]]
+* [[transmission time]] (비트 수 × bit length) · [[propagation time]] · [[CH02 Signals]]

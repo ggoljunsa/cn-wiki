@@ -1,0 +1,48 @@
+key: transmission time
+title: Transmission Time (전송 시간)
+category: 3강 Transmission, 용어
+---
+'''Transmission time'''은 '''메시지의 모든 비트를 선로에 올려놓는 데 걸리는 시간'''이다. $\text{Transmission time} = \text{Message size} / \text{Bandwidth}$. 슬라이드(L2 p.65)는 [[latency]] 의 성분으로 이름만 언급하고, 정의는 교재 Forouzan 기준이다.
+
+{def}L2 p.65 "Latency = propagation time + '''transmission time''' + queuing time + processing delay" (정의 없음)
+Forouzan: "'''Transmission time = (Message size) / Bandwidth'''" — 여기서 bandwidth 는 '''bps''' 단위.
+전송 시간 = 메시지 크기 / 대역폭(bps).{/def}
+
+$$T_{trans} = \frac{\text{message size (bits)}}{\text{bandwidth (bps)}}$$
+
+== 이름에서 개념 끌어내기 ==
+'''transmit''' = ''trans-''(건너) + ''mittere''(보내다) — "보내 건네다". 송신기가 비트들을 '''하나씩 선로로 밀어 넣는''' 행위의 시간. 비트 하나를 밀어 넣는 시간이 [[bit length]] ($1/\text{bit rate}$) 이므로, 비트가 $N$ 개면 $N \times$ bit length = $N / \text{bit rate}$.
+
+{analogy}🎭 '''주차장 출구로 차 빼기.''' 차 100대(비트)가 출구 하나(링크)로 나간다. 출구가 1초에 10대씩 내보내면 마지막 차가 나가기까지 10초 — 그게 transmission time. 그 뒤 차들이 목적지까지 달리는 시간은 따로다(propagation time). 출구를 넓히면(bandwidth↑) transmission 은 줄지만 도로 길이는 그대로다.{/analogy}
+
+[[img:L2-67.png|p.67 — 1 bps 링크에서는 비트 하나를 올리는 데 1초. 5비트 메시지면 transmission time = 5초|medium]]
+
+== 예 (Forouzan 기준) ==
+<pre class="txt">
+메시지 2.5 KB(=2,500 bytes), 링크 bandwidth 1 Gbps
+1. 메시지 크기 = 2,500 × 8 = 20,000 bits
+2. transmission time = 20,000 / 10⁹
+3.                   = 2 × 10⁻⁵ s = '''0.020 ms'''
+</pre>
+짧은 메시지 + 빠른 링크면 transmission 은 무시할 만하고 latency 를 [[propagation time]] 이 지배한다. 반대로 큰 파일 + 느린 링크면 transmission 이 지배한다.
+
+{|
+! || [[propagation time]] || transmission time
+|-
+| 식 || 거리 / 전파 속도 || 메시지 크기 / bandwidth
+|-
+| 대상 || 비트 '''하나''' || 메시지의 '''모든''' 비트
+|-
+| 링크 속도(bps)를 올리면 || 그대로 || '''줄어든다'''
+|-
+| 거리를 늘리면 || '''늘어난다''' || 그대로
+|}
+
+{info}CH03 MAC 의 [[T_fr]] (frame transmission time) 가 바로 이 transmission time 이다 — 프레임 크기 / bit rate. [[CSMA/CD]] 의 조건 $T_{fr} \ge 2T_p$ 는 "transmission time 이 왕복 propagation time 보다 길어야 한다"는 뜻이다.{/info}
+
+{quiz}1,000 bits 프레임을 10 Mbps 링크로 보낼 때 transmission time 은?{/quiz}
+{answer}$1000 / (10\times10^6) = 10^{-4}$ s = '''100 μs'''.{/answer}
+
+== 관련 문서 ==
+* [[latency]] · [[propagation time]] · [[bit length]] · [[bandwidth]]
+* [[T_fr]] · [[CSMA/CD]] · [[CH02 Transmission]]

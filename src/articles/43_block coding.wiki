@@ -1,0 +1,53 @@
+key: block coding
+title: Block Coding (블록 코딩, mB/nB)
+category: 4강 Digital Transmission, 용어
+---
+'''Block coding'''은 비트열을 '''m비트씩 끊어 각 묶음을 n비트 묶음으로 바꾸는''' [[digital-to-digital conversion]] 기법이다. 보통 '''mB/nB coding''' 이라 부른다. L3 p.45–47. 대표 예는 [[4B/5B]].
+
+{def}"Block coding is normally referred to as '''mB/nB coding'''. It '''replaces each m-bit group with an n-bit group'''. n is greater than m (i.e., '''redundancy''')." "Additional bits are used for '''synchronization and error detection'''."
+m비트 그룹을 n비트 그룹으로 치환한다. $n > m$ 이라 [[redundancy]]가 생기고, 추가 비트는 동기화와 오류 검출에 쓰인다.{/def}
+
+[[img:L3-45.png|p.45 Division of a stream into m-bit groups → mB-to-nB substitution → Combining n-bit groups into a stream|medium]]
+
+== 이름에서 개념 끌어내기 ==
+'''block''' = 묶음. [[line coding]] 이 "비트 하나씩(line by line)" 이라면 block coding 은 "'''묶음 하나씩'''". 이름 mB/nB 도 그대로 읽으면 된다: '''m B'''inary → '''n B'''inary. 4B/5B = 4비트 → 5비트, 8B/10B = 8비트 → 10비트.
+
+절차는 세 단계(p.45 그림):
+# 스트림을 '''m비트 그룹'''으로 자른다 (division)
+# 각 그룹을 표에서 찾아 '''n비트 그룹'''으로 바꾼다 (mB-to-nB substitution)
+# n비트 그룹을 이어 붙여 다시 스트림으로 (combining) → 이후 [[line coding]]
+
+{analogy}🎭 '''택배 재포장.''' 4개짜리 상자를 받아 '''완충재 한 칸을 더 넣은 5칸 상자'''로 옮겨 담는다. 부피(비트 수)는 25% 늘지만, 상자가 찌그러졌는지(오류)를 알아보기 쉽고, 컨베이어 벨트 위에서 상자 경계(동기)가 분명해진다. 완충재가 곧 [[redundancy]].{/analogy}
+
+== 왜 n > m 인가 — 교수의 trade-off ==
+교수는 수업 중 "M 과 N 중 어느 게 더 크냐?"고 물은 뒤 이렇게 정리했다.
+* "We usually choose '''N larger''' … to '''fight against some errors''' included in communication. We put some '''redundancy'''."
+* coding rate $= m/n$. redundancy 를 많이 넣을수록 $n$ ↑ → coding rate ↓ (같은 비트를 보내는 데 더 많은 비트가 필요).
+* "There is a '''fundamental trade-off between robustness on the error and the speed of communication'''." — correctness vs speed.
+
+{|
+! 코드 || m → n || coding rate $m/n$ || 늘어나는 비트
+|-
+| [[4B/5B]] || 4 → 5 || 0.8 || 25%
+|-
+| 8B/10B (참고) || 8 → 10 || 0.8 || 25%
+|}
+
+{warn}⚠️ '''CH03 의 [[block code]] 와 이름이 비슷하지만 문맥이 다르다.'''
+* '''여기(block coding, physical layer)''': 목적은 주로 '''동기화'''(0 연속 방지) + 간단한 오류 검출. 결과가 곧 [[line coding]] 으로 전압이 된다. 표를 보고 1:1 치환.
+* '''CH03 [[block code]] (data-link layer)''': k비트 [[dataword]] → n비트 [[codeword]], 목적은 '''오류 검출·정정'''이고 [[Hamming distance]], [[parity check code|parity]], [[CRC]] 로 분석한다.
+공통점은 "m(k) 비트를 n 비트로, $n > m$ → redundancy" 라는 발상뿐. 시험에서 "block coding 의 추가 비트 용도"를 물으면 슬라이드 문구 '''synchronization and error detection''' 을 쓸 것.{/warn}
+
+{quiz}block coding 에서 추가 비트는 무엇에 쓰이는가? (슬라이드 문구로){/quiz}
+{answer}"Additional bits are used for '''synchronization and error detection'''." — n > m 이므로 생기는 [[redundancy]] 가 수신기의 동기 유지(예: [[NRZ-I]] 의 0 연속 방지)와 오류 검출(표에 없는 코드 수신 시 오류로 판단)에 쓰인다.{/answer}
+
+{quiz}8비트 데이터를 4B/5B 로 보내면 몇 비트가 되나? coding rate 는?{/quiz}
+{answer}<pre class="txt">
+1. 8비트 = 4비트 그룹 2개
+2. 그룹마다 5비트 → 2 × 5 = 10비트
+3. coding rate = m/n = 4/5 = 0.8
+</pre>{/answer}
+
+== 관련 문서 ==
+* [[4B/5B]] · [[NRZ-I]] · [[line coding]] · [[digital-to-digital conversion]]
+* [[redundancy]] · 이름 비슷한 다른 개념: [[block code]]

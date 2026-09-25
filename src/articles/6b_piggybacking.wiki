@@ -1,0 +1,32 @@
+key: piggybacking
+title: Piggybacking (피기백킹)
+category: 6강 DLC, 용어
+---
+'''Piggybacking''' 은 반대 방향으로 보낼 '''데이터 프레임에 제어 정보(ACK 등)를 얹어 함께 보내는''' 기법이다. [[HDLC]] 의 '''I-frame''' 이 사용자 데이터와 그 데이터에 관한 제어 정보를 함께 나르는 것이 이것이다. L5 p.56.
+
+{def}"I-frames: information frames — Transport user data and control information that relates to user data ('''piggybacking''')." (p.56){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''piggyback''' = "업어 주기, 목말 태우기"(piggy back ride). 제어 정보가 '''혼자 가지 않고 데이터 프레임의 등에 업혀 간다'''. 따로 가면 프레임 하나(헤더·flag·FCS 전부)가 더 필요하지만, 업혀 가면 Control 필드 몇 비트로 끝난다.
+
+{analogy}🎭 '''편지 답장에 추신.''' A 가 B 에게 편지를 받았다. "잘 받았어" 라는 엽서(ACK)를 따로 보내는 대신, 어차피 보낼 내 편지 끝에 "P.S. 네 편지 잘 받았어" 를 덧붙인다. 우표(오버헤드) 한 장을 아낀다.{/analogy}
+
+<pre class="txt">
+piggybacking 없이:   A → B : [I-frame: data]
+                     B → A : [S-frame: ACK]          ← 제어만 담은 프레임 따로
+                     B → A : [I-frame: data]
+
+piggybacking 사용:   A → B : [I-frame: data]
+                     B → A : [I-frame: data + ACK]   ← 데이터에 ACK 를 얹음
+</pre>
+
+[[img:L5-56.png|p.56 I-frame 설명의 "(piggybacking)" — Control 필드가 ACK 같은 제어 정보를 싣는다|medium]]
+
+{tip}보낼 데이터가 없으면 업혀 갈 등이 없으니 '''S-frame''' 으로 제어 정보만 따로 보낸다. 그래서 HDLC 에 I 와 S 가 둘 다 있다. → [[HDLC 프레임]]{/tip}
+
+== 예상 문제 ==
+{quiz}HDLC 세 프레임 중 piggybacking 을 하는 것은? piggybacking 의 이점은?{/quiz}
+{answer}'''I-frame'''. 제어 정보(ACK 등)를 별도 프레임 없이 데이터 프레임에 얹어 보내 '''프레임 수·오버헤드를 줄인다'''(대역폭 절약).{/answer}
+
+== 관련 문서 ==
+* [[HDLC 프레임]] · [[HDLC]] · [[full-duplex]]

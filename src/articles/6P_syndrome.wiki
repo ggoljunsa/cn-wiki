@@ -1,0 +1,44 @@
+key: syndrome
+title: Syndrome (신드롬)
+category: 6강 DLC, 용어
+---
+'''Syndrome''' 은 수신 측 Checker 가 받은 [[codeword]] 전체로 계산하는 '''검사 결과값'''이다. '''모두 0 이면 accept''', 하나라도 1 이면 discard. [[parity check code]]에서는 1비트 $s_0$, [[CRC]] C(7,4) 에서는 3비트 $s_2 s_1 s_0$. L5 p.39–40, p.45, p.47.
+
+{def}"Checker at the receiver does a similar thing. Addition is done over all 5 bits: $s_0 = b_3 + b_2 + b_1 + b_0 + q_0 \pmod 2$. $s_0$ is called the '''syndrome'''." (p.40)
+CRC: 수신 codeword 를 divisor 로 나눈 나머지가 "'''Syndrome'''" — "000 → Dataword accepted", "011 → Dataword discarded" (p.47){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''syndrome''' 은 원래 의학 용어 "증후군" — 병 자체가 아니라 '''겉으로 드러난 증상들의 묶음'''이다. 오류(병)를 직접 보는 게 아니라, 계산 결과(증상)가 0 이 아니면 "뭔가 걸렸다" 고 진단한다. 증상이 없다고(0) 병이 없다는 보장은 없다 — Example 3.7 case 4 가 그 예.
+
+{analogy}🎭 '''체온계.''' 정상 체온(syndrome 0)이면 통과, 열이 있으면(≠0) 격리(discard). 하지만 열 없는 감기도 있듯, 짝수 개 오류는 체온계에 안 잡힌다.{/analogy}
+
+[[img:L5-45.png|p.45 CRC Decoder: Checker 가 divisor 로 나눠 Syndrome s2 s1 s0 를 만들고, Decision logic 이 Accept / Discard 를 결정|large]]
+
+== 두 코드의 syndrome ==
+{|
+! 코드 || 계산 || 비트 수 || accept 조건
+|-
+| [[parity check code]] C(5,4) || $s_0 = b_3+b_2+b_1+b_0+q_0 \pmod 2$ || 1 || $s_0 = 0$
+|-
+| [[CRC]] C(7,4) || 수신 7비트 ÷ [[divisor]] 1011 의 '''나머지''' || 3 (= divisor 차수) || $s_2s_1s_0 = 000$
+|}
+
+<pre class="txt">
+CRC p.47
+  수신 1001110 ÷ 1011 → 나머지 '''000''' → accept, dataword 1001
+  수신 1000110 ÷ 1011 → 나머지 '''011''' → discard
+
+Parity p.42
+  수신 10111 → s0 = 0 → accept      수신 10011 → s0 = 1 → discard
+</pre>
+
+[[sim:crc_division]]
+
+{warn}'''syndrome 0 ≠ 오류 없음.''' syndrome 0 은 "받은 것이 valid codeword 다" 라는 뜻일 뿐이다. 오류가 다른 valid codeword 로 바꿔 놓았으면(parity 의 짝수 개 오류, Example 3.1 case 3) syndrome 은 0 이 나온다.{/warn}
+
+== 예상 문제 ==
+{quiz}CRC 수신 측에서 syndrome 을 구하려면 무엇을 무엇으로 나누는가? 송신 측 나눗셈과 무엇이 다른가?{/quiz}
+{answer}'''받은 codeword 전체(7비트)'''를 같은 divisor 로 나눈다. 송신 측은 dataword 뒤에 '''0 을 n−k 개 붙인 augmented dataword''' 를 나눴다. 나머지가 송신 측에선 remainder(붙일 값), 수신 측에선 syndrome(판정 값).{/answer}
+
+== 관련 문서 ==
+* [[parity check code]] · [[CRC]] · [[divisor]] · [[modular arithmetic]] · [[codeword]]

@@ -1,0 +1,43 @@
+key: composite signal
+title: Composite Signal (합성 신호)
+category: 2강 Signals, 용어
+---
+'''Composite signal'''은 '''여러 개의 단순한 [[사인파]]로 이루어진 신호'''다. L2 p.27–29. 의미 있는 통신은 사인파 하나로는 불가능하므로 실제로 보내는 신호는 '''항상''' composite signal 이다.
+
+{def}L2 p.27 "Composite Signals"
+"For meaningful communication, we need to send '''a composite signal''', a signal made of many simple sine waves."
+L2 p.28 "According to Fourier analysis: '''Any composite signal can be decomposed into a combination of simple sine waves''' with different frequencies, amplitude, and phases."
+합성 신호 = 여러 단순 사인파로 만든 신호. 어떤 합성 신호든 주파수·진폭·위상이 다른 사인파들로 분해된다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''composite''' = ''com-''(함께) + ''ponere''(놓다) = "함께 놓아 만든 것". 복합 재료(composite material)처럼 '''여러 성분을 합친''' 신호. 교수: "composite 를 생략하고 그냥 signal 이라고 부르는 경우가 많다" — 실제 신호는 거의 다 composite 이기 때문이다.
+
+{analogy}🎭 '''오케스트라.''' 바이올린(고음), 첼로(중음), 콘트라베이스(저음)가 각자 단순한 음(사인파)을 내지만, 청중 귀에 들리는 것은 그 '''합'''이다. 귀(또는 [[Fourier analysis]])는 그 합을 다시 악기별로 나눠 들을 수 있다. 사인파 하나(=독주 한 음)로는 교향곡을 전달할 수 없다 — 그래서 composite 가 필요하다.{/analogy}
+
+[[img:L2-28.png|p.28 — 0 Hz(높이 15, 빨강) + 8 Hz(높이 10, 파랑) + 16 Hz(높이 5, 검정). 시간 영역에선 세 선의 합이 실제 신호, 주파수 영역에선 막대 셋|large]]
+
+$$x(t) = x_1(t) + x_2(t) + x_3(t) = 15 + 10\sin(2\pi\cdot8t) + 5\sin(2\pi\cdot16t)$$
+(0 Hz 성분 15 는 [[주파수|Example 2.1]] 의 배터리처럼 일정한 '''DC''' 값이다.)
+
+[[anim:composite_fourier|f, 3f, 5f 사인파가 차례로 더해지며 사각파에 가까워진다. 성분이 늘수록 모서리가 날카로워진다 — 완벽한 사각파(디지털 신호)는 무한 개가 필요하다]]
+
+== 주기 vs 비주기 composite signal (p.29) ==
+{|
+! composite signal || 분해 결과 || frequency domain 모양
+|-
+| '''periodic''' || '''discrete''' frequencies 의 나열 || 띄엄띄엄한 막대들
+|-
+| '''non-periodic''' || '''continuous''' frequencies 의 조합 || 빈틈없는 면적
+|}
+[[img:L2-29.png|p.29 — 1000~5000 Hz 범위의 주기 신호(막대)와 비주기 신호(면적)|large]]
+
+composite signal 에서 처음 정의할 수 있는 양이 [[bandwidth]] 다 — 성분 주파수의 '''최고 − 최저'''. 사인파 하나에는 없던 개념이다.
+
+{warn}[[distortion]] (L2 p.44) 은 composite signal 에서만 생긴다. 성분들이 서로 다른 속도로 도착해 '''out of phase''' 가 되면 합의 모양이 바뀐다. 사인파 하나라면 어긋날 짝이 없다.{/warn}
+
+{quiz}p.28 의 composite signal 은 몇 개의 주파수 성분으로 이루어져 있고, bandwidth 는 얼마인가?{/quiz}
+{answer}0 Hz, 8 Hz, 16 Hz 의 '''3개'''. bandwidth = $16 - 0 = $ '''16 Hz'''. (0 Hz 도 성분이므로 최저 주파수는 0 이다.){/answer}
+
+== 관련 문서 ==
+* [[Fourier analysis]] · [[사인파]] · [[bandwidth]] · [[time domain과 frequency domain]]
+* [[주기 신호와 비주기 신호]] · [[디지털 신호]] · [[distortion]] · [[CH02 Signals]]

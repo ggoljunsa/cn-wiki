@@ -1,0 +1,37 @@
+key: unipolar NRZ와 polar NRZ
+title: Unipolar NRZ와 Polar NRZ
+category: 5강 Analog Transmission, 용어
+---
+'''Unipolar NRZ''' 는 1 = 양(+) 전압, 0 = '''0 V'''. '''Polar NRZ''' 는 1 = +V, 0 = '''−V'''. 이 과목에서는 [[ASK]] 와 [[PSK]] 를 '''같은 곱셈기'''로 만들 때 입력이 무엇이냐의 차이로 등장한다 (L4 p.39, p.45).
+
+{def}Forouzan: '''Unipolar''' — 모든 신호 레벨이 시간축의 한쪽(양)에만 있다. '''Polar''' — 전압이 양·음 양쪽에 있다. '''NRZ''' (Non-Return-to-Zero) — 비트 구간 중간에 0 으로 돌아가지 않는다.
+L4 p.39 (ASK 구현): 곱셈기 입력 = 0/양 레벨 사각파. L4 p.45 (BPSK 구현): 곱셈기 입력 = 양/음 레벨 사각파 (판서로 −1 표시).{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''uni-polar''' = 극(pole)이 '''하나''' → 0 과 + 만
+* '''polar''' (bi-polar 성격) = 극이 '''둘''' → + 와 −
+* '''NRZ''' = Non-Return-to-Zero → 한 비트 동안 레벨 유지 ([[NRZ-I]] 의 NRZ 와 같은 뜻)
+
+<pre class="ascii">
+bit            1     0     1     1     0
+             ┌─────┐     ┌───────────┐
+unipolar  +1 │     │     │           │
+           0 ┘     └─────┘           └─────     → × 반송파 = [[ASK]] (0 이면 꺼짐)
+
+             ┌─────┐     ┌───────────┐
+polar     +1 │     │     │           │
+           0 ┼ ─ ─ ┼ ─ ─ ┼ ─ ─ ─ ─ ─ ┼ ─ ─
+          −1 ┘     └─────┘           └─────     → × 반송파 = [[PSK]] (0 이면 뒤집힘)
+</pre>
+
+{analogy}🎭 '''볼륨 노브 vs 스피커 극성.''' 반송파(음악)에 unipolar 를 곱하는 건 볼륨을 '''켰다(1) 껐다(0)''' 하는 것 → ASK. polar 를 곱하는 건 볼륨은 그대로 두고 스피커 선을 '''+/− 반대로 꽂았다 뺐다''' 하는 것 → 소리 크기는 같지만 파형이 뒤집힘 → PSK.{/analogy}
+
+[[img:L4-45.png|p.45 BPSK 구현 — 곱셈기 왼쪽 입력이 polar NRZ (판서로 −1 레벨 표시)|medium]]
+
+{exam}🎯 교수의 "'''PSK = ASK with −1'''" 이 바로 이 차이다: 곱셈기와 반송파는 같고, 0 을 '''0''' 으로 보내면(unipolar) ASK, '''−1''' 로 보내면(polar) PSK.{/exam}
+
+{quiz}ASK 와 BPSK 를 같은 곱셈기로 구현할 때 달라지는 것은 무엇인가?{/quiz}
+{answer}곱셈기에 넣는 디지털 신호의 형태. ASK 는 '''unipolar NRZ''' (1 → +1, 0 → 0), BPSK 는 '''polar NRZ''' (1 → +1, 0 → −1). 반송파와 곱셈기는 같다.{/answer}
+
+== 관련 문서 ==
+* [[ASK]] · [[PSK]] · [[NRZ-I]] · [[line coding]] · [[signal level]]

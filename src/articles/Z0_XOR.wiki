@@ -1,0 +1,69 @@
+key: XOR
+title: XOR (Exclusive OR, 배타적 논리합, ⊕)
+category: 용어, 6강 DLC
+---
+'''XOR''' ($\oplus$) 은 두 비트가 '''다르면 1, 같으면 0''' 인 연산이다. mod 2 덧셈과 똑같고, mod 2 에서는 뺄셈도 같은 연산이다. CH03 의 오류 검출 계산 — [[Hamming distance]], [[linear block code]], [[parity check code|parity]], [[CRC]] 나눗셈 — 은 전부 XOR 한 가지로 돌아간다.
+
+{def}"Note: $d(x,y)$ = number of 1s in $x \oplus y$ for binary x and y." (L5 p.28)
+"Addition and subtraction in this case are the same: '''XOR'''." (L5 p.46){/def}
+
+== 진리표 ==
+{|
+! $a$ || $b$ || $a \oplus b$ || $a + b \pmod 2$
+|-
+| 0 || 0 || 0 || 0
+|-
+| 0 || 1 || 1 || 1
+|-
+| 1 || 0 || 1 || 1
+|-
+| 1 || 1 || '''0''' || '''0''' (1+1=2, mod 2 → 0, 올림 없음)
+|}
+
+== 이름에서 개념 끌어내기 ==
+'''eXclusive OR''' — "배타적" 또는. 보통 OR 은 둘 다 1 이어도 1 이지만, XOR 은 "'''둘 중 하나만'''" 일 때만 1. 즉 '''"둘이 다른가?"''' 를 묻는 연산이다. 그래서 XOR 결과의 1 은 "다른 자리 표시" 가 된다 → Hamming distance.
+
+{analogy}🎭 '''복도 양 끝 스위치.''' 계단 아래와 위에 스위치가 하나씩 있는 전등. 어느 쪽이든 한 번 누르면 상태가 뒤집힌다. 불이 켜진 상태 = 두 스위치 위치가 '''다를 때'''. 이것이 XOR 이다. 그리고 '''같은 스위치를 두 번 누르면 원래대로''' — $x \oplus b \oplus b = x$. 그래서 XOR 은 더하기이자 빼기다.{/analogy}
+
+== 성질 (계산에 쓰는 것만) ==
+<pre class="txt">
+x ⊕ 0 = x            ← 0000 으로 XOR 하면 그대로 (CRC 의 "leftmost 0 → 0000")
+x ⊕ x = 0            ← 같은 것끼리 상쇄 (linear code 에 000 이 항상 있는 이유)
+x ⊕ y = y ⊕ x        ← 순서 무관
+(x ⊕ y) ⊕ z = x ⊕ (y ⊕ z)
+빼기 = 더하기         ← x − y = x ⊕ y  (빌림 없음, 올림 없음)
+</pre>
+
+== CH03 에서 쓰이는 곳 ==
+{|
+! 어디 || 어떻게 || 예
+|-
+| [[Hamming distance]] (p.28) || $x \oplus y$ 의 1 개수 || $10101 \oplus 11110 = 01011$ → 3
+|-
+| [[linear block code]] (p.34–35) || codeword ⊕ codeword = codeword || $011 \oplus 101 = 110$
+|-
+| [[parity check code]] (p.40) || $r_0 = a_3 \oplus a_2 \oplus a_1 \oplus a_0$ || 1011 → 1
+|-
+| [[CRC]] 나눗셈 (p.46–47) || 매 단계 현재 4비트 ⊕ divisor(또는 0000) || $1001 \oplus 1011 = 0010$
+|-
+| [[polynomial representation|다항식]] (p.49) || 계수 덧셈이 mod 2 || $x^3 + x^3 = 0$
+|}
+
+<pre class="txt">
+비트열 XOR 은 자리별로 따로 (올림 없음):
+    1 0 0 1
+  ⊕ 1 0 1 1
+  ---------
+    0 0 1 0
+</pre>
+
+[[sim:crc_division]]
+
+{warn}'''일반 덧셈/뺄셈과 헷갈리지 말 것.''' $1001 - 1011$ 을 십진 뺄셈처럼 빌림(borrow)으로 계산하면 틀린다. CRC 에서는 자리마다 독립적으로 XOR 만 한다.{/warn}
+
+== 예상 문제 ==
+{quiz}$1111 \oplus 1011$ 과 $0111 \oplus 0000$ 을 계산하고, 각각 p.47 의 어느 단계인지 말하라.{/quiz}
+{answer}$1111 \oplus 1011 = 0100$ (p.47 오른쪽, 오류 경우 3단계). $0111 \oplus 0000 = 0111$ (같은 경우 2단계 — 맨 왼쪽이 0 이라 0000 사용).{/answer}
+
+== 관련 문서 ==
+* [[modular arithmetic]] · [[Hamming distance]] · [[linear block code]] · [[CRC]] · [[parity check code]]

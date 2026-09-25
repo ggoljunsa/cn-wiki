@@ -1,0 +1,83 @@
+key: Shannon capacity
+title: Shannon Capacity (섀넌 용량)
+category: 3강 Transmission, 용어, 핵심
+---
+'''Shannon capacity'''는 '''잡음 있는(noisy) 채널'''— 정확히는 [[AWGN]] 채널 — 의 '''최대 전송률'''이다. $C = B\log_2(1 + \text{SNR})$. 어떤 변조·level·기법을 쓰든 이 값을 넘어 '''신뢰성 있게''' 보낼 수는 없다. L2 p.53–60.
+
+{def}L2 p.53 "Noisy Channel: Shannon Capacity"
+"For '''Additive White Gaussian Noise (AWGN)''' channel, the following formula determines the '''maximum transmission rate'''
+$$\text{Capacity} = \text{Bandwidth} \times \log_2(1 + \text{SNR})$$
+Bandwidth is the bandwidth of the channel / SNR is the signal-to-noise ratio / Capacity is the capacity of the channel in bits per second"
+L2 p.56 "When the SNR is very high, we can assume that SNR + 1 is almost the same as SNR. … simplified to
+$$\text{Capacity} \approx \text{Bandwidth} \times \frac{\text{SNR}_{dB}}{3}$$"{/def}
+
+[[img:L2-53.png|p.53 — Shannon capacity 공식. 잡음의 종류가 AWGN 이라는 전제가 붙어 있다|large]]
+
+== 공식 해부 ==
+* [[bandwidth|B]] — 채널 대역폭 (Hz)
+* [[SNR]] — '''비율''' (dB 아님!)
+* $\log_2(1+\text{SNR})$ — 1 Hz 당 보낼 수 있는 최대 비트 (bits/s/Hz)
+* '''$L$ 이 없다''' — level 수와 무관한 천장. [[Nyquist bit rate|Nyquist]] 와의 결정적 차이
+* 늘리는 방법은 둘뿐: "'''increase the bandwidth''' of the line or '''improve the signal-to-noise ratio'''" (p.55)
+
+== 이름에서 개념 끌어내기 ==
+[[Claude Shannon]] (1948) 의 이름 + '''capacity''' (그릇에 담을 수 있는 최대량). "'''이 채널이라는 그릇에 담을 수 있는 정보의 최대량'''." 교수(9/1): "noisy channel 에서 reliable communication 이 가능한 bit rate 에는 '''한계'''가 있고, Shannon 은 그 한계까지 신뢰성 있게 보내는 기법이 '''존재함'''을 증명했다. 그 양을 '''channel capacity''' 라 부른다. — this limit is the one that Shannon put."
+
+{analogy}🎭 '''안개 낀 날의 깃발 신호.''' [[Nyquist bit rate|Nyquist]] 는 "깃발 색을 늘리면 더 보낸다"고 했다. Shannon 은 "안개(noise)가 이 정도면 색을 아무리 세분해도 '''구별 가능한 색은 최대 $\sqrt{1+\text{SNR}}$ 개 정도'''다"라는 한계를 줬다. 안개를 걷거나(SNR↑) 깃발을 더 빨리 흔들 수 있게(B↑) 하는 것 말고는 방법이 없다.{/analogy}
+
+== Example 2.8 — 전화선 (p.54–55) ==
+[[img:L2-55.png|p.55 — C = 3000 log₂(1 + 3162) = 3000 × 11.62 = 34,860 bps|large]]
+
+'''문제''': 일반 전화선의 이론적 최고 bit rate. 데이터용 대역폭 '''3000 Hz''' (300~3300 Hz), '''SNR = 3162'''.
+<pre class="txt">
+1. C = B log₂(1 + SNR)
+2.   = 3000 × log₂(1 + 3162) = 3000 × log₂ 3163
+3. log₂ 3163:  2^11 = 2048 < 3163 < 4096 = 2^12  → 11.xx
+               = log₁₀ 3163 / log₁₀ 2 ≈ 3.500 / 0.301 ≈ '''11.62'''
+4. C = 3000 × 11.62 = '''34,860 bps'''
+5. 검산 (근사식): SNR_dB ≈ 35 → 3000 × 35/3 = 35,000 bps ≈ 34,860 ✓
+</pre>
+→ log 손계산은 [[log₂ 계산법]]
+
+== 근사식 (p.56) ==
+SNR ≫ 1 이면 $1 + \text{SNR} \approx \text{SNR}$:
+<pre class="txt">
+C ≈ B log₂ SNR
+  = B × (log₁₀ SNR / log₁₀ 2)
+  = B × ((SNR_dB / 10) / 0.301)
+  ≈ B × SNR_dB / 3.01
+  ≈ '''B × SNR_dB / 3'''         ← "3 dB 마다 1 bit/s/Hz"
+</pre>
+[[img:L2-56.png|p.56 — 근사식 Capacity ≈ Bandwidth × SNR_dB / 3|medium]]
+
+== Example 2.9 — Shannon + Nyquist (p.57–60) ==
+[[img:L2-60.png|p.60 — Shannon 으로 6 Mbps 상한 → 4 Mbps 선택 → Nyquist 로 L = 4|large]]
+
+'''문제''': 대역폭 '''1 MHz''', '''SNR = 63'''. 적절한 bit rate 와 signal level 은?
+<pre class="txt">
+① Shannon 으로 상한
+1. C = 10⁶ × log₂(1 + 63) = 10⁶ × log₂ 64 = 10⁶ × 6 = '''6 Mbps'''
+② "For better performance we choose something lower"
+2. 목표 = '''4 Mbps'''
+③ Nyquist 로 level 수
+3. 4×10⁶ = 2 × 10⁶ × log₂L → log₂L = 2 → '''L = 4'''
+</pre>
+{exam}⭐⭐⭐ '''Shannon 이 천장, Nyquist 가 설계.''' 왜 6 Mbps 를 그대로 안 쓰나? capacity 는 "무한히 복잡한 부호를 쓰면 도달 가능한" 이론값이라 실제로는 여유를 둔다. (1+63 = 64 = $2^6$ 처럼 '''1+SNR 이 2 의 거듭제곱'''이 되도록 숫자를 준 문제는 log 가 딱 떨어진다 — 시험에도 이런 숫자가 나오기 쉽다.){/exam}
+
+[[sim:nyquist_shannon]]
+
+{warn}⚠️ 흔한 실수 세 가지
+# '''SNR_dB 를 비율 자리에''' 넣기: $B\log_2(1+35)$ ✘ → $B\log_2(1+3162)$ ✔
+# '''log 밑 혼동''': capacity 는 $\log_2$, dB 는 $\log_{10}$ (교수 9/10: "not be confused with the base which is two for calculating the capacity")
+# '''+1 빼먹기''': 정확한 식은 $1+\text{SNR}$. 근사식은 SNR 이 클 때만.{/warn}
+
+{quiz}대역폭 4 kHz, SNR = 255 인 채널의 capacity 는?{/quiz}
+{answer}$C = 4000 \times \log_2(1+255) = 4000 \times \log_2 256 = 4000 \times 8 = $ '''32,000 bps = 32 kbps'''.{/answer}
+
+{quiz}SNR = 0 인 채널의 capacity 는? 대역폭을 무한히 늘리면 해결되는가?{/quiz}
+{answer}$C = B\log_2 1 = $ '''0'''. $B$ 가 아무리 커도 $B \times 0 = 0$ — 해결되지 않는다. 신호 없이는 정보를 보낼 수 없다.{/answer}
+
+== 관련 문서 ==
+* [[Nyquist bit rate]] · [[data rate limits]] · [[SNR]] · [[AWGN]] · [[bandwidth]]
+* [[Claude Shannon]] · [[데시벨]] · [[log₂ 계산법]] · [[noise]]
+* [[CH02 Transmission]] · [[계산 문제 모음]]

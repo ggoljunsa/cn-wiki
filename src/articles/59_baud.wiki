@@ -1,0 +1,42 @@
+key: baud
+title: Baud (보, signal rate 의 단위)
+category: 5강 Analog Transmission, 용어
+---
+'''Baud'''는 '''초당 signal element(symbol) 수''', 즉 [[signal rate와 bit rate|signal rate S]] 의 단위다. '''bit rate(bps)와 다른 단위'''라는 것이 핵심. L4 p.37–45 모든 변조 그림 아래에 "Baud: 5" 가 적혀 있다.
+
+{def}Slide p.37: "Bit rate: 5" / "1 signal element" × 5 / "1 s" / "'''Baud: 5'''".
+PCM bandwidth 증명: "$S = N/r$ [baud]" (L3 p.64).
+1 baud = 1 signal element per second.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''Baud''' 는 전신 부호(Baudot code)를 만든 프랑스 기술자 '''Émile Baudot''' 의 이름에서 왔다. Hz 가 Hertz 에서, bps 가 bits per second 에서 온 것처럼 사람 이름 단위다. 뜻은 "'''신호가 초당 몇 번 바뀌나'''" — 비트가 아니라 '''신호 모양'''을 센다.
+
+{exam}🎯 교수: "When we say signal in communication, then '''the unit of it is different''' from [bit]. Maybe we can map two bits to one symbol, right? Then that would be a different symbol rate. '''Please remember, the terminology is very important.''' You should know the meaning of terminologies used throughout this course."{/exam}
+
+{analogy}🎭 '''버스와 승객.''' baud 는 '''초당 출발하는 버스 수''', bps 는 '''초당 실려 가는 승객 수'''. 버스 한 대에 한 명만 타면(r = 1) 두 숫자가 같지만, 네 명씩 타면(r = 4) 승객 수가 버스 수의 4배다. 도로(대역폭)가 감당하는 건 '''버스 수'''다.{/analogy}
+
+[[img:L4-37.png|p.37 1초에 signal element 5개 → Baud 5, 각 element 가 1비트 → Bit rate 5|medium]]
+
+{|
+! || bit rate $N$ || signal rate $S$
+|-
+| 단위 || '''bps''' (bits/s) || '''baud''' (signal elements/s)
+|-
+| 세는 것 || 비트 || 신호 모양 (symbol)
+|-
+| 관계 || $N = r \times S$ || $S = N / r$
+|-
+| 대역폭과 직접 관련 || 간접 || '''직접''': $B = (1+d)S$, $S \le 2B$
+|}
+
+{warn}⚠️ binary 변조($r = 1$)에서는 숫자가 같아서(Bit rate 5 = Baud 5) '''둘을 같은 것으로 착각하기 쉽다'''. 대역폭 공식에는 '''항상 S (baud)''' 가 들어간다. [[QAM]] 처럼 $r > 1$ 이면 달라진다.{/warn}
+
+{quiz}16-QAM 으로 4000 baud 를 보내면 bit rate 는?{/quiz}
+{answer}<pre class="txt">
+1. r = log₂16 = 4 bits/symbol
+2. N = r × S = 4 × 4000 = 16,000 bps = 16 kbps
+</pre>{/answer}
+
+== 관련 문서 ==
+* [[signal rate와 bit rate]] · [[bit rate]] · [[bps와 Hz]] · [[roll-off factor]]
+* [[ASK]] · [[PCM bandwidth]] · [[Nyquist bit rate]]

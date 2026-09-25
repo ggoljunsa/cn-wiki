@@ -1,0 +1,52 @@
+key: polynomial representation
+title: Polynomial Representation (다항식 표현)
+category: 6강 DLC, 용어
+---
+'''Polynomial representation''' 은 비트 패턴을 '''다항식'''으로 쓰는 방법이다. 비트 $a_i$ 가 $x^i$ 의 계수가 된다. [[CRC]] 의 divisor·dataword·나눗셈을 짧게 쓰고 수학적으로 분석하기 위해 쓴다. L5 p.48–49.
+
+{def}p.48 "a. Binary pattern and polynomial": $a_6 a_5 a_4 a_3 a_2 a_1 a_0$ = 1000011 → $1x^6 + 0x^5 + 0x^4 + 0x^3 + 0x^2 + 1x^1 + 1x^0$
+"b. Short form": $x^6 + x + 1${/def}
+
+[[img:L5-48.png|p.48 1000011 의 각 비트가 x⁶ … x⁰ 의 계수가 되고, 0 인 항을 지우면 short form x⁶ + x + 1|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''polynomial''' = poly(여러) + nomial(항). 비트열의 '''자리 = 거듭제곱''', '''값 = 계수'''. 십진수 $345 = 3 \cdot 10^2 + 4 \cdot 10 + 5$ 에서 10 대신 $x$ 를 쓴 것과 같다. 계수는 0 아니면 1 이고, 계수끼리의 연산은 [[modular arithmetic|mod 2]] (덧셈 = 뺄셈 = [[XOR]]).
+
+{analogy}🎭 '''악보.''' 비트열이 "켜짐/꺼짐" 이 나열된 피아노 롤이라면, 다항식은 '''켜진 음만 적는 악보'''다. 1000011 을 "x⁶, x¹, x⁰ 이 켜짐" 이라고 적으면 길이가 32비트짜리여도 한 줄로 쓸 수 있다(CRC-32 를 보라).{/analogy}
+
+== 변환 연습 ==
+<pre class="txt">
+비트            다항식
+1011         →  x³ + x + 1           (divisor)
+1001         →  x³ + 1               (dataword)
+1001000      →  x⁶ + x³              (= dataword × x³, 0 세 개 붙이기)
+110          →  x² + x               (remainder)
+1001110      →  x⁶ + x³ + x² + x     (codeword)
+</pre>
+'''0 을 n−k 개 붙이기 = $x^{n-k}$ 곱하기'''. 비트를 왼쪽으로 민 것이 거듭제곱이 오른 것과 같다.
+
+== 다항식 나눗셈 (p.49) ==
+[[img:L5-49.png|p.49 Binary(1001000 ÷ 1011 → 110) 와 Polynomial((x⁶+x³) ÷ (x³+x+1) → x²+x) 를 나란히|large]]
+
+<pre class="txt">
+            x³       + x              ← 몫
+          ┌───────────────────
+x³ + x + 1│ x⁶           + x³         ← dividend (augmented dataword)
+            x⁶ + x⁴      + x³         ← x³ × (x³ + x + 1)
+            ─────────────────
+                 x⁴                   ← x⁶, x³ 상쇄 (mod 2: 1 + 1 = 0)
+                 x⁴ + x² + x          ← x × (x³ + x + 1)
+                 ────────────
+                      '''x² + x'''          ← remainder = 110
+
+codeword = (x⁶ + x³) + (x² + x)  →  1001 | 110
+</pre>
+
+{warn}'''mod 2 에서는 빼기 = 더하기.''' $x^3 - x^3 = 0$ 이고 $0 - x^4$ 도 $+x^4$ 다(음수 계수가 없다). 그래서 binary 나눗셈의 XOR 과 한 줄 한 줄 정확히 대응한다.{/warn}
+
+== 예상 문제 ==
+{quiz}CRC-16 다항식 $x^{16} + x^{12} + x^5 + 1$ 은 몇 비트이며, 1 인 비트는 몇 개인가?{/quiz}
+{answer}차수 16 → '''17 비트'''. 항이 4개($x^{16}, x^{12}, x^5, x^0$) → 1 인 비트 '''4개'''.{/answer}
+
+== 관련 문서 ==
+* [[CRC]] · [[divisor]] · [[CRC 표준 다항식]] · [[modular arithmetic]] · [[XOR]] · [[cyclic code]]

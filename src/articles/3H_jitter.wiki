@@ -1,0 +1,40 @@
+key: jitter
+title: Jitter (지터)
+category: 3강 Transmission, 용어
+---
+'''Jitter'''는 '''패킷마다 서로 다른 지연(delay)을 겪는''' 현상, 즉 [[latency]] 의 불균일함이다. L2 p.69. [[CH01 Introduction]] 의 [[데이터 통신 4대 특성]](Delivery · Accuracy · Timeliness · '''Jitter''') 중 하나로 이미 등장했다.
+
+{def}L2 p.69 "Jitter"
+"'''Different packets of data encounter different delays.'''"
+지터 = 서로 다른 데이터 패킷이 서로 다른 지연을 겪는 것.{/def}
+
+[[img:L2-69.png|p.69 — No Jitter(초록): 도착 간격 X, X, X 로 일정. With Jitter(빨강): 간격 X, Y, Z 로 제각각 — 몰렸다가 벌어졌다가|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''jitter''' = (영어 구어) 초조해서 '''덜덜 떨다''', "the jitters". 도착 시각이 일정한 박자에서 '''떨리듯 흔들린다'''. 평균 지연이 아니라 '''지연의 흔들림'''이 핵심이다.
+
+{analogy}🎭 '''버스 배차 간격.''' 10분마다 오기로 한 버스가 어떤 날은 3분 만에 두 대가 연달아 오고, 그다음은 20분 동안 안 온다. 평균은 여전히 10분이지만 기다리는 사람은 괴롭다. 영상 통화에서 패킷이 이렇게 오면 화면이 멈췄다가 빨리 감기처럼 튄다.{/analogy}
+
+== 왜 문제인가 ==
+* 음성·영상 같은 '''실시간''' 데이터는 일정한 간격으로 재생돼야 한다. 도착 간격이 흔들리면 끊김·튐.
+* 원인: 패킷마다 경로의 queuing time(라우터 대기열)이 달라서 — [[latency]] 의 4 성분 중 queuing time 이 가장 들쭉날쭉하다.
+* 대응: 수신 측 '''버퍼'''로 잠깐 모았다가 일정하게 재생 (지연을 조금 더하고 흔들림을 없앰).
+
+{warn}⚠️ '''여기서 틀렸다 (0920 NotebookLM, CH01).''' "데이터 통신 4대 특성"에서 '''Jitter''' 를 빠뜨리고 Encryption 을 골랐다. 정답은 '''Delivery, Accuracy, Timeliness, Jitter'''. 이 문서의 jitter(L2 p.69)가 바로 그 넷째 특성이다 — CH01 에서 이름만 나왔던 것이 CH02 성능 지표에서 다시 정의된 것. → [[데이터 통신 4대 특성]]{/warn}
+
+{|
+! 지표 || 묻는 것
+|-
+| [[latency]] || 얼마나 '''오래''' 걸리나 (평균적 지연)
+|-
+| '''jitter''' || 지연이 얼마나 '''들쭉날쭉'''한가
+|-
+| [[throughput]] || 실제로 얼마나 '''많이''' 보내나
+|}
+
+{quiz}패킷 4개가 각각 20 ms, 20 ms, 20 ms, 20 ms 의 지연으로 도착한 경우와 5 ms, 35 ms, 10 ms, 30 ms 로 도착한 경우를 비교하라. 평균 지연과 jitter 관점에서.{/quiz}
+{answer}평균 지연은 둘 다 '''20 ms''' 로 같다. 첫째는 지연이 일정하니 '''jitter 없음''', 둘째는 5~35 ms 로 흔들리니 '''jitter 큼'''. 실시간 음성이라면 둘째가 훨씬 나쁘다 — 평균(latency)이 아니라 흔들림(jitter)이 품질을 가른다.{/answer}
+
+== 관련 문서 ==
+* [[데이터 통신 4대 특성]] · [[latency]] · [[throughput]] · [[CH01 Introduction]] · [[CH02 Transmission]]
+* [[0920 오답 복기]]

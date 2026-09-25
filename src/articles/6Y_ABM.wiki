@@ -1,0 +1,35 @@
+key: ABM
+title: ABM (Asynchronous Balanced Mode)
+category: 6강 DLC, 용어
+---
+'''ABM (Asynchronous Balanced Mode)''' 은 [[HDLC]] 의 전송 모드 중 하나로, 양쪽 스테이션이 모두 '''Combined''' — command 와 response 를 둘 다 보낼 수 있는 대등한 구조다. '''P2P 전용'''. L5 p.55.
+
+{def}"Asynchronous Balanced Mode (ABM): for '''P2P only'''." (p.55) — 그림: Combined ↔ Combined, 양방향 모두 "Command/response".{/def}
+
+[[img:L5-55.png|p.55 아래 그림: 양쪽 Combined 스테이션이 각자 Command/response 를 보낸다 (P2P only)|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Balanced''' — "균형 잡힌". 주종이 없고 두 스테이션이 '''대등'''하다. 둘 다 Primary 이자 Secondary 인 '''Combined'''.
+* '''Asynchronous''' — "비동기". 상대의 허락(poll)을 기다리지 않고 '''아무 때나''' 보낼 수 있다.
+* 왜 P2P only? 대등한 스테이션이 여럿이면 누가 언제 말할지 정해 줄 Primary 가 없어 충돌한다. 둘뿐이라야 성립한다.
+
+{analogy}🎭 '''친구와의 전화 통화.''' 둘 다 아무 때나 말을 꺼내고(command) 대답도 한다(response). 사회자가 필요 없다. 하지만 단체 통화에서 모두가 이러면 난장판 — 그래서 1:1 전용.{/analogy}
+
+{|
+! || [[NRM]] || ABM
+|-
+| 스테이션 || Primary / Secondary || '''Combined''' / '''Combined'''
+|-
+| 누가 command? || Primary 만 || 양쪽 모두
+|-
+| 링크 || P2P + multipoint || '''P2P only'''
+|}
+
+{info}오늘날 P2P HDLC 계열 링크는 대부분 ABM 방식으로 동작한다(Forouzan). [[PPP]] 도 P2P 전용이다.{/info}
+
+== 예상 문제 ==
+{quiz}ABM 의 스테이션 종류와 지원 링크는? NRM 과의 차이 한 줄.{/quiz}
+{answer}'''Combined''' 스테이션 2대, '''P2P only'''. NRM 은 Primary 만 command 를 보내는 주종 구조로 multipoint 도 지원한다.{/answer}
+
+== 관련 문서 ==
+* [[HDLC]] · [[NRM]] · [[HDLC 프레임]] · [[PPP]] · [[point-to-point 링크와 broadcast 링크]]

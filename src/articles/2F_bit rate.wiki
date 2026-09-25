@@ -1,0 +1,47 @@
+key: bit rate
+title: Bit Rate (비트율)
+category: 2강 Signals, 용어
+---
+'''Bit rate'''는 '''1초 동안 보낸 비트 수'''다. 단위 '''bps'''(bits per second). L2 p.32–34. 교수: "ISP 가 가정에 파는 것이 바로 bit rate 다."
+
+{def}L2 p.32 "Bit Rate"
+"'''Bit rate''': The number of bits sent in 1 sec. '''Bits per seconds (bps)'''."
+비트율 = 1초에 보낸 비트 수, 단위 bps.{/def}
+
+[[img:L2-32.png|p.32 — (a) 2 level, 1초에 8비트 → 8 bps (b) 4 level, 같은 칸 수로 16비트 → 16 bps|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''bit''' (binary digit) + '''rate''' (단위 시간당 양). "초당 몇 비트". [[주파수]]가 "초당 몇 번 변하는가"(Hz) 라면, bit rate 는 "초당 몇 비트를 싣는가"(bps). 둘은 '''다른 단위'''다 → [[bps와 Hz]].
+
+{info}교수(9/1): "이사 가서 인터넷 알아볼 때 LG U+ '1 Gbps' 같은 걸 확인한다. 그게 '''bit rate — ISP 가 우리 집에 파는 것'''이다." 1 Gbps ≈ $2^{30}$ bps ≈ 10억 bps. p.32 의 8 bps 와 비교하면 "extremely fast".{/info}
+
+{analogy}🎭 '''컨베이어 벨트.''' 벨트가 1초에 상자 몇 개를 옮기는가가 bit rate 다. 상자 하나에 물건을 하나씩 담으면(2 level) 8개/s, 두 개씩 담으면(4 level) 같은 벨트 속도로 16개/s. 벨트 속도를 높이거나(더 넓은 [[bandwidth]]) 상자를 크게 하면([[signal level|level]] 증가) 된다 — 이게 [[Nyquist bit rate]] 공식의 두 항이다.{/analogy}
+
+== Example 2.3 (p.33–34) ==
+[[img:L2-34.png|p.34 — 100 × 24 × 80 × 8 = 1,536,000 bps = 1.536 Mbps|medium]]
+
+'''문제''': 초당 100 페이지의 텍스트 문서를 다운로드하려 한다. 1 페이지 = 평균 24줄, 줄당 80문자, 1문자 = 8비트. 채널에 필요한 bit rate 는?
+<pre class="txt">
+1. pages/s                         = 100
+2. × lines/page (24)               = 2,400 lines/s
+3. × chars/line (80)               = 192,000 chars/s
+4. × bits/char (8)                 = 1,536,000 bits/s
+5. '''bit rate = 1,536,000 bps = 1.536 Mbps'''
+</pre>
+단위를 따라가면 틀리지 않는다: $\frac{\text{pages}}{\text{s}}\times\frac{\text{lines}}{\text{page}}\times\frac{\text{chars}}{\text{line}}\times\frac{\text{bits}}{\text{char}} = \frac{\text{bits}}{\text{s}}$.
+
+{joke}교수(9/1): "1997년쯤 어릴 때는 10 MB 문서 받는 데 한 시간이 걸렸다. 2000~2001년 ADSL 이 깔리고 5~6분이 됐다 — 엄청난 발전이었다. 이제 10 MB 에 한 시간 쓰는 사람은 없다."{/joke}
+
+== 이어지는 개념 ==
+* 역수 → [[bit length]] ($1/\text{bit rate}$, Example 2.4 = 0.651 μs)
+* 한계 → [[Nyquist bit rate]] (무잡음) · [[Shannon capacity]] (잡음)
+* 실제 달성 → [[throughput]] (p.63: 1 Mbps 링크인데 200 kbps)
+* 신호 요소 수와의 구분 → [[signal rate와 bit rate]], [[baud]]
+
+{quiz}초당 50 페이지, 페이지당 40줄, 줄당 100문자, 문자당 8비트. 필요한 bit rate 는?{/quiz}
+{answer}$50 \times 40 \times 100 \times 8 = $ '''1,600,000 bps = 1.6 Mbps'''.{/answer}
+
+== 관련 문서 ==
+* [[bit length]] · [[signal level]] · [[디지털 신호]] · [[bps와 Hz]]
+* [[Nyquist bit rate]] · [[Shannon capacity]] · [[throughput]] · [[signal rate와 bit rate]]
+* [[CH02 Signals]] · [[계산 문제 모음]]

@@ -1,0 +1,40 @@
+key: token passing
+title: Token Passing (토큰 패싱)
+category: 7강 MAC, 용어
+---
+'''Token passing'''은 [[controlled access]] 방식 중 하나로, 스테이션들이 '''logical ring''' 을 이루고, 링을 도는 특수 패킷 '''token''' 을 가진 스테이션만 채널에 접근한다. L6 p.54.
+
+{def}"The stations in a network are organized in a '''logical ring'''. A special packet called a '''token circulates through the ring''' and the '''possession of the token gives the station the right to access''' the channel." (p.54){/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''token''' = 증표, 통행권. 이걸 쥔 사람만 말할 수 있다
+* '''passing''' = 다음 사람에게 넘긴다
+* '''logical''' ring = 선이 실제로 원형일 필요는 없고, '''넘겨주는 순서'''가 원을 이루면 된다 (1 → 2 → 3 → 4 → 1 …)
+
+[[img:L6-54.png|p.54 Token-passing — a. Physical ring / b. Dual ring / c. Bus ring / d. Star ring|large]]
+
+== 링 구성 4가지 ==
+{|
+! 구성 || 물리적 모양 || 특징
+|-
+| a. Physical ring || 실제로 원형으로 연결 || 한 링크가 끊기면 전체가 멈춤 ([[ring 토폴로지]]의 약점)
+|-
+| b. Dual ring || 원형 두 개(반대 방향) || 주 링이 끊기면 '''보조 링'''(빨간 화살표)으로 우회
+|-
+| c. Bus ring || 물리적으로는 [[bus 토폴로지|bus]], 토큰 순서만 링 || 점선이 논리적 순서 — '''logical ring'''의 대표
+|-
+| d. Star ring || 물리적으로는 가운데 [[허브]]에 연결된 [[star 토폴로지|star]] || 허브 안에서 링을 이룸, 한 스테이션이 죽어도 허브가 건너뜀
+|}
+
+"Logical"이라는 말이 핵심이다 — c 와 d 는 '''선 모양은 링이 아닌데도''' token 이 도는 순서는 링이다.
+
+[[anim:controlled_access|세 번째 장면에서 token 이 링을 돌고, token 을 쥔 스테이션만 데이터를 보내는 것을 보라]]
+
+{analogy}🎭 '''이야기 막대기(talking stick).''' 둘러앉은 사람들이 막대기를 차례로 넘긴다. 막대기를 쥔 사람만 말할 수 있고, 할 말이 없거나 다 했으면 옆 사람에게 넘긴다. 둘이 동시에 막대기를 쥘 수 없으니 말이 겹칠 일이 없다. 앉은 자리가 둥글지 않아도(bus, star) 넘기는 순서만 정해져 있으면 된다.{/analogy}
+
+{quiz}Token passing 에서 "logical ring"이 "physical ring"과 다른 점을 p.54 의 그림 하나를 예로 들어 설명하시오.{/quiz}
+{answer}Logical ring 은 '''token 을 넘기는 순서'''가 원을 이룬다는 뜻이고, 선이 실제로 원형일 필요는 없다. 예: '''c. Bus ring''' 은 물리적으로 버스 한 줄에 매달려 있지만 token 은 1→2→4→3→1 순으로 돈다(점선). '''d. Star ring''' 도 물리적으로는 star 다.{/answer}
+
+== 관련 문서 ==
+* [[controlled access]] · [[reservation]] · [[polling]]
+* [[ring 토폴로지]] · [[bus 토폴로지]] · [[star 토폴로지]]

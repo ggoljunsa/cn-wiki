@@ -1,0 +1,45 @@
+key: SNR_dB와 n_b
+title: SNR_dB와 n_b (SNR_dB = 6.02 n_b + 1.76)
+category: 4강 Digital Transmission, 용어
+---
+PCM 에서 '''샘플당 비트 수 $n_b$''' 와 [[quantization error]] 로 인한 '''신호 품질 $SNR_{dB}$''' 의 관계식이다. L3 p.56.
+
+{def}"Quantization error … '''impacts $SNR_{dB}$ of the signal''' — depending on the number of quantization levels $L$ (or the bits per sample $n_b = \log_2 L$)."
+$$SNR_{dB} = 6.02\,n_b + 1.76 \ \text{[dB]}$${/def}
+
+[[img:L3-56.png|p.56 Quantization Error — 파란 글씨가 SNR_dB = 6.02 n_b + 1.76 [dB]|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* $SNR$ — [[SNR|Signal-to-Noise Ratio]]. 여기서 noise 는 채널 잡음이 아니라 '''양자화 오차''' 자체다. 교수가 수업 첫머리에서 "SNR — 이름 그대로 signal 과 noise 의 비율"이라고 복습한 그 SNR.
+* 아래첨자 $dB$ — [[데시벨]] 단위: $SNR_{dB} = 10\log_{10} SNR$.
+* $n_b$ — number of bits per sample, $n_b = \log_2 L$ ([[encoding]]).
+
+'''6.02 는 어디서 오나:''' 비트 하나 추가 → $L$ 2배 → $\Delta$ 절반 → 오차 전력 1/4 → SNR 4배 → $10\log_{10}4 \approx 6.02$ dB. 즉 '''비트 1개 = 약 6 dB'''. (1.76 은 사인파 기준 상수. 교수: "the derivation of this formula is difficult and '''out of the scope of this course'''" — 공식만 쓸 줄 알면 된다.)
+
+{analogy}🎭 '''자(ruler)의 눈금.''' 눈금 하나를 반으로 쪼갤 때마다(비트 +1) 잴 수 있는 정밀도가 두 배가 되고, 그만큼 "재는 오차 대비 실제 길이" 비율이 좋아진다. 눈금을 쪼갤 때마다 품질이 '''일정한 양(6 dB)씩''' 계단식으로 올라가는 게 이 공식의 모양이다.{/analogy}
+
+{|
+! $n_b$ || $L$ || $SNR_{dB}$ 계산 || 결과
+|-
+| 1 || 2 || 6.02 + 1.76 || 7.78 dB
+|-
+| 3 || 8 (p.55) || 18.06 + 1.76 || 19.82 dB
+|-
+| 8 || 256 (Ex 2.13) || 48.16 + 1.76 || 49.92 dB
+|-
+| 16 || 65536 (CD) || 96.32 + 1.76 || 98.08 dB
+|}
+
+{quiz}$SNR_{dB}$ 가 최소 40 dB 이상이어야 한다. 필요한 최소 $n_b$ 와 $L$ 은?{/quiz}
+{answer}<pre class="txt">
+1. 6.02 n_b + 1.76 ≥ 40
+2. 6.02 n_b ≥ 38.24
+3. n_b ≥ 6.35  →  정수로 올림: n_b = 7
+4. L = 2^7 = 128 레벨
+5. 확인: 6.02 × 7 + 1.76 = 43.9 dB ≥ 40 ✓
+</pre>{/answer}
+
+{warn}이 $SNR_{dB}$ 는 '''양자화로 생기는''' 품질 상한이다. 채널 용량의 [[Shannon capacity]] $C = B\log_2(1+SNR)$ 에 들어가는 SNR(채널 잡음)과 같은 이름이지만 원인이 다르다.{/warn}
+
+== 관련 문서 ==
+* [[quantization error]] · [[quantization]] · [[SNR]] · [[데시벨]] · [[encoding]]

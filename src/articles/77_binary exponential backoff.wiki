@@ -1,0 +1,46 @@
+key: binary exponential backoff
+title: Binary Exponential Backoff (이진 지수 백오프)
+category: 7강 MAC, 용어
+---
+'''Binary exponential backoff'''는 충돌한 뒤 재전송까지 기다릴 시간을 랜덤으로 고르되, '''실패할수록 고를 수 있는 범위를 2배씩''' 넓히는 방법이다. [[ALOHA 절차]](p.12)와 [[CSMA/CD]](p.47)에서 쓰인다.
+
+{def}"$T_B$: (Backoff time): $R \times T_p$ or $R \times T_{fr}$" / "$R$: (Random number): 0 to $2^K - 1$" / "$K$: Number of attempts" (p.12 Legend)
+backoff time $T_B$ 는 랜덤 수 $R$ 에 [[T_p]] (또는 [[T_fr]]) 를 곱한 것이고, $R$ 은 0 부터 $2^K - 1$ 사이에서 고른다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''backoff''' = 뒤로 물러선다 — 충돌했으니 잠깐 비켜 있는다
+* '''exponential''' = 물러서는 범위가 지수적으로 커진다
+* '''binary''' = 그 밑이 2 — 범위가 $2^K$
+충돌한 두 스테이션이 '''같은 시간'''을 고르면 또 충돌한다. 범위가 넓을수록 겹칠 확률이 낮아진다. 그렇다고 처음부터 넓으면 괜히 오래 쉰다. 그래서 '''처음엔 좁게, 실패할 때마다 두 배로'''.
+
+== 표 ==
+<pre class="txt">
+K (시도 횟수) | R 범위           | 경우의 수
+      1       | 0 ~ 1            |   2
+      2       | 0 ~ 3            |   4
+      3       | 0 ~ 7            |   8
+      4       | 0 ~ 15           |  16
+      …       | 0 ~ 2^K − 1      |  2^K
+  K > 15      | Abort
+</pre>
+
+두 스테이션이 $K$ 번째에 같은 $R$ 을 고를 확률은 $1/2^K$ 이다: $K = 1$ 이면 1/2, $K = 2$ 면 1/4, $K = 3$ 이면 1/8.
+
+== Example 3.8 (p.13) ==
+<pre class="txt">
+[[T_p]] = 600 × 10³ m / (3 × 10⁸ m/s) = 2 ms
+K = 2 → R ∈ {0, 1, 2, 3}
+T_B = R × T_p = 0×2, 1×2, 2×2, 3×2
+    = '''0, 2, 4, 6 ms''' 중 하나 (R 에 따라 랜덤)
+</pre>
+
+[[sim:aloha_backoff]]
+
+{analogy}🎭 '''좁은 복도에서 마주친 두 사람.''' 둘 다 왼쪽으로 비키면 또 부딪힌다. 처음엔 "1초 기다리거나 바로 가거나"(2가지), 또 부딪히면 "0~3초 중 아무 때나"(4가지), 또 부딪히면 "0~7초"(8가지)… 선택지가 넓어질수록 둘이 같은 순간을 고를 가능성은 급격히 준다.{/analogy}
+
+{quiz}$T_p$ = 2 ms 인 ALOHA 네트워크에서 3번째 충돌 직후($K = 3$) 가능한 backoff time $T_B$ 의 최댓값은?{/quiz}
+{answer}$R_{max} = 2^3 - 1 = 7$ → $T_B = 7 \times 2$ ms = '''14 ms'''.{/answer}
+
+== 관련 문서 ==
+* [[ALOHA 절차]] · [[CSMA/CD]] · [[p-persistent]] (busy 면 backoff)
+* [[T_p]] · [[T_fr]] · [[collision]]

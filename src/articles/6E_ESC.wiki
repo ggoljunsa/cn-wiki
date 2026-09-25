@@ -1,0 +1,30 @@
+key: ESC
+title: ESC (Escape Character)
+category: 6강 DLC, 용어
+---
+'''ESC (escape character)''' 는 [[byte stuffing]]에서 데이터 속의 [[flag]] 나 ESC 모양 바이트 '''앞에 끼워 넣는 특수 바이트'''다. "바로 다음 한 바이트는 제어 문자가 아니라 그냥 데이터" 라는 뜻. L5 p.18.
+
+{def}"Escape character (ESC): a '''predefined bit pattern'''." / "A special byte ESC is added to the data section of the frame when there is a character with the same pattern as the flag and the ESC." (p.18)
+→ ESC 는 미리 정해 둔 비트 패턴. flag 또는 ESC 와 같은 패턴의 데이터 바이트 앞에 추가된다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''escape''' = "탈출하다". 뒤따르는 바이트를 '''특수 의미에서 탈출'''시킨다. 키보드의 Esc 키, C 언어의 escape sequence(`\n`, `\"`, `\\`) 와 같은 어원이다.
+
+{analogy}🎭 '''인용 부호 안의 인용.''' 대화문 "그가 \"안녕\" 이라고 했다" 에서 `\` 가 ESC 다. `\` 뒤의 `"` 는 문장을 끝내지 않는다. 그리고 `\` 자체를 쓰려면 `\\`.{/analogy}
+
+[[img:L5-18.png|p.18 주황색 ESC 두 개가 삽입된 바이트 — 하나는 Flag 앞, 하나는 ESC 앞|large]]
+
+== 규칙 두 줄 ==
+<pre class="txt">
+송신: 데이터 바이트가 Flag 또는 ESC 모양이면 → 앞에 ESC 삽입
+수신: ESC 를 만나면 → 버리고, 다음 바이트는 무조건 데이터
+</pre>
+
+{warn}'''ESC 자신도 escape 해야 한다.''' 그렇지 않으면 데이터 속 ESC 를 수신자가 탈출 표시로 읽고 삭제해 버린다. p.18 의 "Two extra bytes" 중 하나가 바로 ESC 앞의 ESC 다.{/warn}
+
+== 예상 문제 ==
+{quiz}수신 프레임 데이터가 [A][ESC][ESC][B][ESC][Flag] 이면 unstuffing 결과는?{/quiz}
+{answer}[A] '''[ESC]''' [B] '''[Flag]''' — 각 ESC 뒤의 바이트를 데이터로 받고 앞의 ESC 는 버린다.{/answer}
+
+== 관련 문서 ==
+* [[byte stuffing]] · [[flag]] · [[character-oriented framing]]

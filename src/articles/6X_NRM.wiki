@@ -1,0 +1,36 @@
+key: NRM
+title: NRM (Normal Response Mode)
+category: 6강 DLC, 용어
+---
+'''NRM (Normal Response Mode)''' 은 [[HDLC]] 의 전송 모드 중 하나로, '''Primary''' 스테이션이 '''Command''' 를 보내고 '''Secondary''' 스테이션이 '''Response''' 로만 응답하는 주종(master–slave) 구조다. '''P2P 와 multipoint''' 링크 모두에 쓸 수 있다. L5 p.54.
+
+{def}"Normal Response Mode (NRM): for '''P2P and multipoint'''." (p.54) — 그림 a. Point-to-point: Primary → Command, Secondary → Response / b. Multipoint: Primary 1대, Secondary 여러 대.{/def}
+
+[[img:L5-54.png|p.54 a. Point-to-point: Primary 가 Command, Secondary 가 Response / b. Multipoint: Secondary 여러 대가 각자 Response|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''Normal Response''' — "보통의 응답". Secondary 는 '''물어봐야(command) 대답(response)한다'''. 스스로 먼저 말하지 않는 것이 "normal" 한 동작이다. 반대로 [[ABM]] 의 Asynchronous 는 "허락 없이 아무 때나".
+
+{analogy}🎭 '''교실 수업.''' 선생님(Primary)이 "철수, 대답해 봐" 하고 지목(command)하면 그 학생(Secondary)만 대답(response)한다. 학생이 여러 명이어도(multipoint) 지목받은 사람만 말하니 충돌이 없다. [[polling]] 과 같은 발상이다.{/analogy}
+
+== 특징 ==
+* '''Primary''': command 를 보낼 수 있는 유일한 스테이션. 링크를 통제한다.
+* '''Secondary''': response 만 보낸다.
+* '''multipoint 가능''': Primary 가 순서를 통제하므로 Secondary 가 여럿이어도 된다 — [[CH01 Introduction|CH01]] 의 [[multipoint]] 연결.
+
+{|
+! || NRM || [[ABM]]
+|-
+| 스테이션 || Primary / Secondary || Combined / Combined
+|-
+| 관계 || 주종 (unbalanced) || 대등 (balanced)
+|-
+| 링크 || P2P + multipoint || P2P only
+|}
+
+== 예상 문제 ==
+{quiz}NRM 에서 Secondary 가 Primary 에게 먼저 command 를 보낼 수 있는가? NRM 이 multipoint 를 지원할 수 있는 이유는?{/quiz}
+{answer}'''없다''' — Secondary 는 response 만 보낸다. Primary 한 대가 모든 발언 순서를 통제하므로 Secondary 가 여러 대(multipoint)여도 충돌 없이 동작한다.{/answer}
+
+== 관련 문서 ==
+* [[HDLC]] · [[ABM]] · [[HDLC 프레임]] · [[multipoint]] · [[polling]]

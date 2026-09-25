@@ -1,0 +1,38 @@
+key: DLC
+title: DLC (Data Link Control)
+category: 6강 DLC, 용어
+---
+'''DLC (Data Link Control)''' 는 [[data-link layer]]의 위쪽 sublayer 로, '''인접한 두 노드 사이의 통신 절차'''를 다룬다. [[point-to-point 링크와 broadcast 링크|point-to-point 와 broadcast 링크]] 모두에 해당한다. L5 p.12–14.
+
+{def}"Data Link Control (DLC): Deals with issues for '''both point-to-point and broadcast''' links." (p.12)
+"Deals with procedures for communication between '''two adjacent nodes'''. Key roles: '''Framing''' — how to organize the bits that are carried by the physical layer; '''Error control''' — detecting errors encountered during communication." (p.14)
+→ DLC = 인접 두 노드 간 절차. 핵심 임무 두 가지: '''framing''' 과 '''error control'''.{/def}
+
+[[img:L5-12.png|p.12 두 경우 모두 윗칸은 Data link control sublayer. broadcast 링크에만 아래 MAC 칸이 있다|medium]]
+
+== 이름에서 개념 끌어내기 ==
+'''Data Link Control''' — "링크 위 데이터를 '''통제'''한다". 통제의 대상은 두 가지:
+# 비트 더미를 어디서 끊어 읽을지 → '''[[framing]]'''
+# 오는 도중 망가졌는지 → '''error control''' ([[block code]], [[parity check code]], [[CRC]])
+매체를 누가 쓸지는 DLC 가 아니라 [[MAC sublayer|MAC]] 의 일이다.
+
+{analogy}🎭 '''편지 봉투와 봉인.''' DLC 는 편지를 '''봉투에 넣고'''(framing — 어디서 어디까지가 한 통인지) '''봉인 도장'''을 찍는다(error control — 뜯겼거나 바뀌었으면 도장이 안 맞음). 우체통이 하나뿐이라 줄을 서야 하는 문제(MAC)는 별개다.{/analogy}
+
+== DLC 가 하는 일 ==
+{|
+! 임무 || 세부 || 문서
+|-
+| Framing || fixed-size / variable-size, character-oriented + byte stuffing, bit-oriented + bit stuffing || [[framing]] · [[byte stuffing]] · [[bit stuffing]]
+|-
+| Error control (검출) || [[redundancy]], [[block code]], [[Hamming distance]], [[parity check code]], [[CRC]] || [[minimum Hamming distance]]
+|-
+| 프로토콜 || [[HDLC]], [[PPP]] || [[HDLC 프레임]]
+|}
+
+== 예상 문제 ==
+{quiz}DLC 와 MAC 중 point-to-point 링크에도 존재하는 sublayer 는? 그 두 가지 key role 은?{/quiz}
+{answer}'''DLC'''. key role 은 '''framing'''(물리 계층 비트를 조직)과 '''error control'''(통신 중 오류 검출). MAC 은 broadcast 전용.{/answer}
+
+== 관련 문서 ==
+* [[CH03 Data-Link Control]] · [[MAC sublayer]] · [[point-to-point 링크와 broadcast 링크]]
+* [[framing]] · [[CRC]] · [[HDLC]]
