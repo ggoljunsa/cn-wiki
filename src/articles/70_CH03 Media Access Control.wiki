@@ -5,7 +5,7 @@ category: 7강 MAC, 메인
 '''CH03 Media Access Control'''은 L6 덱(`CH03_Data Link Layer (2).pdf`) p.2–54 다. 지난 시간 [[data-link layer]]의 위쪽 sublayer인 [[DLC]](framing, error control)를 끝냈고, 이번에는 아래쪽 sublayer인 [[MAC sublayer]]를 다룬다. 던지는 질문은 하나다 — '''"하나의 [[point-to-point 링크와 broadcast 링크|broadcast 링크]]를 여러 스테이션이 동시에 쓰려 할 때, 누가 언제 말하게 할 것인가?"'''
 답은 세 갈래다: 각자 알아서 보내고 부딪히면 다시 보내는 [[random access]]([[pure ALOHA]] → [[slotted ALOHA]] → [[CSMA]] → [[CSMA/CD]]), 서로 허락을 받고 보내는 [[controlled access]]([[reservation]] · [[polling]] · [[token passing]]), 그리고 채널 자체를 쪼개는 [[channelization]].
 
-이 덱은 '''recap 없이 p.2 부터 바로 새 내용'''이다. 페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. 녹음본은 아직 없다.
+이 덱은 '''recap 없이 p.2 부터 바로 새 내용'''이다. 페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. '''9/22 (화) 녹음본 반영''' — 이날 p.2–43 (CSMA/CD 충돌·abort)까지 나갔고, p.44 이후는 다음 수업 예정. 교수 강조와 중간고사 형식 공지는 아래 '''🎙 실제 수업 기록''' 절 참고.
 
 {exam}⭐⭐⭐ 이 강의에서 해설본이 ⭐⭐⭐ 를 준 곳은 세 군데뿐이다 — 전부 '''숫자'''로 물을 수 있는 자리다.
 * [[vulnerable time]]: pure ALOHA $2T_{fr}$ (p.19) / slotted ALOHA $T_{fr}$ (p.27)
@@ -303,6 +303,40 @@ T_fr(min) = 2 × 25.6 μs = 51.2 μs
 최소 크기 = 100 × 10⁶ × 51.2 × 10⁻⁶ = 5120 bits = 640 bytes
 </pre>
 bit rate 가 10배가 되면 같은 시간 동안 10배 많은 비트를 보내므로 최소 프레임도 10배가 된다. (그래서 실제 Fast Ethernet 은 64 bytes 를 유지하는 대신 '''케이블 길이(= $T_p$)를 1/10 로''' 줄였다.){/answer}
+
+== 🎙 실제 수업 기록 (9/22 화, 녹음본 기준) ==
+9/22 수업(63분)은 '''중간고사 형식 공지'''로 시작해 p.2 부터 '''p.43 (Collision and abortion in CSMA/CD)''' 까지 나갔다. 녹음은 GoodNotes 내장 녹음을 whisper(small.en)로 전사한 것이라 오인식이 심하다("floating aloha" = slotted ALOHA, "patient" = station, "metallic layer" = data-link layer). 용어는 슬라이드 기준으로 복원했다.
+
+{warn}'''9/22 에 안 나간 부분''': p.44–46 [[최소 프레임 크기]]·Example 3.12, p.47 흐름도, p.48 [[energy level]], p.49–54 [[controlled access]], 그리고 p.55– [[CH03 Link-Layer Addressing|link-layer addressing·ARP]]. 교수는 "There are also some other criteria for CSMA/CD" 라고 예고하고 끝냈다 → '''다음 수업(9/24 목 추정)'''에서 이어질 것.{/warn}
+
+=== 중간고사 공지 (수업 첫머리) ===
+* '''슬라이드 중심''': "I promise you that I will '''avoid taking some problems that are only contained in the textbooks'''. In other words, I focus on materials [in the lecture slides]." → [[Forouzan]] 에만 있고 슬라이드에 없는 내용은 안 낸다.
+* '''개인·필기''': "not by the group, by your own", "I will prepare exams '''in writing, by your own hands, not by computers'''" — 컴퓨터·노트북 불가.
+* '''비중''': "almost '''70 or 80%''' of [your grade] depends on the two exams. So they are very important. They should be '''fair''' … thorough and robust." (CH00 기준 중간 40 + 기말 40 = 80%)
+* '''시간''': "I'm not sure whether we would spend total '''one and a half hours or just one hour'''. … I should occupy one and a half hours for exams, not to be interrupted … But the exam should be maybe one hour." → 1.5시간을 잡아 두지만 실제 시험은 1시간 정도 예상. 날짜는 공지 없음. → [[시험 정보]]
+* 이어서 "I should hurry to match our plan schedule for the midterm" — 중간고사 전에 진도를 맞추려 서두르겠다고 했다.
+
+=== 지난 시간 연결 ===
+* "Last time we discussed [[DLC]] … error control(checksum, CRC …). You should remember — not now, but '''when you prepare the exam'''." 
+* MAC 는 [[data-link layer]] 의 sublayer. "'''media access''' or '''multiple access''' — they are used interchangeably."
+* 3분류 중 "random access and controlled access are addressed in detail", [[channelization]] 은 "brief overview"만. 특히 [[random access]] 에 가장 집중.
+
+=== 교수가 강조하거나 슬라이드 밖에서 덧붙인 것 ===
+* '''시간과 주파수 = 통신의 자원''' (반복 강조): FDMA/TDMA/CDMA 를 소개하며 "You may remember that I emphasized '''several times''' about the resources of communication … which was '''frequency and time'''." (9/10 PCM 때도 같은 말을 했다.)
+* '''station = node''': "here station means the node, just equal this one as node." 모든 station 이 대등해 "no one has the priority of sending the data".
+* '''같은 현상, 계층마다 다른 서비스''' ⭐: [[collision]] 난 프레임을 MAC 는 그냥 '''discard''' 한다. "For the first layer, the physical layer, they actively [handle] the error … but in that layer, they just ignore. … '''For the same phenomenon, the action or the service provided by each layer could be different.'''" MAC 의 목표는 "each station sees an uninterrupted channel" 이다.
+* '''Pure ALOHA 는 비효율의 원형''': 1970 초 University of Hawaii, "the '''oldest''' random access protocol in data communication history". 충돌한 프레임을 각자 재전송해야 하니 "'''huge inefficiency'''".
+* '''[[ALOHA 절차]]의 두 이유''': ① $2 \times$ [[T_p]] 를 기다리는 건 '''ACK 가 돌아오는 왕복''' 때문. ② $K_{max}$ 가 있는 건, 물리적으로 통신이 불가능한 경우(경로가 막힘 등) 무한 반복을 막기 위해. $R$ 은 $0 \sim 2^K - 1$ — 시도가 많을수록 더 큰 $R$ 을 고를 수 있다.
+* '''Example 3.8·3.9 는 숙제처럼''': "I recommend you to '''do it by your own''' as an exercise." → 풀이는 슬라이드에 있으니 혼자 재현할 수 있어야 한다 ([[계산 문제 모음]]).
+* '''[[vulnerable time]] 이름''': "vulnerable means '''weak'''." vulnerable time 이 크면 충돌에 약하다는 뜻. Pure ALOHA 는 $2T_{fr}$.
+* '''18.4% 는 "serious"''': $S = Ge^{-2G}$, $G = 0.5$ 에서 18.4% — "'''This one is serious. We rarely see success''' in our transmission." 매체를 전혀 감지하지 않기 때문.
+* '''[[slotted ALOHA]]''': "one famous variant … '''very important''', and it is '''very simple'''" — 슬롯 시작에만 보내게 한 것뿐. 슬롯 길이 = [[T_fr]], vulnerable time = $T_{fr}$. $G = 1$ 에서 36.8% — "'''huge improvement, but still very low'''". 두 ALOHA 모두 "they do not detect" 이므로 "bad" 하다 → CSMA 의 동기.
+* '''[[CSMA]]''': "listens … the medium before [sending]" — 그래도 "'''impossible to avoid some collisions in a complete manner''' because there is '''propagation delay'''." [[space-time model]] 은 "x-axis represents space, y-axis time".
+* '''[[persistence method]] 이름''': "persistence means bearing something(버티기)… it is about '''what to do when the channel is busy'''." 1-persistent 의 예가 Ethernet. [[p-persistent]] 는 "more complicated … although it is often used". (p-persistent 의 난수 비교 방향은 녹음 불명확 — 슬라이드대로 '''확률 $p$ 로 전송, $q = 1-p$ 로 다음 슬롯 대기'''.)
+* '''CSMA vs [[CSMA/CD]] 의 결정적 차이''' ⭐⭐: "CSMA doesn't have any mechanism for preventing the collision." CSMA/CD 는 보낸 뒤에도 매체를 monitor 하다가, p.43 에서 C 는 A 의 첫 비트를 받은 $t_3$ 에, A 는 C 의 첫 비트를 받은 $t_4$ 에 '''즉시 중단'''한다. "CSMA … transmits totally, completely without caring … even if the collision occurs. … [CSMA/CD] '''stops as soon as they detect collision. It just stops.''' This is the key difference."
+
+=== 학생 Q&A ===
+* 이번 녹음에는 학생 질문이 기록되지 않았다(녹음 불명확 구간 포함).
 
 == 시험 대비 핵심 요약 ==
 # '''MAC 프로토콜 3분류''': random access(ALOHA, CSMA/CD, CSMA/CA) / controlled access(reservation, polling, token passing) / channelization(FDMA, TDMA, CDMA). Random access 는 모두 대등하고 매체 상태만 보고 스스로 결정 → 충돌 가능.

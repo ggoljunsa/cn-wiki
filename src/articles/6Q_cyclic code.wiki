@@ -43,6 +43,8 @@ cyclic code 의 부호화·검사는 '''다항식 나눗셈'''([[polynomial repr
 | [[CRC]] || (cyclic code 의 실용판)
 |}
 
+{exam}🎯 교수(9/17): "You may wonder why we use this kind of cyclic code … the reason is that it is '''easy to implement in practice'''. It has very good property when concerning deployment in the real world." — 그 대표가 [[CRC]].{/exam}
+
 == 예상 문제 ==
 {quiz}0001011 이 cyclic code 의 codeword 라면, 왼쪽으로 두 번 회전한 결과는? p.44 표에서 어느 dataword 의 codeword 인가?{/quiz}
 {answer}0001011 → 0010110 → '''0101100'''. p.44 표에서 dataword '''0101''' 의 codeword(0101100)와 일치한다.{/answer}

@@ -52,6 +52,8 @@ block code
          └ CRC               (LAN/WAN 에서 사용)
 </pre>
 
+{exam}🎯 교수(9/17): linear block code 는 "almost we use everywhere". $d_{min}$ = 0 아닌 codeword 중 1 의 최소 개수 — "'''we don't consider all-zero codeword'''". 일반 block code 는 모든 쌍을 비교해야 하지만 linear 는 codeword 를 한 번 훑으면 끝 — "I expect you to know this notation, it is '''big O''', not small o." (시간복잡도 비교 대목은 녹음 일부 불명확){/exam}
+
 == 예상 문제 ==
 {quiz}코드 {00000, 01011, 10101, 11110} 이 linear 인지 확인하고 $d_{min}$ 을 구하라.{/quiz}
 {answer}01011 ⊕ 10101 = 11110 ✓, 01011 ⊕ 11110 = 10101 ✓, 10101 ⊕ 11110 = 01011 ✓ → linear. 0 아닌 codeword weight: 3, 3, 4 → '''$d_{min} = 3$'''.{/answer}

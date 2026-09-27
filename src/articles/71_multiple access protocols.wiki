@@ -35,6 +35,8 @@ category: 7강 MAC, 용어
 {answer}(a) controlled-access (b) random-access (c) channelization (d) controlled-access (e) random-access.
 slotted ALOHA 는 시간 슬롯이 있어서 channelization(TDMA)처럼 보이지만, 슬롯이 '''특정 스테이션에 배정되지 않고''' 누구나 아무 슬롯에서나 시작할 수 있으므로 여전히 random access 다.{/answer}
 
+{exam}🎯 교수(9/22): "'''media access''' or '''multiple access''' — they are used interchangeably." 3분류 중 "random access and controlled access are addressed '''in detail'''", [[channelization]](FDMA/TDMA/CDMA)은 "brief overview" 만. 그리고 channelization 을 소개하며 다시: "I emphasized '''several times''' about the resources of communication … which was '''frequency and time'''." — 채널을 주파수·시간(·코드)로 쪼개는 것이 곧 자원 분배다.{/exam}
+
 == 관련 문서 ==
 * [[CH03 Media Access Control]] · [[MAC sublayer]] · [[DLC]]
 * [[random access]] · [[controlled access]] · [[channelization]]

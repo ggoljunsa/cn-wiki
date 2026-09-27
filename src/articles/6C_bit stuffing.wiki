@@ -48,6 +48,8 @@ category: 6강 DLC, 용어
 
 {warn}'''수신 측에서 11111 다음이 0 이면 버리고, 1 이면?''' 그러면 1 이 여섯 개 → '''flag''' (또는 그 뒤 비트까지 보고 오류/abort 판정). 데이터 안에서는 1 여섯 개가 불가능하기 때문이다.{/warn}
 
+{exam}🎯 교수(9/15): bit stuffing 은 "'''much simpler compared to the character-oriented framing'''" — 1 이 다섯 개 연속이면 0 하나만 넣으면 된다. 그리고 "if you use a fixed size framing then you don't have to worry about those issues" — stuffing 은 '''variable-size framing 에서만''' 생기는 문제.{/exam}
+
 == 예상 문제 ==
 {quiz}데이터 0111111111110 (0 뒤 1 이 11개, 그리고 0) 을 bit stuffing 하라.{/quiz}
 {answer}

@@ -50,6 +50,8 @@ vulnerable time = 2 × T_fr = '''2 ms'''
 {quiz}Pure ALOHA 에서 충돌이 났음을 송신 스테이션은 어떻게 아는가?{/quiz}
 {answer}전송 후 '''$2 \times T_p$''' 동안 ACK 를 기다려서, ACK 가 오지 않으면 충돌로 간주한다(p.12). 보내는 도중에는 알 수 없다 — 보내는 도중에 아는 것은 [[CSMA/CD]] 다.{/answer}
 
+{exam}🎯 교수(9/22): "the '''oldest''' random access protocol in data communication history" — 보낼 게 있으면 그냥 보내므로 충돌이 "very, very much", 버려진 프레임을 각자 재전송해야 해서 "'''huge inefficiency'''". $G = 0.5$ 에서 18.4% 에 대해: "'''This one is serious. We rarely see success''' in our transmission." 매체를 전혀 감지하지 않기 때문.{/exam}
+
 == 관련 문서 ==
 * [[slotted ALOHA]] · [[vulnerable time]] · [[ALOHA throughput]] · [[offered load G]]
 * [[ALOHA 절차]] · [[binary exponential backoff]] · [[T_fr]] · [[T_p]]

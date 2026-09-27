@@ -36,6 +36,8 @@ category: 6강 DLC, 용어
 
 {warn}'''함정: "CRC-32 divisor 는 32비트다" 는 틀렸다.''' 33비트다. 그리고 송신 측이 붙이는 0 과 나머지는 32비트.{/warn}
 
+{exam}🎯 교수(9/17): 이름의 숫자는 차수 — "'''CRC-8 means our divisor composed with 9 bits''' … CRC-32 means we use 33 bits." 비트 수 = 차수 + 1. 각 표준은 오류 검출 능력에 따라 쓰임새가 다르다.{/exam}
+
 == 예상 문제 ==
 {quiz}Ethernet LAN 이 쓰는 CRC 는? 그 divisor 는 몇 비트이고, 프레임에 붙는 검사 비트는 몇 비트인가?{/quiz}
 {answer}'''CRC-32'''. divisor '''33 비트''', 붙는 나머지([[FCS]]) '''32 비트'''.{/answer}

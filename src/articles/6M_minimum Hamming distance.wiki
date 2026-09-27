@@ -65,6 +65,8 @@ Example 3.4
 == 계산: 쌍이 몇 개? ==
 codeword 가 $M$ 개면 비교할 쌍은 $\binom{M}{2} = M(M-1)/2$ 개 ($O(M^2)$). [[linear block code]] 이면 '''0 아닌 codeword 의 최소 weight''' 로 $O(M)$ 에 끝난다(Example 3.6).
 
+{exam}🎯 교수(9/17): p.33 정정 그림 — "'''Please memorize or please understand well about this diagram. This is crucial''' to understand the error correction capability." 정정은 오류의 '''위치'''를 알아야 해서 검출보다 어렵다. 실례: Example 3.1 코드는 $d_{min}=2$ → $s=1$ 이지만 $t=(2-1)/2=0.5$ → "'''no error correction capability'''" (1비트 정정도 보장 못 함).{/exam}
+
 == 예상 문제 ==
 {quiz}2개 오류를 정정하고 싶다. $d_{min}$ 은 최소 얼마여야 하며, 그 코드는 몇 개 오류까지 검출을 보장하는가?{/quiz}
 {answer}$d_{min} = 2 \cdot 2 + 1 =$ '''5'''. 검출은 $s = 5 - 1 =$ '''4''' 개까지 보장.{/answer}

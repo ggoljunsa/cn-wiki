@@ -28,6 +28,8 @@ t₄ : C 의 첫 비트가 A 에 도착 → '''A 가 충돌 감지, abort''' (A 
 
 [[anim:csma_cd_abort|A 와 C 가 충돌을 감지하는 즉시 전송을 끊고 jamming signal 을 보내는 장면, 그리고 아래 T_fr ≥ 2T_p 왕복 화살표를 보라]]
 
+{exam}🎯 교수(9/22): "'''This is the key difference''' between CSMA and CSMA/CD." CSMA 는 충돌이 나도 "transmits totally, completely without caring", CSMA/CD 는 전송 중에도 monitor 하다가 "'''stops as soon as they detect collision. It just stops.'''" p.43: C 는 A 의 첫 비트를 받은 $t_3$ 에, A 는 C 의 첫 비트를 받은 $t_4$ 에 abort.{/exam}
+
 == 왜 $T_{fr} \geq 2T_p$ 인가 ⭐⭐⭐ ==
 {exam}⭐⭐⭐ "Before sending the last bit of the frame, the sending station must detect a collision, if any, and abort the transmission. '''Once the entire frame is sent''', the station does not keep a copy of the frame and '''does not monitor the line''' for collision detection." (p.44)
 "The frame transmission time $T_{fr}$ must be at least two times the maximum propagation time $T_p$: '''$T_{fr} \geq 2T_p$'''. (Please think about why)" (p.45)

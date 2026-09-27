@@ -12,6 +12,8 @@ category: 7강 MAC, 용어
 
 [[img:L6-9.png|p.9 Pure ALOHA — 겹치는 구간(Collision duration)에 걸린 프레임은 전부 파괴|large]]
 
+{exam}🎯 교수(9/22): 충돌한 프레임을 MAC 는 고치지 않고 '''그냥 버린다'''. "For the physical layer, they actively [handle] the error … but in that layer, they just ignore. … '''For the same phenomenon, the action or the service provided by each layer could be different.'''" — 같은 비트 오류라도 physical layer 는 다루고, MAC 는 discard + 재전송으로 대응한다.{/exam}
+
 == 충돌을 어떻게 알아채나 ==
 {|
 ! 프로토콜 || 충돌을 아는 방법 || 언제 아나

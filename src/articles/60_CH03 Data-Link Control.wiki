@@ -4,7 +4,7 @@ category: 6강 DLC, 핵심
 ---
 '''CH03 Data-Link Layer (1)'''은 [[network layer]]가 내려보낸 datagram 을 '''"한 링크 건너편"까지 어떻게 안전하게 옮기는가'''를 다루는 덱이다(L5, 56쪽). 앞부분(p.7–12)은 [[data-link layer]]의 위치와 용어([[node와 link]], [[DLC]] vs [[MAC sublayer|MAC]])를 정의하고, 본론(p.13–56)은 [[DLC]] sublayer 의 두 임무 — '''[[framing]]'''(비트를 프레임으로 묶기)과 '''error control'''(오류 검출: [[block code]], [[Hamming distance]], [[parity check code|parity]], [[CRC]]) — 그리고 대표 프로토콜 [[HDLC]]·[[PPP]] 로 끝난다.
 
-페이지 번호는 슬라이드 인쇄 번호. p.2–6 은 지난 시간([[physical layer]] vs data-link layer) 복습이고 '''새 내용은 p.7 부터'''. 이 덱에 대한 녹음본은 아직 없다.
+페이지 번호는 슬라이드 인쇄 번호. p.2–6 은 지난 시간([[physical layer]] vs data-link layer) 복습이고 '''새 내용은 p.7 부터'''. 녹음본은 9/15(p.2–31)·9/17(p.32–56) 두 수업분 — 아래 '''🎙 실제 수업 기록''' 절 참고.
 
 {exam}⭐⭐⭐ 이 덱의 계산 3종 세트 — ① '''[[Hamming distance]] / [[minimum Hamming distance|d_min]]''' ($d_{min}=s+1$ 검출, $d_{min}=2t+1$ 정정), ② '''Example 3.7 parity 다섯 경우'''(특히 case 4: 2비트 오류가 syndrome 0 으로 통과), ③ '''CRC XOR 나눗셈''' (1001000 ÷ 1011 → 나머지 110, 수신 측 syndrome 000 / 011). 셋 다 손으로 한 줄씩 재현할 수 있어야 한다.{/exam}
 
@@ -438,6 +438,55 @@ p.44 표의 1101 → 1101001 과 일치한다.
 |-
 | burst 길이 = 마지막 손상 위치 − 첫 손상 위치 + 1 || [[burst error]] || p.21: 8 bits
 |}
+
+== 🎙 실제 수업 기록 (9/15 화 · 9/17 목, 녹음본 기준) ==
+이 덱은 '''두 번의 수업'''에 걸쳐 끝까지 나갔다. 녹음본: `컴네 0915.txt`(70분), `컴네 260917_090050.txt`(78분). 영어 강의 ASR 이라 용어가 깨져 있어("hemming"→Hamming, "parenty"→parity, "cyclic reductant"→cyclic redundancy, "ESG/EFC"→ESC) 슬라이드 용어로 복원해 인용한다.
+
+{|
+! 날짜 || 진도 || 내용
+|-
+| 9/15 (화) || p.2 → p.31 (+ p.29 그림) || 공지 → recap(p.2–6) → [[node와 link]], [[data-link layer 서비스]], 링크 두 종류, 두 sublayer → [[framing]]·[[byte stuffing]]·[[bit stuffing]] → [[single-bit error]]/[[burst error]] → [[redundancy]] → [[block code]] Example 3.1 → [[Hamming distance]] → $d_{min}$ 검출 공식 + Example 3.3 → p.29 원 그림. "error correction 은 다음 시간에"로 종료
+|-
+| 9/17 (목) || recap p.2–31 → p.32 → p.56 (덱 끝) || Example 3.4 → '''정정 공식 p.33''' → [[linear block code]] → [[parity check code]]·[[syndrome]] → [[cyclic code]] → [[CRC]] 나눗셈 → 다항식 → 표준 divisor → [[checksum]]("later, in the network layer" 예고만) → [[HDLC]] NRM/ABM → 프레임 3종
+|}
+
+'''공지'''
+* '''AI 튜터 (9/15 첫머리)''': LMS 공지 링크로 이 과목 자료 기반 AI 챗봇(다른 교수님이 개발)을 쓸 수 있다. 단 "'''the AI may be inconsistent with what we discussed during our class'''" — 과제·시험 답은 '''수업에서 다룬 내용에 맞춰''' 쓸 것. 불일치를 발견하면 TA 나 교수에게 이메일.
+* '''조기 종료 예고 (9/17)''': "this lecture will end a bit earlier because I have a project meeting" — 그래도 결국 덱 끝(HDLC 프레임)까지 다 하고 "I'm sorry for taking all our class time" 으로 마쳤다.
+* '''다음 수업''': "next Tuesday(9/22) we will continue" — [[MAC sublayer|MAC]] = Data-Link Layer (2) ([[CH03 Media Access Control]]).
+
+'''9/15 강조'''
+* '''Physical vs data-link 구분''': "I recommend you to '''keep in mind these kind of distinctions'''." — physical = 비트→신호, 전송 기법 / data-link = '''node-to-node''' 전송, physical addressing, error detection·correction, access control.
+* '''Node / link''': "keep in mind for these two terminologies." '''Frame 과 datagram''' 은 문맥에 따라 같은 뜻으로도 쓰이니 "please be aware when using these terminologies."
+* '''중간 노드의 decapsulation + re-encapsulation''': 라우터는 다음 링크의 종류에 맞춰 frame format 을 바꿀 수 있어야 한다 — "this is the essential key words of data link."
+* '''MAC 은 broadcast 에만''': "MAC is about '''sharing a channel'''. So it should be related to broadcasting" — P2P 링크에서는 나눠 쓸 일이 없다.
+* '''Error control 은 DLC 만의 일이 아니다''': "error control could be implemented at other layers … it is often performed in the physical layer as well"(channel coding). 여기서는 2층의 방법을 본다.
+* '''왜 프레임을 작게 자르나''': 10k 비트짜리 큰 프레임도 가능은 하지만, 오류가 나면 2층은 '''통째로 재전송'''하고, 큰 프레임일수록 오류가 날 확률이 커서 "retransmit this one many times … very inefficient". 그래서 moderate size frame 이 관례.
+* '''Fixed-size 는 경계 표시 불필요''', variable-size 는 flag 로 시작·끝 표시 필요. ASCII 는 "just remember that this has '''eight bit characters'''".
+* '''Byte stuffing''': 데이터 속 flag 앞에 ESC, 그리고 데이터 속 '''ESC 앞에도 ESC''' — ESC 자체가 특수 문자이기 때문. "It is just for differentiation."
+* '''Bit stuffing 은 더 간단''': "much simpler compared to the character-oriented framing" — 1 이 다섯 개 연속이면 0 하나. 두 방식 모두 "design freedom vs 구현 난이도" trade-off.
+* '''Burst error 가 더 어렵다''': "much more difficult to correct or detect compared to a single-bit error … we should employ more sophisticated strategies." 대부분의 오류는 무선 전송에서 발생.
+* '''Redundancy 그림 주의''': p.22 그림은 '''sender 가 오른쪽, receiver 가 왼쪽'''. 실제 코드는 원래 데이터가 codeword 안에 그대로 보이지 않는 경우가 많다(이 예는 단순화).
+* '''왜 "block" coding 인가''': [[line coding]] 은 비트 단위, block coding 은 '''비트 블록 단위'''로 처리하고 결과도 블록. "Almost every coding technique is in the form of block nowadays."
+* '''Hamming distance''': XOR 하고 1 을 센다. "This is a very popular method … '''I recommend you to take this example for practice.'''"
+* '''검출 정리 $d_{min} = s+1$''': "Once again, I would like to repeat … this is actually a '''theorem'''."
+* '''슬라이드 밖 예시''': codeword 를 0000000 / 1111111 처럼 멀리 떨어뜨리면 검출은 쉬워지지만 7비트로 1비트 정보만 보내 "very inefficient" — '''reliability vs speed trade-off''' 는 "our daily life" 에도 있다(CH02 block coding 때와 같은 메시지).
+
+'''9/17 강조'''
+* '''$d_{min}$ 을 알면 검출 능력이 나온다''': "finding or characterizing the minimum Hamming distance of a codebook is '''very important''' to fully characterize the error detection capability."
+* '''정정이 검출보다 어려운 이유''': 정정은 "requires the knowledge on '''the position of the error''', not just knowing that error has occurred. This is a big difference."
+* '''$t$ 계산 실례''': Example 3.1 코드는 $d_{min}=2$ → $s = 1$ 이지만 $t = (2-1)/2 = 0.5$ → '''1비트 정정도 보장 못 함'''("no error correction capability"). "In some cases we can correct but we cannot guarantee."
+* '''p.33 그림 ⭐⭐⭐''': "'''Please memorize or please understand well about this diagram. This is crucial''' to understand the error correction capability." — 받은 word 는 더 가까운 codeword 로 되돌린다, 두 원(반지름 $t$)이 있으니 $d_{min}$ 을 반으로 나눈다.
+* '''Linear block code''': "almost we use everywhere". $d_{min}$ = '''0 아닌 codeword 중 1 의 최소 개수''' — "we don't consider all-zero codeword". 일반 block code 는 모든 쌍($\binom{M}{2}$개)을 비교해야 하지만 linear 는 codeword 를 한 번 훑으면 끝. "I expect you to know this notation — it is '''big O''', not small o." (교수는 일반 block code 쪽을 "exponential", linear 쪽을 "linear time" 이라 표현, 녹음 일부 불명확)
+* '''Syndrome''': "just to '''memorize this terminology'''." Syndrome 0 → no error(accept), 1 → error(discard + 재전송 요청). 교수가 처음엔 반대로 말했다가 "sorry, vice versa" 로 정정했다 — '''0 이 정상'''.
+* '''Parity bit''' 는 mod-2 덧셈 = codeword 의 1 개수를 짝수로 맞추는 것.
+* '''왜 cyclic code 를 쓰나''': "the reason is that it is '''easy to implement in practice''' … very good property when concerning deployment in the real world." CRC 는 LAN·WAN 에서 "practically used in our daily life".
+* '''CRC 나눗셈 규칙 두 개''': ① 덧셈 = 뺄셈 = XOR ② '''맨 왼쪽 비트가 0 이면 all-0s divisor''' — "'''remember these two rules'''." 붙이는 0 은 divisor 에서 나온 개수(1011 → 000). (교수가 ② 를 처음엔 "bit 1" 이라 잘못 말했다가 예제에서 "zero at the leftmost bit" 로 바로잡음)
+* '''수신 측''': "all-zero syndrome means our codeword can be fully divided by our divisor" → accept, 나머지가 0 아니면 discard.
+* '''다항식 표현''': "please remember that our information bits can be represented with polynomials" — 맨 오른쪽 비트 = $x^0$. 연산은 이진 나눗셈과 "just the same", 표를 읽기 위해 알아 두라.
+* '''표준 divisor''': 이름의 숫자 = 차수, '''비트 수 = 차수 + 1''' (CRC-8 → 9비트, CRC-32 → 33비트).
+* '''Checksum''': "we will not discuss in depth at this time" — network layer 에서.
+* '''HDLC''': NRM 은 primary 가 command, secondary 가 response 만(unbalanced) / ABM 은 모든 노드가 command·response 둘 다(balanced). ABM 이 '''P2P 전용'''인 이유: multipoint 에서 모두가 말하면 "it will easily yield some '''collisions'''". 프레임 3종 I(information) / S(supervisory, 제어) / U(unnumbered, 시스템 관리).
 
 == 시험 대비 핵심 요약 ==
 # '''Data-link layer = node-to-node''' (transport 의 end-to-end 와 대비). Node = 호스트·라우터, Link = 노드 사이 구간. 중간 노드는 링크마다 frame format 이 달라 '''decapsulate + 재encapsulate''' 둘 다 수행.

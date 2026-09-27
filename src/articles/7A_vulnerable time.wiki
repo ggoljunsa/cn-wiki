@@ -22,6 +22,8 @@ category: 7강 MAC, 용어
 | [[CSMA]] || '''$T_p$''' || 첫 비트가 끝까지 퍼지는 동안만 "idle" 로 오해 가능
 |}{/exam}
 
+{exam}🎯 교수(9/22): "vulnerable means '''weak'''" — vulnerable time 이 크면 충돌에 약하다. p.16–19 로 pure ALOHA 가 '''$2T_{fr}$''' 임을 짚고 "Once again, vulnerable time is $2T_{fr}$ in pure ALOHA." Example 3.9 는 "'''I recommend you to do it by your own'''."{/exam}
+
 == Pure ALOHA: $2T_{fr}$ 유도 (p.16–19) ==
 <pre class="txt">
 B 가 시각 t 에 전송 시작, 모든 프레임 길이 = [[T_fr]]

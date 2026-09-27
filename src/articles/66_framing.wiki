@@ -30,6 +30,8 @@ category: 6강 DLC, 용어
 | 가변 || 필요 || [[bit-oriented framing|bit-oriented]] ([[flag]] 01111110) || [[bit stuffing]]
 |}
 
+{exam}🎯 교수(9/15): "If we make frames in a very large manner, then it could be '''very inefficient'''" — 오류가 나면 2층은 프레임을 통째로 재전송하는데, 큰 프레임은 채널을 오래 점유해 오류도 더 잘 난다 → "retransmit this one many times". 그래서 관례는 moderate size 프레임. 9/17 recap 에서도 "rule of thumb: small-sized frames" 로 다시 강조.{/exam}
+
 == 예상 문제 ==
 {quiz}framing 이 프레임에 붙이는 두 가지 주소는? 그리고 큰 메시지를 작은 프레임으로 나누는 이유는?{/quiz}
 {answer}'''sender address 와 destination address'''. 너무 큰 프레임은 '''flow control 과 error control 을 비효율적'''으로 만들기 때문(오류 하나에 큰 프레임 전체 재전송).{/answer}

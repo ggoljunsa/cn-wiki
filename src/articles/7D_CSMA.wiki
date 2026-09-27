@@ -19,6 +19,8 @@ category: 7강 MAC, 용어
 
 신호는 빛의 속도로 가지만 '''순간이동은 아니다'''. B 가 $t_1$ 에 보낸 첫 비트가 C 에 닿기 전인 $t_2$ 에 C 가 매체를 들으면 조용하다 → C 도 보낸다 → 가운데서 충돌. → [[space-time model]]
 
+{exam}🎯 교수(9/22): 먼저 듣고 보내도 "it is '''impossible to avoid some collisions in a complete manner''' because there is '''propagation delay'''." p.32 에서 B 가 $t_1$ 에 보냈어도 그 첫 비트가 C 에 닿기 전($t_2$)이면 C 는 idle 로 듣고 보낸다. 그리고 "CSMA doesn't have any mechanism for preventing the collision" → [[CSMA/CD]].{/exam}
+
 == Vulnerable time = $T_p$ ⭐⭐ ==
 [[img:L6-33.png|p.33 Vulnerable time = propagation time — A 의 첫 비트가 D 에 닿고 나면 모두가 busy 를 안다|large]]
 

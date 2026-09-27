@@ -12,6 +12,8 @@ category: 7강 MAC, 용어
 * [[nonpersistent]] — 끈질기지 않음: busy 면 '''자리를 떴다가''' 랜덤 시간 뒤 다시 와서 듣는다
 * [[p-persistent]] — 확률 $p$ 만큼 끈질김: 비는 순간 확률 $p$ 로만 보낸다
 
+{exam}🎯 교수(9/22): "persistence means bearing something … it is about '''what to do when the channel is busy'''." 세 가지를 구분하는 기준은 '''idle 을 찾은 뒤 바로 보내느냐(확률 1 / $p$)'''와 '''busy 일 때 계속 듣느냐, 랜덤하게 쉬느냐'''. 1-persistent 의 예 = Ethernet. p-persistent 는 "more complicated … although it is '''often used'''."{/exam}
+
 == 비교 ==
 {|
 ! 방식 || busy 일 때 || idle 을 찾으면 || 장점 || 단점

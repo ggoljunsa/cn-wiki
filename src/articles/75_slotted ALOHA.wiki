@@ -29,6 +29,8 @@ pure ALOHA 에서는 "앞 프레임의 꼬리가 내 머리를 치는" 충돌과
 | 최대 || 0.184 at $G = 1/2$ || '''0.368 at $G = 1$'''
 |}
 
+{exam}🎯 교수(9/22): "one famous variant of pure ALOHA … '''very important''', and it is '''very simple'''" — 슬롯 시작에만 보내라는 규칙 하나로 "significantly reduces the collision rate". 슬롯 길이는 "totally depending on $T_{fr}$", vulnerable time 은 $T_{fr}$.{/exam}
+
 == Example 3.11 ⭐⭐ ==
 Slotted ALOHA, 200-bit 프레임, 200 kbps 채널. 시스템 전체가 초당 (a) 1000 (b) 500 (c) 250 프레임을 만들 때 throughput?
 <pre class="txt">

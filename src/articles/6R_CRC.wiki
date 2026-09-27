@@ -79,6 +79,8 @@ CRC-8 (ATM header), CRC-10 (ATM AAL), CRC-16 ([[HDLC]]), CRC-32 (LANs). '''divis
 
 {info}[[HDLC 프레임]]의 [[FCS]] 필드가 바로 이 CRC 나머지다. 프레임 전체를 dataword 로 보고 CRC-16(또는 32) 나머지를 계산해 끝에 붙인다.{/info}
 
+{exam}🎯 교수(9/17): 나눗셈 규칙 ① 덧셈 = 뺄셈 = [[XOR]] ② '''맨 왼쪽 비트가 0 이면 all-0s divisor''' — "'''remember these two rules'''." 수신 측은 "all-zero syndrome means our codeword can be fully divided by our divisor" → accept. (교수가 ② 를 처음엔 "bit 1" 이라 말했다가 예제에서 "zero at the leftmost bit" 로 정정){/exam}
+
 == 예상 문제 ==
 {quiz}'''(계산)''' dataword 0111, divisor 1011 로 CRC codeword 를 구하라.{/quiz}
 {answer}

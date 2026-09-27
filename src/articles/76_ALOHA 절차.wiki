@@ -48,6 +48,8 @@ K = 2 → R ∈ {0,1,2,3} → T_B ∈ {0, 2, 4, 6} ms
 {quiz}ALOHA 절차에서 ACK 를 기다리는 시간과, 3번째 실패 직후($K = 3$) 고를 수 있는 $R$ 의 범위를 쓰시오.{/quiz}
 {answer}ACK 대기 = '''$2 \times T_p$'''. $K = 3$ 이면 $R \in \{0, 1, \dots, 2^3 - 1\} = \{0, \dots, 7\}$, 즉 8가지.{/answer}
 
+{exam}🎯 교수(9/22): $2 \times T_p$ 를 기다리는 이유는 "it should receive the '''acknowledgement'''" — ACK 왕복. $K_{max}$ 를 두는 이유는 "the communication may be '''impossible physically'''" (경로가 막힌 경우 등)에서 무한 반복을 막기 위해. 시도 횟수가 늘수록 $R$ 의 범위($0 \sim 2^K - 1$)가 커진다. Example 3.8 은 "I recommend you to '''do it by your own''' as an exercise."{/exam}
+
 == 관련 문서 ==
 * [[pure ALOHA]] · [[binary exponential backoff]] · [[T_p]] · [[T_fr]]
 * [[CSMA/CD]] (p.47 흐름도와 비교) · [[collision]]

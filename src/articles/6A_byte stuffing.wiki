@@ -35,6 +35,8 @@ category: 6강 DLC, 용어
 
 {info}비교: [[bit stuffing]]은 비트 단위(0 한 개), byte stuffing 은 바이트 단위(ESC 한 개). 둘 다 목적은 "데이터 속에 가짜 flag 가 보이지 않게" — 이런 성질을 '''transparency(투명성)'''라고 부른다(Forouzan).{/info}
 
+{exam}🎯 교수(9/15): 데이터 속 flag 앞에 ESC 를 넣는 것만이 아니라 "we have to '''also''' differentiate the ESC encountered in the data field because it is a special character" — 데이터 속 '''ESC 앞에도 ESC'''. "It is just for differentiation." (녹음에선 ESC 가 "ESG/EFC" 로 깨져 있음){/exam}
+
 == 예상 문제 ==
 {quiz}데이터가 [A][ESC][Flag][B] 일 때 송신 프레임의 데이터 구역은? extra byte 는 몇 개?{/quiz}
 {answer}[A] [ESC][ESC] [ESC][Flag] [B] → '''extra byte 2개'''. ESC 앞에 ESC, Flag 앞에 ESC.{/answer}

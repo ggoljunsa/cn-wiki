@@ -30,6 +30,8 @@ length  = 11 − 4 + 1 = '''8 bits'''   (손상 비트 수는 4)
 * [[parity check code]]: 손상 비트 수가 '''짝수'''면 못 잡는다 → 위 예(4개)는 simple parity 로 검출 불가.
 * [[CRC]]: burst error 에 강하다 — 차수 $r$ 인 divisor 를 쓰는 CRC 는 길이 $\le r$ 인 burst 를 모두 검출한다(Forouzan; 슬라이드 범위 밖 참고).
 
+{exam}🎯 교수(9/15): "the second type of error(burst) is '''much more difficult to correct or detect''' compared to a single-bit error. We should employ some more sophisticated error detection strategies." 9/17 recap: burst = "explosive", 여러 비트가 연속으로 틀리는 것 — "a common terminology".{/exam}
+
 == 예상 문제 ==
 {quiz}Sent 10000000, Received 10100100 일 때 burst 의 길이와 손상 비트 수는?{/quiz}
 {answer}손상 위치 3, 6 (1-based) → 길이 = 6 − 3 + 1 = '''4 bits''', 손상 비트 수 '''2'''. 짝수 개라 simple parity 로는 검출 못 한다.{/answer}

@@ -4,7 +4,7 @@ category: 안내
 ---
 CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'''과 '''아직 확인 안 된 것'''을 구분해 적는다. 확인되면 이 문서와 과목 폴더의 `_시험정보.md` 를 함께 갱신한다.
 
-== 확정 (CH00 Course Introduction 슬라이드) ==
+== 확정 (CH00 Course Introduction 슬라이드 + 9/22 녹음 공지) ==
 
 [[img:L0-8.png|CH00 p.8 Grading — 출석 10 / 과제 10 / 중간 40 / 기말 40|medium]]
 
@@ -18,7 +18,15 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 | '''Midterm exam''' || '''40%''' || CH00 p.8
 |-
 | Final exam || 40% || CH00 p.8
+|-
+| '''형식''' || 필기(손으로 작성), 개인 응시, 컴퓨터·노트북 불가 || 0922 녹음본 (9/22 녹음)
+|-
+| '''시간''' || 1~1.5시간 (1.5시간을 잡아 두되 실제로는 1시간 정도 예상) || 0922 녹음본 (9/22 녹음)
+|-
+| '''출제 범위 성격''' || 슬라이드 중심 — "교재에만 있는 문제는 내지 않겠다" || 0922 녹음본 (9/22 녹음)
 |}
+
+{exam}🎯 교수(9/22, 수업 첫머리): "I promise you that I will '''avoid taking some problems that are only contained in the textbooks'''. … I focus on materials [in the slides]." / "I will prepare exams '''in writing, by your own hands, not by computers''' or something like that." / "almost '''70 or 80%''' of [your grade] depends on the two exams … they should be fair, thorough and robust." / "I'm not sure whether we would spend total '''one and a half hours or just one hour''' … the exam should be maybe one hour." → [[CH03 Media Access Control]] 의 🎙 절.{/exam}
 
 * 정책: 부정행위·표절은 과목 F. '''결석이 전체의 1/4 을 넘으면 F''' (CH00 p.9).
 * 교재: [[Forouzan]], ''Data Communications and Networking with TCP/IP Protocol Suite'', 6e (CH00 p.6).
@@ -40,14 +48,14 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 |-
 | CH03 (1) || 9/15 화 추정 || DLC — framing, error control (Hamming, parity, CRC), HDLC || [[CH03 Data-Link Control]]
 |-
-| CH03 (2) || 9/17~22 추정 || MAC — ALOHA, CSMA, CSMA/CD, controlled access; link-layer addressing, ARP || [[CH03 Media Access Control]] · [[CH03 Link-Layer Addressing]]
+| CH03 (2) || 9/22 화 (p.2–43, CSMA/CD abort 까지) + 다음 수업 || MAC — ALOHA, CSMA, CSMA/CD, controlled access; link-layer addressing, ARP || [[CH03 Media Access Control]] · [[CH03 Link-Layer Addressing]]
 |}
 
 == 미확정 — 교수·조교 공지로 확인할 것 ==
 
 {warn}
 * '''시험 날짜·시간·장소''': 아직 어디에도 기록 없음.
-* '''형식''': 객관식/주관식/계산 비율, 계산기 허용 여부, 공식 제공 여부. 녹음본(9/10)에서 교수가 "'''시험 문제에서 $d$(roll-off factor)는 항상 내가 줄 것'''" 이라고 한 것이 형식에 대한 유일한 단서 → 계산 문제가 나온다는 뜻.
+* '''세부 문항 구성''': 필기·시간은 9/22 에 확정(위 표). 남은 것은 객관식/서술/계산 비율, 계산기 허용 여부, 공식 제공 여부. 단서: 녹음본(9/10)에서 교수가 "'''시험 문제에서 $d$(roll-off factor)는 항상 내가 줄 것'''" → 계산 문제가 나온다는 뜻.
 * '''범위 종료 지점''': CH03 (2) 의 ARP 까지인지, 그 뒤 강의(CH03 (3) 이후)가 포함되는지.
 * 족보·이전 학기 시험지: 이 과목은 2026 Fall 이 교수의 DGIST 첫 개설이라 족보가 없다. 대신 [[계산 문제 모음]] 과 [[0920 오답 복기]] 가 그 역할을 한다.
 {/warn}
@@ -61,7 +69,7 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 # '''비교표''': ASK/FSK/PSK, FDM/TDM, pure/slotted ALOHA, NRM/ABM, 스위치/라우터 계층. → [[공식 모음]].
 
 {analogy}
-🎭 시험 정보는 '''일기예보'''다. 확정된 건 배점(40%)뿐이고 나머지는 구름 모양으로 추정한 것이다. 우산(계산 연습)은 챙기고, 날짜가 발표되면 이 문서를 고친다.
+🎭 시험 정보는 '''일기예보'''다. 확정된 건 배점(40%)과 형식(필기·1~1.5시간·슬라이드 중심)뿐이고 나머지는 구름 모양으로 추정한 것이다. 우산(계산 연습)은 챙기고, 날짜가 발표되면 이 문서를 고친다.
 {/analogy}
 
 == 관련 문서 ==

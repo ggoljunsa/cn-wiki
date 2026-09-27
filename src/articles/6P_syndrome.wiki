@@ -36,6 +36,8 @@ Parity p.42
 
 {warn}'''syndrome 0 ≠ 오류 없음.''' syndrome 0 은 "받은 것이 valid codeword 다" 라는 뜻일 뿐이다. 오류가 다른 valid codeword 로 바꿔 놓았으면(parity 의 짝수 개 오류, Example 3.1 case 3) syndrome 은 0 이 나온다.{/warn}
 
+{exam}🎯 교수(9/17): "syndrome — '''just memorize this terminology'''." 짝수 parity 의 syndrome 은 정상이면 항상 0 → '''0 = no error(accept), 1 = error(discard)'''. 교수가 처음엔 반대로 말했다가 "sorry, this is vice versa" 로 바로잡았다 — 헷갈리지 말 것.{/exam}
+
 == 예상 문제 ==
 {quiz}CRC 수신 측에서 syndrome 을 구하려면 무엇을 무엇으로 나누는가? 송신 측 나눗셈과 무엇이 다른가?{/quiz}
 {answer}'''받은 codeword 전체(7비트)'''를 같은 divisor 로 나눈다. 송신 측은 dataword 뒤에 '''0 을 n−k 개 붙인 augmented dataword''' 를 나눴다. 나머지가 송신 측에선 remainder(붙일 값), 수신 측에선 syndrome(판정 값).{/answer}

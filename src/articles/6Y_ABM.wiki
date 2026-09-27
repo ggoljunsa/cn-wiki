@@ -27,6 +27,8 @@ category: 6강 DLC, 용어
 
 {info}오늘날 P2P HDLC 계열 링크는 대부분 ABM 방식으로 동작한다(Forouzan). [[PPP]] 도 P2P 전용이다.{/info}
 
+{exam}🎯 교수(9/17): "the name has everything about its fundamental property" — balanced = 모든 노드가 command·response 둘 다 가능. 그런데 '''P2P 전용'''인 이유는 "if you allow multi-point transmission then it will easily yield some '''collisions''' because everyone talks and everyone listens." NRM 은 primary 만 command 하는 unbalanced.{/exam}
+
 == 예상 문제 ==
 {quiz}ABM 의 스테이션 종류와 지원 링크는? NRM 과의 차이 한 줄.{/quiz}
 {answer}'''Combined''' 스테이션 2대, '''P2P only'''. NRM 은 Primary 만 command 를 보내는 주종 구조로 multipoint 도 지원한다.{/answer}

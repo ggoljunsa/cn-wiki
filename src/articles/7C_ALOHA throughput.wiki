@@ -27,6 +27,8 @@ slotted: dS/dG = e^(−G)(1 − G)   = 0  → G = 1   → S = 1 × e^(−1)   = 
 
 {exam}⭐⭐ pure '''0.184 @ G = 1/2''' (18.4%), slotted '''0.368 @ G = 1''' (36.8%). 둘이 정확히 2배 차이.{/exam}
 
+{exam}🎯 교수(9/22): slotted 의 36.8% 는 "'''huge improvement, but still very low'''". 두 ALOHA 모두 "they do not detect" — 매체를 감지하지 않으니 "bad" 하다. 이것이 [[CSMA]] 로 넘어가는 동기다.{/exam}
+
 == Example 3.11 (p.29) ⭐⭐ ==
 Slotted ALOHA, 200-bit 프레임, 200 kbps ([[T_fr]] = 1 ms).
 <pre class="txt">
