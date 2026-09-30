@@ -40,6 +40,8 @@ A3 : 34 : 45 : 11 : 92 : F1
 {quiz}Ethernet MAC 주소는 몇 비트이고, 16진수 몇 자리로 표기하는가? `A3:34:45:11:92:F1` 은 몇 바이트인가?{/quiz}
 {answer}'''48 bits''', 16진수 '''12 자리''' (콜론으로 두 자리씩 구분). 두 자리가 1 byte 이므로 '''6 bytes'''.{/answer}
 
+{exam}🎯 교수(9/29): IP 주소는 "the source and destination '''terminal'''" 을 나타내고, link-layer(MAC) 주소는 "for delivering your packet to '''neighboring devices which is physically connected''' to you". "You may [see it] from your '''command line''' in your computer." 형식은 12자리 16진수, 각 자리 0–F.{/exam}
+
 == 관련 문서 ==
 * [[IP 주소와 MAC 주소]] · [[unicast]] · [[multicast]] · [[broadcast 주소]] · [[ARP]]
 * [[MAC sublayer]] · [[주소 체계]] · [[CH03 Link-Layer Addressing]]

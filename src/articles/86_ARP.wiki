@@ -29,6 +29,8 @@ DLL:      프레임 [ L₂ | L₁ ][ N₁ | N₈ | Data ] 생성
 {quiz}ARP 가 하는 일과 소속 계층을 쓰시오.{/quiz}
 {answer}'''IP 주소 → link-layer(MAC) 주소''' 매핑. 소속은 '''network layer''' (auxiliary protocol, ICMP·IGMP 와 함께).{/answer}
 
+{exam}🎯 교수(9/29): Alice 는 Bob 의 IP(N₈)는 알지만 다음 중간 노드의 physical address 를 어떻게 아느냐 — "'''this is quite tricky'''". "ARP … is a protocol '''in network layer''' that produces the link-layer address given IP address. … '''This is included in the network layer part''', so you will study this one in more detail later on." → 중간고사 범위에서는 p.63 정의(소속 계층·IP→MAC 방향)까지만.{/exam}
+
 == 관련 문서 ==
 * [[MAC 주소]] · [[IP 주소와 MAC 주소]] · [[broadcast 주소]]
 * [[IP]] · [[network layer]] · [[CH03 Link-Layer Addressing]]

@@ -5,7 +5,7 @@ category: 8강 Addressing, 메인
 '''CH03 Link-Layer Addressing'''은 L6 덱(`CH03_Data Link Layer (2).pdf`) p.55–63 이다. 분량은 9장뿐이지만 던지는 질문이 중요하다 — '''"[[IP]] 주소만으로는 왜 프레임을 배달할 수 없고, 그래서 [[data-link layer]]는 어떤 주소를 따로 쓰는가?"'''
 답: 링크 하나를 건널 때마다 "'''다음 노드'''"를 지정할 주소가 필요하고, 그것이 [[MAC 주소]](link-layer address, physical address)다. 끝에서 IP 주소를 MAC 주소로 바꿔 주는 [[ARP]]가 예고된다.
 
-페이지 번호는 슬라이드 인쇄 번호다. 녹음본은 아직 없다.
+페이지 번호는 슬라이드 인쇄 번호다. '''9/29 (화) 녹음본 반영''' — [[CH03 Media Access Control|controlled access]] 에 이어 같은 날 p.55–63 을 나가고 덱을 끝냈다. 아래 '''🎙 실제 수업 기록''' 절 참고.
 
 {exam}⭐⭐ 이 강의의 핵심은 p.58 그림 하나다. '''IP 주소는 source–destination 순서로 경로 내내 불변''', '''link-layer 주소는 destination–source 순서로 링크를 건널 때마다 바뀐다.''' → [[IP 주소와 MAC 주소]]{/exam}
 
@@ -63,7 +63,7 @@ p.55 섹션 목표: "Introduce link-layer addressing / Mention how a link-layer 
 
 [[img:L6-61.png|p.61 Example 3.14 — "second digit … even number", A2:34:45:11:92:F1|medium]]
 
-{warn}⚠️ '''p.60–61 예시는 뒤바뀐 오타로 의심된다 (교수 확인 전).''' IEEE 802 규약에서는 첫 바이트의 최하위 비트(I/G bit)가 '''0 이면 unicast, 1 이면 multicast''' 다. 첫 바이트 둘째 16진 자리가 '''짝수'''(A2 → …0010) 이면 LSB = 0 → '''unicast''', '''홀수'''(A3 → …0011) 이면 LSB = 1 → '''multicast'''. 슬라이드는 이것과 반대로 적혀 있다. 시험 전에 교수 설명(녹음본)으로 확인할 것. 자세히는 [[multicast]].{/warn}
+{warn}⚠️ '''p.60–61 예시는 뒤바뀐 오타로 의심된다 (교수 확인 전).''' IEEE 802 규약에서는 첫 바이트의 최하위 비트(I/G bit)가 '''0 이면 unicast, 1 이면 multicast''' 다. 첫 바이트 둘째 16진 자리가 '''짝수'''(A2 → …0010) 이면 LSB = 0 → '''unicast''', '''홀수'''(A3 → …0011) 이면 LSB = 1 → '''multicast'''. 슬라이드는 이것과 반대로 적혀 있다. '''교수도 9/29 수업에서 슬라이드대로''' "second digit … an even number" = multicast 라고 설명했다 → 시험에서는 '''슬라이드 기준'''(둘째 hex 자리 짝수 = multicast)으로 답하고, 교재/IEEE 와 다르다는 점만 알아 둘 것. 자세히는 [[multicast]].{/warn}
 
 == p.63 — ARP ⭐⭐ ==
 
@@ -79,13 +79,29 @@ p.58 에서 Alice 는 다음 hop R1 의 '''IP 주소(N₂)'''는 알지만 '''MA
 {quiz}p.58 에서 R1 → R2 구간의 프레임에 적힌 link-layer 주소 두 개와 IP 주소 두 개를 순서대로 쓰시오.{/quiz}
 {answer}Link-layer (destination–source): '''L₅, L₄'''. IP (source–destination): '''N₁, N₈'''.{/answer}
 
+== 🎙 실제 수업 기록 (9/29 화, 녹음본 기준) ==
+9/29 수업(52분, `0929_08_컴네_goodnotes.txt`, GoodNotes 내장 녹음 → whisper small.en 전사) 후반부. [[controlled access]] 를 마치고 p.55–63 을 나가 '''L6 덱을 끝냈다'''. 앞부분(CSMA/CD 최소 프레임·흐름도·controlled access)과 '''시험까지 2주''' 공지는 [[CH03 Media Access Control]] 의 🎙 절. 오인식은 슬라이드 기준으로 복원했다(Alice/Bob 이 "NIF and BAN", "bus" 등으로 깨져 있다).
+
+'''진도''': p.55 → p.63 (ARP) — 덱 끝. 다음 수업은 [[LAN]] (and [[WAN]]) — "an instance of application of the first two layers", 중간고사 전에 진행. [[network layer]] 는 중간고사 뒤.
+
+'''교수가 강조하거나 슬라이드 밖에서 덧붙인 것'''
+* '''동기''' ⭐⭐ (p.56–57): "IP address is sufficient for '''characterizing''' one device — making distinction one device to another. But '''with IP address alone, it is often impossible to send my data''' to that device." → "IP address describes the source and destination '''terminal'''", link-layer(MAC) 주소는 "for delivering your packet to '''neighboring devices which is physically connected''' to you". "You may [see the MAC address] from your '''command line''' in your computer."
+* '''p.58 그림''' ⭐⭐: IP 주소(N₁, N₈)만 있으면 "we don't know '''where to transmit to the next intermediate device'''. We should describe the physical address of our next intermediate device." Alice → R1 구간 프레임은 L₂, L₁. "'''The IP address itself is maintained. Only the physical layer addresses are [changed]''' while going through the network." 중간 노드에서 decapsulation·encapsulation 이 일어난다는 것도 짚었다. (교수는 "intermediate nodes often do not have higher layers such as network and transport layer" 라고 말했는데 녹음 불명확 — 라우터는 network layer 까지 가진다는 CH01 그림과 함께 "transport 이상이 없다"로 이해할 것.)
+* '''주소 3종''' (p.59): unicast = one-to-one, multicast = one-to-many, broadcast = "kind of one-to-many, but '''one-to-all'''". "You may [have seen] these kinds of addresses while configuring your computers."
+* '''형식''' (p.60): 12자리 16진수, 각 자리는 0–F(= 0–15).
+* '''Multicast 판별''' ⚠️ (p.61): "For multicast messages, we should use '''second digits as an even number'''. … The communication of multicast is described by whether it uses an even number or not in the physical address." — '''슬라이드 문장 그대로''' 설명했다(IEEE 규약과 반대라는 언급은 없음). → [[multicast]]
+* '''Broadcast''' (p.62): "if you see a crazy-looking physical address … '''all F in 12 hexadecimal''' … it means broadcast address. Very simple."
+* '''ARP''' (p.63): Alice 는 Bob 의 IP(N₈)는 알지만 "how she knows the physical address of the next intermediate node — '''this is quite tricky'''." ARP = "a protocol '''in network layer''' that produces the link-layer address given IP address". "'''This is included in the network layer part''', so you will study this one in more detail later on." → [[ARP]]
+
+'''학생 Q&A''': 녹음상 학생 질문 없음.
+
 == 시험 대비 핵심 요약 ==
 # '''IP 주소만으로는 불충분''': IP 는 종단(end-to-end) 식별자라 링크마다 "다음 노드"를 지정하지 못함 → '''link address = physical address = MAC address''' 가 따로 필요.
 # '''p.58''': 프레임에서 '''IP 주소는 source–destination 순서로 불변''', '''MAC 주소는 destination–source 순서로 링크마다 갱신'''. 라우터는 인터페이스마다 IP·MAC 쌍을 가진다.
 # '''주소 3종''': unicast(1:1) / multicast(1:다, local) / broadcast(1:전체, `FF:FF:FF:FF:FF:FF`).
 # Ethernet MAC 주소 = '''48 bits = 6 bytes = 콜론으로 구분한 12자리 16진수'''.
-# p.60–61 unicast/multicast 예시는 IEEE 규약(첫 바이트 LSB 0 = unicast, 1 = multicast)과 반대 — '''오타 의심, 교수 확인 전'''.
-# '''ARP''': network layer 의 보조(auxiliary) 프로토콜, '''IP 주소 → link-layer 주소''' 매핑. 다음 강의로 이어짐.
+# p.60–61 unicast/multicast 예시는 IEEE 규약(첫 바이트 LSB 0 = unicast, 1 = multicast)과 반대지만, 교수는 9/29 에 '''슬라이드대로'''(둘째 자리 짝수 = multicast) 설명 → 시험은 슬라이드 기준.
+# '''ARP''': network layer 의 보조(auxiliary) 프로토콜, '''IP 주소 → link-layer 주소''' 매핑. 교수(9/29): 자세한 건 중간고사 뒤 network layer 파트에서.
 
 == 관련 문서 ==
 * 이전 강의: [[CH03 Media Access Control]] · [[CH03 Data-Link Control]]

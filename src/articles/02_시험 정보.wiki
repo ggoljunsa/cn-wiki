@@ -4,7 +4,7 @@ category: 안내
 ---
 CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'''과 '''아직 확인 안 된 것'''을 구분해 적는다. 확인되면 이 문서와 과목 폴더의 `_시험정보.md` 를 함께 갱신한다.
 
-== 확정 (CH00 Course Introduction 슬라이드 + 9/22 녹음 공지) ==
+== 확정 (CH00 Course Introduction 슬라이드 + 9/22 · 9/29 녹음 공지) ==
 
 [[img:L0-8.png|CH00 p.8 Grading — 출석 10 / 과제 10 / 중간 40 / 기말 40|medium]]
 
@@ -24,9 +24,13 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 | '''시간''' || 1~1.5시간 (1.5시간을 잡아 두되 실제로는 1시간 정도 예상) || 0922 녹음본 (9/22 녹음)
 |-
 | '''출제 범위 성격''' || 슬라이드 중심 — "교재에만 있는 문제는 내지 않겠다" || 0922 녹음본 (9/22 녹음)
+|-
+| '''시기''' || 9/29 기준 "2주 뒤" → '''10/13 주 추정''' (정확한 날짜 미공지) || 0929 녹음본 (9/29 녹음)
 |}
 
 {exam}🎯 교수(9/22, 수업 첫머리): "I promise you that I will '''avoid taking some problems that are only contained in the textbooks'''. … I focus on materials [in the slides]." / "I will prepare exams '''in writing, by your own hands, not by computers''' or something like that." / "almost '''70 or 80%''' of [your grade] depends on the two exams … they should be fair, thorough and robust." / "I'm not sure whether we would spend total '''one and a half hours or just one hour''' … the exam should be maybe one hour." → [[CH03 Media Access Control]] 의 🎙 절.{/exam}
+
+{exam}🎯 교수(9/29): "'''We have two more weeks before the exam.'''" / "For the next time, we're going to learn … an instance of application of the first two layers [physical + data link] … which was '''LAN and WAN'''." / "'''After the midterm''', we will move on to the third layer, which is network layer." → 중간고사는 10/13 주 추정, 그 전 수업에서 [[LAN]]·[[WAN]] 을 나간다. [[ARP]] 의 자세한 동작은 중간고사 뒤 network layer 파트.{/exam}
 
 * 정책: 부정행위·표절은 과목 F. '''결석이 전체의 1/4 을 넘으면 F''' (CH00 p.9).
 * 교재: [[Forouzan]], ''Data Communications and Networking with TCP/IP Protocol Suite'', 6e (CH00 p.6).
@@ -48,15 +52,15 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 |-
 | CH03 (1) || 9/15 화 추정 || DLC — framing, error control (Hamming, parity, CRC), HDLC || [[CH03 Data-Link Control]]
 |-
-| CH03 (2) || 9/22 화 (p.2–43, CSMA/CD abort 까지) + 다음 수업 || MAC — ALOHA, CSMA, CSMA/CD, controlled access; link-layer addressing, ARP || [[CH03 Media Access Control]] · [[CH03 Link-Layer Addressing]]
+| CH03 (2) || 9/22 화 p.2–43 + 9/29 화 p.44–63 ('''완료''') || MAC — ALOHA, CSMA, CSMA/CD, controlled access; link-layer addressing, ARP || [[CH03 Media Access Control]] · [[CH03 Link-Layer Addressing]]
 |}
 
 == 미확정 — 교수·조교 공지로 확인할 것 ==
 
 {warn}
-* '''시험 날짜·시간·장소''': 아직 어디에도 기록 없음.
+* '''시험 날짜·시간·장소''': 날짜는 9/29 "two more weeks before the exam" → 10/13 주 추정일 뿐, 정확한 날짜·시간·장소는 공지 없음.
 * '''세부 문항 구성''': 필기·시간은 9/22 에 확정(위 표). 남은 것은 객관식/서술/계산 비율, 계산기 허용 여부, 공식 제공 여부. 단서: 녹음본(9/10)에서 교수가 "'''시험 문제에서 $d$(roll-off factor)는 항상 내가 줄 것'''" → 계산 문제가 나온다는 뜻.
-* '''범위 종료 지점''': CH03 (2) 의 ARP 까지인지, 그 뒤 강의(CH03 (3) 이후)가 포함되는지.
+* '''범위 종료 지점''': CH03 (2) 는 ARP(p.63)까지 9/29 에 끝났다. '''다음 수업 CH04 LAN(/WAN) 이 중간고사 전에 진행 → 범위 포함 가능성 높음 (미확정)'''. 이 위키에는 아직 CH04 문서가 없다(덱이 오면 추가).
 * 족보·이전 학기 시험지: 이 과목은 2026 Fall 이 교수의 DGIST 첫 개설이라 족보가 없다. 대신 [[계산 문제 모음]] 과 [[0920 오답 복기]] 가 그 역할을 한다.
 {/warn}
 

@@ -35,6 +35,8 @@ category: 7강 MAC, 용어
 {quiz}Token passing 에서 "logical ring"이 "physical ring"과 다른 점을 p.54 의 그림 하나를 예로 들어 설명하시오.{/quiz}
 {answer}Logical ring 은 '''token 을 넘기는 순서'''가 원을 이룬다는 뜻이고, 선이 실제로 원형일 필요는 없다. 예: '''c. Bus ring''' 은 물리적으로 버스 한 줄에 매달려 있지만 token 은 1→2→4→3→1 순으로 돈다(점선). '''d. Star ring''' 도 물리적으로는 star 다.{/answer}
 
+{exam}🎯 교수(9/29): "'''I do not go in detail about this one.'''" 핵심만 — token 을 가진 스테이션(예: station 1)만 채널에 접근하고 나머지는 기다린다, 전송이 끝나면 token 을 successor(station 2)에게 넘긴다. p.54 의 네 구성은 "many different ways to make circles in the network".{/exam}
+
 == 관련 문서 ==
 * [[controlled access]] · [[reservation]] · [[polling]]
 * [[ring 토폴로지]] · [[bus 토폴로지]] · [[star 토폴로지]]

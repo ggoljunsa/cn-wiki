@@ -32,6 +32,8 @@ category: 7강 MAC, 용어
 {quiz}Random access 와 controlled access 의 가장 큰 차이를 "누가 결정하나"와 "충돌" 관점에서 쓰시오.{/quiz}
 {answer}Random access: 각 스테이션이 매체 상태만 보고 '''혼자''' 결정 → 충돌 가능. Controlled access: 스테이션들이 '''서로 협의'''해 권한을 받은 쪽만 전송 → '''충돌 없음'''.{/answer}
 
+{exam}🎯 교수(9/29): random access 는 "as soon as they have data, they attempt transmission" 이지만, controlled access 는 "requires the stations to '''consult each other''' to find which station has the right to send data. … If a station is '''not authorized''' by other stations, then it cannot send any messages." 세 방식(reservation · polling · token passing)은 "very short" 하게 다뤘다.{/exam}
+
 == 관련 문서 ==
 * [[reservation]] · [[polling]] · [[token passing]]
 * [[multiple access protocols]] · [[random access]] · [[channelization]]

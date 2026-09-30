@@ -1,14 +1,14 @@
 key: 중간고사 모의 v1
-title: 중간고사 모의 v1 — 89문항 (정의→용어 · T/F · 객관식 · 서술·계산)
+title: 중간고사 모의 v1 — 96문항 (정의→용어 · T/F · 객관식 · 서술·계산)
 category: 시험, 모의고사
 ---
 2026-09-27 에 만든 '''중간고사 모의고사 v1'''. 문제는 영어(시험 언어), 해설은 한국어. 인쇄용 docx/PDF 는 `중간고사/문제풀이/중간고사_모의/중간고사_모의_v1.pdf`, 여기서는 정답이 접혀 있으니 '''먼저 답을 쓰고''' 펼친다. 틀린 문항은 해설의 링크로 바로 복습.
 
-{info}총 89문항  ·  Part A 정의→용어 22 (2 pt)  ·  Part B T/F 28 (2 pt)  ·  Part C MC 28 (3 pt)  ·  Part D 서술·계산 11 (5 pt)  = 239 pt{/info}
+{info}총 96문항  ·  Part A 정의→용어 23 (2 pt)  ·  Part B T/F 31 (2 pt)  ·  Part C MC 30 (3 pt)  ·  Part D 서술·계산 12 (5 pt)  = 258 pt{/info}
 
 {analogy}🎭 '''모의고사는 체온계.''' 점수보다 어느 파트·어느 장에서 열이 나는지가 정보다. 틀린 문항의 출처 페이지를 모아 보면 약한 장이 보인다.{/analogy}
 
-== Part A. Definition → Term (22문항, 각 2점) ==
+== Part A. Definition → Term (23문항, 각 2점) ==
 슬라이드 영어 정의를 보고 용어를 답한다.
 
 === A1 ===
@@ -99,7 +99,11 @@ category: 시험, 모의고사
 {quiz}“Special linear block codes with one extra property: if a codeword is rotated, the result is another codeword.” (CH03(1) p.43){/quiz}
 {answer}'''Cyclic code'''. 예: 1011000 이 codeword 이면 왼쪽으로 한 칸 rotate 한 0110001 도 codeword(p.43). 대표적인 실용 사례가 CRC(cyclic redundancy check, p.44). 교수(9/17): 'you may wonder why we use this kind of cyclic code ... the reason is that it is easy to implement in practice.' — 슬라이드의 'Why use cyclic codes? Easy to implement!' 그대로.{/answer}
 
-== Part B. True / False (28문항, 각 2점) ==
+=== A23 ===
+{quiz}“A category of media access methods in which the stations consult one another to find which station has the right to send, so that a station cannot send unless it has been authorized by other stations.” (CH03(2) p.49){/quiz}
+{answer}'''Controlled access'''. MAC protocol 3분류 중 random access 와 대비되는 범주로, 하위 방식은 reservation · polling · token passing 세 가지(p.49). random access 는 데이터가 생기면 (persistence·backoff 의 랜덤 요소만 거쳐) 스스로 전송을 시도하지만, controlled access 는 다른 스테이션의 허락(예약 슬롯, poll/SEL, token) 없이는 보낼 수 없어 충돌 자체가 생기지 않는다. 교수(9/29): 'control access protocol requires the stations to consult each other to find which station has the right to send data. It is a bit different from random access protocols.'{/answer}
+
+== Part B. True / False (31문항, 각 2점) ==
 
 === B1 ===
 {quiz}(T / F) In full-duplex mode, the capacity of the channel must be divided between the two directions. (CH01 p.7){/quiz}
@@ -213,7 +217,19 @@ category: 시험, 모의고사
 {quiz}(T / F) Because the simple parity-check code has d_min = 2, it guarantees the correction of any single-bit error. (CH03(1) p.29, p.33, p.37){/quiz}
 {answer}'''F'''. 정정 조건 d_min = 2t + 1 에 d_min = 2 를 넣으면 t = 0.5 → 1비트 오류도 정정을 보장하지 못한다. 검출 조건 d_min = s + 1 로는 s = 1 이므로 single-bit error detecting code 일 뿐이다(p.37). 수신 측은 syndrome 으로 오류 존재만 알고 위치는 모르므로 codeword 를 버리고 재전송을 요청한다. 맞는 문장: it guarantees the detection of a single-bit error but cannot guarantee the correction of any error. 교수(9/17): 'if you plug in d_min with 2, then t is just 0.5, meaning that we cannot guarantee error correction even one bit error.'{/answer}
 
-== Part C. Multiple Choice (28문항, 각 3점) ==
+=== B29 ===
+{quiz}(T / F) In the CSMA/CD flow diagram, a station that detects a collision while transmitting sends a jamming signal, increments the number of attempts K, and, if K is still below the limit (15), waits a random backoff time before trying again with the persistence method. (CH03(2) p.47){/quiz}
+{answer}'''T'''. 흐름도 순서: K = 0 → persistence method(1-persistent / nonpersistent / p-persistent) 중 하나를 적용해 idle 을 찾음 → 전송하면서 동시에 receive(감시) → 전송이 끝나거나 충돌이 감지될 때까지 반복 → 충돌 없이 끝나면 Success / 충돌이면 jamming signal 전송 → K = K + 1 → K < 15? → 예: R 을 0 ~ 2^K − 1 에서 골라 T_B = R × T_p 대기 후 처음으로 / 아니오: Abort. 교수(9/29): 'As soon as a station detects any collision, then it screams ... And it increments by one for the number of attempts ... whether the number of attempts does not exceed the limit of 15.'{/answer}
+
+=== B30 ===
+{quiz}(T / F) The energy-level graph of CSMA/CD shows three states of the channel: transmission, idleness, and collision, and the energy level in the collision case is twice the normal one. (CH03(2) p.48){/quiz}
+{answer}'''T'''. 슬라이드 p.48 'Energy level during transmission, idleness, or collision — For the collision case, the energy level is twice the normal one.' 가로축은 시간, 세로축은 energy(전압의 제곱에 비례). idle 은 가장 낮고, 정상 전송은 normal level, 충돌(jamming signal) 구간은 그 2배. 에너지를 더 쓰더라도 링크의 모든 스테이션이 충돌을 확실히 알고 전송을 멈추게 하려는 것. 교수(9/29): 'in collision cases, we transmit a jamming signal with twice the energy ... everyone in the link should be alarmed about this collision.'{/answer}
+
+=== B31 ===
+{quiz}(T / F) An IP address alone is not sufficient to deliver a frame, because the sender must also name the next node on the link; ARP, an auxiliary protocol defined in the network layer, finds that link-layer address from an IP address. (CH03(2) p.57–58, p.63){/quiz}
+{answer}'''T'''. IP 주소는 인터넷에서 source·destination 의 정확한 지점을 정의하지만, 프레임을 물리적으로 '바로 다음' 중간 장치(router)로 보내려면 그 장치의 link-layer(MAC) 주소가 필요하다(p.57). 그래서 hop 마다 link-layer 주소만 바뀌고 IP 주소는 그대로다(p.58). 다음 hop 의 link-layer 주소는 ARP 가 IP → link-layer 로 찾아 주며, ARP 는 link layer 가 아니라 network layer 에 정의된 보조 프로토콜이다(p.63) — 'link-layer 주소를 준다' 는 이유로 link layer 프로토콜이라고 답하는 것이 함정. 교수(9/29): 'if we have only this address, we don't know where to transmit to the next intermediate devices' / 'ARP or address resolution protocol is a protocol in network layer that produces the link layer address given IP address.'{/answer}
+
+== Part C. Multiple Choice (30문항, 각 3점) ==
 
 === C1 ===
 {quiz}Which list gives exactly the four fundamental characteristics affecting the effectiveness of a data communication system? (CH01 p.3)<br>① Delivery, Accuracy, Timeliness, Encryption<br>② Delivery, Accuracy, Timeliness, Jitter<br>③ Delivery, Accuracy, Bandwidth, Jitter<br>④ Sender, Receiver, Transmission medium, Protocol{/quiz}
@@ -327,7 +343,15 @@ category: 시험, 모의고사
 {quiz}Why is the maximum throughput of slotted ALOHA twice that of pure ALOHA? (CH03(2) p.19, p.26–28)<br>① Sending only at slot boundaries halves the vulnerable time from 2T_fr to T_fr<br>② Slotted ALOHA senses the carrier before sending<br>③ Slotted ALOHA uses frames that are half as long<br>④ Slotted ALOHA detects collisions and aborts early{/quiz}
 {answer}'''① Sending only at slot boundaries halves the vulnerable time from 2T_fr to T_fr'''. slot 길이 = T_fr 이고 slot 시작에서만 보내므로 같은 slot 의 프레임끼리만 충돌 → vulnerable time 2T_fr → T_fr. throughput 식의 지수가 e^(-2G) → e^(-G) 로 바뀌어 S_max 가 0.184 → 0.368 로 2배 → ①. 교수(9/22): slotted ALOHA 는 'nothing but pure ALOHA, but allowed to make transmission at the beginning point of each slot, and it significantly reduces the collision rate' / 'it has two times G, while slotted ALOHA has one time G'. ②carrier sensing 은 CSMA. ③프레임 길이는 같다(slot 을 T_fr 로 나눔). ④충돌 감지·abort 는 CSMA/CD — ALOHA 계열은 아무것도 감지하지 않는다.{/answer}
 
-== Part D. 서술 · 계산 (11문항, 각 5점) ==
+=== C29 ===
+{quiz}Which statement correctly describes how a station obtains the right to send in each controlled-access method? (CH03(2) p.49–54)<br>① Reservation: the token holder sends first; Polling: each station marks its own minislot in advance; Token passing: the primary asks each secondary in turn<br>② Reservation: the primary sends SEL to each station; Polling: stations send whenever the line is idle; Token passing: stations reserve minislots in advance<br>③ Reservation: a station marks its minislot before sending; Polling: a secondary waits until the primary polls it; Token passing: the token holder sends, then passes it to its successor<br>④ Reservation: stations send and back off after a collision; Polling: secondaries push data to the primary at any time; Token passing: the token is broadcast to every station{/quiz}
+{answer}'''③ Reservation: a station marks its minislot before sending; Polling: a secondary waits until the primary polls it; Token passing: the token holder sends, then passes it to its successor'''. ③ 이 세 방식을 모두 맞게 짝지었다. reservation: 이름 그대로 '예약' — N 개 minislot 중 자기 칸에 1 을 표시한 스테이션만 reservation frame 뒤에 data frame 을 보낸다(p.50). polling: secondary 는 primary 가 poll 로 묻기 전까지 보낼 수 없는 passive 방식(p.53), primary 가 보낼 때는 SEL 로 준비 여부를 확인(p.52). token passing: logical ring 에서 token 을 가진 스테이션만 채널을 쓰고 끝나면 successor 에게 넘긴다(p.54). ①은 세 설명을 돌려 끼운 것, ②는 SEL(polling)을 reservation 에, idle 감지(random access)를 polling 에 붙인 것, ④는 backoff(random access)·push·broadcast 로 모두 틀림. 교수(9/29): 'you should understand why this one is called reservation' / 'Polling is kind of passive and push is kind of active.'{/answer}
+
+=== C30 ===
+{quiz}In CSMA/CD, why must the sending station detect a collision before it sends the last bit of its frame? (CH03(2) p.44–45)<br>① Because the jamming signal can be sent only while the frame is still being transmitted<br>② Because once the entire frame is sent, the station keeps no copy of it and stops monitoring the line, so a later collision would go unnoticed<br>③ Because the receiver discards any frame whose last bit arrives after the propagation time T_p<br>④ Because the backoff time T_B is counted from the last bit of the frame{/quiz}
+{answer}'''② Because once the entire frame is sent, the station keeps no copy of it and stops monitoring the line, so a later collision would go unnoticed'''. p.44–45: 'Once the entire frame is sent, the station does not keep a copy of the frame and does not monitor the line for collision detection' → ②. 그래서 충돌 신호가 되돌아올 때까지(최악의 경우 왕복 2T_p) 계속 전송 중이어야 하고, 이것이 T_fr ≥ 2T_p 이며 여기에 data rate 를 곱한 것이 최소 프레임 크기다. ①jamming 은 충돌을 감지한 '뒤' 보내는 것이지 감지 시점을 제한하는 이유가 아니다. ③수신 측 폐기 규칙은 슬라이드에 없다. ④backoff 시점은 감지 필요성과 무관. 교수(9/29): 'transmission does not care about collision after the transmission. Only during transmission, they are caring about collision.'{/answer}
+
+== Part D. 서술 · 계산 (12문항, 각 5점) ==
 
 === D1 ===
 {quiz}'''Decibels along a path''' (CH02(1) p.42–43)<br>A signal travels through a cable, and its power drops to one quarter of the original (P2 = 0.25 P1).<br>It then passes through an amplifier that increases its power 8 times.<br>(a) What is the gain/loss of the cable in dB?<br>(b) What is the gain of the amplifier in dB?<br>(c) What is the overall change in dB from the cable input to the amplifier output? Use 10 log₁₀ 2 ≈ 3.{/quiz}
@@ -489,6 +513,23 @@ slotted: S = G × e^(-G) = 0.5 × e^(-0.5) ≈ 0.5 × 0.607 ≈ 0.303 → 성공
 (d) S_slotted / S_pure = (G e^(-G)) / (G e^(-2G)) = e^G = e^0.5 = 1 / e^(-0.5) ≈ 1 / 0.607 ≈ 1.65 (검산: 0.303 / 0.184 ≈ 1.65). 2가 아니다.
 '2배' 는 각 프로토콜의 최대값끼리의 비교: pure S_max = 0.184 (G = 1/2), slotted S_max = 0.368 (G = 1). 두 최대값은 서로 다른 G 에서 나오므로, 같은 G 에서의 비율(e^G)과는 다르다. G = 0.5 에서 pure 는 최대, slotted 는 아직 최대 전.
 (교수 9/22: vulnerable time 유도는 'I recommend you to do it by your own' — 시험은 손으로 쓰는 필기이므로 t − T_fr, t + T_fr 두 경계를 그림과 함께 직접 쓰는 연습이 핵심.)
+</pre>
+{/answer}
+
+=== D12 ===
+{quiz}'''CSMA/CD minimum frame size on a 1 Gbps network''' (CH03(2) p.44–46)<br>A network using CSMA/CD has a bandwidth of 1 Gbps. The maximum propagation time (including the delays in the devices and ignoring the time needed to send a jamming signal) is 2 μs.<br>(a) Find the minimum frame transmission time and the minimum frame size in bits and bytes.<br>(b) A station on this network sends a 64-byte frame (the minimum frame of Standard Ethernet). Is it guaranteed to detect a collision before it finishes sending? Justify with numbers.<br>(c) Keeping the bandwidth at 1 Gbps, what is the largest maximum propagation time T_p for which a 64-byte frame still satisfies the CSMA/CD condition?{/quiz}
+{answer}'''답: (a) T_fr,min = 4 μs, 4000 bits = 500 bytes. (b) No: 512 bits / 1 Gbps = 0.512 μs < 2T_p = 4 μs. (c) T_p ≤ 0.256 μs.'''
+<pre class="txt">
+(a) 조건 T_fr ≥ 2 × T_p → 최소 T_fr = 2 × 2 μs = 4 μs.
+최소 프레임 크기 = 대역폭 × 최소 T_fr = 10^9 bps × 4 × 10^-6 s = 4000 bits.
+4000 bits / 8 = 500 bytes.
+(b) 64 bytes = 64 × 8 = 512 bits → T_fr = 512 / 10^9 s = 0.512 μs.
+0.512 μs < 2T_p = 4 μs 이므로 조건 T_fr ≥ 2T_p 를 만족하지 못한다 → 아니오.
+최악의 경우 멀리 있는 스테이션의 충돌 신호가 돌아오기(4 μs) 전에 전송이 끝나고, 전송이 끝난 뒤에는 사본도 없고 감시도 하지 않으므로 그 충돌을 놓친다.
+(c) T_fr ≥ 2T_p → T_p ≤ T_fr / 2 = 0.512 μs / 2 = 0.256 μs.
+(참고) Ex 3.12 는 10 Mbps · T_p = 25.6 μs 에서 512 bits = 64 bytes. 대역폭이 100배가 되면 같은 64 bytes 로는 허용 T_p 가 1/100(0.256 μs)로 줄어든다 — 속도를 올리면 최소 프레임을 키우거나 망 길이를 줄여야 한다.
+Python 검산: bw=1e9, tp=2e-6 → T_fr,min = 4.0 us; min frame = 4000.0 bits = 500.0 bytes / 64-byte frame T_fr = 0.512 us; >= 2Tp? False / max Tp for 64 bytes = 0.256 us.
+(교수 9/29: 'There are a lot of examples about CSMA/CD on the length of a minimum frame ... to translate this one to minimum frame size, we should multiply it by the data rate.')
 </pre>
 {/answer}
 

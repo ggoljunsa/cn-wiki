@@ -53,6 +53,8 @@ T_fr(min) = 2 × 2.56 μs = 5.12 μs
 </pre>
 속도가 10배, $T_p$ 가 1/10 이라 결과는 그대로 64 bytes — Fast Ethernet 이 한 선택이다.{/answer}
 
+{exam}🎯 교수(9/29): "In CSMA/CD, transmission does not care about collision '''after the transmission'''. Only '''during transmission''' they are caring about collision." → 전송 시간이 왕복(forward and backward) propagation 시간보다 길어야 한다. "I recommend you to '''think about why'''." 그리고 Example 3.12 에 대해: "There are '''a lot of examples''' about CSMA/CD on the length of a minimum frame. … very simple, and I would recommend you to '''do this on your own'''" — $2T_p$ 에 '''데이터율을 곱하면''' 최소 프레임 크기.{/exam}
+
 == 관련 문서 ==
 * [[CSMA/CD]] · [[T_fr]] · [[T_p]] · [[bit rate]]
 * [[CH03 Media Access Control]] · [[계산 문제 모음]]

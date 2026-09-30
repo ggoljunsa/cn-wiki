@@ -27,5 +27,7 @@ category: 8강 Addressing, 용어
 {quiz}Ethernet broadcast 주소를 16진수로 쓰고, 2진수로는 1 이 몇 개인지 쓰시오.{/quiz}
 {answer}'''FF:FF:FF:FF:FF:FF''', 1 이 '''48 개''' (48 bits all 1s).{/answer}
 
+{exam}🎯 교수(9/29): "If you see a crazy-looking physical address … containing '''all F in twelve hexadecimal''' … it means broadcast address. Very simple." broadcast = "kind of one-to-many, but '''one-to-all'''".{/exam}
+
 == 관련 문서 ==
 * [[unicast]] · [[multicast]] · [[MAC 주소]] · [[ARP]] · [[CH03 Link-Layer Addressing]]

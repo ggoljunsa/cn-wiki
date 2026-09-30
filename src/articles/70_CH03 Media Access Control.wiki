@@ -5,7 +5,7 @@ category: 7강 MAC, 메인
 '''CH03 Media Access Control'''은 L6 덱(`CH03_Data Link Layer (2).pdf`) p.2–54 다. 지난 시간 [[data-link layer]]의 위쪽 sublayer인 [[DLC]](framing, error control)를 끝냈고, 이번에는 아래쪽 sublayer인 [[MAC sublayer]]를 다룬다. 던지는 질문은 하나다 — '''"하나의 [[point-to-point 링크와 broadcast 링크|broadcast 링크]]를 여러 스테이션이 동시에 쓰려 할 때, 누가 언제 말하게 할 것인가?"'''
 답은 세 갈래다: 각자 알아서 보내고 부딪히면 다시 보내는 [[random access]]([[pure ALOHA]] → [[slotted ALOHA]] → [[CSMA]] → [[CSMA/CD]]), 서로 허락을 받고 보내는 [[controlled access]]([[reservation]] · [[polling]] · [[token passing]]), 그리고 채널 자체를 쪼개는 [[channelization]].
 
-이 덱은 '''recap 없이 p.2 부터 바로 새 내용'''이다. 페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. '''9/22 (화) 녹음본 반영''' — 이날 p.2–43 (CSMA/CD 충돌·abort)까지 나갔고, p.44 이후는 다음 수업 예정. 교수 강조와 중간고사 형식 공지는 아래 '''🎙 실제 수업 기록''' 절 참고.
+이 덱은 '''recap 없이 p.2 부터 바로 새 내용'''이다. 페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. '''9/22 (화)·9/29 (화) 녹음본 반영''' — 9/22 에 p.2–43 (CSMA/CD 충돌·abort), 9/29 에 p.44–54 (최소 프레임·흐름도·energy level·controlled access)를 나갔고, 같은 날 [[CH03 Link-Layer Addressing]] (p.55–63)까지 이어서 '''덱을 끝냈다'''. 교수 강조와 중간고사 공지는 아래 '''🎙 실제 수업 기록''' 절 참고.
 
 {exam}⭐⭐⭐ 이 강의에서 해설본이 ⭐⭐⭐ 를 준 곳은 세 군데뿐이다 — 전부 '''숫자'''로 물을 수 있는 자리다.
 * [[vulnerable time]]: pure ALOHA $2T_{fr}$ (p.19) / slotted ALOHA $T_{fr}$ (p.27)
@@ -304,10 +304,11 @@ T_fr(min) = 2 × 25.6 μs = 51.2 μs
 </pre>
 bit rate 가 10배가 되면 같은 시간 동안 10배 많은 비트를 보내므로 최소 프레임도 10배가 된다. (그래서 실제 Fast Ethernet 은 64 bytes 를 유지하는 대신 '''케이블 길이(= $T_p$)를 1/10 로''' 줄였다.){/answer}
 
-== 🎙 실제 수업 기록 (9/22 화, 녹음본 기준) ==
+== 🎙 실제 수업 기록 (9/22 · 9/29 화, 녹음본 기준) ==
 9/22 수업(63분)은 '''중간고사 형식 공지'''로 시작해 p.2 부터 '''p.43 (Collision and abortion in CSMA/CD)''' 까지 나갔다. 녹음은 GoodNotes 내장 녹음을 whisper(small.en)로 전사한 것이라 오인식이 심하다("floating aloha" = slotted ALOHA, "patient" = station, "metallic layer" = data-link layer). 용어는 슬라이드 기준으로 복원했다.
 
-{warn}'''9/22 에 안 나간 부분''': p.44–46 [[최소 프레임 크기]]·Example 3.12, p.47 흐름도, p.48 [[energy level]], p.49–54 [[controlled access]], 그리고 p.55– [[CH03 Link-Layer Addressing|link-layer addressing·ARP]]. 교수는 "There are also some other criteria for CSMA/CD" 라고 예고하고 끝냈다 → '''다음 수업(9/24 목 추정)'''에서 이어질 것.{/warn}
+{warn}'''9/22 에 안 나간 부분''': p.44–46 [[최소 프레임 크기]]·Example 3.12, p.47 흐름도, p.48 [[energy level]], p.49–54 [[controlled access]], 그리고 p.55– [[CH03 Link-Layer Addressing|link-layer addressing·ARP]]. 교수는 "There are also some other criteria for CSMA/CD" 라고 예고하고 끝냈다.
+'''→ 9/29 (화) 수업에서 전부 나갔다''' (아래 9/29 소절). 9/24 (목)은 추석 연휴(9/24–26)라 수업이 없었던 것으로 보인다 — 9/29 교수가 "last time we stopped at CSMA/CD" 로 시작했다.{/warn}
 
 === 중간고사 공지 (수업 첫머리) ===
 * '''슬라이드 중심''': "I promise you that I will '''avoid taking some problems that are only contained in the textbooks'''. In other words, I focus on materials [in the lecture slides]." → [[Forouzan]] 에만 있고 슬라이드에 없는 내용은 안 낸다.
@@ -337,6 +338,29 @@ bit rate 가 10배가 되면 같은 시간 동안 10배 많은 비트를 보내�
 
 === 학생 Q&A ===
 * 이번 녹음에는 학생 질문이 기록되지 않았다(녹음 불명확 구간 포함).
+
+=== 9/29 화 — p.44–63 ===
+9/29 수업(52분)은 지난 시간 [[CSMA/CD]] 복습(p.42–43 space-time 그림)으로 시작해 p.44 [[최소 프레임 크기]] → p.47 흐름도 → p.48 [[energy level]] → p.49–54 [[controlled access]] → p.55–63 [[CH03 Link-Layer Addressing|link-layer addressing·ARP]] 로 '''L6 덱을 끝냈다'''. 녹음은 GoodNotes 내장 녹음(같은 `.goodnotes` 파일의 2번째 녹음)을 whisper(small.en)로 전사한 `0929_08_컴네_goodnotes.txt`. 오인식 복원: "cetanin(-c)" = CSMA(/CD), "generalization protocols" = channelization, "token testing" = token passing, "ELC" = DLC, "land and weather" = LAN and WAN, "zooming signal" = jamming signal.
+
+'''공지''' ⭐⭐⭐
+* '''시험까지 2주''': 흐름도의 persistence method 를 복습하며 "as you remember — or as you don't remember, it's OK. '''We have two more weeks before the exam.'''" → 9/29 기준 2주 뒤 = '''10/13 (화) 주''' 추정. 정확한 날짜는 공지 없음. → [[시험 정보]]
+* '''다음 수업 = LAN (and WAN)''': "For the next time, we're going to learn … an '''instance of application of the first two layers''', which was physical layer and data link layer … which was [[LAN]] and [[WAN]]." — '''중간고사 전에''' 진행.
+* '''중간고사 뒤''': "after the midterm, we will move on to the third layer, which is [[network layer]]."
+* 수업 첫머리(녹음 불명확): 진도 계획보다 자료가 오래 걸려 일부는 "we're going to cover it later" 라고 했고, "today we could finish a bit earlier … keep the promise" 라고 했으나 끝에서 "I took more time than I expected, sorry about that" 으로 마쳤다. 마지막 문장 "from the next time, no worries, until the midterm, we will …" 은 녹음이 끊겼다.
+
+'''교수가 강조하거나 슬라이드 밖에서 덧붙인 것'''
+* '''CSMA/CD 의 핵심 = 전송 중에만 듣는다''' (p.44): "transmission does not care about collision '''after the transmission'''. Only '''during transmission''', they are caring about collision." → 그래서 전송 시간이 왕복 propagation 시간("traversing time going forward and backwards")보다 길어야 한다. "Technically I told you everything. But I recommend you to '''think about why'''" (= 슬라이드 p.45 "Please think about why").
+* '''Example 3.12 는 혼자''' ⭐⭐: "There are '''a lot of examples''' about CSMA/CD on the length of a minimum frame. … very simple, and I would recommend you to '''do this on your own'''." 요령 = 최소 전송 시간($2T_p$)에 '''데이터율을 곱하면''' 최소 프레임 크기. → [[계산 문제 모음]]
+* '''흐름도''' (p.47): $K = 0$ → persistence method 하나를 골라 적용 → "transmit and receive" 하며 "done or collision?" → 충돌이면 [[jamming signal]] 을 "'''screams'''… very high power" 로 보내 주변 모두에게 알림 → $K = K + 1$ → $K_{max} = 15$ 는 "just a user parameter … but '''15 is the recommended (default) value'''" → $R$ 선택, $T_B = R \times T_{fr}$ 대기. "What is different [from CSMA] is that it infers '''collision detection'''."
+* '''Energy level''' (p.48): x축 = 시간, y축 = energy = '''voltage 의 제곱'''. 충돌 시 에너지 2배 = voltage $\sqrt{2}$ 배. 교수는 이것을 jamming 과 엮어 "collision is a bad thing, and everyone in the link should be '''alarmed'''" 라고 설명했다. (슬라이드 p.48 의 정의는 '''두 신호가 겹쳐 에너지가 정상의 2배''' — 시험에는 슬라이드 문장대로.)
+* '''Controlled vs random''' (p.49): random 은 "as soon as they have data, they attempt transmission", controlled 는 "stations '''consult each other''' … if a station is not authorized by other stations, it cannot send". 세 방식은 "very short".
+* '''[[reservation]]''' (p.50) ⭐: "the diagram looks very complicated, but it is very simple … first see its '''name'''." 스테이션 5개 → '''reservation packet 길이 = 스테이션 수 N = 5'''. 1 로 표시한 스테이션만 예약 패킷 뒤에 차례로 전송, 아무도 없으면 silence. "'''You should understand why this one is called reservation.'''"
+* '''[[polling]]''' (p.51–53) ⭐: '''push vs pull''' 비유 — 스마트폰 push 알림처럼 데이터가 생기면 먼저 알리는 것이 push(active), '''누가 "보낼 거 있어?" 하고 물어볼 때까지 조용히 기다리는 것이 polling(passive)'''. "Every secondary device '''cannot send data until they receive poll''' message. … This is the essence of polling." Select 는 primary 가 secondary 의 '''수신 준비'''를 묻는 것(교수가 처음에 반대로 말했다가 "Oh, sorry, I tell you in a wrong way" 하고 정정). Data 뒤에는 항상 ACK — "'''the very basic mechanism of error controlling''' in computer networks."
+* 여담: acknowledgement(영국식) vs acknowledgment(미국식) 철자 차이.
+* '''[[token passing]]''' (p.54): "'''I do not go in detail about this one.'''" token 을 가진 스테이션(예: station 1)만 채널을 쓰고, 끝나면 successor(station 2)에게 넘긴다. p.54 의 네 가지 링 구성은 "many different ways to make circles".
+* Link-layer addressing 이후 내용은 [[CH03 Link-Layer Addressing]] 의 🎙 절.
+
+'''학생 Q&A''': 녹음상 학생 질문 없음.
 
 == 시험 대비 핵심 요약 ==
 # '''MAC 프로토콜 3분류''': random access(ALOHA, CSMA/CD, CSMA/CA) / controlled access(reservation, polling, token passing) / channelization(FDMA, TDMA, CDMA). Random access 는 모두 대등하고 매체 상태만 보고 스스로 결정 → 충돌 가능.

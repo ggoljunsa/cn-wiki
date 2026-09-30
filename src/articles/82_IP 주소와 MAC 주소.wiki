@@ -39,6 +39,8 @@ Legend: "N: IP address / L: Link-layer address"{/def}
 {quiz}Alice → Bob 경로에서 한 번도 바뀌지 않는 주소는 무엇이고, 몇 번 바뀌는 주소는 무엇인가?{/quiz}
 {answer}바뀌지 않는 것: '''IP 주소 N₁(source), N₈(destination)'''. 바뀌는 것: '''link-layer 주소''' — 링크 3개를 지나므로 (L₂,L₁) → (L₅,L₄) → (L₈,L₇) 로 링크마다 새로 적힌다.{/answer}
 
+{exam}🎯 교수(9/29): "IP address is sufficient for characterizing one device … but '''with IP address alone, it is often impossible to send my data''' to that device." IP 만으로는 "we don't know '''where to transmit to the next intermediate device'''." 그리고 p.58: "'''The IP address itself is maintained. Only the physical layer addresses are [changed]''' while going through the network."{/exam}
+
 == 관련 문서 ==
 * [[MAC 주소]] · [[IP]] · [[ARP]] · [[CH03 Link-Layer Addressing]]
 * [[end-to-end와 hop-to-hop]] · [[주소 체계]] · [[라우터]] · [[캡슐화]] · [[node와 link]]
