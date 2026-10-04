@@ -1,18 +1,18 @@
 <!-- Parent: ../AGENTS.md -->
-<!-- Generated: 2026-09-25 | Updated: 2026-09-25 -->
+<!-- Generated: 2026-09-25 | Updated: 2026-10-04 -->
 
 # 위키 (컴네위키, CN Wiki)
 
 ## Purpose
-A self-contained, 나무위키-style single-page study wiki for CSE403 Computer Network midterm scope (CH01 Introduction, CH02 Physical Layer (1)(2)(3), CH03 Data-Link Layer (1)(2)). It is its **own git repository** (remote `github.com/ggoljunsa/cn-wiki`, live at https://ggoljunsa.github.io/cn-wiki/), nested inside the OneDrive course folder. Everything the reader sees is generated into `index.html` from `src/` by `build.py`. Built 2026-09-25 from the 운체위키 template following `../../../_위키_개발지침.md`.
+A self-contained, 나무위키-style single-page study wiki for CSE403 Computer Network midterm scope (CH01 Introduction, CH02 Physical Layer (1)(2)(3), CH03 Data-Link Layer (1)(2), CH04 Local Area Networks (1) — L7, added 2026-10-04). It is its **own git repository** (remote `github.com/ggoljunsa/cn-wiki`, live at https://ggoljunsa.github.io/cn-wiki/), nested inside the OneDrive course folder. Everything the reader sees is generated into `index.html` from `src/` by `build.py`. Built 2026-09-25 from the 운체위키 template following `../../../_위키_개발지침.md`.
 
 Three kinds of "visual" content exist, and each has its own syntax and engine:
 
 | Kind | Syntax in `.wiki` | Source | Engine |
 |---|---|---|---|
 | Real slide capture | `[[img:L5-46.png\|캡션\|large]]` | `_slides/` → copied to `images/` | none (plain `<figure>`) |
-| Step simulator (debugger-style) | `[[sim:crc_division]]` | `src/sims/*.js` (16) | `src/sims/_engine.js` (SimEngine) |
-| Animated diagram (SVG+SMIL) | `[[anim:csma_cd_abort\|캡션]]` | `src/anims/*.js` (20) | `src/anims/_anim_engine.js` (AnimEngine) |
+| Step simulator (debugger-style) | `[[sim:crc_division]]` | `src/sims/*.js` (18) | `src/sims/_engine.js` (SimEngine) |
+| Animated diagram (SVG+SMIL) | `[[anim:csma_cd_abort\|캡션]]` | `src/anims/*.js` (23) | `src/anims/_anim_engine.js` (AnimEngine) |
 
 ## Key Files
 | File | Description |
@@ -26,9 +26,9 @@ Three kinds of "visual" content exist, and each has its own syntax and engine:
 ## Subdirectories
 | Directory | Purpose |
 |-----------|---------|
-| `src/` | All authored sources: contract, CSS/layout, renderer, articles (205), sims (16), anims (20), tests (see `src/AGENTS.md`) |
+| `src/` | All authored sources: contract, CSS/layout, renderer, articles (224), sims (18), anims (23), tests (see `src/AGENTS.md`) |
 | `images/` | Build output: slide captures actually referenced by articles (see `images/AGENTS.md`) |
-| `_slides/` | Slide PNG originals `L{덱}-{pp}.png`. Git-ignored; regenerate with `pdftoppm -r 90 -png "../강의자료/<pdf>" _slides/L<n>` (deck table in `src/CONTRACT.md` §1). |
+| `_slides/` | Slide PNG originals `L{덱}-{pp}.png`. Git-ignored; regenerate with `pdftoppm -r 90 -png "../강의자료/<pdf>" _slides/L<n>` — on Windows without poppler use PyMuPDF: `py -3.12 -c "import fitz; ...page.get_pixmap(dpi=90).save(...)"` (deck table in `src/CONTRACT.md` §1). |
 | `_text/` | `pdftotext -layout` output per deck. Git-ignored. |
 | `.omc/` | oh-my-claudecode runtime state. Ignore. |
 
@@ -65,5 +65,6 @@ Debug URLs: `index.html?anim=NAME&animt=SEC` renders one animation paused; `inde
 ### External
 - Python 3 (build), Node ≥ 22 (tests, measure.mjs uses global WebSocket), Google Chrome (screenshots), poppler `pdftoppm`/`pdftotext` (slides).
 - KaTeX 0.16 from jsDelivr at runtime for `$…$` math; no other runtime dependency.
+- Offline/PWA (2026-09-30): `build.py` also writes `sw.js` (service worker, cache name `wiki-<hash>`) and `manifest.webmanifest`; `head.html` has the 📥 오프라인 저장 button. `test_render.js` therefore takes the **last** inline `<script>` block (fixed 2026-10-04).
 
 <!-- MANUAL: Any manually added notes below this line are preserved on regeneration -->

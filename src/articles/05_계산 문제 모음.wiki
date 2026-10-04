@@ -268,6 +268,36 @@ pure 였다면 $S = Ge^{-2G}$: (a) 0.135 → 135, (b) 0.184 → 92, (c) 0.152 �
 {/answer}
 [[sim:csma_cd_minframe]]
 
+== CH04 (1) Ethernet ==
+
+=== Example 13.1 — 주소 전송 순서 ===
+{quiz}
+47:20:1B:2E:08:EE 가 전송선에 나가는 비트 순서를 쓰고, unicast/multicast/broadcast 중 무엇인지 답하라.
+{/quiz}
+{answer}
+<pre class="txt">
+byte 는 왼→오, byte 안은 LSB first (오른쪽 비트부터)
+47 = 01000111 → 11100010 · 20 = 00100000 → 00000100 · 1B = 00011011 → 11011000
+2E = 00101110 → 01110100 · 08 = 00001000 → 00010000 · EE = 11101110 → 01110111
+첫 byte LSB = 1 (둘째 hex digit 7 홀수) → '''multicast''' (슬라이드 p.21 의 "broadcast" 는 오타)
+</pre>
+→ [[Ethernet 주소 전송 순서]] · [[Ethernet 주소 판별]]
+{/answer}
+[[sim:ethernet_addr_bits]]
+
+=== Fast Ethernet 의 최대 네트워크 길이 ===
+{quiz}
+최소 프레임 512 bits 를 유지한 채 100 Mbps 로 올리면 CSMA/CD 가 허용하는 최대 길이는 (전파 속도 2×10⁸ m/s)? 1 Gbps 면?
+{/quiz}
+{answer}
+<pre class="txt">
+Tfr = 512 / 10⁸ = 5.12 μs → Tp ≤ Tfr/2 = 2.56 μs → 길이 ≤ 2.56 μs × 2×10⁸ = '''≈ 512 m''' (표준은 여유를 두어 250 m; Standard 2500 m 의 1/10)
+1 Gbps: Tfr = 0.512 μs → Tp ≤ 0.256 μs → ≈ 51 m (슬라이드 "< 25 m?") → 포기하고 full-duplex 스위치
+</pre>
+→ [[Fast Ethernet]] · [[Gigabit Ethernet]]
+{/answer}
+[[sim:fast_ethernet_length]]
+
 == CH01 ==
 
 === Mesh 링크 수 ===

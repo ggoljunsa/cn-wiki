@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>컴네위키 — DGIST CSE403 Computer Network Wiki</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1c2840">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
@@ -81,6 +85,12 @@
     display: none; background: #1c2840; color: #fff; border: 1px solid #3a4a6a;
     border-radius: 3px; padding: 5px 9px; font-size: 13px; cursor: pointer; white-space: nowrap;
   }
+  .offline-btn {
+    background: #1c2840; color: #ffd75e; border: 1px solid #3a4a6a; border-radius: 3px;
+    padding: 5px 9px; font-size: 12px; cursor: pointer; white-space: nowrap;
+  }
+  .offline-btn.done { color: #9be59b; border-color: #2e6b3a; }
+  .offline-btn.busy { color: #c8d4e6; }
   header.top .tagline {
     margin-left: auto;
     color: #c8d4e6;
@@ -673,7 +683,8 @@
   <div class="search">
     <input id="searchBox" type="text" placeholder="문서 검색... (예: SNR, CRC, vulnerable time)">
   </div>
-  <div class="tagline">DGIST CSE403 Computer Network — 중간고사 (CH01–CH03)</div>
+  <button class="offline-btn" id="offlineBtn" type="button" title="이미지·수식까지 폰에 저장해 인터넷 없이 봅니다">📥 오프라인 저장</button>
+  <div class="tagline">DGIST CSE403 Computer Network — 중간고사 (CH01–CH04)</div>
 </header>
 
 <div class="layout">
@@ -697,3 +708,50 @@
 <footer class="page">
   컴네위키 · DGIST CSE403 Computer Network · Prof. Soobin Um · Forouzan 6e
 </footer>
+
+<script>
+// ===== 오프라인(PWA) — sw.js 등록 + 이미지 전부 캐시 + 상태 표시. file:// 에서는 아무것도 안 함 =====
+(function () {
+  var btn = document.getElementById("offlineBtn");
+  if (!btn) return;
+  if (!("serviceWorker" in navigator) || location.protocol === "file:") { btn.style.display = "none"; return; }
+  function cacheName() { return "wiki-" + (typeof OFFLINE_VER !== "undefined" ? OFFLINE_VER : "0"); }
+  function setState(cls, text) { btn.className = "offline-btn " + cls; btn.textContent = text; }
+  function checkDone() {
+    if (!window.caches || typeof OFFLINE_IMAGES === "undefined") return;
+    caches.open(cacheName()).then(function (c) { return c.keys(); }).then(function (keys) {
+      var have = {}; keys.forEach(function (r) { have[new URL(r.url).pathname.split("/").slice(-2).join("/")] = 1; });
+      var n = OFFLINE_IMAGES.filter(function (p) { return have[p]; }).length;
+      if (n >= OFFLINE_IMAGES.length && keys.length) setState("done", "✓ 오프라인 준비됨");
+      else if (n > 0) setState("", "📥 오프라인 저장 (" + n + "/" + OFFLINE_IMAGES.length + ")");
+    }).catch(function () {});
+  }
+  navigator.serviceWorker.register("sw.js").then(function () { checkDone(); }).catch(function () { btn.style.display = "none"; });
+  btn.addEventListener("click", function () {
+    if (typeof OFFLINE_IMAGES === "undefined") return;
+    var list = ["./index.html", "./manifest.webmanifest", "./icon.svg"].concat(OFFLINE_IMAGES);
+    var done = 0, fail = 0;
+    setState("busy", "저장 중 0/" + list.length);
+    caches.open(cacheName()).then(function (c) {
+      var i = 0;
+      function next() {
+        if (i >= list.length) {
+          // KaTeX 폰트: CSS 가 참조하는 woff2 를 미리 받아 둔다 (css 가 이미 캐시돼 있으면 파싱)
+          return c.match("https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css").then(function (r) { return r ? r.text() : ""; })
+            .then(function (css) {
+              var fonts = (css.match(/fonts\/[A-Za-z0-9_-]+\.woff2/g) || []).filter(function (v, k, a) { return a.indexOf(v) === k; })
+                .map(function (f) { return "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/" + f; });
+              return Promise.all(fonts.map(function (u) { return c.add(new Request(u, { mode: "cors" })).catch(function () {}); }));
+            }).catch(function () {})
+            .then(function () { setState(fail ? "" : "done", fail ? "⚠ " + fail + "개 실패 — 다시 누르기" : "✓ 오프라인 준비됨"); });
+        }
+        var batch = list.slice(i, i + 6); i += 6;
+        return Promise.all(batch.map(function (u) {
+          return c.add(u).then(function () { done++; }).catch(function () { fail++; });
+        })).then(function () { setState("busy", "저장 중 " + (done + fail) + "/" + list.length); return next(); });
+      }
+      return next();
+    });
+  });
+})();
+</script>

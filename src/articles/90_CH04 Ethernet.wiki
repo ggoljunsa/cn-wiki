@@ -1,0 +1,467 @@
+key: CH04 Ethernet
+title: CH04 Ethernet (9강 — 두 계층을 실제로 구현한 LAN, 4세대 진화)
+category: 9강 Ethernet, 메인
+---
+'''CH04 Ethernet'''은 L7 덱(`CH04_Local Area Networks (1).pdf`) p.2–42 다. 지금까지 [[physical layer]](data → signal, 채널로 전송)와 [[data-link layer]]([[DLC]] 로 오류 검출·정정, [[MAC sublayer|MAC]] 으로 매체 공유, 다음 노드 주소 지정)를 따로따로 배웠다. 이 덱이 던지는 질문은 — '''"그 두 계층을 실제로 구현한 네트워크가 [[LAN]] 이고, 그 대표가 Ethernet 이다. Ethernet 은 10 Mbps → 100 Mbps → 1 Gbps → 10 Gbps 로 4세대를 진화하면서 무엇을 지키고 무엇을 바꿨나?"'''
+답: '''지킨 것'''은 호환성 — [[MAC 주소|48-bit 주소]], [[Ethernet 프레임 형식|frame format]], 최소·최대 프레임 길이(64 / 1518 bytes). '''바꾼 것'''은 속도, 그리고 속도 때문에 깨지는 [[CSMA/CD]] 조건 $T_{fr} \geq 2T_p$ 를 맞추려고 '''네트워크 길이'''(2500 m → 250 m)와 '''접근 방식'''(bus 공유 → hub+star → switch + full-duplex 로 CSMA/CD 자체를 버림).
+
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다. p.2–3 은 L6 Ex 3.13/3.14 의 '''정정판(fixed)''', p.4–8 은 지금까지 배운 것 + [[LAN]] 복습이다. '''10/1 (목) 녹음본 반영''' — 한 번에 덱 끝(p.42)까지 나갔다. 아래 '''🎙 실제 수업 기록''' 절 참고.
+
+{exam}🎯 이 덱에서 숫자·이유로 물을 수 있는 자리
+* '''Frame format''' 7 필드와 바이트 수: Preamble 7 · SFD 1 · Dest 6 · Src 6 · Type 2 · Data 46–1500 · CRC 4 (p.18) — Preamble+SFD 는 '''physical-layer header'''
+* '''최소 64 bytes = CSMA/CD 때문''', '''최대 1518 bytes = 한 스테이션의 매체 독점 방지''' (p.19)
+* 주소 전송: '''byte 는 left to right, 각 byte 안에서는 LSB first''' → unicast/multicast 판별 비트가 맨 먼저 도착 (p.20–22)
+* 판별: 첫 byte 의 LSB = 둘째 hex 자리의 홀짝 — '''짝수 unicast · 홀수 multicast · 전부 F broadcast''' (p.23–24)
+* Fast Ethernet: 최소 프레임 512 bits 유지 + 10배 빠름 → $T_{fr}$ 10배 짧음 → '''네트워크 길이 10배 짧게(2500 → 250 m)''' 또는 '''switch + full-duplex 로 CSMA/CD 불필요''' (p.31–33)
+* Gigabit: 25 m 는 비현실적 → '''full-duplex switch, no collision''' (p.39–40){/exam}
+
+{analogy}🎭 '''카카오톡처럼 "다들 이미 쓰고 있어서" 살아남은 기술.''' 교수(10/1)의 비유 그대로 — 카톡을 못 떠나는 이유는 좋아서가 아니라 '''이미 모두가 쓰고 있어서'''다. Ethernet 도 같다. 수많은 LAN 이 사라졌지만 Ethernet 은 '''주소 형식·프레임 형식을 그대로 둔 채''' 속도만 올려 왔기 때문에, 옛날 장비와 새 장비가 같은 언어로 대화할 수 있었다.
+'''도로'''로 비유하면: 차(프레임)의 '''규격'''(번호판 48-bit, 차체 길이 64–1518 B)은 절대 안 바꾸고, 제한 속도만 10 → 100 → 1000 → 10000 으로 올렸다. 속도가 올라가니 "사고 났는지 알아채기 전에 차가 다 지나가 버리는" 문제가 생겼고(→ CSMA/CD 조건), 처음엔 '''도로를 짧게'''(250 m) 만들었다가, 결국 '''차마다 전용 차선'''(switch + full-duplex)을 깔아 사고 자체를 없앴다.{/analogy}
+
+[[anim:ethernet_evolution|4세대(10 M bus → 100 M hub/star → 1 G switch → 10 G fiber)가 지나가는 동안 '유지된 것'(48-bit 주소·frame format·64/1518)과 '바뀐 것'(속도·길이·매체·접근 방식)을 두 열로 나눠 보라]]
+
+== p.2–3 — Example 3.13 / 3.14 (fixed) ⭐⭐ ==
+
+L6 p.60–61 에서는 unicast 예시가 `A3:…`, multicast 예시가 `A2:…`(둘째 자리 짝수 = multicast)로 '''뒤바뀌어''' 있었다. 교수가 이 덱 첫머리에 '''"(fixed)"''' 를 붙여 정정했다.
+
+{def}"Example 3.13 (fixed): The '''unicast''' link-layer addresses in the most common LAN, Ethernet, are 48 bits (six bytes) that are presented as 12 hexadecimal digits separated by colons. For example, the following is a link-layer address of a computer. '''A2:34:45:11:92:F1'''" (p.2)
+"Example 3.14 (fixed): The '''multicast''' link-layer addresses … The second digit, however needs to be an '''odd number''' in hexadecimal. The following shows a multicast address: '''A3:34:45:11:92:F1'''" (p.3){/def}
+
+{|
+! 주소 || 첫 byte (binary) || 첫 byte LSB || 종류
+|-
+| `A2:34:45:11:92:F1` || 1010 001'''0''' || 0 (2 = 짝수) || [[unicast]]
+|-
+| `A3:34:45:11:92:F1` || 1010 001'''1''' || 1 (3 = 홀수) || [[multicast]]
+|-
+| `FF:FF:FF:FF:FF:FF` || 1111 1111 || 1 (전부 1) || [[broadcast 주소|broadcast]]
+|}
+
+이제 슬라이드·교재·IEEE 규약(첫 byte 의 LSB = I/G bit: 0 individual, 1 group)이 모두 일치한다. 왜 하필 "둘째 자리"인지는 p.20 의 전송 순서에서 풀린다 → [[Ethernet 주소 판별]].
+
+{warn}L6 p.60–61 원본(정정 전)을 보고 외웠다면 '''반대로''' 기억하고 있을 수 있다. 9/29 수업에서도 교수는 정정 전 슬라이드대로 "second digit … even number = multicast" 라고 설명했다. '''정답은 정정판: 둘째 hex 자리 짝수 = unicast, 홀수 = multicast.''' → [[CH03 Link-Layer Addressing]]{/warn}
+
+== p.4–8 — What we learned so far / Recap: LAN ==
+
+p.4–6 은 두 계층의 역할을 다시 정리하고 질문을 던진다: "'''Real-world networks based on those two layers?'''" → "One key example: '''Local Area Networks (LANs)'''".
+
+{|
+! 계층 || 하는 일 (p.4)
+|-
+| [[physical layer|Physical Layer]] || Translate data to signal · Transmit a signal to a physical channel
+|-
+| [[data-link layer|Data-link Layer]] || Detect and correct errors ([[DLC]]) · Share the medium among users ([[MAC sublayer|MAC]]) · Address the next node ([[MAC 주소]])
+|}
+
+{def}"[[LAN|Local Area Network]]: A computer network that is designed for a '''limited geographical area''' such as a building or a campus. Mostly linked to a [[WAN|wide area network (WAN)]] or the Internet. Two broad categories: '''Wired LANs''', '''Wireless LANs'''." (p.7–8){/def}
+
+* '''Wired LAN''': 장치들이 선으로 연결. 교수: 캠퍼스의 데스크톱은 거의 다 '''LAN cable''' 로 연결되어 있다 — "This is also called as LAN cable because it is widely used for LANs."
+* '''Wireless LAN''': 가장 유명한 예가 [[WiFi]].
+* 교수의 여담(녹음 첫머리): 인터넷과 격리된 연구용 LAN 서버에서는 `pip install` 을 못 해서 '''패키지를 USB 에 담아 옮겨야''' 한다 — "very annoying". LAN 은 보통 WAN/인터넷에 연결되어 있지만, 그렇지 않은 격리 LAN 도 있다는 예.
+
+== p.9 — Three instances of LANs ==
+
+# '''Ethernet''' — wired
+# [[WiFi]] ('''Wi'''reless '''Fi'''delity) — wireless
+# [[Bluetooth]] — wireless
+
+이번 수업은 1번 Ethernet 만. WiFi·Bluetooth 는 다음 수업(교수 공지).
+
+== p.10–13 — Ethernet 소개, IEEE Project 802, 4세대 evolution ⭐ ==
+
+p.10: "Discuss the ideas behind the technology / Explain all four versions of Ethernet": [[Standard Ethernet]] (10 Mbps) · [[Fast Ethernet]] (100 Mbps) · [[Gigabit Ethernet]] (1000 Mbps) · [[10 Gigabit Ethernet]] (10,000 Mbps).
+
+{def}"Ethernet: Developed in the 1970s by '''Robert Metcalfe and David Boggs'''. '''Almost every LAN except Ethernet has disappeared.''' Ethernet was able to update itself to meet the needs of the time — e.g., evolving for higher transmission rates." (p.11){/def}
+
+살아남은 이유가 핵심이다: '''시대의 요구(더 높은 전송률 — 영상·이미지 전송)에 맞춰 스스로 업데이트'''했다. 그러면서도 호환성을 지켰기 때문에, 사람들은 익숙한 것을 계속 썼다(→ 카톡 비유).
+
+{def}"[[IEEE Project 802]]: To set '''standards''' to enable intercommunication among equipment from a variety of manufacturers. Specifying functions of the '''physical and the data-link layers''' of major LAN protocols." (p.12){/def}
+
+* IEEE 는 "'''I triple E'''" 라고 읽는다 (교수: AAAI 를 "triple A I" 라고 읽는 것과 같은 규칙). 전기·전자·컴퓨터 분야의 주요 저널·학회가 거의 다 IEEE 산하다.
+* '''standard''' = 여러 제조사의 장비가 서로 통신할 수 있도록 정한 규칙 — "similar to [[프로토콜|protocols]]".
+* 802 는 '''LAN 의 처음 두 계층(physical + data-link) 기능'''을 정하는 프로젝트다. 그 아래 번호로 세부 표준이 붙는다: '''802.3 = Ethernet''', '''802.11 = WiFi'''. "IEEE 802.something" 을 보면 "어떤 네트워크의 표준이구나" 하고 이해하면 된다.
+* 교수: IEEE 가 physical/data-link 층을 더 잘게 나눈 세부 기능까지는 "I don't suggest you to know or to understand all of these separate functions."
+
+[[img:L7-13.png|p.13 Evolution of Ethernet — Standard 10 Mbps / Fast 100 Mbps / Gigabit 1 Gbps / 10 Gigabit 10 Gbps|medium]]
+
+{warn}'''10 Gbps 는 체감 속도가 아니다''' (교수가 "black secret of ISP" 라고 강조). 이 data rate 는 '''physical layer 에서 잰 속도'''다. ① 사용자 데이터는 application → transport → network → data-link 를 내려오며 [[캡슐화|헤더·redundancy]] 가 붙으므로, physical layer 에서 흐르는 비트 중 '''진짜 사용자 데이터의 비율은 훨씬 작다'''. ② 게다가 '''bits per second''' 다 — 파일 크기는 bytes 로 재니 '''8 로 나눠야''' 한다. → "You never experience 10 gigabits per second in your room." ([[throughput]] 과 [[bit rate]] 의 차이와 같은 이야기){/warn}
+
+== p.14–17 — Standard Ethernet: connectionless와 unreliable ⭐⭐ ==
+
+p.14: "[[Standard Ethernet]] — The original Ethernet with the data rate of '''10 Mbps'''."
+
+{def}"Characteristics: '''Connectionless and unreliable service'''
+* Each frame sent is '''independent''' of the previous or next frame
+* The sender sends a frame '''whenever it has it''' — The receiver may or may not be ready for it
+* If a frame is corrupted during transmission and the receiver finds out about corruption using '''CRC-32''' — The receiver '''drops the frame silently'''" (p.15–17){/def}
+
+자세히는 [[connectionless와 unreliable]].
+
+{|
+! 특성 || 뜻 || 결과
+|-
+| '''Connectionless''' || 프레임마다 독립. 연결 설정·순서 관리 없음 || 앞뒤 프레임과 무관하게 각자 간다
+|-
+| '''Unreliable''' (보낼 때) || 보낼 게 있으면 그냥 보낸다. 수신 측 준비 여부 확인 안 함 || 수신 성공이 '''보장되지 않는다'''
+|-
+| '''Unreliable''' (받을 때) || [[CRC]]-32 로 손상을 '''검출'''만 하고 || '''silently drop''' — NAK 도, 재전송 요청도 없음
+|}
+
+* '''silently''' 의 뜻 (교수): "It doesn't respond NAK or something … some retransmission request to the transmitter. '''It does not talk.'''"
+* '''왜 이렇게 만들었나?''' "The reason is to maintain '''simplicity'''. Very simple … easily maintainable." 신뢰성은 상위 계층([[TCP]])의 몫으로 남긴다.
+* 그래도 CRC 는 넣는다: "Even if Ethernet does not maintain reliable communications … it still wants to '''detect''' errors" — 거의 모든 data-link 프레임이 기본 오류 검출 능력으로 CRC 를 갖는다.
+
+{warn}"unreliable = CRC 가 없다" 가 '''아니다'''. 오류 '''검출'''은 한다(CRC-32). 검출한 뒤 '''복구를 시도하지 않고 조용히 버릴 뿐'''이다.{/warn}
+
+== p.18 — Frame Format ⭐⭐⭐ ==
+
+[[img:L7-18.png|p.18 Ethernet frame format — Preamble 7B · SFD 1B · Destination 6B · Source 6B · Type 2B · Data and padding 46–1500B · CRC 4B. Preamble+SFD 는 Physical-layer header|large]]
+
+[[anim:ethernet_frame|7 필드가 왼쪽부터 하나씩 나타나는 순서대로 바이트 수를 따라 적어 보고, 마지막에 'Preamble+SFD 는 physical-layer header' 괄호가 어디에 걸리는지 확인하라]]
+
+{|
+! 필드 || 크기 || 역할
+|-
+| [[preamble과 SFD|Preamble]] || 7 bytes (56 bits) || '''alternating 1s and 0s''' (10101010…) — "여기 프레임이 온다" 알림 + 수신 측 동기
+|-
+| [[preamble과 SFD|SFD]] (Start Frame Delimiter) || 1 byte || '''10101011''' — "flag". 마지막 `11` 이 "이제 진짜 시작"
+|-
+| Destination address || 6 bytes || 목적지 [[MAC 주소]] (맨 앞 — 수신 측이 "내 거냐" 를 먼저 판단)
+|-
+| Source address || 6 bytes || 출발지 MAC 주소
+|-
+| [[Type 필드|Type]] || 2 bytes || 위(upper, '''network''') 계층 프로토콜 종류 — [[IP]], [[ARP]] 등
+|-
+| Data and padding || 46–1500 bytes || 상위 계층 데이터. 46 B 보다 짧으면 padding 으로 채움
+|-
+| [[CRC]] || 4 bytes || CRC-32 오류 검출
+|}
+
+* '''왜 preamble/SFD 가 필요한가''' (교수): Ethernet 프레임은 [[variable-size framing|variable size]] 다. 길이가 일정하지 않으니 수신 측에 '''프레임의 시작점을 알려야''' 한다 → preamble 과 SFD 가 [[flag]] 역할을 한다. "very foolish-like sequence" 처럼 보이는 1010… 을 보면 수신 측이 "oh, here comes a packet" 하고 알아챈다.
+* '''Preamble + SFD = physical-layer header''' ⭐: 그림에서는 MAC 주소와 같은 줄에 그려져 있지만, 실제로는 '''physical layer 에서 붙는다'''. 그래서 프레임 길이(64–1518 B)를 셀 때 '''포함하지 않는다'''.
+* '''Type''' (교수): "the type specifies the services of the previous layer … it can be IP, ARP" — 전부 network layer 에서 온 것. ARP 는 지난 시간 본 "IP 주소 → 물리 주소" 변환기.
+* 교수 여담: 2010 년 가을 학부 때 컴퓨터 네트워크를 처음 들으며 '''이 frame format 을 외우기 싫었다'''. 하지만 프로토콜의 동작(가변 길이 → 시작 알림 필요, CSMA/CD → 최소 길이 필요)을 이해하면 외우기 쉽다고.
+
+== p.19 — Frame Length ⭐⭐⭐ ==
+
+{def}"Minimum length: '''64 bytes''' (including header and trailer) — Required for '''CSMA/CD'''.
+Maximum length: '''1518 bytes''' (including header and trailer) — To prevent one station from '''monopolizing''' the shared medium." (p.19){/def}
+
+자세히는 [[프레임 길이 제한]].
+
+<pre class="txt">
+최소 프레임 = 6 (dest) + 6 (src) + 2 (type) + '''46''' (data 최소) + 4 (CRC) = '''64 bytes = 512 bits'''
+최대 프레임 = 6 + 6 + 2 + '''1500''' (data 최대) + 4                     = '''1518 bytes = 12,144 bits'''
+(Preamble 7 + SFD 1 = 8 bytes 는 physical-layer header 라 빠진다)
+</pre>
+
+* '''왜 최소 64 B?''' Ethernet 의 MAC 은 [[CSMA/CD]] 다. 충돌을 감지하려면 프레임을 다 보내기 전에 충돌 신호가 돌아와야 하므로 $T_{fr} \geq 2T_p$ ([[T_fr]], [[T_p]]). 이것이 L6 p.45–46 [[최소 프레임 크기]]이고, Example 3.12 의 답 '''512 bits = 64 bytes''' 가 바로 이 숫자다.
+* '''왜 최대 1518 B?''' 공유 매체를 한 스테이션이 오래 '''독점'''하지 못하게. 교수 덧붙임: 버퍼 메모리를 늘리면 큰 프레임도 처리할 수 있겠지만 "'''at that time, memory was very expensive'''" — 지금도 비싸다(연구실 세팅하며 메모리·GPU 값에 놀랐다는 여담).
+
+{quiz}Ethernet 프레임의 최소 길이가 64 bytes 인 이유와, 이 64 bytes 에 Preamble 이 포함되는지 쓰시오.{/quiz}
+{answer}MAC 으로 '''CSMA/CD''' 를 쓰기 때문이다. 충돌을 전송 도중 감지하려면 $T_{fr} \geq 2T_p$ 여야 하고, 10 Mbps · 최대 길이 기준으로 512 bits = 64 bytes 가 필요하다(Ex 3.12). Preamble(7 B)과 SFD(1 B)는 '''physical-layer header''' 라서 64 bytes 에 '''포함되지 않는다'''(header and trailer = dest·src·type·CRC 만 포함).{/answer}
+
+== p.20–24 — Addressing: 전송 순서와 unicast/multicast/broadcast ⭐⭐⭐ ==
+
+{def}"Addressing: 6 bytes (48 bits) normally written in hexadecimal notation, e.g. 47:20:1B:2E:08:EE.
+Transmission of address bits: The transmission is '''left to right, byte by byte'''. For each byte, the '''least significant bit is sent first''' — the definition of unicast or multicast '''arrives first''' at the receiver." (p.20){/def}
+
+자세히는 [[Ethernet 주소 전송 순서]].
+
+* byte 순서는 직관적으로 왼쪽 → 오른쪽.
+* 그런데 '''각 byte 안에서는 오른쪽(LSB)부터''' 보낸다 — 교수: "why is the man employing this confusing protocol? … there is '''one big reason''': they want to announce the receiver about '''whether this transmission is unicast or not'''."
+* 첫 byte 의 LSB 가 unicast(0)/multicast(1) 를 정하는 비트이므로, 이렇게 보내면 '''수신 측이 받는 첫 비트가 곧 주소 종류'''다.
+
+=== Example 13.1 — 47:20:1B:2E:08:EE 는 선로에 어떻게 나가나 ===
+
+[[img:L7-22.png|p.22 Example 13.1 — Hexadecimal / Binary / Transmitted ← (각 byte 를 right to left 로 뒤집음)|large]]
+
+{|
+! Hexadecimal || 47 || 20 || 1B || 2E || 08 || EE
+|-
+| Binary || 01000111 || 00100000 || 00011011 || 00101110 || 00001000 || 11101110
+|-
+| Transmitted ← || '''1'''1100010 || 00000100 || 11011000 || 01110100 || 00010000 || 01110111
+|}
+
+<pre class="txt">
+1. byte 순서: 47 → 20 → 1B → 2E → 08 → EE  (left to right)
+2. 47 = 0100 0111  → 뒤집으면 1110 0010  (LSB 1 이 맨 먼저 나간다)
+3. 20 = 0010 0000  → 0000 0100
+4. 1B = 0001 1011  → 1101 1000
+5. 2E = 0010 1110  → 0111 0100
+6. 08 = 0000 1000  → 0001 0000
+7. EE = 1110 1110  → 0111 0111
+8. 첫 비트 = 1 → 첫 byte LSB = 1 → '''multicast''' (47 의 둘째 자리 7 = 홀수)
+</pre>
+
+[[sim:ethernet_addr_bits]]
+
+{warn}⚠️ '''슬라이드 오타 #1 (p.21–22)''': "47: an Odd number → '''broadcast'''" 라고 적혀 있지만 '''multicast''' 가 맞다. 같은 덱 p.23·p.24(Ex 13.2 b) 가 "7 in binary is 0111 (odd) → '''multicast'''" 라고 스스로 답한다. broadcast 는 48 비트가 '''전부 1'''(FF:FF:FF:FF:FF:FF)일 때뿐이다.{/warn}
+
+=== p.23 — 판별 규칙 ===
+
+{def}"The destination address can be unicast, multicast, or broadcast. If the '''LSB of the first byte''' in a destination address is '''0, it is unicast'''; otherwise, it is multicast. Broadcast address: This is '''forty-eight 1s''' (all 1s)." (p.23){/def}
+
+첫 byte 의 LSB 는 '''둘째 hex 자리의 LSB''' 와 같다(둘째 자리 = 첫 byte 의 하위 4비트). 그래서 '''둘째 hex 자리가 짝수면 unicast, 홀수면 multicast''' 라는 손쉬운 규칙이 나온다. → [[Ethernet 주소 판별]]
+
+=== Example 13.2 ===
+
+{|
+! 주소 || 둘째 hex 자리 || binary || 종류
+|-
+| `4A:30:10:21:10:1A` || A || 1010 (even) || [[unicast]]
+|-
+| `47:20:1B:2E:08:EE` || 7 || 0111 (odd) || [[multicast]]
+|-
+| `FF:FF:FF:FF:FF:FF` || F (전부 F) || 1111 … || [[broadcast 주소|broadcast]]
+|}
+
+{info}broadcast 는 multicast 의 특수한 경우다 — FF 의 LSB 도 1 이다. 판별 순서는 "전부 F 인가? → 아니면 둘째 자리 홀짝".{/info}
+
+{quiz}목적지 주소 `4B:12:00:3C:7D:01` 의 종류를 쓰고, 이 주소의 첫 byte 가 선로에 실제로 나가는 비트 순서를 쓰시오.{/quiz}
+{answer}둘째 hex 자리 B = 1011 → 홀수 → '''multicast'''. 첫 byte 4B = 0100 1011 → LSB first 로 뒤집으면 '''1101 0010''' (첫 비트 1 = group/multicast).{/answer}
+
+== p.25 — Medium Access Method: CSMA/CD + 1-persistent ==
+
+{def}"Medium Access Method: '''CSMA/CD''' with '''1-persistent''' method." (p.25){/def}
+
+* [[1-persistent]]: 채널을 계속 감지하다가 '''idle 이 되는 즉시''' 보낸다 ([[persistence method]]).
+* 교수: CSMA/CD 가 그냥 CSMA 와 다른 점은 둘 — '''충돌을 감지'''하는 것, 그리고 충돌을 '''정상 신호의 2배 에너지'''를 가진 신호([[jamming signal]], [[energy level]])로 모든 장치에 알리는 것.
+
+== p.26 — Encoding and Decoding ==
+
+{def}"Use '''digital signaling (baseband) at 10 Mbps'''. At the sender, data are converted to a digital signal using the '''line coding''' scheme. At the receiver, the received signal is interpreted as coded and decoded into data." (p.26){/def}
+
+* [[baseband 전송|baseband]] = 디지털 신호를 변조 없이 그대로 보냄.
+* 교수의 복습: [[line coding]] 은 '''1 bit → 1 signal''' 로 그대로 바꾸는 것, [[block coding]] 은 '''k bits → n bits''' (n > k) 로 묶어 바꾸는 것. Standard Ethernet 은 line coding 만 쓴다. 구체적인 부호화 방식은 "I will not go into detail".
+
+== p.27 — Ethernet implementations (Standard) ==
+
+[[img:L7-27.png|p.27 Standard Ethernet implementations — 10Base5 / 10Base2 / 10Base-T / 10Base-F|medium]]
+
+{|
+! Implementation || Medium || Medium Length (m) || Encoding
+|-
+| 10Base5 || Thick coax || 500 || Line coding
+|-
+| 10Base2 || Thin coax || 185 || Line coding
+|-
+| 10Base-T || 2 UTP || 100 || Line coding
+|-
+| 10Base-F || 2 Fiber || 2000 || Line coding
+|}
+
+이름 읽는 법: '''10''' = 10 Mbps, '''Base''' = baseband, 뒤 = 매체(5 → 500 m thick coax, 2 → 약 200 m thin coax, T = twisted pair, F = fiber). 자세히는 [[Ethernet implementations]].
+
+== p.28–30 — Fast Ethernet: 목표 4개 ⭐⭐ ==
+
+{def}"Ethernet made a big jump by increasing the transmission rate to '''100 Mbps'''. The new generation was called the Fast Ethernet.
+Goals of Fast Ethernet: Upgrade the data rate to 100 Mbps · Make it '''compatible''' with Standard Ethernet · Keep the '''same 48-bit address''' · Keep the '''same frame format'''." (p.29–30){/def}
+
+{exam}교수(10/1): "the most important factor to consider when designing the protocols of [[Fast Ethernet]] is to maintain '''compatibility''' with Standard Ethernet, because Standard Ethernet was already used worldwide." — 48-bit 주소와 frame format 을 유지하는 것도 결국 같은 관점(호환성)이다. Gigabit·10G 도 이 호환성을 계속 지킨다.{/exam}
+
+== p.31–33 — Access method: CSMA/CD 조건이 깨진다 ⭐⭐⭐ ==
+
+{def}"The proper operation of the CSMA/CD depends on the '''transmission rate''', the '''minimum size of the frame''', and the '''maximum length of the network'''. For CSMA/CD: $T_{fr} \geq 2T_p$. $T_{fr}$: frame transmission time (determined by frame size and data rate). $T_p$: max. propagation time (determined by the max. network length)." (p.31){/def}
+
+"If we want to '''keep the minimum size of the frame''' (for the compatibility), the maximum length of the network should be changed. If the minimum frame size is still 512 bits, and it is transmitted 10 times faster (10 Mbps → 100 Mbps), the collision needs to be detected 10 times sooner, which means the '''maximum length of the network should be 10 times shorter'''." (p.32)
+
+<pre class="txt">
+1. 최소 프레임은 호환성 때문에 512 bits 고정
+2. [[T_fr]] = 512 bits / rate
+     10 Mbps  → 51.2 μs
+    100 Mbps  →  5.12 μs   (10배 짧아짐)
+3. CSMA/CD 조건  T_fr ≥ 2·T_p   →   [[T_p]] ≤ T_fr / 2
+     10 Mbps  → T_p ≤ 25.6 μs
+    100 Mbps  → T_p ≤ 2.56 μs  (10배 짧아짐)
+4. T_p = (최대 거리) / (전파 속도 ≈ 2×10⁸ m/s)  →  최대 거리도 10배 짧아져야
+     이론값: 10 M ≈ 5120 m,  100 M ≈ 512 m
+     표준값: 10 M = '''2500 m''', 100 M = '''250 m'''  (repeater 지연·jamming 등 여유를 둔 값)
+</pre>
+
+[[sim:fast_ethernet_length]]
+
+교수의 정리: $T_{fr}$ 은 frame size 와 data rate 로 정해진다 — 같은 크기면 data rate 가 높을수록 짧다. $T_p$ 는 '''최대 거리 ÷ 전파 속도''' 라서 network length 로 정해진다. 프레임 크기를 못 바꾸니(호환성) $T_{fr}$ 이 10배 줄면 '''$T_p$ 도, 즉 네트워크 길이도 10배 줄여야''' 조건이 유지된다. "It is all because of the CD."
+
+{def}"Solution #1: Totally drop the bus topology and use a '''passive hub and star topology'''. Maximum size of the network is '''250 m instead of 2500 m'''.
+Solution #2: To use a '''link-layer switch''' with a '''buffer''' to store frames and a '''full-duplex''' connection to each host to make the transmission medium '''private''' — '''No need for CSMA/CD'''." (p.33){/def}
+
+{|
+! || Solution #1 || Solution #2
+|-
+| 장비 || [[passive hub]] || [[link-layer 스위치와 full-duplex|link-layer switch]] (buffer 있음)
+|-
+| 토폴로지 || [[bus 토폴로지|bus]] 를 버리고 [[star 토폴로지|star]] || star (호스트마다 전용 링크)
+|-
+| 매체 || 여전히 '''공유''' (hub 는 신호를 모두에게 뿌림) || '''private''' ([[full-duplex]])
+|-
+| CSMA/CD || 유지 → 길이 10배 축소 (2500 → 250 m) || '''불필요''' (충돌 자체가 없음)
+|}
+
+교수: 두 번째 방법은 "if you construct an Ethernet network that '''does not share the media''' with other users, then you don't have to use MAC to share the media among users."
+
+[[anim:switch_fullduplex|위쪽 hub(공유 매체)에서는 A·C 동시 전송이 충돌하고, 아래쪽 switch + full-duplex 에서는 프레임이 buffer 에 잠깐 머문 뒤 목적지 포트로만 가서 충돌이 없는 것을 비교하라]]
+
+== p.34 — Topology ==
+
+[[img:L7-34.png|p.34 Topology — a. coaxial cable 을 쓰는 bus topology LAN (cable tap, cable end) / b. hub 를 쓰는 star topology LAN (twisted-pair cable)|large]]
+
+* (a) '''bus''': 굵은 coaxial cable 하나에 cable tap 으로 호스트를 매단다 — Standard Ethernet(10Base5/10Base2) 의 원래 모습. 모두가 한 매체를 공유 → CSMA/CD.
+* (b) '''star''': 가운데 [[허브|hub]] 에 twisted-pair 로 각 호스트를 연결. Fast Ethernet Solution #1. hub 는 여전히 신호를 모두에게 뿌리므로 '''논리적으로는 여전히 공유 매체'''다.
+
+== p.35–36 — Fast Ethernet implementations ⭐ ==
+
+[[img:L7-36.png|p.36 Fast Ethernet implementations (100Base-TX / FX / T4) + Cf. Standard Ethernet 표 — 길이가 2000 m 급에서 100–185 m 로 줄었다|large]]
+
+{|
+! Implementation || Medium || Medium Length (m) || Wires || Encoding
+|-
+| 100Base-TX || STP || 100 || 2 || [[4B/5B]] + MLT-3
+|-
+| 100Base-FX || Fiber || 185 || 2 || 4B/5B + [[NRZ-I]]
+|-
+| 100Base-T4 || UTP || 100 || 4 || Two 8B/6T
+|}
+
+교수(10/1): "compared to Standard Ethernet, the '''length of the network significantly shrinks'''" — Standard 는 2000 m(10Base-F) 까지 있었는데 Fast 는 많아야 200 m 안팎. "Important part is … the length of Fast Ethernet is significantly shrunk, due to its higher data rate and the requirement of maintaining the '''compatibility'''." 또 Standard 와 달리 '''block coding'''(4B/5B, 8B/6T)이 들어간다는 점도 보였다(세부는 다루지 않음).
+
+== p.37–40 — Gigabit Ethernet: CSMA/CD 를 버리다 ⭐⭐ ==
+
+{def}"The need for an even higher data rate resulted in the design of the Gigabit Ethernet — '''Standard 802.3z'''.
+Goals of Gigabit Ethernet: Upgrade the data rate to '''1 Gbps''' · Make it compatible with Standard or Fast Ethernet — Keep the '''address length, frame format, and the maximum and minimum frame length''' the same." (p.38){/def}
+
+"Access method: '''Impossible to maintain the previous MAC with 1 Gbps''' — e.g., network size < 25 m?" (p.39)
+
+같은 계산을 한 번 더 하면, 512 bits / 1 Gbps = 0.512 μs → 길이를 '''또 10배''' 줄여 250 m → '''25 m'''. 건물 한 층도 못 덮는다. 그래서 Gigabit 은 Solution #1(길이 축소)을 '''택하지 않고''' Solution #2 를 택했다.
+
+{def}"Instead: it uses half-duplex or full-duplex ('''mostly full-duplex'''). Full-duplex Mode: There is a '''central switch''' connected to all computers or other switches. The switch sends a frame connected to a particular destination — '''No collision occurs''' (i.e., '''no need for CSMA/CD''')." (p.40){/def}
+
+* 교수: A 가 B 에게 보내려면 먼저 central switch 로 보내고, switch 가 '''그 목적지에만''' 전달한다. 링크가 모두 '''privately''' 연결되어 매체를 공유하지 않으니 충돌이 없고, CSMA/CD 가 필요 없다. → [[link-layer 스위치와 full-duplex]], [[Gigabit Ethernet]]
+
+== p.41 — Gigabit Ethernet implementations ==
+
+[[img:L7-41.png|p.41 Gigabit Ethernet implementations — 1000Base-SX / LX / CX / T4(슬라이드 표기)|medium]]
+
+{|
+! Implementation || Medium || Medium Length (m) || Wires || Encoding
+|-
+| 1000Base-SX || Fiber S-W || 550 || 2 || 8B/10B + NRZ
+|-
+| 1000Base-LX || Fiber L-W || 5000 || 2 || 8B/10B + NRZ
+|-
+| 1000Base-CX || STP || 25 || 2 || 8B/10B + NRZ
+|-
+| 1000Base-T4 (슬라이드 표기) || UTP || 100 || 4 || 4D-PAM5
+|}
+
+교수: 이제 길이 제한이 다시 커졌다(LX 5000 m) — "network size limitation that we saw … is all because of the use of CSMA/CD. But here Gigabit Ethernet does not take that way."
+
+{warn}⚠️ '''슬라이드 오타 #2 (p.41)''': 마지막 행 "1000Base-'''T4'''" 는 Forouzan(및 IEEE 802.3ab) 에서는 '''1000Base-T''' 다. "T4" 는 Fast Ethernet 의 100Base-T4 와 섞인 표기로 보인다. 4 쌍 UTP · 4D-PAM5 라는 내용은 같다. 시험에서 이름을 쓸 일이 있으면 슬라이드 표기를 쓰되, 1000Base-T 와 같은 것임을 알아 둘 것.{/warn}
+
+== p.42 — 10-Gigabit Ethernet implementations ==
+
+[[img:L7-42.png|p.42 10-Gigabit Ethernet implementations — 10GBase-SR / LR / EW / X4, 전부 fiber, 300 m ~ 40 km|medium]]
+
+{|
+! Implementation || Medium || Medium Length || Number of wires || Encoding
+|-
+| 10GBase-SR || Fiber 850 nm || 300 m || 2 || 64B66B
+|-
+| 10GBase-LR || Fiber 1310 nm || 10 km || 2 || 64B66B
+|-
+| 10GBase-EW || Fiber 1350 nm || 40 km || 2 || SONET
+|-
+| 10GBase-X4 || Fiber 1310 nm || 300 m to 10 km || 2 || 8B10B
+|}
+
+[[10 Gigabit Ethernet]] 은 '''전부 fiber''' 이고 길이가 '''km 단위'''(최대 40 km)다 — LAN 을 넘어 MAN 급. 교수: CSMA/CD 를 버리고 전용 링크를 깐 덕분에 "they now don't have any limitations on the network size … they just pour their money to build individual architectures … '''the money is the best, always money can handle the situation'''." 공유하지 않으니 더 안정적이기도 하다.
+
+{|
+! 세대 || 속도 || 주된 토폴로지·장비 || 접근 방식 || 길이
+|-
+| [[Standard Ethernet]] || 10 Mbps || bus (coax) → star || CSMA/CD (1-persistent) || 2500 m (구간 최대 2000 m)
+|-
+| [[Fast Ethernet]] || 100 Mbps || star + passive hub / switch || CSMA/CD 또는 full-duplex || 250 m (구간 100–185 m)
+|-
+| [[Gigabit Ethernet]] || 1 Gbps || central switch || '''mostly full-duplex''', no CSMA/CD || 25–5000 m
+|-
+| [[10 Gigabit Ethernet]] || 10 Gbps || switch, fiber || full-duplex || 300 m – 40 km
+|}
+
+{quiz}Fast Ethernet 이 data rate 를 10배 올리면서 최소 프레임 크기(512 bits)를 바꾸지 않은 이유와, 그 결과 CSMA/CD 를 유지하려면 무엇을 바꿔야 했는지 쓰시오. 또 이를 피하는 다른 방법은?{/quiz}
+{answer}'''호환성'''(Standard Ethernet 과 같은 48-bit 주소·frame format·frame length) 때문이다. 크기가 같고 속도가 10배면 $T_{fr}$ 이 10배 짧아지므로, $T_{fr} \geq 2T_p$ 를 지키려면 $T_p$ 즉 '''최대 네트워크 길이를 10배 줄여야''' 한다(2500 m → 250 m, bus 대신 passive hub + star). 다른 방법은 '''link-layer switch(buffer) + full-duplex''' 로 매체를 private 하게 만들어 충돌 자체를 없애는 것 — 그러면 '''CSMA/CD 가 필요 없다'''.{/answer}
+
+{quiz}Gigabit Ethernet 이 CSMA/CD 를 유지하지 않은 이유를 계산 근거와 함께 쓰시오.{/quiz}
+{answer}1 Gbps 에서 512 bits 의 $T_{fr}$ = 0.512 μs 로 Fast 의 1/10 이다. CSMA/CD 조건을 지키려면 네트워크 길이를 다시 10배 줄여 '''약 25 m''' 가 되어야 하는데, 이는 비현실적이다("Impossible to maintain the previous MAC with 1 Gbps"). 그래서 '''central switch + full-duplex''' 로 각 호스트에 전용 링크를 주어 '''no collision → no need for CSMA/CD''' 를 택했다.{/answer}
+
+{quiz}Ethernet 이 connectionless 하고 unreliable 하다고 하는 근거 세 가지를 슬라이드 기준으로 쓰시오.{/quiz}
+{answer}① 각 프레임이 앞뒤 프레임과 '''독립'''이다. ② 송신 측은 프레임이 생기면 '''그냥 보내고''', 수신 측이 준비됐는지 확인하지 않는다. ③ 수신 측이 '''CRC-32''' 로 손상을 발견하면 '''silently drop''' — NAK·재전송 요청을 보내지 않는다. 이유는 '''simplicity'''.{/answer}
+
+== 🎙 실제 수업 기록 (10/1 목, 녹음본 기준) ==
+10/1 수업 녹음은 '''66분'''(`1001_10_컴네.txt`, faster-whisper large-v3 전사)이며 '''09:12 에 시작'''해 수업 첫 12분(p.1–7 근처, 그 사이 공지가 있었다면 그것도)은 없다. 녹음은 p.7–8 LAN 복습 도중("I take that USB into our isolated LAN server")에서 시작해 '''p.42 로 덱을 끝까지''' 나갔다. 오인식은 슬라이드 기준으로 복원했다 — "internet"(대부분 = Ethernet), "GSMA-CD"/"CFMA-CD" = CSMA/CD, "TFR"/"TXR" = $T_{fr}$, "lens"/"land" = LANs, "preamplifier" = preamble, "SSD" = SFD, "unicats/multicase" = unicast/multicast, "I2P/I triple" = IEEE, "802.3b" = 802.3z(슬라이드).
+
+=== 공지 (수업 끝, 10:17 경 — 재전사로 확인) ===
+{exam}🎯 '''중간고사 시험 시간은 1.5시간이 아니라 1시간 (교수 "could be" — 확정 공지는 아님)''' — 교수(10/1): "one more notice is for midterm, I think '''the time for exam could be one hour rather than one and a half'''. So please prepare the exam accordingly." (9/22 에는 "1.5시간을 잡아 두지만 실제 시험은 1시간 정도"라고 했었다 → 1시간으로 굳어짐.) → [[시험 정보]]{/exam}
+* '''다음 수업''': "move on to the second instance of LANs, which is '''Wi-Fi''', and the third one, '''Bluetooth''', and finish the chapter 4" → [[WiFi]], [[Bluetooth]] 로 CH04 마무리.
+* '''중간고사 전 진도''': "I expect that maybe we can finish the '''WAN before the midterm''', which is '''as planned'''. This is our introduction part. So please be prepared for the midterm exam." → 중간고사 범위에 [[WAN]] 까지 들어갈 가능성.
+
+=== 교수가 강조하거나 슬라이드 밖에서 덧붙인 것 ===
+* '''격리 LAN 여담''' (p.7–8): 인터넷에 연결되지 않은 DGIST 격리 LAN 서버에는 패키지를 USB 에 담아 옮긴다 — "It is very annoying." "But in practice, don't worry, we are almost all connected to the internet."
+* '''LAN cable''': 캠퍼스 데스크톱은 거의 다 LAN cable 로 연결 — "This is also called as LAN cable because it is widely used for LANs." 무선 LAN 의 대표는 WiFi. "Now you should understand why we learn LANs. Because we use [them] almost everywhere in our daily lives."
+* '''WiFi = Wireless Fidelity''' (p.9): 두 단어의 앞 두 글자씩.
+* '''Metcalfe & Boggs''' (p.11): "Honestly I don't know their names. It was my first time to see their names. But their contributions are huge" — 유선 LAN 은 사실상 Ethernet 만 남았다. "This is why you should be familiar with, aware of, Ethernet."
+* '''KakaoTalk 비유''' (p.11): Ethernet 이 살아남은 건 더 높은 전송률로 진화했기 때문이고, 사람들은 익숙한 것을 계속 쓴다 — "This is why we cannot leave KakaoTalk, right? … It is not because they are comfortable or they are good, just because we are using it right now."
+* '''IEEE = "I triple E"''' (p.12): AAAI 를 "triple A I" 로 읽는 것과 같은 규칙. 주요 저널·학회(ISSCC 등)가 IEEE 산하 — "I recommend you to be familiar with this institution." 802 는 LAN 의 physical + data-link 기능 표준, '''802.11 = WiFi'''. 세부 기능 분할은 "I don't suggest you to know".
+* '''10 Mbps 의 추억 + ISP 의 비밀''' (p.13): 10 Mbps 는 1998 년쯤 어릴 때는 아주 빨랐지만, 지금 방에서 8 Mbps 가 나오면 ISP 에 항의 전화를 할 속도. 그리고 ⭐ "Don't confuse this data rate as your experienced user speed, because this speed is '''measured at the physical layer''' … headers are added … and we have to divide by 8 … '''That is a black secret in the field of Internet service providers.'''"
+* '''Unreliable 의 이유는 simplicity''' (p.15–17): "The transmission protocol used by Ethernet is very simple and crude and rough." 손상은 CRC 로 감지하되 "it just drops the frame silently … It doesn't respond NAK … '''It does not talk.'''" 왜? "To maintain simplicity. Very simple. Very simple."
+* '''Frame format 은 이해하면 외워진다''' (p.18): "I also took this course at '''fall of 2010''' … I hated to see this kind of frame format, because I have to memorize all of these to successfully take the exam." 그러나 가변 길이 → 시작점 알림 → preamble/SFD 가 '''flag''' 역할, 이렇게 프로토콜을 이해하면 쉽다. Preamble 은 "1 0 1 0 1 0 … very foolish-like sequence". '''Preamble·SFD 는 그림에서 MAC 주소와 같은 줄이지만 실제로는 physical layer 에서 붙는다'''("this is why we see the physical-layer header marking"). Type = 상위(network) 계층 서비스: IP, ARP.
+* '''최대 길이와 메모리 값''' (p.19): 독점 방지. 메모리로 해결할 수도 있겠지만 "at that time, memory was very expensive. It is very expensive even for now" — 한 달 전 부임해 연구실을 세팅 중인데(전기 공사부터 컴퓨터·서버·GPU 구매까지) 메모리·GPU 값이 매우 비싸다는 여담.
+* '''LSB first 의 "one big reason"''' (p.20–22): "they want to announce the receiver about whether this transmission is unicast or not" — 수신 측이 처음 보는 비트가 첫 byte 의 마지막 비트, 1 이면 홀수 = multicast, 0 이면 unicast. p.24: "4A … A means 10 in decimal … even number, so it is unicast. And 47 is an odd number … If you see all F, very simple."
+* '''CSMA/CD vs CSMA''' (p.25): 차이는 "detecting collision and announcing the collision with a high-energy signal, '''twice as energy''' compared to the normal signal".
+* '''Line coding vs block coding''' (p.26): "line coding just transmits each bit to each signal … one bit to one signal", block coding 은 k bits → n bits.
+* '''Fast Ethernet 의 핵심은 compatibility''' (p.30): "the most important factor … is to maintain compatibility with Standard Ethernet, because Standard Ethernet was already used worldwide … Even now, all Ethernet variants beyond Fast Ethernet basically maintain this compatibility."
+* '''$T_{fr}$·$T_p$ 재설명''' (p.31–32): $T_p$ 는 "the maximum distance between the two nodes in the network, divided by the speed of light" — network length 로 정해진다. $T_{fr}$ 이 10배 줄면 network length 도 10배 줄여야. "It is all because of the CD."
+* '''두 해법''' (p.33): 2.5 km 를 250 m 로, 또는 "construct an Ethernet network that does not share the media … then you don't have to use MAC".
+* '''Gigabit 은 두 번째 길''' (p.39–40): "Should we employ a small network with 25 meters? The answer is no. … they just employed the second option" — 대부분 full-duplex, central switch 가 목적지에만 전달, "no collisions, meaning that we don't need CSMA/CD".
+* '''"Money handles it"''' (p.41–42): 길이 제한이 사라진 건 CSMA/CD 를 안 쓰기 때문 — "They just pour their money to build their individual architectures … '''always money can handle the situation'''." 10G 는 더 큰 네트워크.
+
+'''학생 Q&A''': 녹음상 학생 질문 없음.
+
+== 시험 대비 핵심 요약 ==
+# '''LAN''' = 제한된 지역(건물·캠퍼스)의 네트워크, 대개 WAN/인터넷에 연결. wired / wireless 두 분류. 대표 instance: '''Ethernet(wired), WiFi(wireless fidelity), Bluetooth'''.
+# Ethernet: 1970s '''Metcalfe & Boggs'''. 다른 LAN 은 거의 다 사라짐 — 높은 전송률로 '''스스로 진화'''했기 때문. 4세대 '''10 M / 100 M / 1 G / 10 G'''.
+# '''IEEE Project 802''': 여러 제조사 장비의 상호 통신을 위한 표준, LAN 의 '''physical + data-link''' 기능 규정. 802.3 Ethernet, 802.11 WiFi.
+# Standard Ethernet 은 '''connectionless & unreliable''': 프레임 독립 · 그냥 보냄 · CRC-32 로 손상 발견 시 '''silently drop'''(NAK 없음). 이유 = simplicity.
+# '''Frame format''': Preamble 7 (56 bits 1010…) · SFD 1 (10101011, flag) · Dest 6 · Src 6 · Type 2 · Data+padding 46–1500 · CRC 4. '''Preamble+SFD = physical-layer header'''. Type = 상위 network 계층 프로토콜(IP, ARP).
+# '''Frame length''': 최소 '''64 B = 512 bits''' (CSMA/CD 때문, Ex 3.12) / 최대 '''1518 B''' (독점 방지). Preamble·SFD 제외.
+# '''주소 전송''': byte 는 left → right, 각 byte 는 '''LSB first''' → unicast/multicast 판별 비트가 가장 먼저 도착. Ex 13.1: 47 → 11100010.
+# '''주소 판별''': 첫 byte LSB = 둘째 hex 자리 홀짝 — '''짝수 unicast · 홀수 multicast · 48개 1(FF…FF) broadcast'''. 4A unicast / 47 multicast / FF broadcast. (L6 Ex 3.13/3.14 는 CH04 p.2–3 에서 '''A2 unicast, A3 multicast''' 로 정정.)
+# MAC = '''CSMA/CD + 1-persistent''', encoding = '''baseband 10 Mbps line coding'''.
+# '''Fast Ethernet''' 목표: 100 Mbps · '''compatibility''' · 같은 48-bit 주소 · 같은 frame format. 최소 프레임 512 bits 유지 → $T_{fr}$ 1/10 → '''길이 1/10 (2500 → 250 m, passive hub + star)''' 또는 '''switch + full-duplex 로 CSMA/CD 불필요'''.
+# '''Gigabit (802.3z)''': 주소·frame format·최대/최소 길이 유지. CSMA/CD 면 25 m → 불가 → '''mostly full-duplex, central switch, no collision'''. 10G 는 전부 fiber, km 단위.
+# 슬라이드 오타 2건: p.21 "47 odd → broadcast" 는 '''multicast''', p.41 "1000Base-T4" 는 Forouzan 에선 '''1000Base-T'''.
+# 공지(10/1): '''중간고사 시간 1시간''', 다음 수업 WiFi·Bluetooth, 중간고사 전 WAN 까지.
+
+== 공식 모음 ==
+{|
+! 공식 || 뜻 || 값
+|-
+| $T_{fr} \geq 2T_p$ || CSMA/CD 가 전송 도중 충돌을 감지할 조건 || [[최소 프레임 크기]]
+|-
+| $T_{fr} = \dfrac{\text{frame size}}{\text{data rate}}$ || frame transmission time || 512 bits ÷ 10 Mbps = 51.2 μs
+|-
+| $T_p = \dfrac{\text{max distance}}{\text{propagation speed}}$ || max propagation time (network length 로 결정) || 25.6 μs ↔ 약 5120 m (2×10⁸ m/s)
+|-
+| 최소 프레임 = 512 bits = 64 bytes || 6+6+2+46+4 || Ex 3.12 와 같은 값
+|-
+| 최대 프레임 = 12,144 bits = 1518 bytes || 6+6+2+1500+4 || 독점 방지
+|-
+| 최대 길이 $\propto \dfrac{1}{\text{data rate}}$ || 최소 프레임 크기 고정 시 || 2500 m → 250 m → (25 m)
+|}
+
+== 관련 문서 ==
+* 이전 강의: [[CH03 Link-Layer Addressing]] · [[CH03 Media Access Control]] · [[CH03 Data-Link Control]]
+* 이 강의 사전: [[IEEE Project 802]] · [[Standard Ethernet]] · [[connectionless와 unreliable]] · [[Ethernet 프레임 형식]] · [[preamble과 SFD]] · [[Type 필드]] · [[프레임 길이 제한]] · [[Ethernet 주소 전송 순서]] · [[Ethernet 주소 판별]] · [[Ethernet implementations]] · [[Fast Ethernet]] · [[passive hub]] · [[link-layer 스위치와 full-duplex]] · [[Gigabit Ethernet]] · [[10 Gigabit Ethernet]] · [[WiFi]] · [[Bluetooth]]
+* 다시 쓰이는 개념: [[LAN]] · [[WAN]] · [[CSMA/CD]] · [[1-persistent]] · [[최소 프레임 크기]] · [[T_fr]] · [[T_p]] · [[jamming signal]] · [[line coding]] · [[block coding]] · [[4B/5B]] · [[NRZ-I]] · [[MAC 주소]] · [[unicast]] · [[multicast]] · [[broadcast 주소]] · [[CRC]] · [[flag]] · [[variable-size framing]] · [[bus 토폴로지]] · [[star 토폴로지]] · [[허브]] · [[스위치]] · [[ARP]]
+* 시험: [[시험 정보]] · [[계산 문제 모음]]

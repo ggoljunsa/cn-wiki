@@ -1,0 +1,50 @@
+key: link-layer 스위치와 full-duplex
+title: Link-Layer Switch 와 Full-Duplex 연결 (CSMA/CD 가 필요 없어지는 이유)
+category: 9강 Ethernet, 용어
+---
+'''Link-layer switch''' 는 '''buffer 에 프레임을 저장'''했다가 목적지 호스트가 연결된 포트로만 보내는 장치다. 각 호스트와 스위치 사이를 '''full-duplex''' 전용 링크로 연결하면 '''매체가 private''' 해져 아무와도 매체를 공유하지 않는다 → '''충돌이 없다''' → '''[[CSMA/CD]] 가 필요 없다'''. [[Fast Ethernet]] 의 Solution #2 이자, [[Gigabit Ethernet]]·[[10 Gigabit Ethernet]] 의 주된 방식이다. L7 p.33, p.39–40.
+
+{def}"Solution #2: To use a '''link-layer switch with a buffer to store frames''' and a '''full-duplex connection to each host''' to make the transmission medium '''private''' → '''No need for CSMA/CD'''." (p.33)
+"Full-duplex Mode: There are a '''central switch''' connected to all computers or other switches. The switch sends a frame '''connected to a particular destination'''. '''No collision occurs''' (i.e., no need for CSMA/CD)." (p.40){/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''link-layer''' switch — [[data-link layer]] 까지 가진 장비라 프레임의 '''[[MAC 주소|destination address]]''' 를 읽을 수 있다. 그래서 "모두에게"가 아니라 "그 목적지에게만" 보낼 수 있다. (1강 [[스위치]]: L1–L2 장비.)
+* '''buffer''' — 두 프레임이 같은 출력 포트로 동시에 와도 하나를 '''잠깐 저장'''해 두면 된다. 충돌 대신 '''줄 서기'''.
+* '''full-duplex''' — 1강 [[full-duplex]]: 양방향 '''동시''' 송수신. 호스트↔스위치 링크에서 보내는 선과 받는 선이 따로라 자기 송신과 수신도 겹치지 않는다.
+
+[[anim:switch_fullduplex|왼쪽 hub 에서는 A·C 가 동시에 보내면 충돌, 오른쪽 switch 에서는 같은 상황이 buffer 를 거쳐 목적지 포트로만 — 차이를 비교하라]]
+
+== 왜 충돌이 사라지나 — 논리 사슬 ⭐⭐⭐ ==
+<pre class="txt">
+1. 호스트마다 스위치까지 '''전용(private) 링크'''        ← 매체를 아무와도 공유 안 함
+2. 그 링크가 '''full-duplex'''                          ← 내 송신과 스위치의 송신이 다른 선
+3. 같은 목적지로 두 프레임이 오면 스위치가 '''buffer''' 에 저장 후 차례로
+4. → 어디에서도 두 신호가 같은 매체에서 겹치지 않음 → '''no collision'''
+5. → 충돌을 감지할 일이 없음 → '''no need for CSMA/CD'''
+6. → T_fr ≥ 2T_p 제약도 사라짐 → '''네트워크 길이 제한이 풀림'''
+</pre>
+
+{|
+! || [[passive hub]] (Solution #1) || link-layer switch (Solution #2)
+|-
+| 받은 프레임 || 모든 포트로 신호 중계 || buffer 에 '''저장''' 후 목적지 포트로만
+|-
+| 매체 || 공유 || '''private''' (호스트별 full-duplex 링크)
+|-
+| 충돌 || 가능 || '''없음'''
+|-
+| 접근 방식 || [[CSMA/CD]] || '''CSMA/CD 불필요'''
+|-
+| 길이 제한 || 250 m (Fast) || $T_{fr} \geq 2T_p$ 에 묶이지 않음
+|}
+
+{analogy}🎭 '''단체 채팅방 vs 개인 DM + 비서.''' hub 는 단체 채팅방 — 모두가 같은 방에 말해서 동시에 말하면 뒤죽박죽. switch 는 '''모두에게 개인 전화선을 깔아 주고 가운데 비서를 둔''' 것 — 비서가 메시지를 받아 적어(buffer) 해당 사람에게만 전해 준다. 겹칠 일이 없으니 "말하기 전에 듣기" 규칙도 필요 없다. 대신 전화선 깔 돈이 든다.{/analogy}
+
+{exam}🎯 교수(10/1): Gigabit 에서 "they just employed the '''second option''' … to build a network that '''does not share the media''' to other users … mostly full-duplex". "there is a central switch connected to all computers and other switches … they are all '''connected privately'''. So they do not share medium … meaning that '''no collisions''', meaning that '''we don't need CSMA/CD'''." 그리고 "network size limitation … is '''all because of the use of CSMA/CD'''" — 그래서 스위치 방식은 길이 제한이 없다. 여담: "they just '''pour their money''' to build their individual architectures … '''money can handle the situation'''."{/exam}
+
+{quiz}"full-duplex 스위치로 연결된 Ethernet 에서는 CSMA/CD 가 필요 없다" — 그 이유를 세 단계로 쓰시오.{/quiz}
+{answer}① 호스트마다 스위치까지 '''전용 full-duplex 링크''' → 매체를 공유하지 않음(private). ② 스위치가 프레임을 '''buffer''' 에 저장해 목적지 포트로만 보냄 → '''충돌이 일어나지 않음'''. ③ 충돌이 없으니 충돌을 감지·처리하는 '''CSMA/CD 가 불필요''' (덤: $T_{fr} \geq 2T_p$ 길이 제약도 사라짐).{/answer}
+
+== 관련 문서 ==
+* [[passive hub]] · [[Fast Ethernet]] · [[Gigabit Ethernet]] · [[10 Gigabit Ethernet]]
+* [[스위치]] · [[full-duplex]] · [[CSMA/CD]] · [[collision]] · [[CH04 Ethernet]]

@@ -1,0 +1,49 @@
+key: IEEE Project 802
+title: IEEE Project 802 (LAN 표준화 프로젝트)
+category: 9강 Ethernet, 용어
+---
+'''IEEE Project 802''' 는 IEEE 가 시작한 '''LAN 표준화 프로젝트'''로, 서로 다른 제조사의 장비가 함께 통신할 수 있도록 주요 LAN 프로토콜의 [[physical layer]] 와 [[data-link layer]] 기능을 규정한다. [[Standard Ethernet|Ethernet]](802.3)과 [[WiFi]](802.11)가 모두 이 우산 아래 있다. L7 p.12.
+
+{def}"'''IEEE Project 802'''
+* To set standards to enable '''intercommunication among equipment from a variety of manufacturers'''
+* Specifying functions of the '''physical and the data-link layers''' of major LAN protocols" (p.12)
+→ 여러 제조사 장비가 서로 통신할 수 있게 표준을 정하고, 주요 [[LAN]] 프로토콜의 physical·data-link 계층 기능을 규정하는 프로젝트.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''IEEE''' — Institute of Electrical and Electronics Engineers. 교수는 읽는 법부터 짚었다: 같은 글자가 몰려 있으면 개수를 세어 읽는다 → "'''I triple E'''" (AAAI 를 "triple A I" 라 읽는 것과 같은 규칙).
+* '''Project''' — 하나의 규격이 아니라 '''여러 작업 그룹이 진행하는 프로젝트'''다. 그래서 뒤에 점 번호가 붙는다: 802'''.3''' = Ethernet, 802'''.11''' = WiFi.
+* '''802''' — 프로젝트 번호. "802.무엇" 을 보면 "아, LAN 계열의 또 다른 표준이구나" 하고 읽으면 된다.
+
+== 무엇을 표준화하나 ==
+[[TCP/IP 프로토콜 스위트]]의 아래 두 계층만 다룬다. 교수 설명: IEEE 표준은 physical layer 와 data-link layer 를 '''다시 여러 기능(function)으로 쪼개서''' 규정한다 — 그 세부 기능은 외울 필요 없다.
+<pre class="ascii">
+  TCP/IP 5계층            IEEE 802 가 다루는 범위
+ ┌──────────────────┐
+ │ application      │
+ │ transport        │
+ │ network          │
+ ├──────────────────┤  ┐
+ │ data-link        │  │  ← 기능별로 세분 (예: [[MAC sublayer|MAC]] 등)
+ ├──────────────────┤  │   '''IEEE 802'''
+ │ physical         │  │  ← 매체·[[line coding|encoding]]별로 세분
+ └──────────────────┘  ┘
+</pre>
+
+{|
+! 표준 || 무엇
+|-
+| 802.3 || Ethernet ([[Standard Ethernet]] 이후 전 세대) — [[Fast Ethernet]] 은 802.3u, [[Gigabit Ethernet]] 은 802.3z
+|-
+| 802.11 || [[WiFi]] (wireless LAN)
+|}
+
+{analogy}🎭 '''USB 규격.''' 어느 회사 노트북이든 어느 회사 마우스든 꽂으면 되는 건 "USB 규격"이 있어서다. IEEE 802 는 LAN 장비판 USB 규격 — 랜카드·스위치·공유기를 어느 회사에서 사든 서로 말이 통하게 만든다.{/analogy}
+
+{exam}🎯 교수(10/1): "802 is just about '''standards on LAN''' for describing the functions of the '''first two layers'''." 그리고 "if you see IEEE 802 point blah blah … you can think of it as another standard for other types of computer networks", 예로 "'''802.11 which is about Wi-Fi'''". 세부 기능은 "I don't suggest you to know or to understand all of these separate functions."{/exam}
+
+{quiz}IEEE Project 802 가 규정하는 계층은 어디부터 어디까지인가? 802.11 은 무엇의 표준인가?{/quiz}
+{answer}'''physical layer 와 data-link layer'''(아래 두 계층). 802.11 은 '''WiFi'''(wireless LAN) 표준. (Ethernet 은 802.3.){/answer}
+
+== 관련 문서 ==
+* [[CH04 Ethernet]] · [[Standard Ethernet]] · [[WiFi]] · [[Gigabit Ethernet]]
+* [[LAN]] · [[physical layer]] · [[data-link layer]] · [[프로토콜]]

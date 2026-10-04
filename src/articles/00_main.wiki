@@ -2,22 +2,23 @@ key: main
 title: 컴네위키 — DGIST CSE403 Computer Network 중간고사
 category: 안내
 ---
-'''컴네위키'''는 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) 중간고사 범위 — '''CH01 Introduction · CH02 Physical Layer (1)(2)(3) · CH03 Data-Link Layer (1)(2)''' — 를 나무위키 스타일로 정리한 학습 위키다. 교재는 [[Forouzan]] 6e. 강의는 영어, 문서는 한국어 산문 + 영어 용어 그대로.
+'''컴네위키'''는 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) 중간고사 범위 — '''CH01 Introduction · CH02 Physical Layer (1)(2)(3) · CH03 Data-Link Layer (1)(2) · CH04 Local Area Networks (1) Ethernet''' — 를 나무위키 스타일로 정리한 학습 위키다. 교재는 [[Forouzan]] 6e. 강의는 영어, 문서는 한국어 산문 + 영어 용어 그대로.
 
 해설본(`정리본/CH0X_정리.md`)이 "그림이 없고, 기호가 뭔지 그때마다 까먹어서" 안 읽히던 문제를 풀기 위해 만들었다. 그래서 이 위키는 세 가지를 약속한다.
 
 # '''기호·용어를 까먹으면 클릭한다.''' $B$, $L$, $T_{fr}$, $G$, syndrome, divisor … 모든 기호와 용어에 사전 문서가 있고 본문 첫 등장 시 링크돼 있다.
-# '''계산이 나오면 옆에서 값이 바뀌는 걸 본다.''' Example 2.6, 2.8, 2.9, 3.7, 3.11, 3.12 와 CRC 나눗셈·stuffing 을 한 단계씩 밟는 '''시뮬레이터 16종'''(◀ ▶).
-# '''보고만 있어도 흐름이 들어온다.''' 캡슐화, 사인파, PCM, 변조, ALOHA 충돌, CSMA/CD … '''움직이는 그림 20종'''과 실제 슬라이드 캡처.
+# '''계산이 나오면 옆에서 값이 바뀌는 걸 본다.''' Example 2.6, 2.8, 2.9, 3.7, 3.11, 3.12, 13.1 과 CRC 나눗셈·stuffing·Fast Ethernet 길이 제약을 한 단계씩 밟는 '''시뮬레이터 18종'''(◀ ▶).
+# '''보고만 있어도 흐름이 들어온다.''' 캡슐화, 사인파, PCM, 변조, ALOHA 충돌, CSMA/CD, Ethernet 프레임·4세대 진화 … '''움직이는 그림 23종'''과 실제 슬라이드 캡처.
 
-[[anim:layer_stack|이 과목의 지도. message 가 5계층을 내려가 bits 가 되고, 스위치(L1–L2)·라우터(L1–L3)를 지나 다시 올라온다. 중간고사 범위는 이 그림의 아래 두 층(Physical, Data-link)이다]]
+[[anim:layer_stack|이 과목의 지도. message 가 5계층을 내려가 bits 가 되고, 스위치(L1–L2)·라우터(L1–L3)를 지나 다시 올라온다. 중간고사 범위는 이 그림의 아래 두 층(Physical, Data-link)과 그 실제 구현인 Ethernet(CH04)이다]]
 
 == 어디서부터 읽나 ==
 
 * 처음이면 → [[읽는 순서]] (강의 순서대로, 한 강의 = 메인 문서 1편 + 딸린 사전 문서)
 * 시험이 코앞이면 → [[공식 모음]] → [[계산 문제 모음]] → [[자주 틀리는 함정 모음]]
 * 내가 뭘 틀렸었지 → [[0920 오답 복기]] (NotebookLM 퀴즈 8문항, 전부 개념으로 다시)
-* 시험 날짜·형식·비중 → [[시험 정보]]
+* 시험 날짜·형식·비중 → [[시험 정보]] (10/1 공지: '''시험 1시간''', 범위는 CH04 LAN·WAN 까지 계획)
+* 모의고사 → [[중간고사 모의 v1]] · [[중간고사 모의 v2]] (v2 는 CH04 포함, 문항 전부 새것)
 
 == 강의별 메인 문서 ==
 
@@ -39,6 +40,8 @@ category: 안내
 | 7 || [[CH03 Media Access Control]] || [[pure ALOHA]]/[[slotted ALOHA]]([[vulnerable time]], [[ALOHA throughput]]), [[CSMA]]([[persistence method]]), '''[[CSMA/CD]]([[최소 프레임 크기]])''', [[controlled access]] || `sim:aloha_throughput` · `sim:csma_cd_minframe` · `anim:vulnerable_time` · `anim:csma_cd_abort`
 |-
 | 8 || [[CH03 Link-Layer Addressing]] || [[MAC 주소]]가 따로 필요한 이유, [[IP 주소와 MAC 주소]]의 순서, unicast/multicast/broadcast, [[ARP]] || `anim:node_to_node`
+|-
+| 9 || [[CH04 Ethernet]] || LAN 의 대표 Ethernet 4세대: [[Ethernet 프레임 형식]], [[프레임 길이 제한]](64/1518), '''[[Ethernet 주소 전송 순서]]'''(LSB first), [[Fast Ethernet]]의 길이 1/10, [[Gigabit Ethernet]]의 full-duplex 스위치 || `sim:ethernet_addr_bits` · `sim:fast_ethernet_length` · `anim:ethernet_frame` · `anim:ethernet_evolution` · `anim:switch_fullduplex`
 |}
 
 == 이 위키를 읽는 법 ==
@@ -53,7 +56,7 @@ category: 안내
 {/tip}
 
 {analogy}
-🎭 이 위키는 '''지하철 노선도'''다. 메인 문서 8편이 노선이고, 사전 문서 190여 편이 역이다. 어느 역(용어)에서 내려도 그 역이 어느 노선(강의)에 있고 옆 역이 무엇인지(관련 문서) 바로 보인다. 처음엔 노선을 따라 끝까지 타 보고, 시험 전엔 자주 갈아타는 환승역([[자주 틀리는 함정 모음]])만 다시 본다.
+🎭 이 위키는 '''지하철 노선도'''다. 메인 문서 9편이 노선이고, 사전 문서 200여 편이 역이다. 어느 역(용어)에서 내려도 그 역이 어느 노선(강의)에 있고 옆 역이 무엇인지(관련 문서) 바로 보인다. 처음엔 노선을 따라 끝까지 타 보고, 시험 전엔 자주 갈아타는 환승역([[자주 틀리는 함정 모음]])만 다시 본다.
 {/analogy}
 
 {joke}

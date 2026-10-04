@@ -158,5 +158,29 @@ category: 안내
 | ARP 는 어느 계층 || '''network layer''' 의 보조 프로토콜 (ICMP, IGMP 와 함께). IP → MAC. || [[ARP]]
 |}
 
+== CH04 Ethernet ==
+
+{|
+! 함정 || 구분 || 문서
+|-
+| 최소 길이 64 B 의 이유 || '''CSMA/CD''' ($T_{fr} \ge 2T_p$). 최대 1518 B 의 이유가 '''독점 방지'''. 둘을 바꿔 쓰지 말 것. || [[프레임 길이 제한]]
+|-
+| 64/1518 에 Preamble·SFD 포함? || '''미포함''' — physical-layer header. Dest 부터 CRC 까지. || [[Ethernet 프레임 형식]]
+|-
+| 주소 비트 전송 순서 || byte 는 왼→오지만 '''byte 안은 LSB first'''. 이유: unicast/multicast 비트가 먼저 도착. || [[Ethernet 주소 전송 순서]]
+|-
+| 47:20:… 은 broadcast? || '''multicast''' (둘째 digit 7 홀수). broadcast 는 FF:FF:FF:FF:FF:FF 뿐. 슬라이드 p.21 오타. || [[Ethernet 주소 판별]]
+|-
+| A2:… / A3:… 어느 쪽이 multicast || '''A3''' (3 홀수). L6 p.60–61 은 뒤바뀐 오타, CH04 p.2–3 에서 교수가 (fixed). || [[Ethernet 주소 판별]]
+|-
+| Fast Ethernet 이 바꾼 것 || 속도·'''최대 길이(1/10)'''. 48-bit 주소·frame format·최소/최대 프레임은 '''유지'''(compatibility). || [[Fast Ethernet]]
+|-
+| Gigabit 은 CSMA/CD? || 25 m 는 비현실 → '''full-duplex 스위치'''(매체 비공유, 충돌 없음) → CSMA/CD 불필요. || [[Gigabit Ethernet]]
+|-
+| unreliable 의 뜻 || 재전송·NAK 없음, 손상 프레임은 '''silently drop'''. 오류 '''검출'''(CRC-32)은 한다. || [[connectionless와 unreliable]]
+|-
+| Standard Ethernet 의 encoding || '''line coding'''(baseband, 1 bit → 1 signal). block coding 은 Fast(4B/5B)·Gigabit(8B/10B)부터. || [[Standard Ethernet]]
+|}
+
 == 관련 문서 ==
 * [[0920 오답 복기]] · [[공식 모음]] · [[계산 문제 모음]] · [[읽는 순서]]

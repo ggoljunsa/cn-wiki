@@ -1,0 +1,50 @@
+key: connectionless와 unreliable
+title: Connectionless and Unreliable Service (Ethernet 의 서비스 특성)
+category: 9강 Ethernet, 용어
+---
+[[Standard Ethernet]] 은 '''connectionless and unreliable service''' 를 제공한다. 프레임은 서로 독립이고, 수신 측이 준비됐는지 확인하지 않고 보내며, 손상된 프레임은 [[CRC]]-32 로 감지만 하고 '''조용히 버린다'''(재전송 요청 없음). 교수가 꼽은 이유는 '''simplicity'''. L7 p.15–17.
+
+{def}"Characteristics — '''Connectionless and unreliable service'''
+* Each frame sent is '''independent of the previous or next frame'''
+* The sender sends a frame '''whenever it has it''' — The receiver '''may or may not be ready''' for it
+* If a frame is corrupted during transmission and the receiver finds out about corruption using '''CRC-32''' — The receiver '''drops the frame silently'''" (p.15–17)
+→ 프레임마다 독립(연결 설정 없음), 송신자는 프레임이 생기면 바로 보냄(수신 준비 여부 무관), 손상은 CRC-32 로 알아내되 말없이 버림.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''connection-less''' — "연결이 없다". 보내기 전에 "지금 보낼게, 받을 준비 됐어?" 하는 연결 설정이 없고, 프레임 사이에 순서 번호 같은 '''관계'''도 없다 → "Each frame sent is independent".
+* '''un-reliable''' — "믿을 수 없다" = '''배달을 보장하지 않는다'''. 오류를 '''모르는''' 게 아니라(CRC 로 안다), 알고도 '''복구해 주지 않는다'''는 뜻이다.
+
+== 세 문장 풀어 읽기 ==
+{|
+! 슬라이드 문장 || 무슨 뜻 || 어느 쪽 성질
+|-
+| Each frame sent is independent of the previous or next frame || 프레임끼리 순서·관계 없음, 연결 설정 없음 || '''connectionless'''
+|-
+| The sender sends a frame whenever it has it; the receiver may or may not be ready || 흐름 제어(flow control) 없음 — 수신 버퍼가 꽉 차도 모름 || '''unreliable'''
+|-
+| Corrupted → found by CRC-32 → dropped '''silently''' || 오류 '''검출'''은 함, ACK/NAK·재전송 '''안 함''' || '''unreliable'''
+|}
+
+<pre class="ascii">
+송신                         수신
+ │──── frame 1 ────────────▶│  OK → 위 계층으로
+ │──── frame 2 ──✗(손상)───▶│  CRC-32 불일치 → '''그냥 버림''' (NAK 없음)
+ │──── frame 3 ────────────▶│  OK
+ │                           │
+ (송신자는 frame 2 가 사라진 걸 '''모른다''' — 필요하면 위 계층(예: [[TCP]])이 알아서 재전송)
+</pre>
+
+{info}"silently" 의 뜻은 교수(10/1) 설명 그대로: "it '''doesn't respond NAK''' or something … some retransmission request … It just drops the frame '''while not requesting any messages'''." 그런데도 [[CRC]] 를 붙이는 이유: "Even if the Ethernet does not maintain reliable communications … it '''still wants to detect''' some errors." 손상된 프레임을 위 계층으로 올려 보내지 않는 것까지는 해 준다.{/info}
+
+{analogy}🎭 '''전단지 배포.''' 전단지 아르바이트는 집집마다 우편함에 넣고 지나간다 — 집에 사람이 있는지(수신 준비) 확인 안 하고, 전단지끼리 순서도 없고(connectionless), 비에 젖은 전단지는 받은 사람이 그냥 버린다(silent drop). 등기우편(reliable)처럼 "받았다는 서명"을 받지 않는 대신 '''엄청 빠르고 단순하다'''.{/analogy}
+
+{exam}🎯 교수(10/1): "it is '''connectionless and unreliable''' … The transmission protocol used by Ethernet is '''very simple and crude''' and rough." "It is not guaranteed for receiver to successfully receive the data sent by the transmitter. This is why we call it unreliable." 왜 이렇게 했나? — "The reason is to maintain '''simplicity'''. It is very simple … It is easily maintainable." 교수는 이것을 "not good, but it can also be considered as a '''benefit'''" 이라 했다.{/exam}
+
+{warn}"unreliable = 오류 검출을 안 한다" 로 쓰면 틀린다. Ethernet 은 '''CRC-32 로 검출은 한다'''. 안 하는 것은 '''재전송(ACK/NAK)과 흐름 제어'''다. 반대로 [[TCP]] 는 connection-oriented + reliable (0920 오답에서 TCP 가 connection-oriented 인 것을 놓쳤다 — 대비해서 같이 외우자).{/warn}
+
+{quiz}Ethernet 수신자가 CRC-32 검사에서 오류를 발견하면 어떻게 하는가? 이것이 "unreliable" 과 어떤 관계인가?{/quiz}
+{answer}프레임을 '''조용히 버린다(drops the frame silently)''' — NAK 이나 재전송 요청을 보내지 않는다. 오류를 검출은 하지만 복구(재전송)는 보장하지 않으므로 '''unreliable'''. 이유는 '''simplicity'''.{/answer}
+
+== 관련 문서 ==
+* [[Standard Ethernet]] · [[CH04 Ethernet]] · [[Ethernet 프레임 형식]]
+* [[CRC]] · [[FCS]] · [[TCP]] · [[UDP]]

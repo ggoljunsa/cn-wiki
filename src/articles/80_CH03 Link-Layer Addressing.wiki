@@ -52,9 +52,9 @@ p.55 섹션 목표: "Introduce link-layer addressing / Mention how a link-layer 
 {|
 ! 종류 || 슬라이드 정의 || 예시 (Ethernet, 48 bits, 12 hex digits)
 |-
-| [[unicast|Unicast]] || One-to-one. 링크 안의 '''한 엔티티'''에게만 || Ex 3.13: `A3:34:45:11:92:F1`
+| [[unicast|Unicast]] || One-to-one. 링크 안의 '''한 엔티티'''에게만 || Ex 3.13 (fixed): `A2:34:45:11:92:F1` (둘째 자리 2 짝수) — 원본 p.60 은 `A3…` ⚠️
 |-
-| [[multicast|Multicast]] || One-to-many. 적용 범위는 '''local (inside the link)''' || Ex 3.14: `A2:34:45:11:92:F1` (둘째 자리 짝수) ⚠️
+| [[multicast|Multicast]] || One-to-many. 적용 범위는 '''local (inside the link)''' || Ex 3.14 (fixed): `A3:34:45:11:92:F1` (둘째 자리 3 홀수) — 원본 p.61 은 `A2…` ⚠️
 |-
 | [[broadcast 주소|Broadcast]] || One-to-All. 링크 안의 '''모든 엔티티'''에게 || Ex 3.15: `FF:FF:FF:FF:FF:FF`
 |}
@@ -63,7 +63,7 @@ p.55 섹션 목표: "Introduce link-layer addressing / Mention how a link-layer 
 
 [[img:L6-61.png|p.61 Example 3.14 — "second digit … even number", A2:34:45:11:92:F1|medium]]
 
-{warn}⚠️ '''p.60–61 예시는 뒤바뀐 오타로 의심된다 (교수 확인 전).''' IEEE 802 규약에서는 첫 바이트의 최하위 비트(I/G bit)가 '''0 이면 unicast, 1 이면 multicast''' 다. 첫 바이트 둘째 16진 자리가 '''짝수'''(A2 → …0010) 이면 LSB = 0 → '''unicast''', '''홀수'''(A3 → …0011) 이면 LSB = 1 → '''multicast'''. 슬라이드는 이것과 반대로 적혀 있다. '''교수도 9/29 수업에서 슬라이드대로''' "second digit … an even number" = multicast 라고 설명했다 → 시험에서는 '''슬라이드 기준'''(둘째 hex 자리 짝수 = multicast)으로 답하고, 교재/IEEE 와 다르다는 점만 알아 둘 것. 자세히는 [[multicast]].{/warn}
+{warn}⚠️ '''p.60–61 예시는 뒤바뀐 오타였다 — 교수가 CH04 p.2–3 에서 "(fixed)" 로 정정했다''' (10/1). 정정판: '''Ex 3.13 unicast = `A2:34:45:11:92:F1`''' (둘째 자리 2 짝수), '''Ex 3.14 multicast = `A3:34:45:11:92:F1`''' — "The second digit, however needs to be an '''odd''' number in hexadecimal." 이는 IEEE 802 규약(첫 바이트 최하위 비트 I/G bit 가 '''0 이면 unicast, 1 이면 multicast''')과 일치한다: A2 → …0010 → LSB 0 → unicast, A3 → …0011 → LSB 1 → multicast. 9/29 수업에서는 교수가 정정 전 슬라이드대로 "second digit … an even number" = multicast 라고 설명했지만, '''이제 시험 기준은 정정판(둘째 hex 자리 짝수 = unicast, 홀수 = multicast)'''이다. 위 두 캡처는 정정 전 원본. → [[CH04 Ethernet]], [[multicast]]{/warn}
 
 == p.63 — ARP ⭐⭐ ==
 
@@ -89,7 +89,7 @@ p.58 에서 Alice 는 다음 hop R1 의 '''IP 주소(N₂)'''는 알지만 '''MA
 * '''p.58 그림''' ⭐⭐: IP 주소(N₁, N₈)만 있으면 "we don't know '''where to transmit to the next intermediate device'''. We should describe the physical address of our next intermediate device." Alice → R1 구간 프레임은 L₂, L₁. "'''The IP address itself is maintained. Only the physical layer addresses are [changed]''' while going through the network." 중간 노드에서 decapsulation·encapsulation 이 일어난다는 것도 짚었다. (교수는 "intermediate nodes often do not have higher layers such as network and transport layer" 라고 말했는데 녹음 불명확 — 라우터는 network layer 까지 가진다는 CH01 그림과 함께 "transport 이상이 없다"로 이해할 것.)
 * '''주소 3종''' (p.59): unicast = one-to-one, multicast = one-to-many, broadcast = "kind of one-to-many, but '''one-to-all'''". "You may [have seen] these kinds of addresses while configuring your computers."
 * '''형식''' (p.60): 12자리 16진수, 각 자리는 0–F(= 0–15).
-* '''Multicast 판별''' ⚠️ (p.61): "For multicast messages, we should use '''second digits as an even number'''. … The communication of multicast is described by whether it uses an even number or not in the physical address." — '''슬라이드 문장 그대로''' 설명했다(IEEE 규약과 반대라는 언급은 없음). → [[multicast]]
+* '''Multicast 판별''' ⚠️ (p.61): "For multicast messages, we should use '''second digits as an even number'''. … The communication of multicast is described by whether it uses an even number or not in the physical address." — '''정정 전 슬라이드 문장 그대로''' 설명했다. → 10/1 [[CH04 Ethernet]] p.2–3 에서 "(fixed)" 로 정정: '''홀수 = multicast'''. → [[multicast]]
 * '''Broadcast''' (p.62): "if you see a crazy-looking physical address … '''all F in 12 hexadecimal''' … it means broadcast address. Very simple."
 * '''ARP''' (p.63): Alice 는 Bob 의 IP(N₈)는 알지만 "how she knows the physical address of the next intermediate node — '''this is quite tricky'''." ARP = "a protocol '''in network layer''' that produces the link-layer address given IP address". "'''This is included in the network layer part''', so you will study this one in more detail later on." → [[ARP]]
 
@@ -100,7 +100,7 @@ p.58 에서 Alice 는 다음 hop R1 의 '''IP 주소(N₂)'''는 알지만 '''MA
 # '''p.58''': 프레임에서 '''IP 주소는 source–destination 순서로 불변''', '''MAC 주소는 destination–source 순서로 링크마다 갱신'''. 라우터는 인터페이스마다 IP·MAC 쌍을 가진다.
 # '''주소 3종''': unicast(1:1) / multicast(1:다, local) / broadcast(1:전체, `FF:FF:FF:FF:FF:FF`).
 # Ethernet MAC 주소 = '''48 bits = 6 bytes = 콜론으로 구분한 12자리 16진수'''.
-# p.60–61 unicast/multicast 예시는 IEEE 규약(첫 바이트 LSB 0 = unicast, 1 = multicast)과 반대지만, 교수는 9/29 에 '''슬라이드대로'''(둘째 자리 짝수 = multicast) 설명 → 시험은 슬라이드 기준.
+# p.60–61 unicast/multicast 예시는 뒤바뀐 오타였고 교수가 CH04 p.2–3 에서 '''(fixed)''' 로 정정: '''A2:… = unicast''' (둘째 자리 짝수), '''A3:… = multicast''' (홀수) — IEEE 규약(첫 바이트 LSB 0 = unicast, 1 = multicast)과 일치. → [[CH04 Ethernet]]
 # '''ARP''': network layer 의 보조(auxiliary) 프로토콜, '''IP 주소 → link-layer 주소''' 매핑. 교수(9/29): 자세한 건 중간고사 뒤 network layer 파트에서.
 
 == 관련 문서 ==

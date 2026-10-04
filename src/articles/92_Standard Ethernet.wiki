@@ -1,0 +1,57 @@
+key: Standard Ethernet
+title: Standard Ethernet (10 Mbps 원조 Ethernet)
+category: 9강 Ethernet, 용어
+---
+'''Standard Ethernet''' 은 1970년대에 Robert Metcalfe 와 David Boggs 가 만든 '''원조 Ethernet''' 으로, data rate 는 '''10 Mbps''' 다. 이후 [[Fast Ethernet]](100 Mbps) · [[Gigabit Ethernet]](1 Gbps) · [[10 Gigabit Ethernet]](10 Gbps) 로 진화했지만, 주소 형식과 [[Ethernet 프레임 형식|frame format]] 같은 뼈대는 모두 이 세대에서 정해졌다. L7 p.11, p.13–27.
+
+{def}"'''1.1 Standard Ethernet''' — The original Ethernet with the data rate of '''10 Mbps'''" (p.14)
+"Developed in the 1970s by Robert Metcalfe and David Boggs. Almost every LAN except Ethernet has disappeared — Ethernet was able to '''update itself to meet the needs of the time''' (e.g., evolving for higher transmission rates)." (p.11)
+→ 10 Mbps 로 시작한 원래 Ethernet. 다른 유선 LAN 은 거의 사라졌고 Ethernet 만 속도를 올려 가며 살아남았다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''Standard''' = 뒤에 나온 Fast / Gigabit / 10 Gigabit 의 '''기준점'''. 후속 세대는 모두 "Standard Ethernet 과 '''compatible'''" 을 목표로 했으므로, 이 문서의 특징 목록이 곧 "Ethernet 이 끝까지 지킨 것"과 "나중에 바뀐 것"을 나누는 기준이 된다.
+
+[[img:L7-13.png|p.13 Ethernet evolution — 네 세대, 10 Mbps → 100 Mbps → 1 Gbps → 10 Gbps|medium]]
+
+[[anim:ethernet_evolution|네 세대가 차례로 나올 때 '유지된 것'과 '바뀐 것'을 구분해서 보라 — Standard Ethernet 이 기준점이다]]
+
+== 특징 한눈에 (p.15–27) ==
+{|
+! 항목 || Standard Ethernet || 문서
+|-
+| data rate || '''10 Mbps''' || [[bit rate]]
+|-
+| 서비스 || '''connectionless and unreliable''' (CRC-32 로 오류 감지 → 조용히 drop) || [[connectionless와 unreliable]]
+|-
+| frame || Preamble 7 · SFD 1 · Dest 6 · Src 6 · Type 2 · Data 46–1500 · CRC 4 (bytes) || [[Ethernet 프레임 형식]]
+|-
+| 길이 || 최소 '''64 B''' (CSMA/CD 때문) / 최대 '''1518 B''' (독점 방지) || [[프레임 길이 제한]]
+|-
+| 주소 || 6 bytes = 48 bits, byte 는 left→right, byte 안은 LSB first || [[Ethernet 주소 전송 순서]] · [[Ethernet 주소 판별]]
+|-
+| 매체 접근 || '''[[CSMA/CD]] with [[1-persistent]] method''' (p.25) || [[CSMA/CD]]
+|-
+| encoding || '''digital signaling (baseband)''' at 10 Mbps, '''[[line coding]]''' (p.26) || [[baseband 전송]]
+|-
+| 구현 || 10Base5 · 10Base2 · 10Base-T · 10Base-F || [[Ethernet implementations]]
+|}
+
+== Medium Access: CSMA/CD + 1-persistent (p.25) ==
+"Medium Access Method: CSMA/CD with 1-persistent method." 공유 매체([[bus 토폴로지|bus]])를 여럿이 쓰므로 7강의 [[CSMA/CD]] 를 쓴다. persistence 는 [[1-persistent]] — 채널을 '''계속 듣다가 idle 이 되는 즉시''' 전송. 충돌이 나면 [[jamming signal]] 로 모두에게 알린다.
+
+== Encoding and Decoding (p.26) ==
+"Use digital signaling ('''baseband''') at 10 Mbps. At the sender, data are converted to a digital signal using the '''line coding''' scheme. At the receiver, the received signal is interpreted as coded and decoded into data."
+교수(10/1)는 [[block coding]] 과 대비해 설명했다: line coding 은 "one data bit to one signal", block coding 은 k bits → n bits($n > k$) 묶음 변환. Standard Ethernet 은 '''line coding 만''' 쓴다. ([[Fast Ethernet]] 부터 [[4B/5B]] 같은 block coding 이 붙는다.)
+{info}교재(Forouzan) 원표에서는 Standard Ethernet 의 line coding 이 '''Manchester''' 로 명시돼 있다. 슬라이드는 "Line coding" 으로만 적었고 교수도 "I will not go into detail on specific encoding" 이라 했으니, 답안은 "baseband, line coding" 이면 충분하다.{/info}
+
+{analogy}🎭 '''1세대 아이폰.''' 화면 크기·칩 성능은 세대마다 바뀌었지만 "홈 화면에 아이콘 격자, 앱스토어" 같은 뼈대는 1세대에서 정해졌다. Standard Ethernet 은 Ethernet 의 1세대 — 속도(10 Mbps)와 매체는 낡았지만 '''48-bit 주소, frame format, 64/1518''' 은 지금 랜선에서도 그대로다.{/analogy}
+
+{exam}🎯 교수(10/1): Ethernet 이 살아남은 이유 — "it was able to '''update their versions to meet needs of time''' … evolved for higher transmission rate". 그리고 10 Mbps 같은 숫자는 '''physical layer 에서 잰 속도'''라 사용자가 체감하는 속도가 아니다("an uncomfortable secret"): 위 계층 헤더가 붙고, bit 단위라 byte 로 보려면 8 로 나눠야 한다.{/exam}
+
+{quiz}Standard Ethernet 의 (a) data rate (b) 매체 접근 방식과 persistence method (c) encoding 방식을 쓰시오.{/quiz}
+{answer}(a) '''10 Mbps''' (b) '''CSMA/CD''', '''1-persistent''' (c) '''digital signaling (baseband)''' + '''line coding''' (block coding 아님).{/answer}
+
+== 관련 문서 ==
+* [[CH04 Ethernet]] · [[Fast Ethernet]] · [[Gigabit Ethernet]] · [[10 Gigabit Ethernet]]
+* [[connectionless와 unreliable]] · [[Ethernet 프레임 형식]] · [[Ethernet implementations]]
+* [[CSMA/CD]] · [[1-persistent]] · [[line coding]] · [[IEEE Project 802]] · [[LAN]]

@@ -1,0 +1,60 @@
+key: Ethernet 주소 판별
+title: Ethernet 주소 판별 (unicast / multicast / broadcast 구분법)
+category: 9강 Ethernet, 용어
+---
+Ethernet 목적지 주소의 종류는 '''첫 byte 의 LSB''' 하나로 정해진다: '''0 이면 [[unicast]], 1 이면 [[multicast]]''', 그리고 '''48 bits 가 전부 1''' 이면 [[broadcast 주소|broadcast]]. hex 표기로는 '''왼쪽에서 둘째 hex digit 이 짝수면 unicast, 홀수면 multicast, 전부 F 면 broadcast'''. L7 p.23–24, p.2–3.
+
+{def}"The destination address can be unicast, multicast, or broadcast. '''If the LSB of the first byte in a destination address is 0, it is unicast; otherwise, it is multicast'''." "'''Broadcast address''': This is '''forty-eight 1s''' (all 1s)." (p.23)
+"To find the type of the address, we need to look at the '''second hexadecimal digit from the left'''. If it is '''even''', the address is unicast. If it is '''odd''', the address is multicast. If '''all digits are Fs''', the address is broadcast." (p.24)
+→ 첫 byte 최하위 비트 0 = unicast, 1 = multicast, 전부 1 = broadcast. 눈으로는 둘째 hex 자리의 짝/홀.{/def}
+
+== 이름에서 개념 끌어내기 — 왜 "둘째 hex digit" 인가 ==
+첫 byte = hex 두 자리. 첫째 자리는 '''상위 4 bits''', 둘째 자리는 '''하위 4 bits''' 다. byte 의 LSB(맨 오른쪽 비트)는 '''둘째 자리의 맨 오른쪽 비트''' 이고, 어떤 수의 맨 오른쪽 비트가 1 이면 '''홀수''', 0 이면 '''짝수''' 다.
+<pre class="ascii">
+첫 byte  4A  =  0100 1010
+                ↑↑↑↑ ↑↑↑'''0'''  ← LSB = 0  ⇔  A(=10) 은 짝수  ⇒ '''unicast'''
+           첫째 자리  둘째 자리
+
+첫 byte  47  =  0100 0111
+                     ↑↑↑'''1'''  ← LSB = 1  ⇔  7 은 홀수     ⇒ '''multicast'''
+</pre>
+그래서 "LSB of the first byte" 와 "second hex digit 짝/홀" 은 '''같은 규칙의 두 표현'''이다. 이 LSB 가 [[Ethernet 주소 전송 순서|회선에서 가장 먼저 나가는 비트]]다.
+
+== Example 13.2 (p.24) ⭐⭐⭐ ==
+{|
+! 주소 || 둘째 hex digit || 이진 || 판정
+|-
+| `4A:30:10:21:10:1A` || A || 1010 (even) || '''unicast'''
+|-
+| `47:20:1B:2E:08:EE` || 7 || 0111 (odd) || '''multicast'''
+|-
+| `FF:FF:FF:FF:FF:FF` || — || 전부 1 (48 ones) || '''broadcast'''
+|}
+
+[[sim:ethernet_addr_bits]]
+
+{info}broadcast 주소 FF:… 도 첫 byte LSB 가 1 이므로 규칙상 "multicast 의 특수한 경우"다 — '''모든 스테이션이 속한 그룹'''. 그래서 판정 순서는 "① 전부 F 인가? → broadcast ② 아니면 둘째 자리 짝/홀" 로 하면 실수가 없다.{/info}
+
+== CH04 p.2–3 "Example 3.13/3.14 (fixed)" ==
+9/29 덱(L6 p.60–61)의 Example 3.13/3.14 는 unicast 예와 multicast 예가 '''뒤바뀌어''' 있었다(그래서 [[unicast]]·[[multicast]] 문서에 경고를 달아 두었다). 10/1 덱 첫머리에서 교수가 '''정정판'''을 냈다:
+{|
+! || L6 (9/29, 원본) || L7 p.2–3 (10/1, '''fixed''')
+|-
+| unicast 예 || A3:34:45:11:92:F1 || '''A2:34:45:11:92:F1''' (2 = 짝수)
+|-
+| multicast 예 || A2:34:45:11:92:F1 ("second digit … even") || '''A3:34:45:11:92:F1''' ("The second digit, however needs to be an '''odd''' number")
+|}
+→ 이제 슬라이드 규칙과 IEEE 규약(I/G bit)이 '''일치'''한다. 답안은 정정판 기준으로.
+
+{analogy}🎭 '''주민번호 뒷자리 첫 숫자.''' 뒷자리 첫 숫자의 홀/짝만 보면 성별을 안다(1·3 남, 2·4 여). 나머지 열두 자리는 볼 필요도 없다. Ethernet 주소도 '''둘째 hex digit 의 홀/짝 하나'''로 unicast/multicast 가 갈린다.{/analogy}
+
+{exam}🎯 교수(10/1): "they differ from the first byte, where '''unicast is an even number, and multicast is odd number''' for the second hexadecimal digit, and '''broadcast is all F'''." "4A … because A means 10 in decimal … it is '''even''' number, so it is unicast. And 47 is an '''odd''' number … If you see all F, very simple." → 판정 문제는 거의 확실히 나올 유형.{/exam}
+
+{warn}p.21–22 Example 13.1 의 "47: an Odd number → broadcast" 는 '''오타''' — 47 은 multicast. 자세한 건 [[Ethernet 주소 전송 순서]].{/warn}
+
+{quiz}다음 목적지 주소의 종류를 판정하시오: (a) `A2:34:45:11:92:F1` (b) `01:00:5E:00:00:01` (c) `FF:FF:FF:FF:FF:FF` (d) `3C:22:FB:10:00:07`{/quiz}
+{answer}(a) 둘째 자리 2 짝수 → '''unicast''' (b) 1 홀수 → '''multicast''' (c) 전부 F → '''broadcast''' (d) C(=12) 짝수 → '''unicast''' (뒤쪽 07 의 홀짝은 무관 — '''첫 byte''' 만 본다).{/answer}
+
+== 관련 문서 ==
+* [[unicast]] · [[multicast]] · [[broadcast 주소]] · [[MAC 주소]]
+* [[Ethernet 주소 전송 순서]] · [[Ethernet 프레임 형식]] · [[CH04 Ethernet]]

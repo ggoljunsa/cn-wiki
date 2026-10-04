@@ -12,24 +12,24 @@ category: 8강 Addressing, 용어
 
 [[img:L6-61.png|p.61 Example 3.14 — 둘째 자리 2 를 빨갛게 강조|medium]]
 
-== ⚠️ 슬라이드 예시는 IEEE 규약과 뒤바뀌어 있다 ==
-{warn}⚠️ '''교수도 9/29 수업에서 슬라이드대로 설명 → 시험에서는 슬라이드 기준(둘째 hex 자리 짝수 = multicast)으로 답하고, 교재/IEEE 와 다르다는 점만 알아 둘 것.'''
-슬라이드는 "multicast 는 둘째 16진 자리가 짝수"라며 `A2:…` 를 multicast, `A3:…` 를 unicast 예로 들었다. 그런데 IEEE 802 (Ethernet) 규약은 '''첫 바이트의 최하위 비트(I/G bit)''' 로 구분한다:
+== ⚠️ L6 원본 예시는 뒤바뀐 오타 — CH04 p.2–3 에서 정정 ==
+{warn}⚠️ '''교수가 CH04 p.2–3 에서 "(fixed)" 로 정정했다''' (10/1): Example 3.14 (fixed) — "The second digit, however needs to be an '''odd''' number in hexadecimal … '''A3:34:45:11:92:F1'''", Example 3.13 (fixed) unicast = '''A2:34:45:11:92:F1'''. → [[CH04 Ethernet]]
+L6 p.61 원본(위 캡처)은 "multicast 는 둘째 16진 자리가 짝수"라며 `A2:…` 를 multicast, `A3:…` 를 unicast 예로 들었었다(9/29 수업도 이대로 설명). 그런데 IEEE 802 (Ethernet) 규약은 '''첫 바이트의 최하위 비트(I/G bit)''' 로 구분한다:
 <pre class="txt">
 첫 바이트 = 16진 두 자리, 둘째 자리의 최하위 비트가 곧 첫 바이트의 LSB
 A2 = 1010 0010 → LSB 0 → '''unicast''' (individual)
 A3 = 1010 0011 → LSB 1 → '''multicast''' (group)
 FF = 1111 1111 → LSB 1 → group 의 특수한 경우 = broadcast
 </pre>
-즉 규약대로라면 '''둘째 자리가 짝수 → unicast''', '''홀수 → multicast''' 이고, p.60(Ex 3.13)과 p.61(Ex 3.14)의 예시가 '''서로 뒤바뀐''' 것이다. (해설본 `CH03(2)_정리.md` p.61 주석과 같은 판단.) 교수는 9/29 에 이 차이를 언급하지 않았으므로, 답안은 '''슬라이드 규칙'''으로 쓰고 서술형이면 "IEEE 규약(I/G bit)과는 반대" 를 한 줄 덧붙이는 정도가 안전하다.{/warn}
+즉 '''둘째 자리가 짝수 → unicast''', '''홀수 → multicast''' 이고, p.60(Ex 3.13)과 p.61(Ex 3.14)의 원본 예시가 '''서로 뒤바뀐''' 것이었다 (해설본 `CH03(2)_정리.md` p.61 주석과 같은 판단 — 교수 정정으로 확인). '''시험 기준은 정정판 = IEEE 규약''': 둘째 hex 자리 홀수 = multicast. CH04 p.23–24 (Ex 13.2: 47 → multicast) 도 같은 규칙이다.{/warn}
 
 == 세 종류 비교 ==
 {|
 ! || 대상 || 첫 바이트 LSB (IEEE) || 예
 |-
-| [[unicast|Unicast]] || 1 : 1 || 0 (둘째 자리 짝수) || (규약상) `A2:34:45:11:92:F1`
+| [[unicast|Unicast]] || 1 : 1 || 0 (둘째 자리 짝수) || (정정판 Ex 3.13) `A2:34:45:11:92:F1`
 |-
-| '''Multicast''' || 1 : 그룹 || 1 (둘째 자리 홀수) || (규약상) `A3:34:45:11:92:F1`
+| '''Multicast''' || 1 : 그룹 || 1 (둘째 자리 홀수) || (정정판 Ex 3.14) `A3:34:45:11:92:F1`
 |-
 | [[broadcast 주소|Broadcast]] || 1 : 전체 || 1 (전부 1) || `FF:FF:FF:FF:FF:FF`
 |}
@@ -37,9 +37,9 @@ FF = 1111 1111 → LSB 1 → group 의 특수한 경우 = broadcast
 {analogy}🎭 '''단체 채팅방.''' 학교 전체 방송(broadcast)도, 한 명에게 보내는 개인 메시지(unicast)도 아니고, '''이 방에 초대된 사람들'''에게만 한 번에 간다. 방에 없는 사람은 무시한다.{/analogy}
 
 {quiz}(IEEE 규약 기준) `4B:20:1B:2E:08:EE` 는 unicast 인가 multicast 인가? 근거는?{/quiz}
-{answer}첫 바이트 `4B` 의 둘째 자리 B = 1011, 최하위 비트 1 → '''multicast'''. (슬라이드의 "둘째 자리가 짝수여야 multicast" 규칙 — 교수가 9/29 에 그대로 설명한 규칙 — 을 따르면 B 는 홀수이므로 '''unicast''' 가 된다. 시험은 슬라이드 기준으로 답할 것.){/answer}
+{answer}첫 바이트 `4B` 의 둘째 자리 B = 1011, 최하위 비트 1 → '''multicast'''. (L6 원본 슬라이드의 "둘째 자리가 짝수여야 multicast" 규칙을 따르면 '''unicast''' 가 되지만, 그 규칙은 CH04 p.2–3 에서 정정되었다. 정정판 기준으로도 '''multicast'''.){/answer}
 
-{exam}🎯 교수(9/29): "For multicast messages, we should use '''second digits as an even number'''. … The communication of multicast is described by whether it uses an even number or not in the physical address." — 슬라이드 p.61 문장 그대로 설명했고, IEEE 규약과 반대라는 언급은 없었다.{/exam}
+{exam}🎯 교수(9/29): "For multicast messages, we should use '''second digits as an even number'''. …" — 정정 전 슬라이드 p.61 문장 그대로 설명했다. → '''10/1 CH04 p.3 "Example 3.14 (fixed)": "needs to be an odd number"''' 로 정정. 교수(10/1, p.20–22): "if the last bit of the first byte corresponds to 1, then it means odd number, meaning multicast." 시험은 '''홀수 = multicast'''.{/exam}
 
 == 관련 문서 ==
 * [[unicast]] · [[broadcast 주소]] · [[MAC 주소]] · [[CH03 Link-Layer Addressing]]

@@ -70,6 +70,14 @@ category: 안내
 == 8. CH03 Link-Layer Addressing (30분) ==
 [[CH03 Link-Layer Addressing]] → [[IP 주소와 MAC 주소]](순서가 다르다!) → [[unicast]]/[[multicast]]/[[broadcast 주소]] → [[ARP]].
 
+== 9. CH04 Ethernet (1시간, 10/1 수업) ==
+[[CH04 Ethernet]] 통독 — physical + data-link 두 층의 실제 구현. 들를 곳:
+# [[IEEE Project 802]], [[Standard Ethernet]] 의 [[connectionless와 unreliable]] (CRC-32 → silently drop).
+# '''[[Ethernet 프레임 형식]]''' — [[preamble과 SFD]](physical-layer header), [[Type 필드]], [[프레임 길이 제한]](64 ↔ [[최소 프레임 크기]], 1518).
+# '''[[Ethernet 주소 전송 순서]]''' (byte 는 왼→오, byte 안은 LSB first, Ex 13.1) → [[Ethernet 주소 판별]] (둘째 hex digit 홀짝, Ex 13.2).
+# [[Ethernet implementations]] 이름 읽기(10Base5/2/T/F) → [[Fast Ethernet]]: $T_{fr} \ge 2T_p$ 라 10배 빠르면 길이 1/10 (2500 → 250 m), [[passive hub]] vs [[link-layer 스위치와 full-duplex]].
+# [[Gigabit Ethernet]] (25 m 는 불가 → full-duplex 스위치, CSMA/CD 불필요) → [[10 Gigabit Ethernet]]. [[WiFi]]·[[Bluetooth]] 는 다음 수업.
+
 == 마무리 (시험 전날) ==
 # [[공식 모음]] 을 보지 않고 백지에 쓴다.
 # [[계산 문제 모음]] 의 Example 을 전부 다시 푼다 (시뮬레이터는 답 맞출 때만).

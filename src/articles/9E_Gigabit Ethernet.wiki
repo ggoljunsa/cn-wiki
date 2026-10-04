@@ -1,0 +1,59 @@
+key: Gigabit Ethernet
+title: Gigabit Ethernet (1 Gbps, IEEE 802.3z)
+category: 9강 Ethernet, 용어
+---
+'''Gigabit Ethernet''' 은 Ethernet 의 3세대로 data rate '''1 Gbps''', 표준 '''802.3z'''. Standard·Fast Ethernet 과의 compatibility 를 위해 '''주소 길이, frame format, 최소·최대 프레임 길이'''를 그대로 두었다. 그러면 CSMA/CD 로는 네트워크가 약 25 m 로 줄어들어 쓸 수 없으므로, '''half-duplex 또는 full-duplex(주로 full-duplex)''' — 중앙 '''스위치'''에 모두 전용 연결하는 방식을 쓴다. L7 p.37–41.
+
+{def}"The need for an even higher data rate resulted in the design of the '''Gigabit Ethernet''' — Standard '''802.3z'''. Goals: Upgrade the data rate to '''1 Gbps''' · Make it '''compatible''' with Standard or Fast Ethernet — Keep the '''address length, frame format, and the maximum and minimum frame length the same'''." (p.38)
+"Access method: '''Impossible to maintain the previous MAC with 1 Gbps''' (e.g., network size < 25 m?). Instead: it uses half-duplex or full-duplex ('''mostly full-duplex''')." (p.39–40){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''Giga'''bit = 10⁹ bits/s = 1000 Mbps. Fast 의 또 10배. 그런데 이번에는 Fast 때처럼 "길이를 10배 줄이자" 가 '''통하지 않는다''' — 그게 이 문서의 핵심이다.
+
+== 왜 previous MAC(CSMA/CD)를 못 쓰나 (p.39) ⭐⭐⭐ ==
+<pre class="txt">
+최소 프레임 512 bits 그대로 (compatibility)
+T_fr = 512 / 10⁹ = 0.512 μs          ← Fast(5.12 μs)의 1/10
+T_p ≤ T_fr / 2   = 0.256 μs
+최대 길이도 Fast(250 m)의 1/10 → '''약 25 m'''    ← 슬라이드 "network size < 25 m ?"
+→ 25 m 짜리 LAN 은 쓸모가 없다 → CSMA/CD 포기
+</pre>
+
+[[sim:fast_ethernet_length]]
+
+교수(10/1): "one option could be use CSMA/CD and again shrinking the network size by 10 times more … should we employ a small network with 25 meters? The answer is, they did not take this way. They just employed the '''second option'''" — [[Fast Ethernet]] 의 Solution #2 인 '''[[link-layer 스위치와 full-duplex|switch + full-duplex]]'''.
+
+== Full-duplex mode (p.40) ==
+"There are a '''central switch''' connected to all computers or other switches. The switch sends a frame connected to a particular destination. '''No collision occurs''' (i.e., no need for CSMA/CD)."
+
+[[anim:switch_fullduplex|hub 의 충돌과 switch 의 전용 링크를 비교 — Gigabit 이 왜 대부분 full-duplex 인지 확인하라]]
+
+== Gigabit Ethernet implementations (p.41) ==
+[[img:L7-41.png|p.41 1000Base-SX/LX/CX/T4 — 매체·길이·wires·encoding|medium]]
+
+{|
+! Implementation || Medium || Length (m) || Wires || Encoding
+|-
+| 1000Base-SX || Fiber S-W (short-wave) || 550 || 2 || 8B/10B + NRZ
+|-
+| 1000Base-LX || Fiber L-W (long-wave) || 5000 || 2 || 8B/10B + NRZ
+|-
+| 1000Base-CX || STP || 25 || 2 || 8B/10B + NRZ
+|-
+| 1000Base-T4 || UTP || 100 || 4 || 4D-PAM5
+|}
+* 교수: "they can maintain '''bigger network compared to Fast Ethernet''' … because they now don't have any limitations on the network size" — LX 는 '''5000 m''' 까지(Fast 는 최대 185 m).
+* 이름 읽기: S = '''S'''hort-wave, L = '''L'''ong-wave 레이저 fiber, C = '''C'''opper(STP), T = '''T'''wisted pair. encoding 은 [[block coding]](8B/10B) + [[line coding]](NRZ).
+
+{warn}'''1000Base-T4''' 는 슬라이드 표기다. IEEE 표준 이름은 '''1000Base-T''' (802.3ab, UTP 4쌍) 이고 'T4' 는 100Base-T4 와 섞인 표기로, 교재 판본에 따라 1000Base-T 로 적혀 있다. 시험에서 표를 재현할 때는 '''슬라이드 표기'''를 쓰되, 다른 표기를 보고 당황하지 말 것.{/warn}
+
+{analogy}🎭 '''교차로를 없애고 전용 도로.''' 차(프레임)가 10배 빨라지자, 교차로에서 서로 부딪히지 않게 하려면 도시를 손바닥만 하게(25 m) 줄여야 했다. 그건 말이 안 되니 '''집집마다 중앙 터미널까지 전용 도로'''를 깔았다(스위치 + full-duplex). 교수 말대로 "'''money can handle the situation'''".{/analogy}
+
+{exam}🎯 교수(10/1): Gigabit 도 "has to maintain '''compatibility''' to previous versions" → CSMA/CD 를 쓰면 25 m → 대신 "'''mostly full-duplex'''" → "they do not share medium … '''no collisions''' … '''we don't need CSMA/CD'''" → "network size limitation that we saw … is all because of the use of CSMA/CD". 그리고 "it is indeed much '''more stable''' than sharing the medium." Fast(길이 축소 or 스위치) vs Gigabit(스위치) 의 '''선택 차이'''가 비교 서술로 나오기 좋다.{/exam}
+
+{quiz}Gigabit Ethernet 이 CSMA/CD 를 유지하지 않고 주로 full-duplex 스위치를 쓰는 이유를, 최소 프레임 크기와 연결해 설명하시오.{/quiz}
+{answer}compatibility 때문에 '''최소 프레임 512 bits''' 를 유지해야 한다. 1 Gbps 에서는 $T_{fr} = 0.512\ \mu s$ 로 Fast 의 1/10 → $T_{fr} \geq 2T_p$ 를 지키려면 최대 길이가 '''약 25 m''' 로 줄어 실용성이 없다. 그래서 '''전용 full-duplex 링크 + 중앙 스위치'''로 매체를 공유하지 않게 해 충돌 자체를 없앴다 → CSMA/CD 불필요, 길이 제한도 풀림.{/answer}
+
+== 관련 문서 ==
+* [[Fast Ethernet]] · [[10 Gigabit Ethernet]] · [[Standard Ethernet]] · [[CH04 Ethernet]]
+* [[link-layer 스위치와 full-duplex]] · [[프레임 길이 제한]] · [[최소 프레임 크기]] · [[CSMA/CD]]

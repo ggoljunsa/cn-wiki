@@ -22,7 +22,7 @@ category: 8강 Addressing, 용어
 
 [[img:L6-59.png|p.59 Three Types of Addresses — Unicast / Multicast / Broadcast|medium]]
 
-{warn}⚠️ '''Ex 3.13 의 예시 `A3:34:45:11:92:F1` 은 IEEE 규약상 multicast 에 해당한다 (교수 확인 전).''' 첫 바이트 A3 = 1010 0011 의 최하위 비트가 1 이면 group(multicast) 주소다. 실제 unicast 는 첫 바이트가 짝수(최하위 비트 0)여야 한다. 슬라이드가 p.60–61 의 예시를 뒤바꾼 것으로 보인다 → [[multicast]] 문서 참고.{/warn}
+{warn}⚠️ '''위 L6 p.60 원본의 예시 `A3:34:45:11:92:F1` 은 오타였다 — 교수가 CH04 p.2 에서 "Example 3.13 (fixed)" 로 `A2:34:45:11:92:F1` 로 정정했다''' (10/1). 첫 바이트 A2 = 1010 0010 의 최하위 비트가 0 → unicast (둘째 hex 자리 2 = 짝수). A3(LSB 1)은 multicast 다. 정정판은 IEEE 규약과 일치한다 → [[CH04 Ethernet]], [[multicast]].{/warn}
 
 {analogy}🎭 '''교실에서 한 학생 이름 부르기.''' 교실(링크) 안 모두가 소리를 듣지만, 이름이 불린 한 명만 대답한다. broadcast 링크에서 프레임은 물리적으로 모두에게 가지만, 목적지 MAC 이 자기 것이 아닌 NIC 는 버린다.{/analogy}
 

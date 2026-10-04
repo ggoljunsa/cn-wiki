@@ -1,0 +1,57 @@
+key: Ethernet implementations
+title: Ethernet Implementations (10Base5 · 10Base2 · 10Base-T · 10Base-F)
+category: 9강 Ethernet, 용어
+---
+[[Standard Ethernet]] 의 구현(implementation)은 '''매체(medium)와 최대 길이'''에 따라 네 가지다: '''10Base5'''(thick coax, 500 m) · '''10Base2'''(thin coax, 185 m) · '''10Base-T'''(2 UTP, 100 m) · '''10Base-F'''(2 Fiber, 2000 m). 넷 다 encoding 은 '''[[line coding]]'''. 이름만 읽을 줄 알면 표의 절반은 외운 셈이다. L7 p.27.
+
+{def}p.27 "Ethernet implementations" 표:
+{|
+! Implementation || Medium || Medium Length (m) || Encoding
+|-
+| '''10Base5''' || Thick coax || 500 || Line coding
+|-
+| '''10Base2''' || Thin coax || 185 || Line coding
+|-
+| '''10Base-T''' || 2 UTP || 100 || Line coding
+|-
+| '''10Base-F''' || 2 Fiber || 2000 || Line coding
+|}{/def}
+
+[[img:L7-27.png|p.27 Ethernet implementations — 넷 다 Encoding 은 Line coding, 차이는 매체와 길이|medium]]
+
+== 이름에서 개념 끌어내기 ⭐ ==
+이름은 '''[속도][신호 방식][매체 또는 길이]''' 세 조각이다.
+<pre class="txt">
+ 10     Base      5
+ │       │        └─ 숫자 = 최대 segment 길이 ÷ 100 m  (5 → 500 m, 2 → 약 200 m: 실제 185 m)
+ │       │           문자 = 매체:  '''T''' = Twisted pair,  '''F''' = Fiber
+ │       └────────── '''Base'''band — digital signaling ([[baseband 전송]])
+ └────────────────── 10 Mbps ([[bit rate|data rate]])
+</pre>
+{|
+! 이름 || 10 || Base || 끝 조각
+|-
+| 10Base5 || 10 Mbps || baseband || '''5''' → 500 m (thick coax, [[bus 토폴로지|bus]])
+|-
+| 10Base2 || 10 Mbps || baseband || '''2''' → 185 m ≈ 200 m (thin coax, bus)
+|-
+| 10Base-T || 10 Mbps || baseband || '''T''' → '''T'''wisted pair (2 UTP, [[star 토폴로지|star]] + [[허브|hub]])
+|-
+| 10Base-F || 10 Mbps || baseband || '''F''' → '''F'''iber (2000 m)
+|}
+같은 규칙이 다음 세대에도 이어진다: 100Base-'''TX''' / '''FX''' ([[Fast Ethernet]]), 1000Base-'''SX''' / '''LX''' ([[Gigabit Ethernet]]), 10'''G'''Base-'''SR''' ([[10 Gigabit Ethernet]]).
+
+== 표에서 읽을 것 ==
+* '''Encoding 은 전부 Line coding''' — 교수(10/1): "they all use the line coding". [[block coding]] 은 안 쓴다. (교재 원표는 Manchester 로 명시.)
+* 길이는 매체가 결정: 동축(coax)은 굵을수록 멀리(500 vs 185), twisted pair 는 짧게(100), fiber 는 가장 멀리(2000).
+* 교수: "different kinds of implementations, '''depending on the network size'''. Here we see the medium length, meaning that the '''length of some wired line'''."
+* [[Fast Ethernet]] 표(p.36)와 나란히 보면 '''길이가 확 줄어든다'''(최대 2000 → 185 m) — 교수가 10/1 에 표에서 짚은 점. 다만 p.31–33 의 1/10 규칙은 매체 구간이 아니라 '''network 최대 길이'''(2500 → 250 m)에 대한 것이다(10Base-T 와 100Base-TX 는 둘 다 100 m).
+
+{analogy}🎭 '''타이어 규격 "205/55R16".''' 숫자와 글자가 아무렇게나 붙은 것 같지만 폭/편평비/구조/휠 크기를 순서대로 적은 것이다. "10Base-T" 도 속도/신호 방식/매체를 순서대로 적은 규격 이름이다 — 읽는 법만 알면 외울 게 줄어든다.{/analogy}
+
+{quiz}"10Base-T" 의 세 조각(10, Base, T)이 각각 무엇을 뜻하는지 쓰고, 이 구현의 매체와 최대 길이를 쓰시오.{/quiz}
+{answer}'''10''' = 10 Mbps, '''Base''' = baseband(digital signaling), '''T''' = twisted pair. 매체 '''2 UTP''', 최대 '''100 m''', encoding 은 line coding.{/answer}
+
+== 관련 문서 ==
+* [[Standard Ethernet]] · [[Fast Ethernet]] · [[Gigabit Ethernet]] · [[10 Gigabit Ethernet]]
+* [[baseband 전송]] · [[line coding]] · [[bus 토폴로지]] · [[star 토폴로지]] · [[CH04 Ethernet]]

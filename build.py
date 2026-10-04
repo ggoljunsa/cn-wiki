@@ -212,10 +212,81 @@ def main():
         parts.append(read(os.path.join(ANIMS_DIR, f)))
     parts.append("\n// ===== renderer =====\n")
     parts.append(renderer)
+
+    # ---------- 5b. 오프라인(PWA): 버전 해시 + 이미지 목록 + sw.js + manifest ----------
+    import hashlib
+    body_so_far = "".join(parts)
+    image_list = sorted(wanted)
+    ver = hashlib.md5((body_so_far + "|".join(image_list)).encode("utf-8")).hexdigest()[:10]
+    parts.append("\n// ===== offline (build.py 생성) =====\n")
+    parts.append("const OFFLINE_VER = " + json.dumps(ver) + ";\n")
+    parts.append("const OFFLINE_IMAGES = " + js_json(["images/" + f for f in image_list]) + ";\n")
     parts.append("\n</script>\n</body>\n</html>\n")
 
     with open(OUT, "w", encoding="utf-8") as f:
         f.write("".join(parts))
+
+    katex = [
+        "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css",
+        "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js",
+        "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js",
+    ]
+    sw = """// 오프라인용 service worker (build.py 생성 — 직접 편집 금지)
+const VER = %s;
+const CACHE = "wiki-" + VER;
+const CORE = ["./", "./index.html", "./manifest.webmanifest"];
+const KATEX = %s;
+self.addEventListener("install", function (e) {
+  e.waitUntil(caches.open(CACHE).then(function (c) {
+    return c.addAll(CORE).then(function () {
+      // KaTeX(CDN) 는 실패해도 설치는 진행 (폰트는 CSS 가 참조하는 것을 fetch 시점에 캐시)
+      return Promise.all(KATEX.map(function (u) { return c.add(new Request(u, { mode: "cors" })).catch(function () {}); }));
+    });
+  }).then(function () { return self.skipWaiting(); }));
+});
+self.addEventListener("activate", function (e) {
+  e.waitUntil(caches.keys().then(function (keys) {
+    return Promise.all(keys.filter(function (k) { return k.indexOf("wiki-") === 0 && k !== CACHE; }).map(function (k) { return caches.delete(k); }));
+  }).then(function () { return self.clients.claim(); }));
+});
+self.addEventListener("fetch", function (e) {
+  var req = e.request;
+  if (req.method !== "GET") return;
+  var url = new URL(req.url);
+  var isPage = req.mode === "navigate" || url.pathname.endsWith("/index.html") || url.pathname.endsWith("/");
+  if (isPage) {
+    // 페이지: 네트워크 우선, 실패하면 캐시 (오프라인)
+    e.respondWith(fetch(req).then(function (r) {
+      var copy = r.clone(); caches.open(CACHE).then(function (c) { c.put("./index.html", copy); }); return r;
+    }).catch(function () { return caches.match("./index.html"); }));
+    return;
+  }
+  // 이미지·KaTeX·폰트: 캐시 우선, 없으면 받아서 캐시
+  e.respondWith(caches.match(req, { ignoreSearch: true }).then(function (hit) {
+    if (hit) return hit;
+    return fetch(req).then(function (r) {
+      if (r && (r.ok || r.type === "opaque")) { var copy = r.clone(); caches.open(CACHE).then(function (c) { c.put(req, copy); }); }
+      return r;
+    });
+  }));
+});
+self.addEventListener("message", function (e) {
+  if (e.data === "SKIP_WAITING") self.skipWaiting();
+});
+""" % (json.dumps(ver), json.dumps(katex))
+    with open(os.path.join(ROOT, "sw.js"), "w", encoding="utf-8") as f:
+        f.write(sw)
+    manifest = {
+        "name": "컴네위키", "short_name": "컴네위키", "start_url": "./index.html", "scope": "./",
+        "display": "standalone", "background_color": "#f5f5f5", "theme_color": "#1c2840", "lang": "ko",
+        "icons": [{"src": "icon.svg", "sizes": "any", "type": "image/svg+xml"}],
+    }
+    with open(os.path.join(ROOT, "manifest.webmanifest"), "w", encoding="utf-8") as f:
+        json.dump(manifest, f, ensure_ascii=False, indent=1)
+    icon_path = os.path.join(ROOT, "icon.svg")
+    if not os.path.exists(icon_path):
+        with open(icon_path, "w", encoding="utf-8") as f:
+            f.write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#1c2840"/><text x="32" y="41" font-size="26" font-weight="700" text-anchor="middle" fill="#ffd75e" font-family="sans-serif">컴네</text></svg>')
 
     # ---------- 6. 보고 ----------
     if missing_imgs:
@@ -253,6 +324,7 @@ def main():
     print("  anims         : %d  (missing %d, unused %d)" % (len(defined_anims), len(missing_anims), len(unused_anims)))
     print("  broken links  : %d" % len(broken))
     print("  output        : %s  (%.0f KB)" % (os.path.relpath(OUT, ROOT), size_kb))
+    print("  offline       : sw.js + manifest.webmanifest (ver %s, images %d)" % (ver, len(image_list)))
     sys.exit(0)
 
 

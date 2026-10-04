@@ -1,0 +1,61 @@
+key: Ethernet 주소 전송 순서
+title: Ethernet 주소 비트의 전송 순서 (byte 는 왼→오, bit 는 LSB first)
+category: 9강 Ethernet, 용어
+---
+Ethernet 주소(6 bytes)는 회선에 실릴 때 '''byte 단위로는 왼쪽에서 오른쪽''', 그러나 '''각 byte 안에서는 least significant bit(LSB)부터''' 보낸다. 그래서 각 byte 를 이진수로 쓴 뒤 '''좌우를 뒤집은''' 것이 실제 전송 순서다. 이렇게 하는 이유: '''unicast/multicast 를 정하는 비트(첫 byte 의 LSB)가 수신기에 가장 먼저 도착'''하게 하려고. L7 p.20–22 (Example 13.1).
+
+{def}"Transmission of address bits
+* The transmission is '''left to right, byte by byte'''
+* For each byte, the '''least significant bit is sent first'''
+  → the definition of '''unicast or multicast arrives first''' at the receiver" (p.20)
+"Solution: The address is sent left to right, byte by byte. '''For each byte, it is sent right to left''', bit by bit." (p.22)
+→ byte 순서는 그대로, byte 안의 비트 순서만 뒤집혀서(LSB 먼저) 나간다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''least significant bit''' = "가장 덜 중요한(자릿값이 가장 작은) 비트" = 이진수로 쓸 때 '''맨 오른쪽''' 비트. "LSB first" 라는 이름 자체가 "'''오른쪽 끝부터''' 보낸다"는 뜻이다. 그리고 첫 byte 의 LSB 는 [[Ethernet 주소 판별|unicast/multicast 를 가르는 비트]]다 → 이름만으로 "왜 LSB 먼저인가"까지 이어진다.
+
+== Example 13.1 — 47:20:1B:2E:08:EE 를 회선에 싣기 ⭐⭐⭐ ==
+[[img:L7-22.png|p.22 Example 13.1 — Hexadecimal / Binarys / Transmitted ← 세 줄. 각 byte 가 좌우로 뒤집혀 있다|large]]
+
+{|
+! Hex || 47 || 20 || 1B || 2E || 08 || EE
+|-
+| Binary || 01000111 || 00100000 || 00011011 || 00101110 || 00001000 || 11101110
+|-
+| '''Transmitted ←''' || '''11100010''' || '''00000100''' || '''11011000''' || '''01110100''' || '''00010000''' || '''01110111'''
+|}
+
+손으로 푸는 순서:
+<pre class="txt">
+1. 각 byte 를 hex 두 자리 → 4 bits + 4 bits 로:  47 = 0100 0111
+2. 그 8 bits 를 좌우로 뒤집는다:               0100 0111 → 1110 0010
+3. byte 순서(47 → 20 → 1B → 2E → 08 → EE)는 그대로 둔다
+4. 첫 byte 의 '''첫 전송 비트 = 원래 LSB''' = 47 의 맨 오른쪽 1 → '''multicast'''
+</pre>
+
+[[sim:ethernet_addr_bits]]
+
+== 왜 이런 "헷갈리는" 순서인가 ==
+수신기는 비트를 받는 순서대로 처리한다. 주소의 종류([[unicast]] / [[multicast]])는 '''첫 byte 의 LSB''' 로 정해지므로, 그 비트를 '''가장 먼저''' 보내면 수신기는 첫 비트 하나만 받고도 "나한테 온 unicast 인지, 그룹 주소인지"를 판단하기 시작할 수 있다.
+<pre class="ascii">
+원래 표기:   47        =  0 1 0 0 0 1 1 '''1'''   ← LSB(맨 오른쪽)
+회선 위:     먼저 → '''1''' 1 1 0 0 0 1 0   ← 첫 비트가 바로 unicast/multicast 비트
+</pre>
+
+{warn}⚠️ '''슬라이드 오타 (p.21–22)''': "47: an Odd number → '''broadcast'''" 라고 적혀 있지만, 47 은 홀수 → '''multicast''' 가 맞다. 바로 뒤 Example 13.2(p.24)도 47:20:1B:2E:08:EE 를 "This is a '''multicast''' address because 7 in binary is 0111 (odd)" 라고 한다. [[broadcast 주소]]는 '''48 bits 전부 1(FF:FF:FF:FF:FF:FF)''' 일 때뿐이다. 교수(10/1)도 설명할 때는 "if the last bit of the first byte corresponds to 1, then it means odd number, '''meaning multicast'''" 라고 했다 — 슬라이드의 broadcast 는 단순 오타다.{/warn}
+
+{analogy}🎭 '''편지 봉투의 '긴급' 도장.''' 우체국 직원(수신기)은 봉투를 한 줄씩 읽는다. 봉투마다 '''맨 처음 보이는 곳'''에 "개인 앞(unicast) / 단체 앞(multicast)" 도장이 찍혀 있으면 나머지를 읽기 전에 분류를 시작할 수 있다. Ethernet 은 그 도장 비트를 맨 앞에 오게 하려고 byte 안 순서를 뒤집었다.{/analogy}
+
+{exam}🎯 교수(10/1): "one important thing that I would like to '''highlight''' … we send the addresses from '''left to right''' … but for each byte, '''bits are sent from right to left'''." 왜? — "they want to '''announce the receiver about whether this transmission is unicast or not''' … the first bit that the receiver sees is actually the '''last bit of the first byte'''. And if the last bit of the first byte corresponds to 1, then it means '''odd number, meaning multicast'''. … if the receiver sees 0 at its first position, then it corresponds to unicast." → 변환 문제 + 이유 서술 둘 다 대비.{/exam}
+
+{quiz}주소 `4A:30:10:21:10:1A` 의 첫 두 byte(4A, 30)가 회선에 실리는 비트 순서를 쓰고, 수신기가 맨 처음 받는 비트로 무엇을 알 수 있는지 쓰시오.{/quiz}
+{answer}<pre class="txt">
+4A = 0100 1010 → 뒤집기 → 0101 0010
+30 = 0011 0000 → 뒤집기 → 0000 1100
+전송: 01010010 00001100 …
+</pre>
+첫 비트 '''0''' (= 4A 의 LSB) → '''unicast''' 주소임을 첫 비트에서 안다.{/answer}
+
+== 관련 문서 ==
+* [[Ethernet 주소 판별]] · [[MAC 주소]] · [[unicast]] · [[multicast]] · [[broadcast 주소]]
+* [[Ethernet 프레임 형식]] · [[CH04 Ethernet]]

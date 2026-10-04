@@ -1,0 +1,76 @@
+key: Fast Ethernet
+title: Fast Ethernet (100 Mbps, IEEE 802.3u)
+category: 9강 Ethernet, 용어
+---
+'''Fast Ethernet''' 은 Ethernet 의 2세대로, data rate 를 '''100 Mbps''' 로 10배 올렸다. 최우선 목표는 '''[[Standard Ethernet]] 과의 compatibility''' — 48-bit 주소와 frame format(그리고 최소 프레임 512 bits)을 그대로 두었다. 그 대가로 [[CSMA/CD]] 의 조건 $T_{fr} \geq 2T_p$ 를 지키려면 '''네트워크 최대 길이를 10배 줄여야''' 했고(2500 m → 250 m), 해법으로 '''passive hub + star''' 또는 '''full-duplex 스위치'''를 썼다. L7 p.28–36.
+
+{def}"Ethernet made a big jump by increasing the transmission rate to 100 Mbps. The new generation was called the '''Fast Ethernet'''." (p.29)
+"Goals of Fast Ethernet: Upgrade the data rate to 100 Mbps · '''Make it compatible with Standard Ethernet''' · Keep the same 48-bit address · Keep the same frame format" (p.30){/def}
+
+== 이름에서 개념 끌어내기 ==
+'''Fast''' = Standard 보다 빠르다, 딱 그 뜻(10 → 100 Mbps). 그런데 문서의 핵심은 "빨라졌다"가 아니라 '''"빨라졌는데 옛날 것과 호환되게 하려니 무엇을 희생했나"''' 다. 이름에 없는 그 희생 = '''네트워크 길이'''.
+
+== 목표 4가지 (p.30) ⭐⭐ ==
+# Upgrade the data rate to '''100 Mbps'''
+# Make it '''compatible with Standard Ethernet''' ← 교수가 "the most important factor"
+# Keep the same '''48-bit address'''
+# Keep the same '''frame format'''
+3·4 는 사실 2(compatibility)를 구체화한 것이다. 교수(10/1): "Standard Ethernet already used worldwide. So maintain such compatibility to all those devices was very important. Even for now … Gigabit Ethernet or 10 Gigabit Ethernet basically maintain this compatibility."
+
+== CSMA/CD 문제: 왜 길이가 10배 줄어드나 (p.31–32) ⭐⭐⭐ ==
+"The proper operation of the CSMA/CD depends on the '''transmission rate''', the '''minimum size of the frame''', and the '''maximum length of the network'''. For CSMA/CD: $T_{fr} \geq 2T_p$ — $T_{fr}$: frame transmission time (determined by frame size and data rate), $T_p$: max. propagation time (determined by the max. network length)." (p.31)
+
+<pre class="txt">
+[[T_fr]] = 최소 프레임 크기 / data rate           [[T_p]] = 최대 길이 / 전파 속도
+조건: T_fr ≥ 2 T_p
+
+최소 프레임 512 bits '''고정''' (compatibility)
+10 Mbps : T_fr = 512 / 10⁷  = 51.2 μs  → T_p ≤ 25.6 μs
+100 Mbps: T_fr = 512 / 10⁸  = 5.12 μs  → T_p ≤ 2.56 μs   ('''1/10''')
+T_p ∝ 길이 → 최대 길이도 '''1/10''':  2500 m → '''250 m'''
+</pre>
+"If the minimum frame size is still 512 bits, and it is transmitted 10 times faster (10 Mbps → 100 Mbps), the collision needs to be detected '''10 times sooner''', which means the maximum length of the network should be '''10 times shorter'''." (p.32)
+
+[[sim:fast_ethernet_length]]
+
+{info}sim 의 "≈512 m" 은 $T_p$ 를 순수 전파 시간(2×10⁸ m/s)으로만 계산한 이론값이다. 표준의 250 m(Standard 는 2500 m)는 리피터·장치 지연을 포함한 여유를 둔 값이라 더 짧다. 시험 답은 슬라이드 수치 '''2500 m → 250 m''' 로.{/info}
+
+== 두 가지 해법 (p.33) ==
+{|
+! || Solution #1 || Solution #2
+|-
+| 무엇 || bus 를 버리고 '''[[passive hub]] + [[star 토폴로지|star topology]]''' || '''[[link-layer 스위치와 full-duplex|link-layer switch]]''' (buffer) + 호스트마다 '''full-duplex''' 연결
+|-
+| 매체 || 여전히 '''공유''' (hub 는 신호만 중계) || '''private''' (전용 링크)
+|-
+| CSMA/CD || 필요 → 최대 길이 '''250 m''' (2500 m 대신) || '''No need for CSMA/CD'''
+|}
+교수(10/1): Solution #1 은 "making a small-scale network … by 10 times smaller", Solution #2 는 "if you construct an Ethernet network that '''does not share the media''' with other users, then you don't have to use MAC to share the media".
+
+[[img:L7-34.png|p.34 Topology — (a) coaxial cable 의 bus, (b) hub 를 가운데 둔 star(twisted-pair)|medium]]
+
+== Fast Ethernet implementations (p.35–36) ==
+[[img:L7-36.png|p.36 위: Fast Ethernet 3종 / 아래: Cf. Standard Ethernet — 길이 비교|large]]
+{|
+! Implementation || Medium || Length (m) || Wires || Encoding
+|-
+| 100Base-TX || STP || 100 || 2 || [[4B/5B]] + MLT-3
+|-
+| 100Base-FX || Fiber || 185 || 2 || 4B/5B + [[NRZ-I]]
+|-
+| 100Base-T4 || UTP || 100 || 4 || Two 8B/6T
+|}
+* Standard Ethernet 은 line coding 만 썼지만, Fast 부터는 '''[[block coding]](4B/5B, 8B/6T) + line coding''' 조합 — 100 Mbps 에서 동기화를 지키려고. 교수: "it uses different encoding type that I didn't tell you" (세부는 넘어감).
+* 교수: "compared to Standard Ethernet, '''the length of the network significantly shrinks'''. Here we see 2000 m … but we see only 200 m at most." → 표의 핵심은 '''길이'''.
+
+{analogy}🎭 '''같은 자(512 bits)로 더 빨리 뛰기.''' 운동장 끝까지 갔다 오는 메아리를 들어야 하는 규칙(충돌 감지)이 있는데, 외치는 시간(T_fr)이 10배 짧아졌다. 외침 길이(프레임 크기)는 규칙상 못 늘린다(호환성). 남은 방법은 '''운동장을 10배 작게'''(Solution #1) 하거나, '''아예 각자 전용 통화선'''(Solution #2)을 주는 것이다.{/analogy}
+
+{exam}🎯 교수(10/1): "one big problem arising due to the higher data rate of 100 Mbps … CSMA/CD has a requirement of frame transmission time and maximum propagation time" → "frame transmission time is much shorter, about '''10 times'''" → "we should maintain '''10 times smaller network length'''" → "'''It is all because of the CD'''." 표에서 "important part is … '''the length of Fast Ethernet is significantly shrinked'''. Due to what? Due to its '''higher data rate''' and the requirements of maintaining the '''compatibility'''." → 서술형 "왜 Fast Ethernet 의 최대 길이가 줄었나" 대비.{/exam}
+
+{quiz}Fast Ethernet 이 최소 프레임 크기를 512 bits 로 유지하면서 CSMA/CD 를 쓰면, Standard Ethernet(최대 2500 m) 대비 최대 네트워크 길이는 얼마가 되고 그 이유는?{/quiz}
+{answer}'''250 m''' (1/10). 512 bits 를 10배 빠르게 보내면 $T_{fr}$ 가 1/10 → $T_{fr} \geq 2T_p$ 를 지키려면 $T_p$ 도 1/10 → $T_p$ 는 길이에 비례하므로 '''길이도 1/10'''. (최소 프레임 크기는 compatibility 때문에 못 바꿈.){/answer}
+
+== 관련 문서 ==
+* [[Standard Ethernet]] · [[Gigabit Ethernet]] · [[CH04 Ethernet]]
+* [[passive hub]] · [[link-layer 스위치와 full-duplex]] · [[최소 프레임 크기]] · [[프레임 길이 제한]]
+* [[CSMA/CD]] · [[T_fr]] · [[T_p]] · [[4B/5B]] · [[NRZ-I]]

@@ -4,7 +4,9 @@
 // 사용: node src/test_render.js index.html
 const fs=require("fs"),vm=require("vm");
 const html=fs.readFileSync(process.argv[2],"utf8");
-const body=(html.match(/<script>([\s\S]*?)<\/script>\s*<\/body>/)||[])[1];
+// 마지막 inline <script> 블록만 (head.html 의 오프라인(PWA) 스크립트 등 앞선 블록은 제외, 2026-10-04)
+const _blocks=[...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
+const body=_blocks.length?_blocks[_blocks.length-1]:null;
 if(!body){console.error("script 추출 실패");process.exit(1);}
 let captured="";
 function stub(id){const e={_id:id,style:{},classList:{add(){},remove(){},toggle(){}},

@@ -127,5 +127,24 @@ category: 안내, 시험
 * [[MAC 주소]] 48 bits = 12 hex, 콜론 구분. [[broadcast 주소]] = FF:FF:FF:FF:FF:FF.
 * 프레임 안: IP = source–destination (불변), MAC = destination–source (링크마다 갱신). → [[IP 주소와 MAC 주소]]
 
+== CH04 Ethernet ==
+{|
+! 항목 || 값 || 문서
+|-
+| 4세대 데이터율 || Standard 10 Mbps / Fast 100 Mbps / Gigabit 1 Gbps (802.3z) / 10 Gigabit 10 Gbps || [[CH04 Ethernet]]
+|-
+| 프레임 필드 || Preamble 7 B (56 bits 1010…) · SFD 1 B (10101011) · Dest 6 · Src 6 · Type 2 · Data+padding 46–1500 · CRC 4 || [[Ethernet 프레임 형식]]
+|-
+| 프레임 길이 || 최소 '''64 B = 512 bits''' (CSMA/CD) · 최대 '''1518 B = 12,144 bits''' (독점 방지). Preamble+SFD 는 미포함 || [[프레임 길이 제한]]
+|-
+| 주소 전송 || byte 는 왼→오, byte 안은 '''LSB first'''. 첫 byte LSB 0 = unicast / 1 = multicast = 둘째 hex digit 짝/홀. FF:…:FF = broadcast || [[Ethernet 주소 전송 순서]] · [[Ethernet 주소 판별]]
+|-
+| 길이 제약 || $T_{fr} \ge 2T_p$, $T_{fr} = 512/R$ → 최대 길이 ∝ $1/R$. 10배 빠르면 10배 짧게: 2500 m → 250 m (Fast) → 25 m? (Gigabit, 포기) || [[Fast Ethernet]] · [[Gigabit Ethernet]]
+|-
+| 접근 방식 || Standard: CSMA/CD + 1-persistent, bus / Fast: passive hub star 또는 switch / Gigabit: full-duplex switch, no collision || [[link-layer 스위치와 full-duplex]]
+|-
+| 이름 읽기 || 10Base5 = 10 Mbps · Baseband · 500 m; -T = twisted pair, -F = fiber; 100Base-TX 4B/5B+MLT-3; 1000Base-SX 8B/10B; 10GBase-SR 64B66B || [[Ethernet implementations]]
+|}
+
 == 관련 문서 ==
 * [[계산 문제 모음]] · [[자주 틀리는 함정 모음]] · [[log₂ 계산법]] · [[bps와 Hz]]

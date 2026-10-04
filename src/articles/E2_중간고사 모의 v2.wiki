@@ -1,0 +1,581 @@
+key: 중간고사 모의 v2
+title: 중간고사 모의 v2 — 100문항 (정의→용어 · T/F · 객관식 · 서술·계산)
+category: 시험, 모의고사
+---
+2026-10-04 에 만든 '''중간고사 모의고사 v2'''. 문제는 영어(시험 언어), 해설은 한국어. 인쇄용 docx/PDF 는 `중간고사/문제풀이/중간고사_모의/중간고사_모의_v2.pdf`, 여기서는 정답이 접혀 있으니 '''먼저 답을 쓰고''' 펼친다. 틀린 문항은 해설의 링크로 바로 복습.
+
+{info}총 100문항  ·  Part A 정의→용어 24 (2 pt)  ·  Part B T/F 32 (2 pt)  ·  Part C MC 32 (3 pt)  ·  Part D 서술·계산 12 (5 pt)  = 268 pt{/info}
+
+{analogy}🎭 '''모의고사는 체온계.''' 점수보다 어느 파트·어느 장에서 열이 나는지가 정보다. 틀린 문항의 출처 페이지를 모아 보면 약한 장이 보인다.{/analogy}
+
+== Part A. Definition → Term (24문항, 각 2점) ==
+슬라이드 영어 정의를 보고 용어를 답한다.
+
+=== A1 ===
+{quiz}“Exchange of data between two devices via some form of transmission medium, i.e., wire cable.” (CH01 p.2){/quiz}
+{answer}'''Data communication'''. CH01 첫 정의. 이 정의 위에 4대 특성(Delivery, Accuracy, Timeliness, Jitter, p.3)과 5 components(Message, Sender, Receiver, Transmission medium, Protocol, p.4)가 쌓인다. 핵심 단어는 'two devices' 와 'transmission medium'.{/answer}
+
+=== A2 ===
+{quiz}“The amount of time (in seconds) that a signal needs to complete 1 cycle.” (CH02(1) p.20){/quiz}
+{answer}'''Period (T)'''. 단위는 초(s). Frequency 는 1초 동안의 period 수이므로 Frequency = 1 / Period, Period = 1 / Frequency 로 서로 역수 관계다. 정현파 3요소(peak amplitude, frequency, phase) 중 frequency 를 대신 표현하는 값.{/answer}
+
+=== A3 ===
+{quiz}“The position of the waveform relative to time 0.” (CH02(1) p.25){/quiz}
+{answer}'''Phase'''. 정현파를 나타내는 3요소(peak amplitude, frequency, phase)의 마지막. 크기·빠르기가 같아도 time 0 에 대해 얼마나 밀려 있는지가 다르면 phase 가 다르다.{/answer}
+
+=== A4 ===
+{quiz}“The distance (time) one bit occupies on the transmission medium.” (CH02(1) p.35){/quiz}
+{answer}'''Bit length'''. Bit length = 1 / (bit rate). Example 2.4: bit rate 1,536,000 bps 이면 1 / 1,536,000 ≈ 0.651 μs. Bit rate 가 커질수록 한 bit 가 차지하는 시간은 짧아진다.{/answer}
+
+=== A5 ===
+{quiz}“Each device has a dedicated point-to-point connection with only the two devices on either side of it.” (CH01 p.13){/quiz}
+{answer}'''Ring topology'''. 신호는 한 방향으로 전달되고 각 장치에 repeater 가 들어 있다. 설치·재구성과 fault isolation 이 비교적 쉽지만 ring 이 한 곳 끊기면 network 전체가 마비될 수 있다. 중앙 hub 에만 연결하면 Star, backbone 케이블에 drop line·tap 으로 붙으면 Bus 와 구분.{/answer}
+
+=== A6 ===
+{quiz}“How long it takes for an entire message to completely arrive at the destination.” (CH02(1) p.65){/quiz}
+{answer}'''Latency (Delay)'''. Latency = propagation time + transmission time + queuing time + processing delay. Propagation time = Distance / Propagation speed. 패킷마다 이 delay 가 달라지는 '변동'은 latency 가 아니라 jitter(p.69).{/answer}
+
+=== A7 ===
+{quiz}“Communication of a digital signal through a bandpass channel, which requires the signal to be modulated first.” (CH02(2) p.10 (CH02(1) p.38)){/quiz}
+{answer}'''Broadband transmission'''. CH02(2) p.10 복습 슬라이드: 'Broadband Transmission — Communication through a bandpass channel'; CH02(1) p.38 원문: 'Modulation of a digital signal for transmission on a bandpass channel'. 짝 개념 baseband transmission 은 low-pass channel(0 Hz 부터)로 디지털 신호를 변조 없이 보내는 것. bandpass channel 은 0 Hz 를 포함하지 않으므로 디지털 신호를 그대로 못 싣고 carrier 에 실어(ASK/FSK/PSK, CH02(3)) 보내야 한다 — 그래서 digital-to-analog conversion 이 필요하다. 교수(9/10): '이름에 모든 것이 있다' — broad(넓은 대역을 쓰는) band.{/answer}
+
+=== A8 ===
+{quiz}“The inverse of the sampling interval T, i.e., how many samples are taken from the analog signal per second.” (CH02(2) p.50){/quiz}
+{answer}'''Sampling rate (fs)'''. PCM 의 첫 단계에서 아날로그 신호를 T 초마다 sampling 하고, 그 역수 fs = 1/T 가 sampling rate 다. 얼마나 자주 뽑아야 하는지는 Nyquist theorem(fs ≥ 2 × 최고 주파수)이 정한다. 교수(9/10): '이름에 모든 것이 있다' — sampling rate 는 말 그대로 초당 sample 의 수.{/answer}
+
+=== A9 ===
+{quiz}“The PCM step that divides the amplitude range between Vmin and Vmax into L levels of height Δ, assigns the values 0 to L−1 to the midpoint of each level, and approximates every sample amplitude to one of these values.” (CH02(2) p.54){/quiz}
+{answer}'''Quantization'''. PCM 인코더 3단계(sampling → quantizing → encoding) 중 두 번째. Δ = (Vmax − Vmin)/L 이고, 샘플을 레벨 midpoint 로 근사하므로 오차가 −Δ/2 ~ Δ/2 범위에서 생긴다(quantization error, p.56). 이어지는 encoding 이 각 값을 nb = log₂L 비트 codeword 로 바꾼다.{/answer}
+
+=== A10 ===
+{quiz}“The process of changing one of the characteristics of an analog signal based on the information in digital data.” (CH02(3) p.35){/quiz}
+{answer}'''Digital-to-analog conversion (D2A)'''. carrier(사인파)의 세 특성 amplitude · frequency · phase 중 하나(QAM 은 둘)를 digital data 에 따라 바꾸는 것. 종류는 ASK · FSK · PSK · QAM (p.36). 송신측 modulator, 수신측 demodulator. 교수(9/10): 오늘날 source data 가 대부분 digital 이라 이 부분이 analog-to-analog 보다 더 중요하다.{/answer}
+
+=== A11 ===
+{quiz}“A modulation method in which the amplitude of the carrier signal is varied to create signal elements, while the other two parameters of the carrier remain constant.” (CH02(3) p.37){/quiz}
+{answer}'''ASK (Amplitude Shift Keying)'''. 바뀌는 것이 amplitude 하나뿐이므로 amplitude shift keying. binary 의 경우 bit 1 = carrier 있음, bit 0 = amplitude 0. 교수(9/10): 'Shift Keying' 이라는 이름은 이상해 보이니 '무엇이 변하는가(variable part)'만 외워라 — ASK 는 amplitude, FSK 는 frequency, PSK 는 phase.{/answer}
+
+=== A12 ===
+{quiz}“A digital process that allows several connections to share the high bandwidth of a link, in which time is shared instead of a portion of the bandwidth.” (CH02(3) p.52){/quiz}
+{answer}'''TDM (Time-Division Multiplexing)'''. FDM 은 analog 기법으로 주파수 축(대역폭의 일부)을 나누고, TDM 은 digital 기법으로 시간 축을 slot 으로 나눈다. 그림에서 입력 1~4 가 … 4 3 2 1 | 4 3 2 1 … 순서로 time slot 을 돌아가며 차지한다.{/answer}
+
+=== A13 ===
+{quiz}“A code where the XOR of two valid codewords creates another valid codeword. Almost all block codes used today belong to this class.” (CH03(1) p.34){/quiz}
+{answer}'''Linear block code'''. valid codeword 두 개를 XOR 해도 다시 valid codeword 가 되는 block code. 이 성질 덕분에 d_min 을 모든 쌍을 비교하지 않고 '0 이 아닌 codeword 중 1 의 최소 개수'로 바로 구할 수 있다(p.34, Ex 3.5–3.6). simple parity-check code 와 cyclic code(CRC)도 모두 여기에 속한다.{/answer}
+
+=== A14 ===
+{quiz}“The bit computed by the checker at the receiver by adding all 5 received bits in modulo-2 arithmetic, s0 = b3 + b2 + b1 + b0 + q0 (mod 2).” (CH03(1) p.40){/quiz}
+{answer}'''Syndrome'''. 수신 측 checker 가 만든 오류 표시 비트. s0 = 0 이면 오류 없음으로 보고 dataword 를 수락, s0 = 1 이면 오류로 보고 버린다(재전송 요청). CRC 에서는 수신 codeword 를 divisor 로 나눈 나머지가 syndrome 이다. 교수(9/17): 'the checker would result in a bit which we call syndrome — just to memorize this terminology.' 교수가 처음에 0/1 의미를 반대로 말했다가 'sorry, vice versa' 로 정정했으니 0 이 정상임을 확실히 기억할 것.{/answer}
+
+=== A15 ===
+{quiz}“A special byte ESC is added to the data section of the frame when there is a character with the same pattern as the flag and the ESC.” (CH03(1) p.18){/quiz}
+{answer}'''Byte stuffing'''. character-oriented framing 에서 데이터 안에 flag 와 같은 패턴의 문자가 있으면 수신 측이 프레임 끝으로 오해하므로, 그 앞에 ESC(escape character, 미리 정한 비트 패턴)를 넣는다. 데이터 속 ESC 앞에도 ESC 를 넣는다는 점이 핵심. 수신 측은 unstuffing 으로 ESC 를 제거한다. bit-oriented framing 의 bit stuffing(1 다섯 개 뒤 0 삽입)과 구분.{/answer}
+
+=== A16 ===
+{quiz}“A controlled-access method that works with topologies in which one device is designated as a primary station and the other devices are secondary stations.” (CH03(2) p.51–53){/quiz}
+{answer}'''Polling'''. 모든 데이터 교환은 primary 를 거친다. primary 가 보낼 때는 SEL(select)로 secondary 의 수신 준비를 확인하고, 받을 때는 각 secondary 에게 차례로 poll 을 보내 보낼 것이 있는지 묻는다. secondary 는 poll 을 받기 전에는 보낼 수 없는 passive(pull) 방식.{/answer}
+
+=== A17 ===
+{quiz}“A random-access method in which each station first listens to the medium before sending, in order to minimize the chance of collision and increase the performance (the basic method, without collision detection).” (CH03(2) p.30–31){/quiz}
+{answer}'''CSMA (Carrier Sense Multiple Access)'''. '보내기 전에 듣는다(sense before transmit)'. ALOHA 보다 충돌 가능성을 줄이지만, propagation delay 때문에 다른 스테이션이 이미 보낸 첫 비트가 아직 도착하지 않았으면 idle 로 오판할 수 있어 충돌을 없애지는 못한다. 그래서 vulnerable time 은 T_p(p.33). busy 일 때의 행동이 persistence method(1-persistent, nonpersistent, p-persistent).{/answer}
+
+=== A18 ===
+{quiz}“An error-detecting technique that can be applied to a message of any length; it is mostly used in the network and transport layers rather than in the data-link layer.” (CH03(1) p.51){/quiz}
+{answer}'''Checksum'''. CRC 처럼 오류 검출 기법이지만 임의 길이 메시지에 적용 가능하며 주로 network·transport layer 에서 쓰인다. 슬라이드에서도 'Will discuss it later, in the network layer' — 이번 장에서는 이름과 위치만 알면 된다(교수 9/17: 'we will not discuss in depth at this time').{/answer}
+
+=== A19 ===
+{quiz}“One of the two DLC protocols on the slides: it is derived from HDLC and is used for P2P links.” (CH03(1) p.52){/quiz}
+{answer}'''PPP (Point-to-Point Protocol)'''. 슬라이드 'Two DLC Protocols' 의 두 번째. HDLC 는 P2P 와 multipoint 링크 모두를 위한 bit-oriented 프로토콜이고 LAN 용 여러 프로토콜의 바탕이며, PPP 는 HDLC 에서 파생되어 P2P 링크 전용으로 쓰인다. 이름 그대로 point-to-point. HDLC 의 transfer mode(NRM, ABM)와 frame 3종(I/S/U)은 p.53–56.{/answer}
+
+=== A20 ===
+{quiz}“The sublayer of the data-link layer that deals only with issues specific to broadcast links, whereas the other sublayer deals with issues for both point-to-point and broadcast links.” (CH03(1) p.12){/quiz}
+{answer}'''Media Access Control (MAC)'''. data-link layer 의 두 sublayer: DLC(P2P·broadcast 공통 — framing, error control) / MAC(broadcast link 전용 — 공유 매체 접근). P2P 링크는 두 장치 전용이라 매체를 나눌 일이 없으므로 MAC 이 필요 없다. 교수(9/15): 'It is about sharing a channel. So it should be related to broadcasting.'{/answer}
+
+=== A21 ===
+{quiz}“A characteristic of Standard Ethernet: each frame sent is independent of the previous or next frame; the sender sends a frame whenever it has it, and the receiver may or may not be ready for it; if the receiver finds a frame corrupted using CRC-32, it drops the frame silently.” (CH04(1) p.15–17){/quiz}
+{answer}'''Connectionless and unreliable service'''. connectionless = 프레임마다 독립(연결 설정·순서 관리 없음), unreliable = 수신 준비 여부를 확인하지 않고, 깨진 프레임은 CRC-32 로 검출만 하고 조용히 버린다(ACK/NAK·재전송 요청 없음). 교수(10/1): 'it just drops the frame silently ... it doesn't respond NAK or something, some retransmission request' — 재전송은 Ethernet 이 아니라 상위 계층(예: TCP)의 몫이다.{/answer}
+
+=== A22 ===
+{quiz}“A 7-byte (56-bit) field of alternating 1s and 0s at the start of an Ethernet frame that alerts the receiving system to the coming frame and enables it to synchronize its clock.” (CH04(1) p.18){/quiz}
+{answer}'''Preamble'''. 프레임 맨 앞 7 bytes, 10101010… 반복 패턴. 수신기가 '프레임이 온다'는 것을 알아채고 bit 동기를 맞추게 한다. 다음 필드 SFD 와 함께 physical-layer header 이므로 64B/1518B 프레임 길이에 포함되지 않는다.{/answer}
+
+=== A23 ===
+{quiz}“The 1-byte field 10101011 that flags the beginning of the frame; its last two bits 11 alert the receiver that the next field is the destination address.” (CH04(1) p.18){/quiz}
+{answer}'''SFD (Start Frame Delimiter)'''. Preamble 뒤의 1 byte. 앞 6비트는 Preamble 과 같은 10 반복이고 마지막이 11 로 끝나 '여기서 패턴이 깨진다 = 다음은 Destination address' 를 알린다. 역시 physical layer 에서 붙는 header 다.{/answer}
+
+=== A24 ===
+{quiz}“An effort to set standards that enable intercommunication among equipment from a variety of manufacturers, specifying functions of the physical and the data-link layers of major LAN protocols.” (CH04(1) p.12){/quiz}
+{answer}'''IEEE Project 802'''. 제조사가 달라도 LAN 장비끼리 통신되도록 표준을 정한 프로젝트. physical layer 와 data-link layer 의 기능만 규정한다(그 위 계층은 대상 아님). Ethernet 은 802.3, Gigabit Ethernet 은 802.3z(p.38).{/answer}
+
+== Part B. True / False (32문항, 각 2점) ==
+
+=== B1 ===
+{quiz}(T / F) A fully connected mesh of 6 devices needs 15 duplex-mode links. (CH01 p.10){/quiz}
+{answer}'''T'''. Mesh topology 는 모든 장치가 다른 모든 장치와 dedicated point-to-point link 를 가진다. duplex-mode 링크 하나가 양방향을 맡으므로 필요한 링크 수 = n(n − 1)/2 = 6 × 5 / 2 = 15. (simplex 로 방향마다 따로 놓으면 n(n − 1) = 30.) 배선이 많아 비싸지만(bulk of wiring → expensive) traffic 문제가 없고 robust 하며 privacy·security, fault identification/isolation 이 좋다.{/answer}
+
+=== B2 ===
+{quiz}(T / F) In a star topology, devices are attached to one long backbone cable through drop lines and taps, so no central controller is required. (CH01 p.11–12){/quiz}
+{answer}'''F'''. 함정: Bus topology 의 설명을 Star 에 붙였다. Backbone 케이블 + drop line(장치↔케이블 선) + tap(케이블 접속점)은 Bus(multipoint connection)의 요소다. 맞는 문장: In a star topology, each device has a dedicated point-to-point link only to a central controller such as a hub.{/answer}
+
+=== B3 ===
+{quiz}(T / F) Because the transmission medium carries bits, the logical unit between two physical layers in two devices is an electrical or optical signal. (CH01 p.33){/quiz}
+{answer}'''F'''. 함정: 단위를 뒤바꿨다. 슬라이드: 'Transmission medium does not carry bits, but electrical or optical signals' 그리고 'The logical unit between two physical layers in two devices is a bit'. 맞는 문장: The transmission medium carries electrical or optical signals, not bits, and the logical unit between two physical layers is a bit.{/answer}
+
+=== B4 ===
+{quiz}(T / F) The routers in the path, which choose the best route for each packet, do so as a function of the transport layer. (CH01 p.35){/quiz}
+{answer}'''F'''. 함정: 계층 바꿔치기. 최적 경로 선택과 host-to-host 통신은 network layer 의 일이며 그 main protocol 이 IP 다. Transport layer 는 end-to-end logical connection(TCP, UDP)을 담당하고, 라우터는 network·data link·physical 3계층만 구현하므로 transport layer 자체가 없다(p.26). 맞는 문장: ... as a function of the network layer.{/answer}
+
+=== B5 ===
+{quiz}(T / F) If a composite signal is periodic, its Fourier decomposition gives a combination of sine waves with continuous frequencies. (CH02(1) p.29){/quiz}
+{answer}'''F'''. 함정: periodic/non-periodic 결과를 뒤집었다. Periodic composite signal → discrete frequencies 의 series, non-periodic composite signal → continuous frequencies 의 조합. 맞는 문장: If a composite signal is periodic, the decomposition gives a series of signals with discrete frequencies.{/answer}
+
+=== B6 ===
+{quiz}(T / F) In data communications, periodic analog signals and non-periodic digital signals are commonly used. (CH02(1) p.17){/quiz}
+{answer}'''T'''. 슬라이드 원문 그대로. Periodic 은 측정 가능한 시간(period) 안에 패턴을 완성하고, aperiodic 은 패턴·주기 없이 변한다. 아날로그는 주기 신호(sine wave 등), 디지털은 비주기 신호를 주로 쓴다 — 조합을 거꾸로 외우지 않도록 주의.{/answer}
+
+=== B7 ===
+{quiz}(T / F) Jitter occurs because different packets of data encounter different delays, and it is one of the four fundamental characteristics on which the effectiveness of a communication system depends. (CH01 p.3, CH02(1) p.69){/quiz}
+{answer}'''T'''. CH01 p.3 의 4대 특성은 Delivery·Accuracy·Timeliness·Jitter(패킷 도착 시간의 variation). CH02(1) p.69 에서 'Different packets of data encounter different delays' 로 다시 정의된다. 실시간 음성·영상에서 jitter 가 크면 끊김이 생긴다.{/answer}
+
+=== B8 ===
+{quiz}(T / F) If we want to send data faster than the Shannon capacity of a telephone line, we can either increase the bandwidth of the line or improve the signal-to-noise ratio. (CH02(1) p.55){/quiz}
+{answer}'''T'''. Example 2.8 의 결론 문장. Capacity = Bandwidth × log₂(1 + SNR) 이므로 상한을 올리려면 bandwidth 를 넓히거나 SNR 을 높여야 한다. Signal level 수 L 을 늘리는 것은 Nyquist(noiseless) 쪽 이야기이고 Shannon 상한 자체는 올리지 못한다.{/answer}
+
+=== B9 ===
+{quiz}(T / F) A bandpass analog signal occupies the band from 40 kHz to 50 kHz. Since its bandwidth is only 10 kHz, PCM can reproduce it with a sampling rate of 20,000 samples per second. (CH02(2) p.51){/quiz}
+{answer}'''F'''. 함정(sampling rate 와 bandwidth 혼동). Nyquist theorem 의 기준은 bandwidth 가 아니라 highest frequency 이다(슬라이드 '(not bandwidth)'). 맞는 문장: 'The sampling rate must be at least 2 × 50 kHz = 100,000 samples per second.' 20 k samples/s 는 Nyquist rate 의 1/5 이므로 undersampling 이 되어 원 신호를 복원할 수 없다.{/answer}
+
+=== B10 ===
+{quiz}(T / F) When 4B/5B block coding is applied, the bit rate on the line becomes 4/5 of the original data rate, a 20% saving, because the 5-bit codewords avoid long runs of 0s. (CH02(2) p.45–46){/quiz}
+{answer}'''F'''. 함정(방향 반대). 4비트마다 5비트를 보내므로 line bit rate 는 원래의 5/4 배, 즉 25% 늘어난다(예: 100 Mbps 데이터 → 125 Mbps). 맞는 문장: 'With 4B/5B, the line bit rate is 5/4 of the data rate (a 25% increase); the redundancy buys synchronization and error detection.' n > m 인 mB/nB 는 항상 redundancy 를 추가한다.{/answer}
+
+=== B11 ===
+{quiz}(T / F) For any digital-to-analog modulation, the signal (baud) rate S can never be smaller than the data (bit) rate N. (CH02(2) p.63, CH02(3) p.38){/quiz}
+{answer}'''F'''. 함정(baud 와 bps 의 크기 방향). S = N / r 이므로 signal element 하나가 r > 1 비트를 실으면 S < N 이다(예: r = 4, N = 12 kbps → S = 3 kbaud). 맞는 문장: 'With r ≥ 1 the baud rate is never larger than the bit rate; it equals the bit rate only when r = 1.' 교수(9/10): 'the terminology is very important' — signal 의 단위(baud)와 data 의 단위(bps)는 다르다.{/answer}
+
+=== B12 ===
+{quiz}(T / F) At the FDM receiver, the multiplexed signal is separated by giving each channel its own time slot, whereas TDM separates channels with band filters. (CH02(3) p.51–52){/quiz}
+{answer}'''F'''. 함정(FDM/TDM 뒤바꿈). FDM 은 analog 기법으로 수신측에서 filter 들이 합성 신호를 주파수 대역별로 분해한 뒤 각 carrier 로 demodulate 한다. time slot 으로 나누는 것은 digital 기법인 TDM. 맞는 문장: 'FDM demultiplexing uses filters to decompose the multiplexed signal; TDM shares time slots.'{/answer}
+
+=== B13 ===
+{quiz}(T / F) A PCM decoder recovers the analog signal by connecting the received samples and then passing the result through a low-pass filter. (CH02(2) p.60){/quiz}
+{answer}'''T'''. PCM decoder: digital data → 각 codeword 를 레벨 값으로 복원해 sample 들을 이음(계단형 신호) → low-pass filter 로 매끄럽게 하여 원래 analog signal 을 복원한다.{/answer}
+
+=== B14 ===
+{quiz}(T / F) Because delta modulation sends only one bit per sample, its bit rate is equal to its sampling rate. (CH02(2) p.65){/quiz}
+{answer}'''T'''. DM 은 직전 sample 대비 증가면 1, 감소면 0 — sample 당 1비트만 보낸다. 따라서 N = fs × 1 = fs. PCM 은 sample 당 nb 비트이므로 N = fs × nb 로 nb 배 크다.{/answer}
+
+=== B15 ===
+{quiz}(T / F) In binary PSK, the two signal elements have the same amplitude and the same frequency; they differ only in phase, by 180°. (CH02(3) p.44){/quiz}
+{answer}'''T'''. PSK 는 phase 만 변하고 amplitude·frequency 는 일정하다. BPSK 에서 bit 1 = phase 0°, bit 0 = phase 180°. 그래서 carrier 가 하나뿐이고 대역폭은 ASK 와 같은 (1 + d)S 이다(교재).{/answer}
+
+=== B16 ===
+{quiz}(T / F) In FDM, adjacent channels are kept apart by guard bands, so the link bandwidth must be larger than the simple sum of the channel bandwidths. (CH02(3) p.49){/quiz}
+{answer}'''T'''. FDM 적용 조건: link 대역폭 > 전송할 신호들의 대역폭 합. 채널 사이에 사용하지 않는 대역(guard band)을 두어 인접 채널 간 간섭을 막으므로, n 개 채널이면 n × 채널 대역 + (n − 1) × guard band 가 필요하다.{/answer}
+
+=== B17 ===
+{quiz}(T / F) The Hamming distance between a received codeword and the codeword that was sent equals the number of bits corrupted during transmission. (CH03(1) p.27–28){/quiz}
+{answer}'''T'''. p.27–28: Hamming distance d(x, y) 는 같은 길이 두 word 에서 대응 비트가 다른 개수 = x ⊕ y 의 1 의 개수. 전송 중 비트 하나가 뒤집힐 때마다 보낸 codeword 와 받은 word 의 거리가 1 씩 늘어나므로, 받은 word 와 보낸 codeword 사이의 Hamming distance 가 곧 깨진 비트 수다. 이 사실이 검출(d_min = s + 1)·정정(d_min = 2t + 1) 조건의 출발점이다. 교수(9/17): 'please memorize or please understand well about this diagram. This is crucial to understand the error correction capability.'{/answer}
+
+=== B18 ===
+{quiz}(T / F) For a linear block code, the minimum Hamming distance is the minimum number of 1s among all codewords in the code set, including the all-zero codeword. (CH03(1) p.34, p.36){/quiz}
+{answer}'''F'''. all-zero codeword 를 포함하면 1 의 최소 개수가 항상 0 이 되어 의미가 없다. linear block code 에는 반드시 00…0 이 들어 있으므로(자기 자신과 XOR) d_min 은 '0 이 아닌 codeword 중 1 의 최소 개수'다(Ex 3.6: 2, 2, 2 → d_min = 2). 맞는 문장: … the minimum number of 1s among the nonzero codewords. 교수(9/17): 'Remember that we don't consider all-zero codewords in calculating d_min.'{/answer}
+
+=== B19 ===
+{quiz}(T / F) In character-oriented framing, when the receiver encounters an ESC byte in the data section, it removes the ESC and treats the next byte as data, even if that byte has the same pattern as the flag. (CH03(1) p.18){/quiz}
+{answer}'''T'''. 수신 측 unstuffing 규칙 그대로다. ESC 는 '바로 다음 바이트는 경계가 아니라 데이터' 라는 표시이므로, 수신기는 ESC 를 지우고 다음 바이트를 flag 패턴이든 ESC 패턴이든 무조건 데이터로 받아들인다. 그래서 송신 측은 flag 패턴뿐 아니라 ESC 패턴의 데이터 문자 앞에도 ESC 를 넣어야 한다 — 그렇지 않으면 데이터 속 ESC 를 수신기가 표시로 오해해 바로 뒤의 진짜 flag 를 데이터로 처리해 버린다. 교수(9/15): 'This one is just for differentiation between flag in the data field and the starting and ending points.'{/answer}
+
+=== B20 ===
+{quiz}(T / F) Communication at the data-link layer is node-to-node, so an intermediate router must both decapsulate the frame it receives and encapsulate the datagram in a new frame for the next link. (CH03(1) p.9–10){/quiz}
+{answer}'''T'''. data-link layer 는 end-to-end(transport layer)가 아니라 node-to-node. 링크마다 프로토콜·frame format 이 다를 수 있으므로 중간 노드는 받은 frame 을 풀고(decapsulate) 다음 링크용 frame 으로 다시 싼다(encapsulate). 교수(9/15): 이것이 'the essential key words of data link'.{/answer}
+
+=== B21 ===
+{quiz}(T / F) In the slide example of communication between Alice and Bob, there are three separate logical connections between the data-link layers along the path, one for each router. (CH03(1) p.8–10){/quiz}
+{answer}'''F'''. 함정(연결 수는 라우터 수가 아니라 링크 수). 슬라이드 p.8: 'Can see five separate logical connections between the data-link layers' — 경로 위 링크마다(호스트–라우터, 라우터–라우터, …) 별도의 data-link 연결이 하나씩 생기므로 그림에서는 다섯 개다. 맞는 문장: There are five separate logical connections between the data-link layers, one for each link on the path. 교수(9/15): data-link 통신은 node-to-node.{/answer}
+
+=== B22 ===
+{quiz}(T / F) In p-persistent CSMA, a station that has decided (with probability q = 1 − p) to wait for the next time slot and then finds the line busy acts as though a collision has occurred and uses the backoff procedure. (CH03(2) p.37–39){/quiz}
+{answer}'''T'''. p-persistent 절차: idle 을 찾은 뒤 ① 확률 p 로 전송, ② 확률 q = 1 − p 로 다음 slot 시작까지 기다렸다가 다시 감지 → a. idle 이면 ① 로, b. busy 면 충돌이 난 것처럼 backoff procedure 를 따른다(p.39). 교수(9/22): p-persistent 는 'more complicated, although it is often used'.{/answer}
+
+=== B23 ===
+{quiz}(T / F) In HDLC, S-frames transport user data together with control information that relates to the user data (piggybacking). (CH03(1) p.56){/quiz}
+{answer}'''F'''. 사용자 데이터 + piggybacking 은 I-frame(information frame)의 역할이다. S-frame(supervisory)은 제어 정보만, U-frame(unnumbered)은 시스템 관리용. 맞는 문장: I-frames transport user data and control information that relates to user data (piggybacking).{/answer}
+
+=== B24 ===
+{quiz}(T / F) An Ethernet broadcast link-layer address is 48 bits that are all 1s, written as twelve hexadecimal digits FF:FF:FF:FF:FF:FF. (CH03(2) p.62){/quiz}
+{answer}'''T'''. Ex 3.15: broadcast 주소는 48비트 모두 1 → 16진수 F 열두 개. one-to-all, 링크 안의 모든 엔티티에게 전달된다. 교수(9/29): 'crazy-looking … all F in twelve hexadecimal'.{/answer}
+
+=== B25 ===
+{quiz}(T / F) A CRC decoder divides the whole received codeword by the divisor without appending any 0s, and accepts the dataword only when the remainder is all 0s. (CH03(1) p.45, p.47){/quiz}
+{answer}'''T'''. 0 을 붙이는 것(augmented dataword)은 encoder 에서만 한다. decoder 는 받은 n 비트 codeword 전체를 같은 divisor 로 나누고, 나머지 = syndrome. all-0s 이면 dataword(앞 k 비트)를 수락, 아니면 버린다. 교수(9/17): 'all-zero syndrome means our codeword can be fully divided by our divisor'.{/answer}
+
+=== B26 ===
+{quiz}(T / F) In fixed-size framing, a flag is still needed at the beginning and the end of each frame to define its boundaries. (CH03(1) p.16){/quiz}
+{answer}'''F'''. fixed-size framing 은 크기 자체가 경계 역할을 하므로 경계를 정의할 필요가 없다(예: ATM WAN 의 cell). 경계 표시(flag)가 필요한 것은 LAN 에서 흔한 variable-size framing. 맞는 문장: In variable-size framing, the end of one frame and the beginning of the next must be defined.{/answer}
+
+=== B27 ===
+{quiz}(T / F) The minimum frame length of 64 bytes in Standard Ethernet exists to prevent one station from monopolizing the shared medium. (CH04(1) p.19){/quiz}
+{answer}'''F'''. 함정: 최소·최대 길이의 이유를 뒤바꿨다. 맞는 문장: 최소 64 bytes 는 CSMA/CD 가 제대로 동작하도록(T_fr ≥ 2T_p, 전송이 끝나기 전에 충돌을 감지) 필요하고, '한 스테이션의 매체 독점 방지' 는 최대 길이 1518 bytes 의 이유다.{/answer}
+
+=== B28 ===
+{quiz}(T / F) The 8-byte physical-layer header in front of the destination address is counted in the 64-byte minimum frame length of Standard Ethernet. (CH04(1) p.18–19){/quiz}
+{answer}'''F'''. 함정. destination address 앞의 8 bytes 는 Preamble(7) + SFD(1)이며, 이 둘은 physical-layer header 라서 프레임 길이에 들어가지 않는다. 맞는 문장: 64 bytes = Destination 6 + Source 6 + Type 2 + Data(최소 46, padding 포함) + CRC 4. 최대 1518 bytes = 6 + 6 + 2 + 1500 + 4. 교수(10/1): 'although we see these preambles at the same level with the second layer header such as MAC addresses ... they are appended at the first layer.'{/answer}
+
+=== B29 ===
+{quiz}(T / F) When an Ethernet address is put on the line, the bytes are sent from left to right, and within each byte the most significant bit is sent first. (CH04(1) p.20–22){/quiz}
+{answer}'''F'''. 함정. byte 순서는 left → right 가 맞지만, 각 byte 안에서는 least significant bit(LSB)가 먼저 나간다(byte 안에서 right → left). 그래서 첫 byte 의 LSB — unicast(0)/multicast(1) 를 정하는 비트 — 가 수신기에 가장 먼저 도착한다. 교수(10/1): 'why is it employing this confusing protocol? ... because they want to announce the receiver about whether this transmission is unicast or not.'{/answer}
+
+=== B30 ===
+{quiz}(T / F) To stay compatible with Standard and Fast Ethernet, Gigabit Ethernet must use CSMA/CD in every mode of operation. (CH04(1) p.39–40){/quiz}
+{answer}'''F'''. 함정. compatibility 는 address 길이·frame format·최소/최대 frame 길이를 그대로 두는 것이지 MAC 방식을 유지하는 것이 아니다. 512 bits 를 1 Gbps 로 보내면 망이 약 25 m 이하여야 해서 CSMA/CD 유지는 사실상 불가능 → half-duplex 또는 full-duplex(대부분 full-duplex)를 쓰고, full-duplex 에서는 central switch 가 목적지로만 프레임을 보내므로 collision 이 없고 CSMA/CD 가 필요 없다. 교수(10/1): 'they did not take this way (a 25 m network) ... they just employed the second option ... no collisions, meaning that we don't need CSMA/CD.'{/answer}
+
+=== B31 ===
+{quiz}(T / F) Standard Ethernet uses CSMA/CD with the 1-persistent method as its medium access method. (CH04(1) p.25){/quiz}
+{answer}'''T'''. 맞다. Standard Ethernet(10 Mbps)의 MAC 은 1-persistent CSMA/CD — 채널이 idle 이 되는 즉시 확률 1 로 전송한다. (CH03(2) 의 persistence methods 가 실제 쓰이는 곳){/answer}
+
+=== B32 ===
+{quiz}(T / F) The 10 Gbps data rate of 10 Gigabit Ethernet is measured at the physical layer, so the rate an application actually experiences is lower than 10 Gbps. (CH04(1) p.13, p.37; 녹음 10/1){/quiz}
+{answer}'''T'''. 맞다. 4세대 속도(10 / 100 / 1000 / 10,000 Mbps)는 physical layer 에서 잰 값이다. 상위 계층 header·trailer, Preamble, 재전송 등의 오버헤드 때문에 사용자 체감 속도는 더 낮다. 교수(10/1): 'don't confuse this speed ... as your experienced user speed ... because it is actually the speed measured at physical layer.'{/answer}
+
+== Part C. Multiple Choice (32문항, 각 3점) ==
+
+=== C1 ===
+{quiz}At which TCP/IP layer is a datagram taken and encapsulated in a packet called a frame, to be moved across a single link? (CH01 p.34)<br>① Network layer<br>② Transport layer<br>③ Data link layer<br>④ Physical layer{/quiz}
+{answer}'''③ Data link layer'''. 정답 ③ Data link layer. 'Takes a datagram and encapsulates it in a packet called a frame' — 한 link(wired/wireless LAN·WAN)를 건너 옮긴다. ① Network layer 는 datagram 을 만드는 쪽(IP)이며 frame 은 그 아래 계층의 PDU 다. ② Transport layer 의 PDU 는 segment(TCP) 또는 user datagram(UDP). ④ Physical layer 의 logical unit 은 bit 이며 frame 안의 bit 하나하나를 신호로 실어 나른다.{/answer}
+
+=== C2 ===
+{quiz}A message goes from a source host, through one router, to a destination host. Which device does NOT need to implement the transport layer? (CH01 p.26, p.31)<br>① The router<br>② The source host<br>③ The destination host<br>④ Both end hosts, because TCP runs only inside the router{/quiz}
+{answer}'''① The router'''. 정답 ① router. 'Intermediate nodes can be simpler than end nodes' — router 는 network·datalink·physical 3계층만 가진다. ②③ end host(end user)는 application·transport·network·datalink·physical 5계층을 모두 구현해야 end-to-end logical connection 이 성립한다. ④ TCP 는 transport layer 프로토콜로 양 끝 host 에서 동작하며, router 에는 transport layer 가 없다.{/answer}
+
+=== C3 ===
+{quiz}The Addressing slide gives one example address for each layer. Which example is used at the transport layer? (CH01 p.39)<br>① www.dgist.ac.kr<br>② 443<br>③ 192.168.0.1<br>④ 00:1A:2B:...{/quiz}
+{answer}'''② 443'''. 정답 ② 443 (port number: 80, 443, 53). 계층마다 주소가 다르다. ① www.dgist.ac.kr 은 application layer 의 이름(URL·email 주소). ③ 192.168.0.1 은 network layer 의 IP address. ④ 00:1A:2B:... 는 data link layer 의 link-layer(MAC) address.{/answer}
+
+=== C4 ===
+{quiz}In which mode of data flow can only one of the two devices on a link transmit, while the other can only receive? (CH01 p.5)<br>① Half-duplex<br>② Full-duplex<br>③ Multipoint<br>④ Simplex{/quiz}
+{answer}'''④ Simplex'''. 정답 ④ Simplex — unidirectional. ① Half-duplex 는 양쪽 모두 송·수신 가능하지만 동시에는 안 된다(walkie-talkie). ② Full-duplex 는 양쪽이 동시에 송·수신하며 채널 용량을 두 방향이 나눠 쓴다. ③ Multipoint 는 data flow 가 아니라 connection 유형(두 개보다 많은 장치가 한 link 공유)이다.{/answer}
+
+=== C5 ===
+{quiz}What does a frequency-domain plot of a single sine wave show? (CH02(1) p.26)<br>① Only its peak amplitude and its frequency<br>② The change of its amplitude with respect to time<br>③ Its peak amplitude and its phase<br>④ Its bit rate and bit length{/quiz}
+{answer}'''① Only its peak amplitude and its frequency'''. 정답 ①. Frequency-domain plot 은 'Concern with only the peak value and the frequency' — 정현파 하나는 해당 주파수 위치의 막대 하나로 그려진다. ② 시간에 따른 amplitude 변화는 time-domain plot. ③ peak amplitude 는 맞지만, 슬라이드 정의상 frequency-domain plot 은 phase 를 다루지 않는다('only the peak value and the frequency'). ④ bit rate·bit length 는 digital signal 의 개념이다.{/answer}
+
+=== C6 ===
+{quiz}Data rate depends on three factors. Which item lies outside that list? (CH02(1) p.47)<br>① The bandwidth available<br>② The physical length of the cable between the two devices<br>③ The level of the signals we use<br>④ The quality of the channel (the amount of noise){/quiz}
+{answer}'''② The physical length of the cable between the two devices'''. 정답 ②. 슬라이드의 세 요인은 bandwidth, signal level 수, channel quality(noise 양). 케이블 길이는 propagation time(latency)에 영향을 주지만 data rate limit 의 세 요인이 아니다. ① bandwidth 는 Nyquist·Shannon 모두에 들어간다. ③ level 수 L 은 Nyquist 의 log₂ L. ④ noise 는 Shannon 의 SNR 로 들어간다.{/answer}
+
+=== C7 ===
+{quiz}A subscriber line has a bandwidth of 4 kHz, yet with a sophisticated modem it can carry data at up to 56,000 bps. Which statement explains this correctly? (CH02(1) p.61–62)<br>① The line's bandwidth actually increases from 4 kHz to 56 kHz when the modem is used.<br>② 56,000 bps is the throughput, and 4 kHz is the latency of the line.<br>③ 4 kHz is the bandwidth in hertz (the range of frequencies the line can pass), while 56,000 bps is its bandwidth in bits per second.<br>④ The two numbers contradict each other, because a bit rate can never exceed the bandwidth in hertz.{/quiz}
+{answer}'''③ 4 kHz is the bandwidth in hertz (the range of frequencies the line can pass), while 56,000 bps is its bandwidth in bits per second.'''. 정답 ③. Bandwidth 는 두 가지 측정값: bandwidth in Hertz(신호에 포함되거나 채널이 통과시키는 주파수 범위)와 bandwidth in bps(채널·링크가 보낼 수 있는 초당 bit 수). Example 2.10 이 바로 그 예. ① 모뎀은 digital 신호를 analog 로 바꿀 뿐 선로의 Hz 대역을 넓히지 않는다. ② throughput 은 실제로 측정되는 전송 속도이고, latency 는 Hz 가 아니라 시간 단위다. ④ bit rate 는 Hz 값을 넘을 수 있다 — Nyquist 만 봐도 2 × Bandwidth × log₂ L 이다.{/answer}
+
+=== C8 ===
+{quiz}Which of the following signals has the highest frequency? (CH02(1) p.20, p.22–24)<br>① The constant 1.5 V voltage of a battery<br>② The U.S. electrical voltage (60 Hz)<br>③ A periodic signal whose period is 1 ms<br>④ A periodic signal whose period is 1 μs{/quiz}
+{answer}'''④ A periodic signal whose period is 1 μs'''. 정답 ④. f = 1 / T 이므로 1 μs → 1 MHz. ① 배터리 전압은 전혀 변하지 않으므로 0 Hz(Example 2.1, 0-freq sine wave) — 가장 낮다. ② 60 Hz(Example 2.2). ③ 1 ms → 1 kHz. 크기 순: 0 Hz < 60 Hz < 1 kHz < 1 MHz.{/answer}
+
+=== C9 ===
+{quiz}A voice signal is digitized by PCM at a fixed sampling rate. Which change increases the PCM bit rate while leaving the sampling rate unchanged? (CH02(2) p.56–57)<br>① Increasing the number of quantization levels from L = 64 to L = 256<br>② Digitizing a signal whose highest frequency is twice as large<br>③ Lowering the sampling rate from the Nyquist rate to one half of it<br>④ Adding a low-pass filter after the PCM decoder{/quiz}
+{answer}'''① Increasing the number of quantization levels from L = 64 to L = 256'''. 정답 ①: N = fs × nb 이고 nb = log₂L. L 이 64 → 256 이면 nb 가 6 → 8 로 늘어 N 이 4/3 배가 되고, fs 는 그대로다(덤으로 SNRdB 도 약 12 dB 개선). ② 최고 주파수가 바뀌면 Nyquist 에 의해 fs 자체가 바뀐다 — 조건 위반. ③ fs 를 줄이는 것이며 bit rate 도 줄고 undersampling 이 된다. ④ decoder 의 low-pass filter 는 복원 단계로 송신 bit rate 와 무관하다.{/answer}
+
+=== C10 ===
+{quiz}In the proof that the minimum bandwidth of a PCM signal is Bmin = nb × B_analog, which result is used in the final step S ≤ 2B? (CH02(2) p.61–64)<br>① The Nyquist sampling theorem, fs = 2 × B_analog<br>② Shannon capacity, C = B × log₂(1 + SNR)<br>③ The Nyquist bit rate formula: a channel of bandwidth B can carry at most 2B symbols per second<br>④ The quantization SNR formula, SNRdB = 6.02 nb + 1.76{/quiz}
+{answer}'''③ The Nyquist bit rate formula: a channel of bandwidth B can carry at most 2B symbols per second'''. 정답 ③: 증명 흐름은 (1) Nyquist sampling theorem 으로 fs = 2B_analog → (2) N = nb × fs, r = 1 이라 S = N → (3) Nyquist bit rate formula 로 S ≤ 2B → B ≥ S/2 = nb × B_analog. 마지막 단계가 쓰는 것은 '같은 이름의 다른 정리'인 Nyquist bit rate 다. ① 은 첫 단계(sampling rate)에서 쓰인다. ② Shannon 은 noisy channel 의 capacity 로 증명에 등장하지 않는다. ④ 는 양자화 잡음 공식으로 대역폭과 무관하다.{/answer}
+
+=== C11 ===
+{quiz}Compared with PCM, what does delta modulation transmit for each sample? (CH02(2) p.65)<br>① An nb-bit codeword representing the quantized amplitude of the sample<br>② A single bit telling whether the signal went up or down relative to the previous sample<br>③ The exact difference from the previous sample, encoded with nb bits<br>④ A carrier whose amplitude follows the sample value{/quiz}
+{answer}'''② A single bit telling whether the signal went up or down relative to the previous sample'''. 정답 ②: DM 은 직전 sample 대비 변화만 1비트로 부호화(증가 1, 감소 0). 교수(9/10): '이름에 모든 것이 있다' — delta = 직전 time step 과의 차이. ① 은 PCM 의 encoding. ③ 차이의 '크기'를 nb 비트로 보내지 않는다 — 방향만 1비트. ④ carrier 의 amplitude 를 바꾸는 것은 D2A 의 ASK 이지 A2D 기법이 아니다.{/answer}
+
+=== C12 ===
+{quiz}Which technique varies both the amplitude and the phase of the carrier? (CH02(3) p.36)<br>① ASK<br>② FSK<br>③ PSK<br>④ QAM{/quiz}
+{answer}'''④ QAM'''. 정답 ④ QAM (Quadrature Amplitude Modulation) = ASK + PSK 결합으로 amplitude 와 phase 를 동시에 바꾼다. ① ASK 는 amplitude 만, ② FSK 는 frequency 만(f₁/f₂), ③ PSK 는 phase 만 바꾼다. 교수(9/10): 이름이 낯설어도 '변하는 부분(variable part)'을 기억하라.{/answer}
+
+=== C13 ===
+{quiz}A 4B/5B receiver gets the 5-bit group 00100. According to the mapping table on the slides, what does it represent? (CH02(2) p.47)<br>① The data sequence 0010<br>② The control sequence Q (Quiet)<br>③ The control sequence H (Halt)<br>④ The data sequence 0100{/quiz}
+{answer}'''③ The control sequence H (Halt)'''. 정답 ③ H (Halt) = 00100. ① 0010 의 코드는 10100 이다 — 4비트 앞에 0 을 붙인 것이 아니다. ② Q (Quiet) 는 00000. ④ 0100 의 코드는 01010. 32개 5비트 패턴 중 16개는 data, 8개는 control sequence(Q, I, H, J, K, T, S, R)이고 나머지는 쓰지 않아 error detection 에 쓰인다.{/answer}
+
+=== C14 ===
+{quiz}At the transmitter side of FDM, how does each source's signal end up in its own channel? (CH02(3) p.50)<br>① Each source is given its own time slot in a repeating frame.<br>② A modulator shifts each source onto a different carrier frequency, and the modulated signals are then summed.<br>③ Filters at the transmitter pass only one source at a time onto the link.<br>④ Each source sends its baseband signal directly, and the sources are separated by amplitude.{/quiz}
+{answer}'''② A modulator shifts each source onto a different carrier frequency, and the modulated signals are then summed.'''. 정답 ②: FDM 송신 과정은 소스마다 서로 다른 carrier(f₁, f₂, f₃)로 modulate → 합산(+) → 하나의 합성 신호로 link 에 실음. ① time slot 은 TDM. ③ filter 는 수신측 demultiplexing 에서 대역을 분리할 때 쓴다(p.51). ④ baseband 그대로 보내면 모두 같은 저주파 대역을 차지해 겹친다 — FDM 은 주파수로 나누지 amplitude 로 나누지 않는다.{/answer}
+
+=== C15 ===
+{quiz}A modulated signal carries data at N = 12 kbps with a signal rate of S = 3 kbaud. How many bits does each signal element carry (r), and how many distinct signal elements (L) are needed? (CH02(2) p.22, p.63)<br>① r = 3, L = 8<br>② r = 4, L = 8<br>③ r = 0.25, L = 2<br>④ r = 4, L = 16{/quiz}
+{answer}'''④ r = 4, L = 16'''. 정답 ④: r = N / S = 12 / 3 = 4 bits per element, L = 2^r = 2⁴ = 16 (Nyquist 공식의 log₂L = 심볼당 비트 수). ① r 을 3 으로 잘못 잡은 값(L = 2³). ② r 은 맞지만 L = 2r 로 착각. ③ S / N 으로 뒤집어 나눈 값 — r ≥ 1 이므로 baud 가 bps 보다 클 수는 없다.{/answer}
+
+=== C16 ===
+{quiz}Binary ASK is transmitted at a signal rate of S baud. Considering every allowed value of the roll-off factor d, which range contains the required bandwidth? (CH02(3) p.38)<br>① From S to 2S<br>② From S/2 to S<br>③ From 2S to 4S<br>④ Exactly 2S, independent of d{/quiz}
+{answer}'''① From S to 2S'''. 정답 ①: B = (1 + d) × S 이고 0 ≤ d ≤ 1 이므로 d = 0 일 때 B = S, d = 1 일 때 B = 2S. ② S/2 는 Nyquist bit rate(S ≤ 2B)의 무잡음 이론 하한으로 ASK 공식이 아니다. ③ 2S 를 넘으려면 d > 1 이어야 한다. ④ d = 1 인 경우 하나일 뿐이다. 교수(9/10): d 는 modulation·filtering 에 관련된 factor 로 자세히는 다루지 않고, 시험 문제에서는 항상 값을 준다.{/answer}
+
+=== C17 ===
+{quiz}A designer wants a block code that guarantees the correction of up to 3 errors. What is the smallest d_min that guarantees this, and how many errors does such a code then guarantee to detect? (CH03(1) p.29, p.33)<br>① d_min = 4; it detects up to 3 errors<br>② d_min = 6; it detects up to 5 errors<br>③ d_min = 3; it detects up to 2 errors<br>④ d_min = 7; it detects up to 6 errors{/quiz}
+{answer}'''④ d_min = 7; it detects up to 6 errors'''. 정정: d_min = 2t + 1 = 2 × 3 + 1 = 7. 이 코드의 검출 능력: s = d_min − 1 = 6 → ④. ①은 정정 조건에 검출 공식(s + 1)을 쓴 오류 — d_min = 4 로는 1개만 정정. ②는 2t 만 쓰고 +1 을 빠뜨린 값 — d_min = 6 이면 t = 2.5 → 2개만 보장. ③은 t 와 d_min 을 같게 본 오류 — d_min = 3 은 1개 정정.{/answer}
+
+=== C18 ===
+{quiz}What is the Hamming distance d(10110, 11001)? (CH03(1) p.27–28)<br>① 1<br>② 3<br>③ 4<br>④ 5{/quiz}
+{answer}'''③ 4'''. d(x, y) = x ⊕ y 의 1 의 개수. 10110 ⊕ 11001 = 01111 → 1 이 4개 → ③. ②3 은 한 자리를 빠뜨리고 센 경우, ④5 는 word 길이 n 과 혼동, ①1 은 같은 자리에 1 이 겹치는 개수(첫 비트)를 센 오류. 교수(9/15): 'This is a very popular method … I recommend you to take this example for practice.'{/answer}
+
+=== C19 ===
+{quiz}A CRC uses the generator polynomial x⁴ + x + 1. How many 0s are appended to the dataword in the encoder, and how many bits does the remainder (check bits) have? (CH03(1) p.46, p.48–50)<br>① 3 zeros are appended and the remainder has 3 bits<br>② 4 zeros are appended and the remainder has 4 bits<br>③ 5 zeros are appended and the remainder has 5 bits<br>④ 4 zeros are appended and the remainder has 5 bits{/quiz}
+{answer}'''② 4 zeros are appended and the remainder has 4 bits'''. x⁴ + x + 1 → divisor 10011 (5 bits, 차수 4). 붙이는 0 의 개수 = 나머지 비트 수 = divisor 비트 수 − 1 = 차수 = 4 → ②. (p.50: 비트 수는 항상 차수 + 1.) ①은 항이 3개라는 데서 나온 오답. ③은 divisor 비트 수(5)를 그대로 쓴 오류. ④는 나머지 길이를 divisor 길이로 착각 — 나머지는 항상 divisor 보다 한 비트 짧다.{/answer}
+
+=== C20 ===
+{quiz}Which bit pattern does the polynomial x⁵ + x² + 1 represent? (CH03(1) p.48)<br>① 100101<br>② 101001<br>③ 10101<br>④ 1001010{/quiz}
+{answer}'''① 100101'''. 최고차 x⁵ → 6비트. 왼쪽부터 x⁵, x⁴, x³, x², x¹, x⁰ 의 계수: 1, 0, 0, 1, 0, 1 → 100101 (①). ②는 맨 오른쪽 비트를 x⁵ 로 본(순서 뒤집은) 오류. ③10101 은 x⁴ + x² + 1(차수를 하나 낮춰 읽음). ④1001010 은 x⁶ + x³ + x(차수를 하나 올림). 교수(9/17): 'please remember that our information bits can be represented with polynomials' — 맨 오른쪽 비트가 x⁰.{/answer}
+
+=== C21 ===
+{quiz}Which of the following tasks belongs to the data-link sublayer that handles medium sharing on broadcast links, rather than to the DLC sublayer? (CH03(1) p.12, p.14; CH03(2) p.3)<br>① Packing the bits into distinguishable frames<br>② Detecting transmission errors with a CRC<br>③ Deciding which station may use a shared medium at a given moment<br>④ Inserting ESC bytes into the data section{/quiz}
+{answer}'''③ Deciding which station may use a shared medium at a given moment'''. MAC 은 broadcast link 에서 공유 매체의 접근 순서를 정하는 일(random/controlled access, channelization) → ③. ①framing, ②error control(CRC), ④byte stuffing(framing 의 일부)은 모두 DLC 의 key roles(p.14). 교수(9/15): 'I recommend you to keep in mind these kind of distinctions.'{/answer}
+
+=== C22 ===
+{quiz}A CSMA station finds the line busy, keeps sensing it continuously, and transmits with probability 1 the moment the line becomes idle. Which method is this? (CH03(2) p.35–36)<br>① 1-persistent<br>② Nonpersistent<br>③ p-persistent<br>④ A method that transmits only at slot boundaries without sensing the line{/quiz}
+{answer}'''① 1-persistent'''. busy 동안 계속 감지하다가 idle 이 되면 즉시(확률 1) 전송 = 1-persistent → ①. ②nonpersistent 는 busy 면 계속 감지하지 않고 랜덤 시간 기다린 뒤 다시 감지한다(충돌은 줄지만 idle 인 채널을 놀리는 시간이 생김). ③p-persistent 는 idle 을 찾은 뒤에도 확률 p 로만 전송하고 q = 1 − p 로 다음 slot 을 기다린다. ④는 slotted ALOHA 의 설명 — carrier sensing 이 없으므로 persistence method 가 아니다.{/answer}
+
+=== C23 ===
+{quiz}Which of the following is a multicast link-layer address? (Use the rule as corrected in class on 10/1.) (CH03(2) p.59–62)<br>① A4:6B:10:22:3C:F0<br>② B8:27:EB:10:22:33<br>③ 5E:00:53:AF:01:22<br>④ 07:1B:3C:44:5D:6E{/quiz}
+{answer}'''④ 07:1B:3C:44:5D:6E'''. 규칙: 첫 바이트의 둘째 16진수 자리가 짝수면 unicast, 홀수면 multicast, 48비트가 전부 1(FF:…:FF)이면 broadcast. 둘째 16진수 자리 = 첫 바이트의 하위 4비트이므로, 그 값이 홀수면 첫 바이트의 마지막 비트가 1 → multicast. 07 의 둘째 자리 7 은 홀수 → ④. ①A4 의 4, ②B8 의 8, ③5E 의 E(=14) 는 모두 짝수 → unicast. 주의: 슬라이드 p.60–61 의 예시(A3 = unicast, A2 = multicast)는 뒤바뀌어 있고, 교수가 10/1(CH04 p.2–3)에서 정정했다 — 교수(10/1): 'unicast is an even number, and multicast is odd number for the second hexadecimal digit, and broadcast is all F.' Ethernet 은 각 바이트를 오른쪽 비트부터 보내므로 수신 측이 첫 비트만 보고 unicast 인지 아닌지 알 수 있다.{/answer}
+
+=== C24 ===
+{quiz}In pure ALOHA, the last bit of station A's frame overlaps on the channel with the first bit of station B's frame. What happens? (CH03(2) p.10–11)<br>① Only A's frame is destroyed, because its last bit was hit<br>② Only B's frame is destroyed, because its first bit was hit<br>③ Both frames are destroyed and must be retransmitted<br>④ Neither frame is destroyed, because a one-bit overlap is tolerated{/quiz}
+{answer}'''③ Both frames are destroyed and must be retransmitted'''. 슬라이드 p.10: 'If even one bit of a frame overlaps with another frame on the channel (a collision), both are destroyed.' p.11: 충돌로 잃은 프레임은 재전송해야 한다 → ③. ①②는 한쪽만 손상된다고 본 오류 — 겹친 구간의 신호는 두 프레임 모두에 속하므로 둘 다 깨진다. ④1비트라도 겹치면 충돌. 이것이 pure ALOHA 의 vulnerable time 이 앞뒤로 T_fr 씩, 2T_fr 가 되는 이유다.{/answer}
+
+=== C25 ===
+{quiz}Frames of 500 bits are sent over a 250 kbps shared channel using pure ALOHA. A station starts sending at time t. For its frame to be collision-free, during which interval must no other station start sending? (CH03(2) p.19–20)<br>① 2 ms: from t to t + 2 ms<br>② 4 ms: from t − 2 ms to t + 2 ms<br>③ 4 ms: from t to t + 4 ms<br>④ 1 ms: from t − 1 ms to t{/quiz}
+{answer}'''② 4 ms: from t − 2 ms to t + 2 ms'''. T_fr = 500 bits / 250 kbps = 2 ms. pure ALOHA vulnerable time = 2T_fr = 4 ms, 구간은 t − T_fr 부터 t + T_fr 까지 → ②. 앞쪽 2 ms 는 '내가 시작하기 전에 시작해서 아직 안 끝난 프레임', 뒤쪽 2 ms 는 '내가 보내는 동안 시작하는 프레임'(Ex 3.9 의 논리, 숫자만 다름). ①은 뒤쪽만 본 오류(slotted ALOHA 의 T_fr 와 혼동). ③은 길이는 맞지만 구간을 모두 뒤쪽에 둔 오류. ④는 T_fr 계산 실수에 앞쪽만 본 오류.{/answer}
+
+=== C26 ===
+{quiz}According to the lecture, why is a long message usually divided into smaller frames at the data-link layer? (CH03(1) p.15)<br>① Because only small frames can carry a sender address and a destination address<br>② Because the physical layer cannot carry more than one character in a signal<br>③ Because small frames remove the need for a flag between frames<br>④ Because a very large frame is more likely to be corrupted and must then be resent as a whole, which makes flow and error control inefficient{/quiz}
+{answer}'''④ Because a very large frame is more likely to be corrupted and must then be resent as a whole, which makes flow and error control inefficient'''. 슬라이드 p.15: 'Very large frames can make flow and error control inefficient → A message is usually divided into smaller frames.' 큰 프레임은 채널을 오래 차지해 오류가 날 확률이 크고, 2층은 오류가 나면 프레임 전체를 재전송하므로 비효율 → ④. ①주소는 프레임 크기와 무관하게 붙는다. ②physical layer 는 비트를 신호로 바꿀 뿐 문자 단위 제한은 없다. ③variable-size frame 은 작아도 flag 가 필요하다. 교수(9/15): 'very large frames are more easy to see some errors because it transmits a lot and it occupies the channel a very long time … it could be very inefficient.'{/answer}
+
+=== C27 ===
+{quiz}Which of the following was NOT one of the goals of Fast Ethernet? (CH04(1) p.30)<br>① Upgrade the data rate to 100 Mbps<br>② Keep the same 48-bit address<br>③ Introduce a new frame format with a larger minimum frame so CSMA/CD works at the higher rate<br>④ Make it compatible with Standard Ethernet{/quiz}
+{answer}'''③ Introduce a new frame format with a larger minimum frame so CSMA/CD works at the higher rate'''. 정답 ③. Fast Ethernet 의 goals 는 (1) 100 Mbps 로 upgrade, (2) Standard Ethernet 과 compatible, (3) 같은 48-bit address, (4) 같은 frame format. frame format·최소 길이를 바꾸는 것은 compatibility 를 깨므로 목표가 아니었고, 대신 망 길이를 줄였다(p.32). ① 목표 맞음 — 이름의 유래. ② 목표 맞음 — 주소 체계 유지. ④ 목표 맞음 — 가장 중요한 목표. 교수(10/1): 'the most important factor to consider when designing the protocols of Fast Ethernet is to try to maintain compatibility with Standard Ethernet, because Standard Ethernet was already used worldwide.'{/answer}
+
+=== C28 ===
+{quiz}Why did Fast Ethernet have to shorten the maximum length of a CSMA/CD network compared with Standard Ethernet? (CH04(1) p.31–33)<br>① The 512-bit minimum frame was kept but sent 10 times faster, so a collision must be detected 10 times sooner, which requires a network about 10 times shorter<br>② The maximum frame length was reduced from 1518 bytes, so frames finish too early to detect collisions<br>③ Signals propagate 10 times more slowly in a medium carrying 100 Mbps<br>④ Fast Ethernet gave up CSMA/CD entirely, and the shorter length is needed for the token to circulate{/quiz}
+{answer}'''① The 512-bit minimum frame was kept but sent 10 times faster, so a collision must be detected 10 times sooner, which requires a network about 10 times shorter'''. 정답 ①. CSMA/CD 조건 T_fr ≥ 2T_p 에서 compatibility 때문에 최소 frame(512 bits)을 유지하면 T_fr 이 1/10 로 줄고, 따라서 허용 T_p 도 1/10 → 최대 망 길이도 약 1/10(2500 m → 250 m, passive hub + star). ② 틀림 — 최대 길이 1518 bytes 는 그대로이고, 충돌 감지와 관련된 것은 최소 길이다. ③ 틀림 — 전파 속도는 매체의 성질이지 data rate 와 무관하다. ④ 틀림 — Fast Ethernet 은 CSMA/CD 를 유지하는 Solution #1(hub)과 switch + full-duplex 로 CSMA/CD 가 필요 없는 Solution #2 를 제시했을 뿐, token passing 은 등장하지 않는다.{/answer}
+
+=== C29 ===
+{quiz}Which row correctly describes a Fast Ethernet implementation (medium, wires, encoding, maximum length)? (CH04(1) p.35–36)<br>① 100Base-TX: fiber, 2 wires, 4B/5B + NRZ-I, 185 m<br>② 100Base-FX: STP, 2 wires, 4B/5B + MLT-3, 100 m<br>③ 100Base-TX: UTP, 4 wires, 8B/10B + NRZ, 550 m<br>④ 100Base-T4: UTP, 4 wires, two 8B/6T, 100 m{/quiz}
+{answer}'''④ 100Base-T4: UTP, 4 wires, two 8B/6T, 100 m'''. 정답 ④. 100Base-T4 = Category UTP, 4 wires, Two 8B/6T, 100 m. ① 틀림 — fiber·4B/5B + NRZ-I·185 m 는 100Base-FX 의 특성이다(TX 는 STP, 2 wires, 4B/5B + MLT-3, 100 m). ② 틀림 — STP·MLT-3·100 m 는 100Base-TX 의 특성이다(FX 는 fiber, NRZ-I). ③ 틀림 — 8B/10B + NRZ, 550 m 는 Gigabit 의 1000Base-SX 이다. 이름 끝 X 는 2 wires, T4 는 4 wires 로 기억.{/answer}
+
+=== C30 ===
+{quiz}Which Gigabit Ethernet implementation uses 4 UTP wires with 4D-PAM5 encoding over a maximum length of 100 m? (CH04(1) p.41)<br>① 1000Base-SX<br>② 1000Base-T<br>③ 1000Base-CX<br>④ 1000Base-LX{/quiz}
+{answer}'''② 1000Base-T'''. 정답 ②. twisted-pair 4 쌍을 모두 쓰는 1000Base-T 가 4D-PAM5, 100 m. (슬라이드 표에는 '1000Base-T4' 로 적혀 있으나 교재 Forouzan 표기는 1000Base-T.) ① 틀림 — SX 는 short-wave fiber, 2 wires, 8B/10B + NRZ, 550 m. ③ 틀림 — CX 는 STP, 2 wires, 8B/10B + NRZ, 25 m. ④ 틀림 — LX 는 long-wave fiber, 2 wires, 8B/10B + NRZ, 5000 m.{/answer}
+
+=== C31 ===
+{quiz}Among the Standard Ethernet implementations, which one supports the longest maximum segment length? (CH04(1) p.27)<br>① 10Base-F<br>② 10Base5<br>③ 10Base2<br>④ 10Base-T{/quiz}
+{answer}'''① 10Base-F'''. 정답 ①. 10Base-F(2 fiber)는 2000 m. 모두 10 Mbps · baseband · line coding(Manchester)이고 매체에 따라 길이가 다르다. ② 틀림 — 10Base5(thick coax, bus)는 500 m. ③ 틀림 — 10Base2(thin coax, bus)는 185 m. ④ 틀림 — 10Base-T(2 UTP, star + hub)는 100 m. 숫자 5·2 는 대략 100 m 단위 길이(500, 약 200)에서 온 이름이다.{/answer}
+
+=== C32 ===
+{quiz}Which 10-Gigabit Ethernet implementation uses a 1350 nm wavelength, SONET encoding, and a maximum length of 40 km? (CH04(1) p.42)<br>① 10GBase-SR<br>② 10GBase-LR<br>③ 10GBase-EW<br>④ 10GBase-X4{/quiz}
+{answer}'''③ 10GBase-EW'''. 정답 ③. 10GBase-EW = extended-wavelength 1350 nm, SONET, 40 km(가장 긴 거리). ① 틀림 — SR 은 short-range 850 nm, 64B66B, 300 m. ② 틀림 — LR 은 long-range 1310 nm, 64B66B, 10 km. ④ 틀림 — X4 는 1310 nm 대역에서 파장 4개를 쓰며(교재) 8B10B, 300 m–10 km.{/answer}
+
+== Part D. 서술 · 계산 (12문항, 각 5점) ==
+
+=== D1 ===
+{quiz}'''Bit rate, bit length, and signal levels''' (CH02(1) p.31–35)<br>We need to download text documents at the rate of 125 pages per second.<br>A page has an average of 25 lines with 80 characters in each line, and one character requires 8 bits.<br>(a) What is the required bit rate of the channel?<br>(b) What is the bit length (in μs)?<br>(c) If a digital signal with L = 4 levels is used, how many bits does each level carry, and how many signal levels must be sent per second?{/quiz}
+{answer}'''답: (a) 2,000,000 bps = 2 Mbps  (b) 0.5 μs  (c) 2 bits per level, 1,000,000 levels/s'''
+<pre class="txt">
+(a) Example 2.3 과 같은 구조: bit rate = pages/s × lines/page × characters/line × bits/character.
+= 125 × 25 × 80 × 8 = 2,000,000 bps = 2 Mbps.
+(b) Bit length = 1 / (bit rate) = 1 / 2,000,000 s = 0.0000005 s = 0.5 μs.
+(c) L 개 level 이면 각 level 은 log₂ L bits → log₂ 4 = 2 bits.
+초당 보내야 할 level(신호 요소) 수 = 2,000,000 / 2 = 1,000,000 개/s.
+검산(Python): 125·25·80·8 = 2,000,000, 1/2,000,000 = 5×10⁻⁷ s.
+</pre>
+{/answer}
+
+=== D2 ===
+{quiz}'''Decibels over three segments, then SNR''' (CH02(1) p.42–43, p.46)<br>A signal with power P1 = 8 mW passes through three segments in order:<br>cable 1 halves the power, an amplifier multiplies the power by 10, and cable 2 reduces the power to one eighth.<br>(a) Give the gain/loss of each segment in dB (use 10 log₁₀ 2 ≈ 3).<br>(b) What is the overall gain/loss in dB, and what is the output power?<br>(c) At the receiver the average noise power is 5 μW. What are the SNR and SNR_dB?{/quiz}
+{answer}'''답: (a) −3 dB, +10 dB, −9 dB  (b) −2 dB, 5 mW  (c) SNR = 1000, SNR_dB = 30 dB'''
+<pre class="txt">
+공식: dB = 10 log₁₀(P2/P1). 감쇠는 음수, 증폭은 양수.
+(a) cable 1: 10 log₁₀(1/2) ≈ −3 dB (Example 2.5 와 같음).
+amplifier: 10 log₁₀ 10 = +10 dB.
+cable 2: 10 log₁₀(1/8) = −3 × 10 log₁₀ 2 ≈ −9 dB.
+(b) dB 는 로그라서 구간별 값을 더한다: −3 + 10 − 9 = −2 dB (정확값 −2.04 dB).
+출력 전력: 전력비 = 0.5 × 10 × 0.125 = 0.625 → 8 mW × 0.625 = 5 mW.
+(c) SNR = 평균 신호 전력 / 평균 noise 전력 = 5 mW / 5 μW = 5×10⁻³ / 5×10⁻⁶ = 1000.
+SNR_dB = 10 log₁₀ 1000 = 10 × 3 = 30 dB.
+검산(Python): 10·log₁₀(0.625) = −2.041, 10·log₁₀(1000) = 30.0.
+</pre>
+{/answer}
+
+=== D3 ===
+{quiz}'''Shannon limit, Nyquist levels, and bandwidth-delay product''' (CH02(1) p.53, p.56–60, p.65–68)<br>A channel has a bandwidth of 500 kHz and an SNR of 1023.<br>(a) Find the Shannon capacity, i.e., the theoretical maximum bit rate of this channel.<br>(b) Check (a) with the high-SNR approximation, using SNR ≈ 1024 and log₁₀ 2 ≈ 0.3.<br>(c) We pick a safer rate of 4 Mbps. How many signal levels does the Nyquist formula require for it?<br>(d) The link is 400 km long and the propagation speed is 2 × 10⁸ m/s. Find the propagation time and, taking it as the delay, the bandwidth-delay product at 4 Mbps.{/quiz}
+{answer}'''답: (a) 5 Mbps  (b) SNR_dB ≈ 30 dB → 500 kHz × 30/3 = 5 Mbps  (c) L = 16  (d) 2 ms, 8000 bits'''
+<pre class="txt">
+(a) Shannon: Capacity = Bandwidth × log₂(1 + SNR) = 500 × 10³ × log₂ 1024 = 500 × 10³ × 10 = 5 × 10⁶ bps = 5 Mbps (상한).
+(b) SNR_dB = 10 log₁₀ SNR ≈ 10 log₁₀ 2¹⁰ = 10 × 10 × 0.3 = 30 dB.
+SNR 이 매우 크면 1 + SNR ≈ SNR → Capacity ≈ Bandwidth × SNR_dB / 3 = 500 kHz × 30 / 3 = 5 Mbps — (a) 와 일치(정확 계산 5.017 Mbps).
+(c) 상한보다 낮은 4 Mbps 를 택하고 Nyquist: BitRate = 2 × Bandwidth × log₂ L.
+4 × 10⁶ = 2 × 500 × 10³ × log₂ L → log₂ L = 4 × 10⁶ / 10⁶ = 4 → L = 2⁴ = 16 levels.
+(d) Propagation time = Distance / Propagation speed = 400 × 10³ m / (2 × 10⁸ m/s) = 2 × 10⁻³ s = 2 ms.
+BDP = bandwidth × delay = 4 × 10⁶ bps × 2 × 10⁻³ s = 8000 bits — 링크를 가득 채울 수 있는 bit 수.
+검산(Python): 500e3·log₂1024 = 5.0e6, 4e6/(2·500e3) = 4, 400e3/2e8 = 0.002, 4e6·0.002 = 8000.
+</pre>
+{/answer}
+
+=== D4 ===
+{quiz}'''PCM: effect of the number of quantization levels''' (CH02(2) p.50–51, p.56–57, p.61–64)<br>An audio source is band-limited to 6 kHz (a low-pass signal whose band starts at 0 Hz). It is digitized by PCM at the Nyquist rate with L = 64 quantization levels (r = 1).<br>(a) Find the sampling rate fs and the sampling interval T.<br>(b) Find the number of bits per sample nb and the bit rate N.<br>(c) Find Bmin, the smallest bandwidth the PCM output needs, and the quantization SNRdB.<br>(d) If L is raised to 128 with the same fs, find the new bit rate and the new SNRdB.{/quiz}
+{answer}'''답: (a) fs = 12 k samples/s, T ≈ 83.3 μs  (b) nb = 6, N = 72 kbps  (c) Bmin = 36 kHz, SNRdB = 37.88 dB  (d) N = 84 kbps, SNRdB = 43.90 dB'''
+<pre class="txt">
+(a) Nyquist: fs = 2 × f_max = 2 × 6 kHz = 12,000 samples/s.
+(a) T = 1 / fs = 1 / 12,000 s ≈ 83.3 μs (sampling rate 는 sampling interval 의 역수).
+(b) nb = log₂L = log₂64 = 6 bits.
+(b) N = fs × nb = 12,000 × 6 = 72,000 bps = 72 kbps.
+(c) low-pass 이므로 B_analog = 6 kHz → Bmin = nb × B_analog = 6 × 6 = 36 kHz (검산: S = N = 72 kbaud, S ≤ 2B → B ≥ 36 kHz).
+(c) SNRdB = 6.02 × 6 + 1.76 = 36.12 + 1.76 = 37.88 dB.
+(d) L = 128 → nb = 7. N = 12,000 × 7 = 84 kbps (fs 는 그대로, nb 만 늘어 12 kbps 증가).
+(d) SNRdB = 6.02 × 7 + 1.76 = 42.14 + 1.76 = 43.90 dB — 비트 1개 추가로 약 6 dB 개선.
+</pre>
+{/answer}
+
+=== D5 ===
+{quiz}'''ASK, multi-level PSK, and FSK in a 500–620 kHz band''' (CH02(3) p.38, p.40–42, p.44)<br>An available band spans from 500 kHz to 620 kHz (120 kHz). The roll-off factor is given as d = 0.2.<br>(a) Binary ASK is used with the carrier at the middle of the band. Find the carrier frequency, the signal rate S, and the bit rate N.<br>(b) Instead, a PSK scheme with four phases (2 bits per signal element) is used. Find S and N.<br>(c) Instead, binary FSK is used with 2Δf = 60 kHz. Find f₁, f₂, S, and N, and check that both carriers fit in the band.{/quiz}
+{answer}'''답: (a) fc = 560 kHz, S = 100 kbaud, N = 100 kbps  (b) S = 100 kbaud, N = 200 kbps  (c) f₁ = 530 kHz, f₂ = 590 kHz, S = 50 kbaud, N = 50 kbps'''
+<pre class="txt">
+(a) carrier = 대역 중간점 = (500 + 620) / 2 = 560 kHz.
+(a) ASK: B = (1 + d)S → 120 = 1.2 × S → S = 100 kbaud. binary 이므로 r = 1 → N = 100 kbps.
+(b) PSK 대역폭도 B = (1 + d)S (carrier 하나; 교재) → S = 100 kbaud 로 같다.
+(b) r = 2 → N = r × S = 2 × 100 = 200 kbps. 같은 대역폭·같은 baud 에서 element 당 비트를 늘려 bit rate 를 2배로.
+(c) FSK: B = (1 + d)S + 2Δf → 120 = 1.2S + 60 → 1.2S = 60 → S = 50 kbaud, r = 1 → N = 50 kbps.
+(c) Δf = 30 kHz → f₁ = 560 − 30 = 530 kHz, f₂ = 560 + 30 = 590 kHz.
+(c) 검산: 각 carrier 가 (1 + d)S = 60 kHz 차지 → f₁: 500–560 kHz, f₂: 560–620 kHz → 대역에 딱 맞음.
+주의: d 는 공식에 그대로 대입할 값으로 문제에서 준다(교수 9/10: 시험에서는 항상 준다). d = 0 이나 1 로 가정하지 말 것.
+</pre>
+{/answer}
+
+=== D6 ===
+{quiz}'''FDM: total bandwidth with guard bands''' (CH02(3) p.49–51)<br>Four channels, each with a bandwidth of 60 kHz, are combined by FDM. A guard band of 8 kHz is placed between every pair of adjacent channels.<br>(a) What is the minimum bandwidth of the link?<br>(b) A link of 400 kHz is available with the same channel width and guard band. What is the maximum number of channels?<br>(c) If the four 60-kHz channels must fit into a 252-kHz link, what is the largest guard band that can be used?<br>(d) In one sentence, why are guard bands needed?{/quiz}
+{answer}'''답: (a) 264 kHz  (b) 6 channels  (c) 4 kHz  (d) to keep adjacent channels from interfering'''
+<pre class="txt">
+(a) 채널 4개 → 인접 쌍 사이 guard band 는 3개. B = 4 × 60 + 3 × 8 = 240 + 24 = 264 kHz.
+(b) n 개 채널: n × 60 + (n − 1) × 8 = 68n − 8 ≤ 400 → 68n ≤ 408 → n ≤ 6.
+(b) 검산: 6 × 60 + 5 × 8 = 360 + 40 = 400 kHz 로 정확히 맞고, 7개면 476 kHz 로 초과.
+(c) 4 × 60 + 3g ≤ 252 → 3g ≤ 12 → g ≤ 4 kHz.
+(d) 각 채널 신호는 carrier 주변에 퍼지므로, 사용하지 않는 대역(guard band)으로 떼어 놓아야 인접 채널끼리 겹치거나 간섭하지 않는다 — 그래서 link 대역폭은 채널 대역폭의 합보다 커야 한다(p.49).
+</pre>
+{/answer}
+
+=== D7 ===
+{quiz}'''CRC with generator x³ + x² + 1: encoder and decoder''' (CH03(1) p.44–49)<br>A CRC code C(8,5) uses the divisor 1101, i.e. the generator polynomial x³ + x² + 1.<br>(a) Encode the dataword 10011: give the augmented dataword, quotient, remainder and codeword, writing out each XOR row.<br>(b) Write the dataword and the codeword from (a) as polynomials.<br>(c) During transmission the second bit (from the left) of the codeword in (a) is flipped. Divide the received word, give the remainder, and state what the decoder does.{/quiz}
+{answer}'''답: (a) augmented 10011000, quotient 11111, remainder 011, codeword 10011011. (b) dataword x⁴ + x + 1, codeword x⁷ + x⁴ + x³ + x + 1. (c) received 11011011 → quotient 10001, syndrome 110 (nonzero) → error found, word discarded.'''
+<pre class="txt">
+(a) divisor 1101 은 4비트, 차수 3 이므로 0 세 개를 덧붙여 10011000 을 만든다(augmented).
+1행: 1001 ⊕ 1101 = 0100 (몫 1) → 첫 비트 버리고 다음 비트 1 을 내림 → 1001
+2행: 1001 ⊕ 1101 = 0100 (몫 1) → 다음 비트 0 을 내림 → 1000
+3행: 1000 ⊕ 1101 = 0101 (몫 1) → 다음 비트 0 을 내림 → 1010
+4행: 1010 ⊕ 1101 = 0111 (몫 1) → 다음 비트 0 을 내림 → 1110
+5행: 1110 ⊕ 1101 = 0011 (몫 1) → 남은 3비트 011 = remainder. 몫 = 11111.
+codeword = dataword + remainder = 10011 011 = 10011011.
+검산: 10011011 을 1101 로 나누면 나머지 000 (Python 으로 확인).
+(b) 맨 오른쪽 비트가 x⁰. dataword 10011 → x⁴ + x + 1.
+codeword 10011011 → 1 이 있는 자리 7, 4, 3, 1, 0 → x⁷ + x⁴ + x³ + x + 1.
+(c) 왼쪽에서 둘째 비트 0 을 1 로 뒤집으면 수신 word = 11011011. decoder 는 0 을 붙이지 않고 그대로 나눈다.
+1행: 1101 ⊕ 1101 = 0000 (몫 1) → 다음 비트 1 을 내림 → 0001
+2행: 맨 왼쪽이 0 → all-0s divisor: 0001 ⊕ 0000 = 0001 (몫 0) → 다음 비트 0 → 0010
+3행: 0010 ⊕ 0000 = 0010 (몫 0) → 다음 비트 1 → 0101
+4행: 0101 ⊕ 0000 = 0101 (몫 0) → 다음 비트 1 → 1011
+5행: 1011 ⊕ 1101 = 0110 (몫 1) → syndrome = 110, 몫 = 10001.
+syndrome 110 ≠ 000 → 오류 검출, dataword 를 버린다(CRC 는 검출 코드이므로 위치를 찾아 고치지 않는다).
+교수(9/17): 덧셈 = 뺄셈 = XOR, 맨 왼쪽 비트가 0 이면 all-0s divisor — 'remember these two rules.'
+</pre>
+{/answer}
+
+=== D8 ===
+{quiz}'''Character- and bit-oriented framing transparency''' (CH03(1) p.17–20)<br>(a) Character-oriented framing. The data section to be sent is the character sequence A, FLAG, B, ESC, C, ESC, FLAG, D, where FLAG and ESC denote data characters with the same patterns as the flag and the escape character. Give the stuffed sequence and the number of inserted ESC bytes.<br>(b) Bit-oriented framing. The data section to be sent is 0111110111111111011. Give the data after bit stuffing and the number of inserted 0s.<br>(c) A receiver of a bit-oriented frame gets the stuffed data section 01111100111110110. Recover the original data.{/quiz}
+{answer}'''답: (a) A, ESC, FLAG, B, ESC, ESC, C, ESC, ESC, ESC, FLAG, D — 4 bytes added (8 → 12). (b) 011111001111101111011 — 2 bits added (19 → 21). (c) 011111011111110.'''
+<pre class="txt">
+(a) 규칙: 데이터 속 문자가 flag 또는 ESC 와 같은 패턴이면 그 앞에 ESC 를 하나 넣는다.
+A → A / FLAG → ESC FLAG / B → B / ESC → ESC ESC / C → C / ESC → ESC ESC / FLAG → ESC FLAG / D → D.
+결과: A, ESC, FLAG, B, ESC, ESC, C, ESC, ESC, ESC, FLAG, D. 8개 → 12개, 추가 4바이트.
+(수신 측 unstuffing: ESC 를 만나면 그것을 지우고 바로 다음 바이트를 무조건 데이터로 취급 → 원래 8개 복원.)
+(b) 규칙: 0 뒤에 1 이 다섯 개 연속되면 그 다음에 0 을 하나 넣고 카운트를 0 으로 되돌린다. 다음 데이터 비트가 원래 0 이어도 넣는다.
+0111110111111111011 = 0 | 11111 | 0 | 111111111 | 0 | 11.
+첫 1 묶음(정확히 5개): 뒤에 0 추가 → 0 111110, 이어서 원래 데이터 0 → 01111100 (0 이 두 개 연속).
+둘째 1 묶음(9개): 처음 다섯 개 뒤에 0 추가 → 11111 0 1111, 이어서 0 11.
+stuffed = 011111001111101111011 (19 → 21비트, 추가 2비트). Python 으로 검산.
+(c) unstuffing: 0 뒤 1 이 다섯 개 연속되면 바로 다음 비트(stuffed 0)를 버린다.
+01111100111110110 = 0 11111 [0 삭제] 0 11111 [0 삭제] 110.
+원래 데이터 = 0111110 11111 110 = 011111011111110 (17 → 15비트). 다시 stuffing 하면 받은 비트열과 같아짐을 Python 으로 확인.
+교수(9/15): bit stuffing 은 character-oriented 보다 'much simpler' — 1 이 다섯 개 연속이면 0 하나.
+</pre>
+{/answer}
+
+=== D9 ===
+{quiz}'''Pure vs. slotted ALOHA under light and heavy load, and backoff''' (CH03(2) p.12–13, p.19–22, p.27–28)<br>Frames of 2000 bits are sent by an ALOHA network over a 400 kbps shared channel.<br>(a) Find T_fr and the vulnerable time of pure ALOHA and of slotted ALOHA.<br>(b) Together the stations generate 400 frames/s. Compute G, and for each protocol (pure, slotted) compute S and how many frames per second get through.<br>(c) Repeat (b) for 50 frames per second.<br>(d) The farthest two stations are 450 km apart; propagation speed is 3 × 10^8 m/s. Compute T_p and how long a pure ALOHA station waits for an acknowledgment. After the fourth failed attempt (K = 4), give the range of R and the largest possible backoff time T_B = R × T_p.<br>Use e^(-0.25) ≈ 0.779, e^(-0.5) ≈ 0.607, e^(-2) ≈ 0.135, e^(-4) ≈ 0.0183.{/quiz}
+{answer}'''답: (a) T_fr = 5 ms; pure 10 ms, slotted 5 ms. (b) G = 2: pure S ≈ 0.0366 → ≈ 14.6 frames/s; slotted S ≈ 0.271 → ≈ 108 frames/s. (c) G = 0.25: pure S ≈ 0.152 → ≈ 7.6 frames/s; slotted S ≈ 0.195 → ≈ 9.7 frames/s. (d) T_p = 1.5 ms, wait 2T_p = 3 ms; R from 0 to 15, max T_B = 22.5 ms.'''
+<pre class="txt">
+(a) T_fr = 2000 bits / 400 kbps = 2000 / 400,000 s = 5 ms.
+pure ALOHA vulnerable time = 2T_fr = 10 ms, slotted ALOHA = T_fr = 5 ms.
+(b) G = (frames/s) × T_fr = 400 × 0.005 = 2 (T_fr 동안 평균 2개 생성 — 과부하).
+pure: S = G e^(-2G) = 2 × e^(-4) ≈ 2 × 0.0183 = 0.0366 → 성공 400 × 0.0366 ≈ 14.6 frames/s.
+slotted: S = G e^(-G) = 2 × e^(-2) ≈ 2 × 0.135 = 0.271 → 성공 400 × 0.271 ≈ 108 frames/s.
+(c) G = 50 × 0.005 = 0.25 (부하가 가벼움).
+pure: S = 0.25 × e^(-0.5) ≈ 0.25 × 0.607 = 0.152 → 성공 50 × 0.152 ≈ 7.6 frames/s.
+slotted: S = 0.25 × e^(-0.25) ≈ 0.25 × 0.779 = 0.195 → 성공 50 × 0.195 ≈ 9.7 frames/s.
+해석: 두 경우 모두 최대점(pure G = 1/2 → 0.184, slotted G = 1 → 0.368)에서 벗어나 있다. 부하를 G = 2 로 늘려도 성공률은 오히려 떨어진다 — 충돌이 폭증하기 때문. 교수(9/22): 'This one is serious. We rarely see success in our transmission.'
+(d) T_p = 450 × 10^3 m / 3 × 10^8 m/s = 1.5 × 10^-3 s = 1.5 ms.
+pure ALOHA 흐름도(p.12): 전송 후 2 × T_p = 3 ms 동안 ACK 를 기다린다(왕복 시간).
+K = 4 → R 은 0 부터 2^K − 1 = 15 까지(16가지) → T_B = R × T_p = 0, 1.5, 3, …, 22.5 ms. 최대 T_B = 15 × 1.5 = 22.5 ms.
+Python 검산: 2·e^-4 = 0.0366, 2·e^-2 = 0.2707, 0.25·e^-0.5 = 0.1516, 0.25·e^-0.25 = 0.1947.
+</pre>
+{/answer}
+
+=== D10 ===
+{quiz}'''CSMA/CD minimum frame size from cable length, and maximum cable length''' (CH03(2) p.44–46)<br>A CSMA/CD network has a maximum cable length of 2 km, and signals propagate at 2 × 10^8 m/s. Ignore device delays and the jamming signal.<br>(a) With a 100 Mbps bandwidth, compute T_p, the shortest allowed T_fr, and the shortest frame (bits and bytes).<br>(b) If the same 2 km network ran at 10 Mbps instead, what would the minimum frame size be? Explain in one sentence how the minimum frame size depends on the bandwidth.<br>(c) Keeping 100 Mbps and a minimum frame of 128 bytes, what is the longest cable for which CSMA/CD still works correctly?{/quiz}
+{answer}'''답: (a) T_p = 10 μs, T_fr,min = 20 μs, 2000 bits = 250 bytes. (b) 200 bits = 25 bytes; the minimum frame size is proportional to the bandwidth (bandwidth × 2T_p). (c) T_fr = 10.24 μs → T_p ≤ 5.12 μs → length ≤ 1024 m.'''
+<pre class="txt">
+(a) T_p = 거리 / 전파 속도 = 2000 m / 2 × 10^8 m/s = 10^-5 s = 10 μs.
+조건 T_fr ≥ 2T_p → 최소 T_fr = 2 × 10 μs = 20 μs.
+최소 프레임 = 대역폭 × 최소 T_fr = 100 × 10^6 bps × 20 × 10^-6 s = 2000 bits = 2000 / 8 = 250 bytes.
+(b) 10 × 10^6 bps × 20 × 10^-6 s = 200 bits = 25 bytes.
+최소 프레임 크기 = 대역폭 × 2T_p 이므로, 같은 거리에서 대역폭이 10배 빨라지면 최소 프레임도 10배 커져야 한다(빨리 보내면 충돌 소식이 돌아오기 전에 전송이 끝나 버리므로).
+(c) 128 bytes = 1024 bits → T_fr = 1024 / 100 × 10^6 = 10.24 μs.
+T_fr ≥ 2T_p → T_p ≤ 5.12 μs → 최대 거리 = 5.12 × 10^-6 s × 2 × 10^8 m/s = 1024 m.
+Python 검산: Tp = 1.0e-05 s, min frame = 2000 bits / 10 Mbps → 200 bits / 128 B at 100 Mbps → Tp_max = 5.12e-06 s, 1024 m.
+교수(9/29): 최소 프레임 조건 T_fr ≥ 2T_p 에 대해 'Technically, I told you everything. But I recommend you to think about why' — 전송이 끝난 뒤에는 충돌을 감시하지 않으므로, 가장 먼 스테이션까지 갔다 오는 왕복 시간 동안은 전송 중이어야 한다.
+</pre>
+{/answer}
+
+=== D11 ===
+{quiz}'''Transmission order of an Ethernet address''' (CH04(1) p.20–24)<br>An Ethernet station sends a frame whose destination address is 1A:2F:3C:44:5B:06.<br>(a) Write each of the first two bytes in binary, as written (most significant bit on the left).<br>(b) Write the bit sequence that actually goes on the line for these two bytes, in the order of transmission.<br>(c) Which bit of the address reaches the receiver first, and is this address unicast, multicast, or broadcast? Explain why Ethernet uses this bit order.<br>(d) Repeat (b) and (c) for the first byte only of the address 3B:10:A2:7C:00:01.{/quiz}
+{answer}'''답: (a) 1A = 00011010, 2F = 00101111. (b) 01011000 11110100. (c) First bit = LSB of the first byte = 0 → unicast; LSB-first lets the receiver learn unicast/multicast before anything else. (d) 3B = 00111011 → sent 11011100; first bit 1 → multicast.'''
+<pre class="txt">
+규칙(p.20): byte 는 left → right 순서로, 각 byte 안에서는 least significant bit 부터(byte 를 오른쪽 → 왼쪽으로 읽음) 보낸다.
+(a) 1A: 1 = 0001, A = 1010 → 00011010.
+2F: 2 = 0010, F = 1111 → 00101111.
+(b) 각 byte 를 뒤집는다: 00011010 → 01011000.
+00101111 → 11110100.
+전송 순서: 01011000 11110100 (첫 byte 가 먼저, byte 순서는 그대로).
+(c) 맨 처음 나가는 비트 = 첫 byte 1A 의 LSB = 0.
+첫 byte 의 LSB 가 0 → unicast (p.23). 간편법: 둘째 hex digit A(1010)가 짝수 → unicast (p.24).
+LSB first 인 이유: unicast/multicast 를 정하는 비트가 가장 먼저 도착해 수신기가 주소 종류를 즉시 알 수 있다. 교수(10/1): 'they want to announce the receiver about whether this transmission is unicast or not.'
+(d) 3B: 3 = 0011, B = 1011 → 00111011 → 뒤집으면 11011100.
+첫 비트 1 → multicast (둘째 digit B = 11 홀수와 일치). 전부 F(48개의 1)일 때만 broadcast.
+Python 검산: format(0x1A,'08b')[::-1] = 01011000, format(0x2F,'08b')[::-1] = 11110100, format(0x3B,'08b')[::-1] = 11011100.
+(주의) p.21–22 의 '47: odd → broadcast' 는 슬라이드 오타다 — 47:20:… 은 multicast(p.24 Ex 13.2 b). 이 문제의 판정 규칙도 p.23–24 를 따른다.
+</pre>
+{/answer}
+
+=== D12 ===
+{quiz}'''CSMA/CD network-length limit at higher data rates''' (CH04(1) p.31–33, p.39–40)<br>An Ethernet keeps the minimum frame size of 512 bits for compatibility and uses CSMA/CD. Assume a propagation speed of 2 × 10^8 m/s and ignore device delays and the jamming signal.<br>(a) For Fast Ethernet (100 Mbps), find the transmission time T_fr of a minimum frame, the largest allowed maximum propagation time T_p, and the largest network length.<br>(b) Repeat (a) for 10 Gbps.<br>(c) Compare with 10 Mbps under the same assumptions. By what factor does the maximum length shrink per generation?<br>(d) Already at 1 Gbps, this rule would leave a network only tens of meters long, and Gigabit Ethernet did not accept that. Describe the approach it took instead and why CSMA/CD is then unnecessary.{/quiz}
+{answer}'''답: (a) 5.12 μs, 2.56 μs, 512 m. (b) 51.2 ns, 25.6 ns, 5.12 m. (c) 10 Mbps → 51.2 μs, 25.6 μs, 5120 m; ×1/10 per 10× rate. (d) Mostly full-duplex with a central switch: private links, no shared medium, no collisions → no CSMA/CD.'''
+<pre class="txt">
+조건(p.31): T_fr ≥ 2T_p → T_p ≤ T_fr / 2, 최대 길이 L = v × T_p.
+(a) T_fr = 512 bits / (100 × 10^6 bps) = 5.12 × 10^-6 s = 5.12 μs.
+T_p ≤ 5.12 / 2 = 2.56 μs.
+L ≤ 2 × 10^8 m/s × 2.56 × 10^-6 s = 512 m.
+(b) T_fr = 512 / 10^10 = 51.2 × 10^-9 s = 51.2 ns.
+T_p ≤ 25.6 ns.
+L ≤ 2 × 10^8 × 25.6 × 10^-9 = 5.12 m — 사실상 망을 만들 수 없는 길이.
+(c) 10 Mbps: T_fr = 51.2 μs, T_p ≤ 25.6 μs, L ≤ 5120 m (이상적 값).
+data rate 가 10배 → T_fr 1/10 → 허용 T_p 1/10 → 최대 길이 1/10. 슬라이드의 2500 m → 250 m → 25 m 는 repeater·장치 지연을 포함한 실제 표준값이라 절대값은 다르지만 비율 1/10 은 같다.
+(d) 1 Gbps 에서 CSMA/CD 를 유지하면 망이 수십 m 이하가 되어(512 m 와 5.12 m 사이, 비율대로면 약 51 m) 비현실적 → Gigabit 은 이 길을 택하지 않았다(p.39).
+대신 half-/full-duplex 중 대부분 full-duplex: 모든 컴퓨터가 central switch 에 연결되고 switch 가 frame 을 목적지로만 보낸다(p.40).
+각 링크가 private 하고 송수신이 분리되어 매체를 공유하지 않으므로 collision 이 없다 → CSMA/CD 불필요, 길이 제약도 사라진다(Fast Ethernet 의 Solution #2 와 같은 발상, p.33).
+교수(10/1): 'they did not build a network sharing medium to other users ... no collisions, meaning that we don't need CSMA/CD.'
+Python 검산: R = 1e7, 1e8, 1e10 → T_fr = 51.2 μs, 5.12 μs, 51.2 ns; T_p = 25.6 μs, 2.56 μs, 25.6 ns; L = 5120, 512, 5.12 m.
+</pre>
+{/answer}
+
+== 관련 문서 ==
+* [[계산 문제 모음]] · [[공식 모음]] · [[자주 틀리는 함정 모음]] · [[0920 오답 복기]] · [[시험 정보]]
