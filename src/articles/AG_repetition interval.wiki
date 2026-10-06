@@ -4,6 +4,21 @@ category: 10강 WiFi, 용어
 ---
 '''Repetition interval''' 은 [[PCF]] 가 [[DCF]] 보다 우선이라 생기는 문제 — '''DCF 만 쓰는 스테이션이 매체를 영영 못 잡는 것''' — 을 막으려고 시간을 반복 주기로 나눈 것이다. 한 interval 안에 '''contention-free 구간(PCF)''' 과 '''contention 구간(DCF)''' 이 둘 다 들어 있고, 매 interval 은 '''[[beacon frame]]''' 이라는 특별한 control frame 으로 시작한다. L8 p.23–24.
 
+== 쉽게 말하면 ==
+등장인물: '''AP = 사회자(access point), S = AP 가 지목한(polled) 스테이션, C = 그 밖의 DCF 스테이션'''. (p.22–24 는 10/8 수업 범위.)
+
+'''① 왜 필요한가.''' PCF 의 AP 는 PIFS(PCF interframe space — 중간 길이 대기)만 기다리고 DCF 스테이션 C 는 DIFS(DCF interframe space — 가장 긴 대기)를 기다리므로, AP 가 원하면 '''언제나 AP 가 먼저''' 말한다. AP 가 polling 을 끝없이 이어가면 C 는 영원히 차례가 안 온다(starvation). 그래서 시간을 "AP 가 지휘하는 구간 + 자유 경쟁 구간" 으로 나눠 '''반복'''한다.
+
+'''② 어떻게 동작하나.'''
+# AP: PIFS(중간 대기) 뒤 [[beacon frame]] — "지금부터 한 주기 시작, contention-free 구간."
+# C: beacon 을 듣고 NAV(엿들은 예약 시간 타이머)를 켜서 contention-free 구간 내내 조용.
+# AP: SIFS(가장 짧은 대기) 뒤 Poll → S: SIFS(짧은 대기) 뒤 ACK+data → AP: ACK+poll(다음 사람) …
+# AP: CF end — 지휘 끝, C 의 NAV(예약 타이머) 해제.
+# 남은 시간 = contention 구간: C 를 포함한 모두가 [[DCF]](CSMA/CA)로 경쟁.
+# 다음 beacon 이 오면 다시 1 부터.
+
+'''③ 한 줄 요약 (답안용).''' "Repetition interval 은 PCF 가 DCF 보다 우선(PIFS < DIFS)이어서 DCF 스테이션이 매체를 얻지 못하는 것을 막기 위해, beacon frame 으로 시작하는 한 주기를 contention-free(PCF) 구간과 contention(DCF) 구간으로 나눠 반복하는 것이다."
+
 {def}"Due to the '''priority of PCF over DCF''', stations that only use DCF '''may not gain access''' to the medium. To prevent this, a '''repetition interval''' has been designed to cover '''both contention-free PCF and contention-based DCF''' traffic. It starts with a special control frame, called a '''beacon frame'''." (p.23){/def}
 
 [[img:L8-24.png|p.24 Example of repetition interval — 위: AP 의 PIFS·B·SIFS·Poll·…·CF end / 가운데: polled station 의 ACK+data / 아래: Others 의 NAV. 전체 = Contention-free + Contention|large]]

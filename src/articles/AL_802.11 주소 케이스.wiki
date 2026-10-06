@@ -4,6 +4,20 @@ category: 10강 WiFi, 용어
 ---
 802.11 프레임에는 주소 칸이 '''4 개''' 있고, 각 칸에 무엇이 들어가는지는 FC 필드의 '''To DS''' 와 '''From DS''' 두 비트가 정한다. 두 비트의 조합 4 가지 = '''주소 케이스 4 개'''. 외우는 요령은 하나다: '''Address 1 = 이번 hop 에서 받는 쪽, Address 2 = 이번 hop 에서 보내는 쪽''', 남는 칸에 최종 목적지·최초 출발지(그리고 Case 1 에서는 BSS ID). L8 p.28–34.
 
+== 쉽게 말하면 ==
+등장인물: '''A = 처음 보낸 스테이션, B = 최종 받는 스테이션, AP·AP1·AP2 = 중계하는 access point'''.
+
+'''① 왜 주소가 4 개나 필요한가.''' 교수(10/6): infrastructure BSS 에서는 "you never communicate directly … [the access point] relays your message." 그러면 A → B 메시지 하나가 '''여러 hop''' 을 거친다(A → AP1 → DS → AP2 → B). 각 hop 에서 무선 카드는 "이번에 누구에게 주고 누구에게서 받았나"(이번 hop 주소)를 알아야 하고, 동시에 "원래 누가 누구에게 보낸 것인가"(최종 주소)도 잃으면 안 된다. Ethernet 은 한 선 위의 A → B 라 2 개면 됐지만 무선은 이 둘이 달라서 칸이 더 필요하다. 어느 칸이 무엇인지는 '''To DS'''(DS 쪽으로 들어가는 중이면 1)·'''From DS'''(DS 에서 나오는 중이면 1) 두 비트가 알려 준다.
+
+'''② 어떻게 채우나 — A 가 다른 BSS 의 B 에게 보내는 여정.'''
+# A → AP1: To DS(들어감)=1, From DS(나옴)=0 → [AP1 · A · B] — "AP1 아, A 가 보낸 걸 B 에게." (Case 3)
+# AP1 → AP2 (무선 DS 일 때): To DS(들어감)=1, From DS(나옴)=1 → [AP2 · AP1 · B · A] — 중계소끼리, 원래 주인 둘은 3·4 칸에. (Case 4)
+# AP2 → B: To DS(들어감)=0, From DS(나옴)=1 → [B · AP2 · A] — "B 야, AP2 가 전해 준다, 원래 A 가 보냄." (Case 2)
+# (같은 BSS 안 A → B: To DS=0, From DS=0 → [B · A · BSS ID]. Case 1)
+# 공통 규칙: '''Address 1 = 이번 hop 받는 쪽, Address 2 = 이번 hop 보내는 쪽.'''
+
+'''③ 한 줄 요약 (답안용).''' "802.11 프레임의 Address 1 은 이번 hop 의 수신자, Address 2 는 이번 hop 의 송신자이며, To DS/From DS 비트 조합에 따라 Address 3(과 Case 4 의 Address 4)에 최종 목적지·최초 출발지(Case 1 은 BSS ID)가 들어간다."
+
 {def}"Addresses — DS: '''Distribution System''' → The infrastructure component that connects multiple BSSs together to form an ESS." (p.28–29)
 "Addressing mechanisms: Cover '''4 different cases'''." (p.30)
 Case 1 "Frame is moving '''within a single BSS'''" (p.31) · Case 4 "Frame is traveling '''between two APs'''" (p.34){/def}

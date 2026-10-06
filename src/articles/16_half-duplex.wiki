@@ -18,6 +18,9 @@ category: 1강 Introduction, 용어
 
 {info}Half-duplex 링크를 여러 장치가 나눠 쓰면 "누가 언제 보내나"가 문제가 된다. 이걸 푸는 게 CH03 [[CH03 Media Access Control]] 의 [[random access]] 계열(ALOHA, [[CSMA/CD]]) — CSMA/CD 가 half-duplex 이더넷을 위한 방식인 이유다.{/info}
 
+{exam}🎯 교수(10/6, [[CH04 WiFi]] 수업 p.19): 무선 장치가 대부분 half-duplex 라 CSMA/CD 를 못 쓴다는 대목에서 — "full duplex means we can transmit and receive '''at the same time at the same frequency band'''." half-duplex 는 동시에 송수신하려면 '''다른 frequency band''' 를, 같은 band 면 '''다른 시간''' 을 써야 하는 것(휴대폰 통화가 동시에 되는 건 말하기·듣기를 F1·F2 로 나눴기 때문). full duplex 가 어려운 이유는 '''self-interference''' — 큰 전력으로 보내는 내 신호가 멀리서 약해져 온 상대 신호를 덮는다. "'''When we are speaking, it is difficult to hear, right? That is the analogy.'''"
+슬라이드(L1 p.6) 정의 "not at the same time" 과 기준이 조금 다르다(교수는 "같은 주파수에서" 를 붙임). 답안에는 슬라이드 문장을 쓰고, 이유를 물으면 self-interference.{/exam}
+
 {quiz}Half-duplex 와 full-duplex 는 둘 다 "양방향"이다. 차이를 슬라이드 원문 단어 하나씩으로 대비하시오.{/quiz}
 {answer}Half-duplex: "'''not at the same time'''". Full-duplex: "'''simultaneously'''".{/answer}
 

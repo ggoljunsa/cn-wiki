@@ -4,6 +4,20 @@ category: 10강 WiFi, 용어
 ---
 '''RTS (request to send)''' 와 '''CTS (clear to send)''' 는 [[CSMA/CA]] 의 '''핸드셰이크 프레임'''이다. 송신자가 RTS 로 "보내도 될까? 이만큼 걸려" 하고 묻고, 수신자가 CTS 로 "보내도 돼" 하고 답한다. 두 프레임 모두 '''duration''' 을 실어 주변 스테이션이 [[NAV]] 를 설정하게 하고, 특히 '''CTS 는 송신자가 못 듣는 hidden station 에게도 닿아''' [[hidden station problem]] 을 완화한다. 둘 다 '''control frame''' 이다. L8 p.14–17, p.21, p.27.
 
+== 쉽게 말하면 ==
+등장인물: '''A = 보내는 쪽, B = 받는 쪽, C = A 의 목소리는 안 들리고 B 의 목소리만 들리는 제3자''' (p.21 그림은 이름이 반대 — B 가 보내고 A 가 받는다. 역할만 보면 같다).
+
+'''① 왜 필요한가.''' [[CSMA/CA]] 의 A 는 충돌을 감지하지 못하니, 보내기 '''전에''' "지금부터 내가 이만큼 쓴다"고 예약해야 한다. 핵심은 그 예약을 '''누가 들어야 하나'''다. 충돌은 '''받는 쪽 B 의 귀'''에서 일어나므로 B 주변 사람이 알아야 한다. A 가 아무리 외쳐도 A 의 소리가 안 닿는 C 는 모른다 — 그래서 '''B 가 직접 대답(CTS)'''해 B 주변에 알린다. 교수(10/6): "CTS contains the duration of data transmission … This is how CSMA/CA addresses this hidden station problem."
+
+'''② 어떻게 동작하나.'''
+# A → B: '''RTS''' = "B 야, 보내도 돼? 이만큼 걸려." (A 주변이 듣는다 — C 는 못 들음)
+# B: SIFS(응답 전의 짧은 대기) 뒤 '''CTS''' = "A, 보내. 남은 시간 이만큼." (B 주변이 듣는다 — '''C 도 들음''')
+# C: CTS 의 duration 으로 NAV(엿들은 예약 시간 타이머) 설정 → 그동안 송신 안 함.
+# A → B Data, B → A ACK. 충돌 없음.
+# A 가 CTS 를 못 받으면 → RTS 가 남의 RTS 와 부딪혔다고 가정 → backoff → 다시 RTS.
+
+'''③ 한 줄 요약 (답안용).''' "RTS(송신자의 전송 요청)와 CTS(수신자의 전송 허가)는 둘 다 전송 duration 을 담아 이를 들은 스테이션이 NAV 를 설정하게 하며, 특히 수신자가 보내는 CTS 는 송신자의 범위 밖에 있는 hidden station 에게도 닿아 충돌을 완화한다."
+
 {def}"RTS: '''request to send''' · CTS: '''clear to send'''" (p.14)
 "An '''RTS frame includes the duration''' of time that it needs to occupy the channel." (p.15)
 "The handshake frames (RTS and CTS) can '''mitigate''' the [hidden station] issue. The '''CTS message, which contains the duration of data transmission''' from B to A, '''reaches C'''. Station C knows that some hidden station is using the channel and '''refrains from transmitting'''." (p.21){/def}
@@ -45,6 +59,8 @@ category: 10강 WiFi, 용어
 {warn}RTS/CTS 는 '''충돌을 완전히 없애지 못한다'''. RTS 자체가 동시에 보내져 충돌할 수 있고(p.16–17: 그러면 CTS 가 안 옴 → 충돌로 가정 → backoff), 반대로 RTS 를 엿들은 스테이션이 '''쓸 수 있는데도 참는''' [[exposed station problem]] 을 만들기도 한다(p.35).{/warn}
 
 {analogy}🎭 '''RTS/CTS = 무전기의 "송신 요청 — 송신 허가".''' 조종사(송신자)가 "활주로 써도 됩니까, 2분 걸립니다"(RTS) 라고 하면 관제탑(수신자)이 "허가, 2분"(CTS) 이라고 '''모든 비행기가 듣는 주파수'''로 답한다. 조종사의 목소리가 안 닿는 먼 비행기도 관제탑 목소리는 들으니 2분 동안 착륙을 미룬다(NAV).{/analogy}
+
+{exam}🎯 교수(10/6): "RTS and CTS have a [field] that represents the '''transmission time''' for their message." / RTS·CTS 를 주고받는 절차를 악수에 빗대 '''handshaking''' 이라 한다. / (p.21) "CTS contains the '''duration of data transmission''' … This is how CSMA/CA addresses this hidden station problem … due to RTS and CTS that contain the duration of data transmission." → 답안 키워드: '''duration''', '''mitigate''', '''CTS reaches C'''. → [[CH04 WiFi]] 의 🎙 절{/exam}
 
 {quiz}Hidden station 문제에서 RTS 가 아니라 '''CTS''' 가 해결의 열쇠인 이유는?{/quiz}
 {answer}hidden station(C)은 '''송신자(B)의 범위 밖'''이라 B 의 RTS 를 못 듣는다. 하지만 '''수신자(A)의 범위 안'''이라 A 가 보내는 CTS 는 듣는다. CTS 에는 데이터 전송 duration 이 들어 있으므로 C 는 그 시간 동안 NAV 를 설정하고 전송을 삼간다(p.21).{/answer}

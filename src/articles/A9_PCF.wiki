@@ -4,6 +4,19 @@ category: 10강 WiFi, 용어
 ---
 '''PCF (Point Coordination Function)''' 는 802.11 의 두 번째 MAC sublayer 로, '''infrastructure network 에서만''' 구현할 수 있는 '''선택적(optional)''' 접근 방식이다. AP 가 중앙에서 스테이션을 차례로 부르는 '''centralized, contention-free polling''' 이고, 주로 '''time-sensitive''' 전송(지연에 민감한 트래픽)에 쓴다. [[DCF]] 보다 우선권을 주려고 '''PIFS''' 라는 더 짧은 interframe space 를 쓴다. L8 p.22.
 
+== 쉽게 말하면 ==
+등장인물: '''AP = 사회자(access point), S = AP 가 지목한 스테이션, C = 나머지 스테이션'''. (10/6 수업은 이름만 언급 — "point usually represents one individual device" — 본 설명은 10/8.)
+
+'''① 왜 필요한가.''' [[DCF]] 는 모두가 경쟁하므로 언제 내 차례가 올지 모른다(충돌 → backoff 하면 더 늦어진다). 음성·영상처럼 '''time-sensitive''' 한 트래픽에는 곤란하다. 그래서 AP 가 한 명씩 지목해 주는 방식(7강 [[polling]])을 '''선택 사항'''으로 둔다. 지목할 AP 가 있어야 하니 infrastructure 에서만 된다.
+
+'''② 어떻게 동작하나.'''
+# AP 가 PIFS(PCF interframe space — DIFS 보다 짧은 대기)만 기다리고 DCF 스테이션보다 먼저 채널을 잡는다 → beacon.
+# AP → S: Poll("너 보내"). S → AP: ACK+data.
+# C 는 NAV(엿들은 예약 시간 타이머)로 조용 — 경쟁 자체가 없다(contention-free).
+# 지휘가 끝나면 CF end → DCF 자유 경쟁 구간 ([[repetition interval]]).
+
+'''③ 한 줄 요약 (답안용).''' "PCF 는 infrastructure 네트워크에서만 쓰는 선택적 MAC 방식으로, AP 가 PIFS(< DIFS)로 우선권을 얻어 스테이션을 차례로 polling 하는 centralized, contention-free 접근이며 time-sensitive 전송에 쓰인다."
+
 {def}"Point Coordination Function (PCF): An '''optional''' access method that can be implemented in an '''infrastructure''' network. It is used mostly for '''time-sensitive''' transmission. PCF has a '''centralized, contention-free polling''' access method. To give '''priority to PCF over DCF''', another interframe space, '''PIFS''', has been defined. '''PIFS is shorter than DIFS'''." (p.22){/def}
 
 == 이름에서 개념 끌어내기 ==

@@ -45,6 +45,8 @@ category: 10강 WiFi, 용어
 
 {analogy}🎭 '''DCF = 신호등 없는 사거리의 양보 규칙.''' 경찰(AP)이 없어도 모두가 "일단 멈추고(DIFS) → 손짓으로 신호하고(RTS/CTS) → 건넌다" 는 규칙을 지키면 사고가 거의 안 난다. [[PCF]] 는 교통경찰이 직접 한 대씩 보내 주는 방식.{/analogy}
 
+{exam}🎯 교수(10/6): "As you remember, the data link layer has two sublayers, [DLC] and MAC … In IEEE 802.11, we have two different [MAC] functions which we call '''distributed coordination function''' and '''point coordination function'''." / "DCF is about handling '''multiple access for many nodes'''." / "It should wait '''DIFS''' before sending RTS. '''It is the rule''' for CSMA/CA." → [[CH04 WiFi]] 의 🎙 절{/exam}
+
 {quiz}802.11 의 두 MAC sublayer 이름과, DCF 가 쓰는 접근 방식은?{/quiz}
 {answer}'''DCF (Distributed Coordination Function)''' 와 '''PCF (Point Coordination Function)'''. DCF 는 '''CSMA/CA''' 를 쓴다.{/answer}
 

@@ -4,6 +4,20 @@ category: 10강 WiFi, 용어
 ---
 802.11 의 MAC layer frame 은 '''9 개 필드'''로 되어 있다: '''FC 2 · D 2 · Address 1 6 · Address 2 6 · Address 3 6 · SC 2 · Address 4 6 · Frame body 0–2312 · FCS 4''' (bytes). Ethernet 프레임과 가장 크게 다른 점은 '''주소가 4 개'''라는 것(→ [[802.11 주소 케이스]])과 [[NAV]] 를 위한 '''D(duration)''' 필드, [[fragmentation]] 을 위한 '''SC''' 필드가 있다는 것. L8 p.26.
 
+== 쉽게 말하면 ==
+'''① 왜 Ethernet 프레임으로는 안 되나.''' 필드 하나하나가 10/6 에 배운 무선 문제의 답이다: 충돌을 감지할 수 없다 → 미리 예약할 시간이 필요 → '''D'''. 잡음이 많다 → 조각낸다 → '''SC'''. AP 가 relay 한다(교수 10/6: "you never communicate directly") → '''주소 4 개 + To DS/From DS'''.
+
+'''② 읽는 순서 (앞에서부터).'''
+# FC(2 B): 이 프레임이 무엇인지(Type·Subtype) + 방향 비트 To DS(DS 쪽으로 들어가는 중)·From DS(DS 에서 나오는 중) + More frag 등.
+# D(2 B): 이 교환이 끝날 때까지 남은 시간 → 들은 스테이션의 NAV(엿들은 예약 시간 타이머) 값.
+# Address 1·2·3(각 6 B): 이번 hop 받는 쪽 · 이번 hop 보내는 쪽 · 나머지 하나(최종 목적지/출발지/BSS ID).
+# SC(2 B): 앞 4 bits = fragment number.
+# Address 4(6 B): AP 끼리(To DS=1·From DS=1, 즉 DS 안을 지나는 중)일 때만.
+# Frame body(0–2312 B): 실제 데이터.
+# FCS(4 B): CRC-32 오류 검출.
+
+'''③ 한 줄 요약 (답안용).''' "802.11 MAC 프레임은 FC·D·Address 1·2·3·SC·Address 4·Frame body·FCS 의 9 필드로, D 는 NAV 를 설정하는 전송 duration, SC 의 첫 4 bits 는 fragment number, FCS 는 CRC-32 이며, FC 의 To DS/From DS 비트에 따라 4 개 주소의 의미가 달라진다."
+
 {def}"MAC layer frame format: 9 fields.
 '''FC''': define '''type of frame''' and some '''control information'''.
 '''D''': define the '''duration of the transmission''' to set the value of '''NAV'''.

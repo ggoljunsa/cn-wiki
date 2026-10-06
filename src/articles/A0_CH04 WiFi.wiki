@@ -2,7 +2,7 @@ key: CH04 WiFi
 title: CH04 WiFi (10강 — IEEE 802.11 wireless LAN: 충돌을 감지하지 말고 피하라)
 category: 10강 WiFi, 메인
 ---
-{warn}'''10/6 수업 전 선제 작성 — 녹음본 반영 전.''' 슬라이드(L8)만으로 쓴 문서다. 교수가 무엇을 강조했는지(🎯), 학생 Q&A, 공지는 녹음본이 오면 `🎙 실제 수업 기록` 절로 추가한다. 슬라이드 p.32–33 캡션 오류 의심, p.36 대역 오타 의심은 아래 각 절의 주의 박스 참고.{/warn}
+{warn}'''10/6 수업 p.6–21 반영, p.22(PCF)~ 는 10/8 수업 뒤 갱신.''' 10/6 녹음본(`1006_11_컴네.txt`)의 진도·공지·교수 강조는 아래 `🎙 실제 수업 기록 (10/6 화)` 절에 있다. '''중간고사 10/13(화) 확정''' → [[시험 정보]]. 슬라이드 p.32–33 캡션 오류 의심, p.36 대역 오타 의심은 아래 각 절의 주의 박스 참고(둘 다 10/8 수업 범위).{/warn}
 
 '''CH04 WiFi''' 는 L8 덱(`CH04_Local Area Networks (2).pdf`, 36쪽) p.6–36 이다. p.2–5 는 [[CH04 Ethernet]] 복습(LAN 의 정의, 세 instance, Ethernet 4세대)이고, p.5 "'''Today's focus: WiFi, a wireless LAN'''" 부터 끝까지 전부 [[WiFi]] = [[IEEE 802.11]] 이다. [[Bluetooth]] 는 이 덱에 없다.
 이 덱이 던지는 질문은 — '''"매체가 선이 아니라 공기가 되면, 지금까지 배운 data-link 의 무엇이 깨지고 무엇으로 대신하나?"'''
@@ -10,7 +10,49 @@ category: 10강 WiFi, 메인
 
 페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다.
 
-{exam}🎯 슬라이드 구조로 본 출제 예상 자리 (녹음 전이라 교수 강조는 미확인)
+== 한눈에 보기 ==
+기호를 까먹었을 때 이 절만 다시 읽으면 된다. 등장인물은 끝까지 고정 — '''A = 보내는 쪽, B = 받는 쪽, C = 옆에서 엿듣는 제3자''' (p.14 그림 이름 그대로).
+
+=== ① 왜 CSMA/CD 와 CSMA/CA 로 갈라지나 ===
+<pre class="txt">
+Ethernet(유선): 선으로 연결 → 보내면서 동시에 들을 수 있음 → 충돌을 '''감지'''하고 멈춤 = [[CSMA/CD]]
+
+WiFi(무선): 매체가 공기 → 신호가 broadcast(범위 안 모두가 들음)
+  1. 무선 장치는 [[half-duplex]] — 내가 세게 보내는 신호가 내 수신기를 덮어서(self-interference)
+     보내는 동안 멀리서 약해져 온 남의 신호를 못 듣는다          → 감지 불가
+  2. 거리가 멀면 신호가 빨리 약해져([[attenuation]]) 먼 곳의 충돌이 안 들린다 → 감지 불가
+  3. 거리·장애물 때문에 서로 안 들리는 스테이션([[hidden station problem|hidden station]]) → 감지 불가
+  ⇒ "충돌이 나도 송신자는 모른다" ⇒ 감지는 포기하고 처음부터 '''피한다''' = [[CSMA/CA]]
+</pre>
+교수(10/6) 한 줄: "Collision '''detection''' … collision '''avoidance''' — we can learn many things from each name."
+
+=== ② DCF 한 사이클 (A 가 B 에게 Data 를 보낼 때) ===
+# A: 채널이 비었는지 듣고, '''DIFS'''(DCF interframe space — 새 전송을 시작하기 전의 '''긴''' 대기) 만큼 더 기다린다.
+# A → B: '''[[RTS와 CTS|RTS]]'''(request to send — "보내도 돼? 이만큼 걸려"). 걸리는 시간(duration)을 싣는다.
+# B: '''SIFS'''(short interframe space — 진행 중인 대화에 응답하기 전의 '''짧은''' 대기) 뒤 '''CTS'''(clear to send — "보내"). '''C 도 이 CTS 를 듣는다.'''
+# C: CTS 에 적힌 duration 만큼 '''[[NAV]]'''(network allocation vector — 엿들은 예약 시간 타이머)를 켜고, 끝날 때까지 채널을 보지도 않고 조용히 있는다.
+# A: SIFS(짧은 대기) 뒤 '''Data'''.
+# B: SIFS(짧은 대기) 뒤 '''ACK''' — Ethernet 에는 없던 단계. 무선은 받았으면 '''반드시''' 대답한다(교수 10/6).
+# ACK 가 끝나면 C 의 NAV(예약 타이머)도 끝 → 다시 경쟁.
+* '''CTS 가 안 오면?''' A 는 "RTS 가 누군가와 부딪혔구나" 하고 '''가정''' → [[binary exponential backoff|backoff]] → RTS 를 다시 보낸다. (CSMA/CA 에는 충돌 감지 장치가 없다.)
+* DIFS(긴 대기)는 맨 처음 한 번, SIFS(짧은 대기)는 그 뒤 세 번. 짧게 기다리는 쪽이 먼저 채널을 잡으므로, 진행 중인 RTS-CTS-Data-ACK 교환에는 남이 끼어들 수 없다 → [[interframe space]].
+
+=== ③ 주소 4 케이스 — "프레임이 어디서 어디로" ===
+FC 필드의 두 비트 '''To DS'''(DS 쪽으로 '''들어가는''' 중이면 1) · '''From DS'''(DS 에서 '''나오는''' 중이면 1) 가 Address 1~4 의 뜻을 정한다. DS = [[distribution system]](AP 들을 잇는 망). 여기서 A = 처음 보낸 스테이션, B = 최종 받는 스테이션.
+{|
+! Case || To DS · From DS || 프레임이 어디서 어디로 (한 문장) || Address 1 · 2 · 3 · 4
+|-
+| 1 || 0 · 0 || 같은 BSS 안에서 A 가 B 에게 바로 간다. || B · A · BSS ID · —
+|-
+| 2 || 0 · 1 || AP 가 DS 에서 받아 온 프레임을 자기 BSS 의 B 에게 내려 준다(DS 에서 나옴). || B · AP · A · —
+|-
+| 3 || 1 · 0 || A 가 자기 AP 에게 올려 보낸다(DS 로 들어감). || AP · A · B · —
+|-
+| 4 || 1 · 1 || AP1 이 무선 DS 를 통해 AP2 에게 넘긴다(DS 안을 지나는 중). || AP2 · AP1 · B · A
+|}
+외우는 한 줄: '''Address 1 = 이번 hop 에서 받는 쪽, Address 2 = 이번 hop 에서 보내는 쪽''', 남는 칸에 최종 목적지(B)·최초 출발지(A), Case 1 만 BSS ID. → [[802.11 주소 케이스]]
+
+{exam}🎯 출제 예상 자리 (슬라이드 구조 + 10/6 수업에서 p.14–21 을 길게 설명한 것으로 확인 — 아래 🎙 절)
 * '''Why not CSMA/CD for wireless?''' — half-duplex · 큰 거리 · hidden station (p.18–20). 교수가 Question/Answer 로 써 둔 자리
 * '''Collision during handshaking?''' — CTS 미수신 = 충돌 가정 → backoff → 재시도 (p.16–17)
 * DCF 타임라인 순서 '''DIFS → RTS → SIFS → CTS → SIFS → Data → SIFS → ACK''', NAV 의 뜻 (p.14–15)
@@ -193,7 +235,7 @@ p.29: "DS: Distribution System → The infrastructure component that connects mu
 
 [[img:L8-30.png|p.30 Addressing mechanisms 4 cases — a. 한 BSS 안 · b. AP → B · c. A → AP · d. AP1 → AP2 (wireless DS)|large]]
 
-{warn}'''p.32–33 캡션 주의.''' p.32 Case 2 캡션 "Frame is '''heading into''' the DS", p.33 Case 3 캡션 "Frame is '''coming out of''' the DS" 는 같은 슬라이드의 '''표 행·그림과 반대'''다(Case 2 = From DS=1, AP → B 이므로 DS 에서 '''나옴''' / Case 3 = To DS=1, A → AP 이므로 DS 로 '''들어감'''; Forouzan 원문도 Case 2 "coming from a DS", Case 3 "going to a DS"). '''p.32–33 캡션은 뒤바뀐 것으로 보인다 — 시험에서는 To DS/From DS 비트와 Address 1~4 표를 기준으로 답할 것.''' 10/6 수업에서 교수 설명을 확인할 것.{/warn}
+{warn}'''p.32–33 캡션 주의.''' p.32 Case 2 캡션 "Frame is '''heading into''' the DS", p.33 Case 3 캡션 "Frame is '''coming out of''' the DS" 는 같은 슬라이드의 '''표 행·그림과 반대'''다(Case 2 = From DS=1, AP → B 이므로 DS 에서 '''나옴''' / Case 3 = To DS=1, A → AP 이므로 DS 로 '''들어감'''; Forouzan 원문도 Case 2 "coming from a DS", Case 3 "going to a DS"). '''p.32–33 캡션은 뒤바뀐 것으로 보인다 — 시험에서는 To DS/From DS 비트와 Address 1~4 표를 기준으로 답할 것.''' 10/6 수업은 p.21 에서 끝났으므로 10/8 수업에서 교수 설명을 확인할 것.{/warn}
 
 외우는 요령: '''Address 1 = 이번 hop 의 수신자, Address 2 = 이번 hop 의 송신자''', 남는 칸에 최종 목적지/출발지(Case 1 은 BSS ID). → [[802.11 주소 케이스]]
 
@@ -259,6 +301,42 @@ hidden station = 보내면 안 되는데 보냄('''충돌'''), exposed station =
 {quiz}(1) 무선 LAN 에서 CSMA/CD 대신 CSMA/CA 를 쓰는 이유 세 가지를 쓰시오. (2) CSMA/CA 에서 송신자는 RTS 충돌을 어떻게 판단하는가? (3) To DS = 0, From DS = 1 인 프레임의 Address 1–3 은?{/quiz}
 {answer}(1) 무선 장치는 대부분 '''half-duplex''' 라 보내면서 받을 수 없다 · 스테이션 사이 '''거리가 커서''' 충돌이 감지되지 않을 수 있다 · '''hidden station problem''' (p.19–20). (2) '''CTS 를 받지 못하면''' 충돌로 가정하고 '''backoff''' 후 재시도 (p.17). (3) Address 1 = '''Destination''', Address 2 = '''Sending AP''', Address 3 = '''Source''' (AP 가 DS 에서 받은 프레임을 BSS 의 목적지로 보내는 경우).{/answer}
 
+== 🎙 실제 수업 기록 (10/6 화, 녹음본 기준) ==
+10/6 수업 녹음은 '''70분'''(`1006_11_컴네.txt`, 09:02 시작, whisper.cpp medium.en 전사)이다. 진도는 '''수업 첫머리 중간고사 공지 → p.2–5 복습 → p.6–21''' 이고, '''p.21 hidden station 해결에서 끝났다''' — "I think we have to stop here and continue moving on to PCF." '''PCF(p.22)부터 p.36 까지는 10/8(목) 수업'''이다. 오인식은 슬라이드 기준으로 복원했다: "length/lengths" = LAN(s), "internet" = Ethernet(문맥상), "chugga" = WiFi, "CSMA/CT"·"GSMA-CD" = CSMA/CD, "meeting" = midterm, "glasses" = classes, "RTF"·"ITS" = RTS, "DIFF"·"SIFF" = DIFS·SIFS, "NAB" = NAV, "BSN" = BSS, "multi-pass" = multipath, "A02.11"·"8.0.0" = 802.11.
+
+=== 공지 (수업 첫머리 + 수업 끝) ===
+{exam}🎯 '''중간고사 = 10/13(화), 1시간, 나눠 주는 시험지에 연필·펜으로 필기, 범위는 10/8 수업까지(CH01–CH04), CH05 WAN 은 중간고사 뒤로.''' 교수(10/6):
+* "The classes up to the next time would be the '''total coverage''' for the midterm, which is planned on '''the next Tuesday''', right?" → 10/8(목) 수업까지가 범위, 시험은 '''10/13(화)'''.
+* "The exam will take '''one hour'''. … you should write down your answer '''with pencil or pen'''. And I will '''distribute an exam sheet'''…"
+* "Now, you may wonder what could be the type of each problem. And I will '''upload an announcement''' later on, '''during this week'''. … there will be some '''OX quizzes''' or some [계산/단답 — 녹음 "tuition problems", 불명확] problems. And indeed there will be some '''descriptive problems''' also. And some details could be found in the announcements during this week. So please pay attention."
+* (수업 끝) "I think we should end up [at this point] for the midterm and '''postpone our progression to wide area networks after the midterm'''." / "What I told you is that the midterm coverage would be '''from Chapter 1''' … [to Chapter 4] … wide area network, which is '''Chapter 5'''[, comes after the midterm]." (녹음 일부 불명확 — 문맥상 복원)
+→ 한국어: 시험은 다음 주 화요일 10/13, 1시간, 필기. 범위는 목요일(10/8) 수업까지 = CH01–CH04. 문항은 OX·(계산/단답)·서술형이 섞이며 자세한 것은 이번 주 LMS 공지. WAN(CH05)은 중간고사 뒤. → [[시험 정보]]{/exam}
+
+{warn}'''Bluetooth 포함 여부는 미확정.''' 복습(p.3)에서 "the third one is Bluetooth, which would be a coverage of the next [LAN class]" 라고 했고, 녹음 맨 끝에 "I think it is not B…, midterm isn't B…" 라는 불명확한 문장이 있다. "Bluetooth 는 중간고사에 안 들어간다" 로 들리기도 하지만 녹음만으로는 단정할 수 없다 — 10/8 수업에서 직접 확인할 것. 또 수업 첫머리에는 "I want to make sure I can finish the chapter 5" 라고 했다가 끝에서 WAN 을 중간고사 뒤로 미루는 것으로 바뀌었다.{/warn}
+
+=== 교수가 강조하거나 슬라이드 밖에서 덧붙인 것 ===
+* '''Recap''' (p.2–5): LAN 은 "can be easily found in its name" — 제한된 지역의 네트워크, 고립돼 보여도 대부분 WAN·인터넷에 연결. 세 instance 중 Ethernet 은 "almost the only wired protocol". "When we are saying IEEE 802, … it is the standard for the LAN." WiFi 는 "Actually we are using that one now."
+* '''Broadcast 가 모든 문제의 뿌리''' (p.7): "If we transmit a signal through a wireless medium, then basically almost everyone … can receive the transmitted signal." 유선은 신호가 정해진 수신자에게 가고, broadcast 하려면 그렇다고 표시하는 필드가 따로 필요했다(9강). 무선은 그 반대. "'''The most complicated and the most difficult problem arises … due to the broadcast nature''' … Almost all wireless communication techniques are to avoid the problems arising from this broadcast nature." interference 도, 보안(eavesdropping)의 어려움도 여기서 나온다. 호스트는 움직일 수 있지만 "it does not ensure continuous communication while moving around".
+* '''Interference 를 TX/RX 그림으로''' (p.8) ⭐⭐: 송신기 TX 한 대와 수신기 RX1·RX2. TX 가 RX2 에게 보내도 가까운 RX1 도 그 메시지를 듣는다. 이때 '''같은 시간·같은 frequency band''' 로 다른 송신기 TX′ 가 RX1 에게 보내면 두 신호가 "added … at their voltage level" → RX1 은 둘을 따로 decode 하지 못한다. 슬라이드 괄호 "(if they are using the same frequency band)" 의 이유: 수신기는 맨 먼저 자기 frequency band 만 filter 로 잘라내므로 대역이 다르면 섞이지 않는다. "'''Interference could be problematic if two stations share the same time with the same frequency. But it is fine if you differentiate time or frequency.'''" → "This is why we consider '''time and frequency as two important resources''' in communication." (filtering 의 원리는 신호처리 과목 몫 — 여기서는 "다른 대역이면 분리된다"만 기억.) 여담: 교수의 석사 논문이 physical layer 에서 이 interference 를 피하는 signaling 설계였다.
+* '''Multipath''' (p.8): 산·건물에 반사돼 '''같은 신호'''가 다른 크기로 여러 번 도착한다. 그래서 무선은 오류가 훨씬 많고 error detection/correction 이 중요하다 — "this is why we encountered difficulties in developing an error correction code approaching the '''channel capacity'''"([[Shannon capacity]]).
+* '''AP = 기지국, AP 가 relay 한다''' (p.10) ⭐⭐: "we often call it base … in Korean '''기지국'''", 이 강의실에도 하나 있다. infrastructure BSS 에서는 "you have to first communicate with the access point, and '''it relays your message''' to the other station. '''You never communicate directly''' with your opponent." 셀룰러에서 기기끼리 직접 통신하는 것은 D2D(device-to-device)라 따로 부르고, WiFi 에서는 거의 안 쓴다. 모든 메시지가 AP 를 거치므로 '''AP 의 위치가 중요''' — 가까울수록 덜 감쇠돼 data rate 가 높다. 그래서 방마다 AP 가 있다.
+* '''ad-hoc / infrastructure 이름''' (p.10–11): "Ad hoc means not standardized or … independent." infrastructure 는 "it should be '''deployed before''' we use communication" 이라 그 이름. 인프라를 기대할 수 없는 군 통신은 ad-hoc 이고, 교수가 ADD(국방과학연구소로 추정)에서 ad-hoc 통신 시스템을 설계했는데 "extremely annoying and difficult to guarantee reliable communications".
+* '''ESS''' (p.11): "fundamentally an extended version of BSS", 묶이는 BSS 는 반드시 AP 가 있는 infrastructure BSS. distribution system 은 유선·무선 모두 가능하고 server(또는 gateway)에 연결된다.
+* '''Station mobility 와 handoff''' (p.12): station = 개별 장치. 세 종류는 "just categorization made by IEEE 802.11". 이동 중 연속성은 보장 안 됨 — KTX·SRT 에서 끊기거나 느려지는 경험이 그것. 셀룰러(4G/5G)는 가장 가까운 기지국으로 끊김 없이 바꿔 주는 '''handoff'''(부드럽게 하면 soft handoff)를 매우 복잡한 표준으로 해낸다.
+* '''두 MAC sublayer''' (p.13): data-link layer 가 DLC(LLC)/MAC 두 sublayer 였던 것처럼 802.11 의 MAC 도 둘. DCF 는 "about handling multiple access for many nodes". PCF 는 "point usually represents one individual device" 라고 이름만 풀고 넘어갔다 — 본 설명은 10/8 (슬라이드 p.22 정의: AP 가 하는 centralized, contention-free polling).
+* '''이름부터 보라''' (p.14): "As always, … we can learn many things from each name … CD was collision '''detection''' … this is collision '''avoidance'''."
+* '''DCF 그림을 A·B·C·D 로''' (p.14) ⭐⭐⭐: A = source, B = destination, C·D = 다른 스테이션. DIFS 는 "the rule for CSMA/CA — it should wait DIFS before sending RTS", SIFS 도 "a predetermined time space … just a rule". ⭐ '''ACK''': "after a successful reception, the receiver '''always responds with ACK'''. This is one key difference from the CSMA/CD, where CSMA/CD does not respond at all." C 는 CTS 를 들으면 전송을 멈춘다 — "this is the mechanism chosen by CSMA/CA for avoiding collision."
+* '''NAV''' (p.15) ⭐⭐: "RTS and CTS have a [field] that represents the transmission time"; 그것을 들은 스테이션은 같은 시간만큼 "allocate a timer … indicating not using the channel" — "'''a timer that allocates channel not to use'''."
+* '''Handshaking''' (p.16–17): RTS·CTS 를 주고받는 절차를 악수에 빗대 handshaking 이라 한다. CSMA/CA 에는 충돌 감지 장치가 없으므로 "the sender just assumes [collision when] it does not receive CTS" → backoff → RTS 재시도.
+* '''Half-duplex 를 주파수·시간 자원으로''' (p.19) ⭐⭐⭐: CSMA/CD 가 되려면 "they should '''listen when they transmit'''" = full duplex. 교수 정의: "full duplex means we can transmit and receive '''at the same time at the same frequency band'''." half-duplex 는 동시에 송수신하려면 '''다른 frequency band(F1/F2)''' 를, 같은 band 면 '''다른 시간''' 을 써야 하는 것 — 휴대폰 통화에서 말하기와 듣기가 동시에 되는 것처럼 느껴지는 건 F1·F2 로 나눴기 때문. 왜 full duplex 가 어렵나: 무선은 TX–RX 거리가 커서 큰 전력으로 보내야 하는데, 그 '''내 송신 신호가 내 수신기에 interference 로 들어와(self-interference)''' 멀리서 약해져 온 상대 신호를 덮는다. "'''When we are speaking, it is difficult to hear, right? That is the analogy.'''" (지금은 self-interference 가 완전히 해결됐는지 교수도 "not sure", 10년 전엔 멀었다.)
+* '''거리''' (p.20): TX·RX 가 10 km 떨어진 예 — 성공하려면 거대한 안테나와 큰 전력이 필요할 정도라, 먼 곳 주변에서 난 충돌은 감지되지 않을 수 있다. "CD could be meaningful [only] where we can always detect collisions."
+* '''Hidden station 의 원인 두 가지''' (p.20) ⭐⭐⭐: 원은 B 의 coverage. B–A, A–C 는 통신되지만 B–C 는 안 된다 → "station C is visible to A but '''hidden from station B'''." 거리 외에도 "some objects or some buildings … that block between the location of two devices" — 지형·장애물. "If collision occurs at station C, that event is not visible at all at station B" → CSMA/CD 대신 CSMA/CA 를 쓰는 또 하나의 이유.
+* '''해결''' (p.21) ⭐⭐⭐: "'''RTS and CTS''' can mitigate this hidden station problem … CTS contains the '''duration of data transmission''' … This is due to RTS and CTS that contain the duration of data transmission."
+
+{info}'''half-duplex 정의 차이 주의.''' 1강 [[half-duplex]] 는 "양방향이지만 '''동시에는''' 한쪽만" 이다. 10/6 교수 설명은 "'''같은 주파수·같은 시간'''에 송수신 불가" 를 기준으로 삼아, 주파수를 나눠 동시에 말하고 듣는 휴대폰 통화도 half-duplex 장치의 예로 들었다(Forouzan 식으로는 FDD 로 full-duplex 처럼 쓰는 것). 시험 답안에는 슬라이드 문장 "'''cannot send and receive at the same time'''" 을 쓰고, 이유로 '''self-interference''' 를 덧붙이면 안전하다.{/info}
+
+'''학생 Q&A''': 녹음상 학생 질문 없음.
+
 == 시험 대비 핵심 요약 ==
 # WiFi = '''Wireless Fidelity''' = '''IEEE 802.11''' — wireless LAN 의 '''physical + data-link''' 명세, '''WiFi Alliance 인증'''.
 # 유선 vs 무선(p.7): 매체 wire vs '''air(broadcast)''', 호스트 always connected vs '''not physically connected'''. 무선의 특성(p.8): '''attenuation · interference(같은 band 의 다른 송신자) · multipath(같은 송신자의 여러 신호) · error'''.
@@ -275,6 +353,10 @@ hidden station = 보내면 안 되는데 보냄('''충돌'''), exposed station =
 # 프레임 9 필드: '''FC 2 · D 2 · Addr1 6 · Addr2 6 · Addr3 6 · SC 2 · Addr4 6 · Body 0–2312 · FCS 4'''. FCS = CRC-32. Control frame Type '''01''', Subtype RTS 1011 · CTS 1100 · ACK 1101.
 # 주소 표: '''00''' Dest·Src·BSS ID / '''01''' Dest·Sending AP·Src / '''10''' Receiving AP·Src·Dest / '''11''' Receiving AP·Sending AP·Dest·Src. (p.32–33 캡션은 반대로 적혀 있음 — 표 기준)
 # Physical layer(p.36): 802.11 FHSS-FSK / DSSS-PSK / Infrared-PPM (1, 2 Mbps), a OFDM 5 GHz 6–54, b DSSS 2.4 GHz 5.5·11, g OFDM 2.4 GHz 22·54, n OFDM 600.
+# (10/6 교수) Interference 는 '''같은 시간 + 같은 frequency band''' 일 때만 문제 — 시간이나 주파수 중 하나만 달라도 괜찮다("time and frequency as two important resources").
+# (10/6 교수) Infrastructure BSS 에서는 '''AP 가 relay''' — 스테이션끼리 직접 통신하지 않는다. CSMA/CA 에서는 수신자가 '''반드시 ACK''' (CSMA/CD 는 응답 없음).
+# (10/6 교수) Wireless 가 half-duplex 인 이유 = '''self-interference''': 내 송신 신호가 약해져 온 상대 신호를 덮는다("When we are speaking, it is difficult to hear").
+# 중간고사: '''10/13(화), 1시간, 필기(연필·펜), OX·(계산/단답)·서술''', 범위 '''CH01–CH04(10/8 진도까지)''', WAN(CH05) 제외. Bluetooth 포함 여부 미확정. → [[시험 정보]]
 
 == 공식 모음 ==
 {|

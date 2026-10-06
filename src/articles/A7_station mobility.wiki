@@ -26,6 +26,8 @@ category: 10강 WiFi, 용어
 
 {analogy}🎭 '''전화하면서 걷기.''' 방 안을 서성이면(no-transition) 문제없다. 옆 방으로 가면(BSS-transition) 다른 공유기로 갈아타야 하고, 다른 건물로 가면(ESS-transition) 아예 다른 네트워크다. 802.11 은 "갈아타는 동안 통화가 안 끊긴다"고 약속해 주지 않는다.{/analogy}
 
+{exam}🎯 교수(10/6): station = 개별 장치. 세 종류는 "just categorization made by IEEE 802.11". "This IEEE standard '''does not guarantee reliable communication''' during such [moves]. And it is also very tricky to ensure continuous communication when you move around." — KTX·SRT 에서 끊기거나 느려지는 경험이 그것. 셀룰러(4G/5G)는 가장 가까운 기지국으로 끊김 없이 넘겨 주는 '''handoff'''(부드럽게 = soft handoff)를 매우 복잡한 표준으로 해낸다. → [[CH04 WiFi]] 의 🎙 절{/exam}
+
 {quiz}같은 ESS 안에서 한 BSS 에서 다른 BSS 로 옮겨 간 스테이션의 mobility 종류는? 이때 802.11 이 통신 연속성을 보장하는가?{/quiz}
 {answer}'''BSS-transition mobility'''. 연속성은 '''보장하지 않는다'''(p.12).{/answer}
 

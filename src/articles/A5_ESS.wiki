@@ -23,6 +23,8 @@ category: 10강 WiFi, 용어
 
 {analogy}🎭 '''ESS = 여러 교실(BSS)이 복도(distribution system)로 이어진 학교 건물.''' 교실을 옮겨 다녀도 같은 학교 안이다. 건물 정문(gateway)이 바깥 세상으로 통한다.{/analogy}
 
+{exam}🎯 교수(10/6): "As we can [tell from] its name, it is fundamentally an '''extended version of BSS''' … made up of two or more BSSs with AP." / "When we refer to ESS, the sub-BSS should always be a version '''with AP''', not ad-hoc." BSS 들은 [[distribution system]] 으로 연결되고, 그것은 유선·무선 모두 가능하며 server 에 연결된다. → [[CH04 WiFi]] 의 🎙 절{/exam}
+
 {quiz}"Ad-hoc BSS 3 개를 묶어 ESS 를 만들 수 있다" — 참/거짓과 이유.{/quiz}
 {answer}'''거짓'''. ESS 는 "two or more BSSs '''with APs'''" 로 만든다. ad-hoc BSS 에는 AP 가 없어 distribution system 에 연결할 지점이 없다.{/answer}
 

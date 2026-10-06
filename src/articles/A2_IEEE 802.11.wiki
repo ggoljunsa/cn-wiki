@@ -42,6 +42,8 @@ category: 10강 WiFi, 용어
 | MAC || [[CSMA/CD]] || [[CSMA/CA]] ([[DCF]]) + 선택적 [[PCF]]
 |}
 
+{exam}🎯 교수(10/6): "WiFi represents '''wireless fidelity''', the first two letters of [each] word. And it is based on IEEE standard of '''802.11'''. Please remember that we refer to [LAN], the standard of LAN, when we are saying IEEE 802." / "IEEE 802.11 is about the specifications for a wireless LAN, and it actually covers the '''physical and data link layer'''." → 1·2 계층이라는 점과 802 = LAN 표준 가족이라는 점을 같이 쓸 것. → [[CH04 WiFi]] 의 🎙 절{/exam}
+
 {quiz}IEEE 802.11 이 다루는 계층은? 그리고 "WiFi" 와 "IEEE 802.11" 의 관계를 한 문장으로.{/quiz}
 {answer}'''Physical layer 와 data-link layer'''. IEEE 802.11 은 wireless LAN 의 표준(명세)이고, WiFi 는 그 대중적 이름으로 '''WiFi Alliance 가 인증한''' wireless LAN 을 뜻한다.{/answer}
 

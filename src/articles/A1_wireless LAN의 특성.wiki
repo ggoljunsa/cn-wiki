@@ -46,6 +46,11 @@ category: 10강 WiFi, 용어
 * noisy 환경 → 프레임이 자주 깨짐 → 큰 프레임을 잘게 나누는 [[fragmentation]]
 * host 가 연결되어 있지 않음 → [[station mobility]] (이동 중 통신 연속성은 보장 안 됨)
 
+{exam}🎯 교수(10/6): "The most complicated and the most difficult problem arises … due to the '''broadcast nature''' of wireless communication. … Almost all wireless communication techniques are to avoid the problems arising from this broadcast nature."
+* '''Interference''' 를 TX 하나·RX 둘 그림으로: TX 가 RX2 에게 보내도 가까운 RX1 도 듣는다. 이때 TX′ 가 '''같은 시간·같은 frequency band''' 로 RX1 에게 보내면 두 신호가 "added … at their voltage level" 이라 RX1 은 둘을 분리해 decode 하지 못한다. "'''Interference could be problematic if two stations share the same time with the same frequency. But it is fine if you differentiate time or frequency.'''" → "This is why we consider '''time and frequency as two important resources''' in communication." (수신기는 먼저 자기 대역을 filter 로 잘라내므로 대역이 다르면 섞이지 않는다.)
+* '''Multipath''': 산·건물에 반사돼 같은 신호가 '''다른 크기로 여러 번''' 도착. → "error detection and correction is significantly important in wireless communication" — [[Shannon capacity|channel capacity]] 에 다가가는 오류 정정 부호를 만들기 어려운 이유도 이 채널 특성.
+→ [[CH04 WiFi]] 의 🎙 절{/exam}
+
 {quiz}Wireless LAN 의 특성 4가지를 쓰고, 그중 "같은 송신자로부터 신호를 둘 이상 받는 것"의 이름은?{/quiz}
 {answer}'''Attenuation · Interference · Multipath propagation · Error'''. 같은 송신자의 신호를 여러 개 받는 것 = '''multipath propagation''' (다른 송신자의 신호가 섞이는 것은 interference — 헷갈리지 말 것).{/answer}
 

@@ -4,6 +4,20 @@ category: 10강 WiFi, 용어
 ---
 '''Interframe space (IFS)''' 는 802.11 에서 프레임과 프레임 사이에 '''일부러 비워 두는 대기 시간'''이다. 슬라이드에 나오는 것은 세 가지 — '''DIFS'''(DCF interframe space: DCF 스테이션이 새 전송을 시작하기 전), '''SIFS'''(short interframe space: 핸드셰이크 안에서 응답하기 전), '''PIFS'''(PCF 용, DIFS 보다 짧음). 원리는 하나다: '''짧게 기다리는 쪽이 먼저 채널을 잡는다 = 우선권.''' L8 p.14, p.22, p.24.
 
+== 쉽게 말하면 ==
+등장인물: '''A = 보내는 쪽, B = 받는 쪽, C = 새로 말을 꺼내려는 제3자, AP = PCF 를 돌리는 access point'''.
+
+'''① 왜 필요한가.''' 채널이 비는 순간 모두가 동시에 "내 차례!" 하면 부딪힌다. 특히 A·B 가 RTS → CTS → Data → ACK 를 주고받는 '''도중'''의 짧은 빈틈에 C 가 끼어들면 대화가 깨진다. 그래서 "누가 '''얼마나 기다린 뒤''' 말할 수 있나"를 정해 '''우선순위'''를 만든다. 교수(10/6): "It should wait DIFS before sending RTS. It is the rule." / SIFS 는 "a predetermined time space … just a rule."
+
+'''② 어떻게 동작하나.'''
+# 채널이 비면 모두 각자 정해진 시간만큼 기다린다.
+# 진행 중인 대화의 응답(B 의 CTS·ACK, A 의 Data)은 SIFS(short interframe space — 가장 짧은 대기)만 기다리고 바로 말한다.
+# PCF 를 돌리는 AP 는 PIFS(PCF interframe space — SIFS 보다 길고 DIFS 보다 짧은 중간 대기) 뒤에 말한다.
+# 새로 말을 꺼내려는 C 는 DIFS(DCF interframe space — 가장 긴 대기)를 다 기다려야 한다.
+# 짧게 기다린 쪽이 먼저 말을 시작 → 채널 busy → 오래 기다리던 쪽은 "아직 사용 중" 을 보고 물러난다.
+
+'''③ 한 줄 요약 (답안용).''' "Interframe space 는 프레임 사이의 의무 대기 시간으로, SIFS < PIFS < DIFS 순으로 짧게 기다리는 쪽이 먼저 채널을 잡으므로 진행 중인 교환(SIFS)과 PCF(PIFS)가 새 DCF 전송(DIFS)보다 우선권을 갖는다."
+
 {def}"DIFS: '''DCF interframe space''' · SIFS: '''short interframe space'''" (p.14)
 "To give priority to PCF over DCF, another interframe space, '''PIFS''', has been defined. '''PIFS is shorter than DIFS'''." (p.22){/def}
 
@@ -40,6 +54,8 @@ $$\text{SIFS} < \text{PIFS} < \text{DIFS}$$
 [[anim:csma_ca_timeline|DIFS(긴 간격)는 맨 처음 한 번, 그 뒤 SIFS(짧은 간격)가 CTS·Data·ACK 앞에 끼어드는 리듬을 보라]]
 
 {analogy}🎭 '''엘리베이터 앞 줄서기.''' 문이 열리면 이미 대화 중인 일행(SIFS)은 바로 이어서 탄다. 그다음 VIP(PIFS, AP). 일반 손님(DIFS)은 한 박자 더 기다렸다가 "아무도 안 타네" 할 때 탄다. 기다리는 시간이 짧을수록 먼저 탄다.{/analogy}
+
+{exam}🎯 교수(10/6): "It should wait '''DIFS''' before sending RTS. It is the rule for CSMA/CA." / "station B should wait '''SIFS''', or short interframe space. It is just a '''predetermined time space''', similarly to DIFS. It is just a rule." → 순서 '''DIFS → RTS → SIFS → CTS → SIFS → Data → SIFS → ACK''' 를 그대로 쓰게 하는 문제가 유력. (PIFS 는 10/8 수업 범위.) → [[CH04 WiFi]] 의 🎙 절{/exam}
 
 {quiz}PCF 가 DCF 보다 우선권을 갖는 이유를 interframe space 로 설명하시오.{/quiz}
 {answer}PCF 의 AP 는 '''PIFS''' 만 기다린 뒤 전송하고, DCF 스테이션은 '''DIFS''' 를 기다린다. '''PIFS 가 DIFS 보다 짧으므로''' 채널이 idle 이 되면 AP 가 먼저 전송을 시작하고, DCF 스테이션은 그때 채널이 busy 임을 보고 물러난다(p.22).{/answer}

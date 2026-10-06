@@ -4,6 +4,19 @@ category: 10강 WiFi, 용어
 ---
 '''Exposed station problem''' 은 [[hidden station problem]] 의 반대다: 어떤 스테이션이 채널을 '''쓸 수 있는데도 쓰지 않고 참는''' 상황. p.35 그림에서 C 는 '''A 의 RTS 를 엿들었기 때문에''' 전송을 삼가지만, C 가 D 에게 보내는 것은 B 의 수신을 방해하지 않으므로 사실 보내도 됐다. 결과는 충돌이 아니라 '''채널 낭비'''. L8 p.35.
 
+== 쉽게 말하면 ==
+등장인물(p.35 그림 그대로, 일렬 '''B — A — C — D'''): '''A = 보내는 쪽, B = A 의 수신자, C = A 옆의 제3자, D = C 가 보내고 싶은 상대'''. (p.35 는 10/8 수업 범위 — 아직 교수 설명 녹음 없음.)
+
+'''① 왜 문제인가.''' [[hidden station problem]] 을 막으려고 "RTS/CTS 를 들으면 조용히" 규칙을 만들었더니 반대 부작용이 생긴다. C 는 A 의 RTS 를 듣고 조용해지는데, 사실 C 가 D 에게 보내는 신호는 '''B 까지 닿지 않으므로''' B 의 수신을 방해하지 않는다. 보내도 됐는데 안 보냄 → 충돌이 아니라 '''채널 낭비'''.
+
+'''② 어떻게 일어나나.'''
+# A → B: RTS. A 의 소리는 양쪽으로 퍼져 '''C 도 듣는다'''.
+# B → A: CTS. B 의 소리는 A 까지만 — C 는 못 듣는다.
+# C: A 의 RTS 만 듣고 "채널 사용 중" 이라 판단(NAV — 엿들은 예약 시간 타이머) → D 에게 보낼 것을 '''잘못 참는다'''.
+# 실제로는 C → D 신호가 B 에 닿지 않으므로 C 가 보냈어도 B 는 멀쩡했다(그림: 겹치는 곳은 A–C 사이뿐).
+
+'''③ 한 줄 요약 (답안용).''' "Exposed station problem 은 송신자의 RTS 를 엿들은 스테이션이, 자신의 전송이 그 수신자에게 영향을 주지 않아 채널을 쓸 수 있는데도 전송을 삼가 채널을 낭비하는 문제이다."
+
 {def}"Exposed Station Problem: A station '''refrains from using a channel even when it is available'''." (p.35)
 "C can send to D because this area is free, but C '''erroneously refrains from sending''' because of '''received RTS'''." / "If C sends, the collision would be in this area." (p.35 그림){/def}
 

@@ -29,6 +29,8 @@ category: 10강 WiFi, 용어
 
 {analogy}🎭 '''DS = 우체국 간 배송망.''' 동네 우체국(AP)에 맡긴 편지는 배송망(DS)으로 '''들어가고(To DS)''', 받는 동네 우체국에서 '''나와(From DS)''' 집으로 간다. 같은 동네끼리는 배송망을 안 거친다(00). 우체국끼리 직접 주고받는 구간이 11.{/analogy}
 
+{exam}🎯 교수(10/6): "those BSSs are connected through a '''distribution system''' … It can be '''wired or … wireless''', and it is connected to a server or to another distribution system." → "DS 는 유선이다" 같은 OX 는 '''거짓'''(유선 또는 무선). → [[CH04 WiFi]] 의 🎙 절{/exam}
+
 {quiz}To DS = 1, From DS = 0 인 프레임은 어디서 어디로 가는 중인가?{/quiz}
 {answer}출발 스테이션이 '''자기 AP 로''' 보내는 중 — 즉 '''distribution system 으로 들어가는''' 프레임(Case 3). Address 1 = Receiving AP, Address 2 = Source, Address 3 = Destination.{/answer}
 

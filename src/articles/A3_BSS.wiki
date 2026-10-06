@@ -29,6 +29,8 @@ category: 10강 WiFi, 용어
 
 {analogy}🎭 '''BSS = 교실 하나.''' 선생님(AP)이 있는 교실(infrastructure)에서는 선생님을 통해 말을 전하고, 선생님 없는 자습실(ad-hoc)에서는 학생끼리 직접 말한다. 교실 여러 개를 복도(distribution system)로 이은 학교 건물 전체가 [[ESS]].{/analogy}
 
+{exam}🎯 교수(10/6): access point 는 "we often call it base … in Korean '''기지국'''" — 이 강의실에도, 기숙사 방에도 있다. "Maybe you are connecting to the WiFi, which is the official WiFi. Then we are now using '''infrastructure BSS''' in this room." → BSS 는 AP 유무로 ad-hoc / infrastructure. → [[ad-hoc과 infrastructure]], [[CH04 WiFi]] 의 🎙 절{/exam}
+
 {quiz}AP 가 없는 BSS 와 AP 가 있는 BSS 를 각각 무엇이라 부르는가?{/quiz}
 {answer}AP 없음 = '''ad-hoc''' (BSS), AP 있음 = '''infrastructure''' (BSS).{/answer}
 

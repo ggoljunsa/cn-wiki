@@ -28,7 +28,12 @@ category: 10강 WiFi, 용어
 | [[DCF]] || 가능 || 가능
 |}
 
-{analogy}🎭 '''Ad hoc = 캠핑장에서 즉석으로 모인 사람들의 대화, infrastructure = 사회자(AP)가 있는 회의.''' 캠핑장은 누구든 바로 옆 사람과 말하지만 진행자가 없다. 회의는 사회자가 발언권을 주고(→ [[PCF]] 의 polling), 다른 회의실과 연결도 해 준다(→ [[ESS]]).{/analogy}
+{analogy}🎭 '''Ad hoc = 캠핑장에서 즉석으로 모인 사람들의 대화, infrastructure = 사회자(AP)가 있는 회의.''' 캠핑장은 누구든 바로 옆 사람과 말하지만 진행자가 없다. 회의에서는 '''모든 말이 사회자를 거쳐 전달'''되고(교수 10/6: AP 가 relay — "you never communicate directly"), 사회자가 발언권을 주기도 하며(→ [[PCF]] 의 polling), 다른 회의실과 연결도 해 준다(→ [[ESS]]). 사회자석이 가까울수록 말이 잘 전달된다 — AP 위치가 data rate 를 좌우하는 이유.{/analogy}
+
+{exam}🎯 교수(10/6): "If you want to communicate with each other, then you have to first communicate with the access point, and '''it relays your message''' to the other station. '''You never communicate directly''' with your opponent." — 그래서 AP 위치가 중요하다(가까울수록 덜 감쇠 → 높은 data rate). 기기끼리 직접 통신은 셀룰러에서 D2D 라 부르고 WiFi 에선 거의 안 쓴다.
+* "'''Ad hoc''' means not standardized or … independent." / infrastructure 는 "it should be '''deployed before''' we use communication. So we call it infrastructure."
+* 인프라를 기대할 수 없는 '''군 통신'''은 ad-hoc — 교수가 ADD 에서 ad-hoc 통신 시스템을 설계했는데 "extremely annoying and difficult to guarantee reliable communications".
+→ [[CH04 WiFi]] 의 🎙 절{/exam}
 
 {quiz}PCF 를 ad-hoc BSS 에서 쓸 수 없는 이유는?{/quiz}
 {answer}PCF 는 '''centralized''' polling 방식이라 중앙에서 스테이션에 차례로 발언권을 줄 '''AP''' 가 필요하다. ad-hoc 은 AP 가 '''없는''' BSS 이므로 PCF 는 infrastructure network 에서만 구현 가능하다(p.22).{/answer}

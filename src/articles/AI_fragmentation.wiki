@@ -4,6 +4,19 @@ category: 10강 WiFi, 용어
 ---
 '''Fragmentation''' 은 큰 프레임을 '''작은 프레임 여러 개로 나누는 것'''이다. 무선 환경은 '''매우 noisy''' 해서 프레임이 자주 깨지고, 깨진 프레임은 '''통째로 재전송'''해야 한다. 그러니 작게 나눠 두면 하나가 깨져도 '''그 조각만''' 다시 보내면 된다. 조각 번호는 802.11 프레임 '''SC 필드의 첫 4 비트(fragment number)''' 에 들어간다. L8 p.25–26.
 
+== 쉽게 말하면 ==
+등장인물: '''A = 보내는 쪽, B = 받는 쪽'''.
+
+'''① 왜 필요한가.''' 무선은 interference·multipath 때문에 잡음이 많아 오류가 훨씬 잦다(교수 10/6: "we should expect much higher rates of errors"). 프레임이 깨지면 '''전체'''를 다시 보내야 하니, 큰 프레임일수록 한 번 깨질 때 손해가 크고 깨질 확률도 크다.
+
+'''② 어떻게 동작하나.'''
+# A: 큰 프레임을 조각 여러 개로 자른다. 각 조각의 SC 필드 '''앞 4 bits = 몇 번째 조각인지''', FC 의 More frag 비트 = 뒤에 조각이 더 있는지(설명은 Forouzan 보충).
+# A → B: 조각을 하나씩 보내고 B 가 조각마다 ACK(Forouzan 보충).
+# 한 조각이 깨지면 → '''그 조각만''' 다시 보낸다.
+# B: 조각 번호 순서대로 다시 이어 붙인다.
+
+'''③ 한 줄 요약 (답안용).''' "무선 환경은 noisy 해서 프레임이 자주 손상되고 손상된 프레임은 재전송해야 하므로, 재전송량을 줄이기 위해 큰 프레임을 작은 프레임으로 나누는 fragmentation 이 권장되며, 조각 번호는 SC 필드의 첫 4 bits 에 들어간다."
+
 {def}"Fragmentation: The wireless environment is '''very noisy''', so frames are '''often corrupted'''. A corrupt frame '''has to be retransmitted'''. The '''division of a large frame into smaller ones''' is usually recommended." (p.25)
 "SC: the '''first 4 bits define the fragment number'''." (p.26){/def}
 
