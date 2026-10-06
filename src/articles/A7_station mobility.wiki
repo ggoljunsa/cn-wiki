@@ -1,0 +1,33 @@
+key: station mobility
+title: Station Mobility (no-transition · BSS-transition · ESS-transition)
+category: 10강 WiFi, 용어
+---
+802.11 은 스테이션을 '''얼마나 멀리 움직이느냐'''로 세 종류로 나눈다: '''no-transition'''(가만히 있거나 한 BSS 안에서만), '''BSS-transition'''(BSS → 다른 BSS), '''ESS-transition'''(ESS → 다른 ESS). 그리고 단서 하나 — '''IEEE 802.11 은 이동 중 통신이 끊기지 않는다는 것을 보장하지 않는다.''' L8 p.12.
+
+{def}"Station Types — '''No-transition mobility''': Either '''stationary''' (not moving) or '''moving only inside a BSS'''. '''BSS-transition mobility''': Move from '''one BSS to another'''. '''ESS-transition mobility''': Move from '''one ESS to another'''. IEEE 802.11 '''does not guarantee''' that communication is '''continuous''' during the move." (p.12){/def}
+
+[[img:L8-12.png|p.12 Station Types — No-transition / BSS-transition / ESS-transition mobility, 그리고 "does not guarantee that communication is continuous"|medium]]
+
+== 이름에서 개념 끌어내기 ==
+'''transition''' = "경계를 넘어감". 무엇의 경계를 넘느냐가 이름이다.
+{|
+! 종류 || 넘는 경계 || 예
+|-
+| '''No-transition''' || 없음 (정지 or [[BSS]] 내부 이동) || 강의실 자리에 앉아 노트북 사용
+|-
+| '''BSS-transition''' || BSS → BSS (같은 [[ESS]] 안) || 같은 건물에서 강의실을 옮김 (AP 가 바뀜)
+|-
+| '''ESS-transition''' || ESS → ESS || 학교 WiFi 에서 카페 WiFi 로
+|}
+
+[[anim:bss_ess|스테이션 토큰이 BSS 안에서 움직이다(no-transition) → 옆 BSS 로(BSS-transition) → 다른 ESS 로(ESS-transition, ✗ 연속성 보장 없음) 넘어가는 순서를 따라가라]]
+
+{warn}'''"BSS-transition 은 연속성이 보장되고 ESS-transition 만 안 된다"가 아니다.''' 슬라이드는 이동 전체에 대해 "IEEE 802.11 does '''not guarantee''' that communication is continuous during the move" 라고 한다. 시험에서 "802.11 은 이동 중 연속 통신을 보장한다" 는 '''거짓'''.{/warn}
+
+{analogy}🎭 '''전화하면서 걷기.''' 방 안을 서성이면(no-transition) 문제없다. 옆 방으로 가면(BSS-transition) 다른 공유기로 갈아타야 하고, 다른 건물로 가면(ESS-transition) 아예 다른 네트워크다. 802.11 은 "갈아타는 동안 통화가 안 끊긴다"고 약속해 주지 않는다.{/analogy}
+
+{quiz}같은 ESS 안에서 한 BSS 에서 다른 BSS 로 옮겨 간 스테이션의 mobility 종류는? 이때 802.11 이 통신 연속성을 보장하는가?{/quiz}
+{answer}'''BSS-transition mobility'''. 연속성은 '''보장하지 않는다'''(p.12).{/answer}
+
+== 관련 문서 ==
+* [[BSS]] · [[ESS]] · [[distribution system]] · [[wireless LAN의 특성]] · [[CH04 WiFi]]

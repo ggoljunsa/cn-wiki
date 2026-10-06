@@ -1,0 +1,54 @@
+key: 802.11 프레임 종류
+title: 802.11 프레임 종류 (Management / Control / Data)
+category: 10강 WiFi, 용어
+---
+802.11 프레임은 FC 필드의 '''Type''' 2 bits 로 종류를 나눈다. 슬라이드(p.27)가 다루는 것은 두 가지 — '''management frames'''(스테이션과 AP 의 '''초기 통신''')와 '''control frames'''(채널 접근과 '''acknowledgment''', '''Type = 01''') — 이고, control frame 의 '''Subtype''' 이 RTS(1011) · CTS(1100) · ACK(1101) 를 구분한다. 셋째 종류인 data frame 은 Forouzan 보충. L8 p.27.
+
+{def}"Frame type — '''Management frames''': Used for the '''initial communication between stations and APs'''. '''Control frames''': Used for '''accessing the channel and acknowledging frames'''. The value of type field is '''01'''." (p.27){/def}
+
+[[img:L8-27.png|p.27 Control frame 구조 — RTS: FC·D·Address 1·Address 2·FCS / CTS or ACK: FC·D·Address 1·FCS, 그리고 Subtype 표|large]]
+
+== 종류 ==
+{|
+! 종류 || Type (2 bits) || 용도 || 예
+|-
+| '''Management''' || (슬라이드에 값 없음; Forouzan: 00) || 스테이션과 AP 사이 '''초기 통신''' || —
+|-
+| '''Control''' || '''01''' || 채널 '''접근''' + 프레임 '''확인(ACK)''' || RTS · CTS · ACK, [[beacon frame]] (p.23 "special control frame")
+|-
+| Data || (Forouzan 보충: 10) || 실제 데이터 운반 || —
+|}
+
+== Control frame 의 Subtype (p.27 표) ⭐⭐ ==
+{|
+! Subtype || Meaning
+|-
+| '''1011''' || Request to send ('''RTS''')
+|-
+| '''1100''' || Clear to send ('''CTS''')
+|-
+| '''1101''' || Acknowledgment ('''ACK''')
+|}
+
+== Control frame 구조 (p.27 그림) ==
+{|
+! 프레임 || FC || D || Address 1 || Address 2 || FCS
+|-
+| '''RTS''' || 2 bytes || 2 bytes || 6 bytes || 6 bytes || 4 bytes
+|-
+| '''CTS''' or '''ACK''' || 2 bytes || 2 bytes || 6 bytes || — || 4 bytes
+|}
+Control frame 에는 Frame body 가 없다 — 실어 나르는 데이터가 아니라 "채널 조율" 용도이기 때문. 9 필드짜리 전체 형식은 [[802.11 프레임 형식]].
+
+== 이름에서 개념 끌어내기 ==
+* '''management''' — 네트워크를 '''관리''': 처음 AP 를 찾고 붙는 등 "초기 통신".
+* '''control''' — 매체 접근을 '''통제''': 누가 보낼지(RTS/CTS), 잘 받았는지(ACK).
+* RTS·CTS·ACK 는 모두 [[CSMA/CA]] 핸드셰이크의 부품이라 '''control''' 이다.
+
+{analogy}🎭 '''회사 메일함의 세 폴더.''' management = 입사 서류(처음 등록할 때), control = "회의실 예약/예약 승인/수신 확인" 같은 짧은 업무 연락, data = 실제 업무 파일. control 메일에는 첨부파일(Frame body)이 없다.{/analogy}
+
+{quiz}Control frame 의 Type 값은? RTS, CTS, ACK 의 Subtype 값은 각각?{/quiz}
+{answer}Type = '''01'''. Subtype: RTS '''1011''', CTS '''1100''', ACK '''1101''' (p.27).{/answer}
+
+== 관련 문서 ==
+* [[802.11 프레임 형식]] · [[RTS와 CTS]] · [[beacon frame]] · [[CSMA/CA]] · [[CH04 WiFi]]

@@ -1,0 +1,50 @@
+key: IEEE 802.11
+title: IEEE 802.11 (Wireless LAN 표준 = WiFi)
+category: 10강 WiFi, 용어
+---
+'''IEEE 802.11''' 은 wireless LAN 의 '''physical layer 와 data-link layer''' 를 규정하는 표준이다. 일반인은 이것을 '''[[WiFi]]''' 라고 부르고, 정확히는 '''WiFi Alliance 가 인증한''' wireless LAN 이 WiFi 다. [[IEEE Project 802]] 의 한 갈래(802.3 = Ethernet, 802.11 = WiFi). L8 p.6, p.9.
+
+{def}"WiFi (Wireless Fidelity): Based on the '''IEEE 802.11''' standard. Designed to provide services to wireless devices." (p.6)
+"IEEE 802.11: The specifications for a wireless LAN, which covers the '''physical and data-link layers'''. The public uses the term '''WiFi (Wireless Fidelity)'''. A wireless LAN '''certified by the WiFi Alliance'''." (p.9)
+→ 802.11 은 무선 LAN 의 1·2 계층 명세. "WiFi" 는 그 대중적 이름이며, WiFi Alliance 의 인증을 받은 무선 LAN 을 가리킨다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''802''' — [[IEEE Project 802]]: 여러 제조사 장비가 서로 통신하도록 LAN 의 '''physical + data-link''' 기능을 정한 프로젝트. 그러니 "802.무엇" 은 자동으로 "1·2 계층 표준" 이다.
+* '''.11''' — 802 가족의 11번째 작업 그룹. Ethernet 이 '''.3''' 이었다.
+* '''certified''' — 표준(문서)과 상표(WiFi)는 다르다. 표준을 지켰다고 '''WiFi Alliance''' 가 인증해 준 제품만 "WiFi" 로고를 단다.
+
+== 802.11 이 정하는 것 (이 덱의 지도) ==
+{|
+! 계층 || 802.11 이 정한 것 || 문서
+|-
+| Architecture || BSS(ad-hoc / infrastructure), ESS, distribution system, station mobility || [[BSS]] · [[ESS]] · [[distribution system]] · [[station mobility]]
+|-
+| MAC sublayer || '''두 개''': DCF(필수 — Forouzan 보충, [[CSMA/CA]]) 와 PCF(선택, polling) || [[DCF]] · [[PCF]] · [[repetition interval]]
+|-
+| MAC frame || 9 필드, 4 개의 주소, 3 종류 프레임(Forouzan 보충; 슬라이드는 management/control 2종) || [[802.11 프레임 형식]] · [[802.11 주소 케이스]] · [[802.11 프레임 종류]]
+|-
+| Physical layer || 802.11 / a / b / g / n 의 technique·band·modulation·rate || [[802.11 physical layer]]
+|}
+
+[[img:L8-36.png|p.36 Specification of Physical Layer of IEEE 802.11 — 802.11 FHSS/DSSS/Infrared, 802.11a/b/g/n|medium]]
+
+{analogy}🎭 '''IEEE 802 = 교통법 전체, 802.3 = 도로교통 규칙, 802.11 = 항공 규칙.''' 같은 "교통"이라도 땅 위(유선)와 하늘(무선)은 규칙이 다르다. 802.11 은 하늘길에 맞춘 별도 조항 묶음이고, '''WiFi''' 는 "이 규칙을 지켰다"고 인증받은 비행기에 붙는 마크다.{/analogy}
+
+{|
+! || [[Standard Ethernet|Ethernet]] || WiFi
+|-
+| IEEE 표준 || 802.3 || '''802.11'''
+|-
+| 분류 || wired || wireless
+|-
+| 범위 || physical + data-link || physical + data-link
+|-
+| MAC || [[CSMA/CD]] || [[CSMA/CA]] ([[DCF]]) + 선택적 [[PCF]]
+|}
+
+{quiz}IEEE 802.11 이 다루는 계층은? 그리고 "WiFi" 와 "IEEE 802.11" 의 관계를 한 문장으로.{/quiz}
+{answer}'''Physical layer 와 data-link layer'''. IEEE 802.11 은 wireless LAN 의 표준(명세)이고, WiFi 는 그 대중적 이름으로 '''WiFi Alliance 가 인증한''' wireless LAN 을 뜻한다.{/answer}
+
+== 관련 문서 ==
+* [[IEEE Project 802]] · [[WiFi]] · [[CH04 WiFi]] · [[Standard Ethernet]]
+* [[wireless LAN의 특성]] · [[802.11 physical layer]] · [[802.11 프레임 형식]]

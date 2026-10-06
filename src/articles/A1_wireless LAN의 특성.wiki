@@ -1,0 +1,54 @@
+key: wireless LAN의 특성
+title: Wireless LAN 의 특성 (유선과의 차이 · attenuation · interference · multipath · error)
+category: 10강 WiFi, 용어
+---
+'''Wireless LAN''' 은 [[LAN]] 의 두 범주(wired / wireless) 중 하나로, 매체가 '''공기(air)''' 이고 신호가 '''broadcast''' 된다. 그래서 유선에 없던 네 가지 골칫거리 — '''attenuation, interference, multipath propagation, error''' — 를 안고 시작한다. 이 문서는 L8 p.7–8. 이 네 성질이 뒤에 나오는 [[CSMA/CA]], [[fragmentation]] 같은 설계를 모두 설명한다.
+
+{def}"Wired vs. wireless LANs — '''Medium''': In a wired LAN, we use wires to connect hosts. In a wireless LAN, the medium is '''air''', and the signal is generally '''broadcast'''. '''Hosts''': In a wired LAN, a host is '''always connected''' to its network at a point. In a wireless LAN, a host is '''not physically connected''' to the network." (p.7)
+"Characteristics of wireless LANs — '''Attenuation''': The strength of electromagnetic signals decreases rapidly. '''Interference''': Receive signals not only from the intended sender, but also from other senders (if they are using the same frequency band). '''Multipath propagation''': Receive more than one signal from the same sender. '''Error''': Detecting and correcting errors are more serious issues." (p.8)
+→ 무선 LAN 은 공기를 매체로 신호를 퍼뜨리고, 호스트가 물리적으로 묶여 있지 않다. 그 결과 신호가 빨리 약해지고(attenuation), 남의 신호가 섞이고(interference), 같은 신호가 여러 경로로 오고(multipath), 오류 처리가 더 심각한 문제가 된다.{/def}
+
+== 유선 vs 무선 (p.7) ==
+{|
+! 비교 || Wired LAN ([[Standard Ethernet|Ethernet]]) || Wireless LAN ([[WiFi]])
+|-
+| Medium || '''wires''' || '''air''', 신호는 대체로 '''broadcast'''
+|-
+| Hosts || 네트워크의 한 지점에 '''항상 연결''' || '''물리적으로 연결되지 않음''' → 이동 가능 ([[station mobility]])
+|}
+
+== 네 가지 특성 (p.8) ⭐⭐ ==
+[[img:L8-8.png|p.8 Characteristics of wireless LANs — attenuation · interference · multipath propagation · error|medium]]
+
+{|
+! 특성 || 슬라이드 정의 || 이전에 배운 것과 연결 || 결과
+|-
+| '''Attenuation''' || electromagnetic signal 의 세기가 '''빠르게(rapidly)''' 감소 || 3강 [[attenuation]] — 유선에서도 있었지만 공기 중에서는 훨씬 빠름 || 거리가 멀면 상대의 신호를 못 들음 → [[hidden station problem]]
+|-
+| '''Interference''' || 의도한 송신자뿐 아니라 '''같은 frequency band''' 를 쓰는 다른 송신자의 신호도 수신 || 3강 [[noise]] 와 비슷하지만 원인이 "다른 송신자" || 신호가 섞여 손상
+|-
+| '''Multipath propagation''' || '''같은 송신자'''의 신호를 둘 이상 수신 || 벽·물체에 반사된 사본이 시차를 두고 도착 || 사본끼리 겹쳐 신호 왜곡
+|-
+| '''Error''' || 오류의 검출·정정이 '''더 심각한''' 문제 || 6강 [[CRC]], 오류 검출 || 프레임이 자주 깨짐 → [[fragmentation]] 권장
+|}
+
+{info}Interference 는 슬라이드에서 '''굵게''' 표시된 유일한 항목이다. "같은 주파수 대역을 쓰면" 이라는 조건이 붙는다는 점 — 그래서 [[802.11 physical layer]] 표의 '''Band''' 열(2.4 GHz 대 / 5 GHz 대)이 의미를 가진다.{/info}
+
+== 이름에서 개념 끌어내기 ==
+* '''inter-ference''' — "사이에(inter) 끼어든다". 내 대화 사이에 남의 신호가 끼어든다.
+* '''multi-path''' — "여러 경로". 같은 말이 직선 경로 + 벽 반사 경로로 나뉘어 '''메아리'''처럼 두 번 들린다.
+* '''broadcast''' — 공기 중의 신호는 방향을 정할 수 없어 범위 안의 '''모두'''에게 들린다. 이 성질 때문에 [[NAV]] 처럼 "엿들은 정보로 조용히 기다리기" 가 가능하기도 하다.
+
+{analogy}🎭 '''유선 = 전화, 무선 = 시끄러운 운동장에서 소리치기.''' 운동장에서는 ① 멀어지면 목소리가 금방 안 들리고(attenuation), ② 옆 반 아이들 고함이 섞이고(interference), ③ 체육관 벽에 울려 같은 말이 두 번 들리고(multipath), ④ 그래서 말을 잘못 알아듣는 일이 잦다(error). 전화선으로 이야기할 때는 거의 없던 문제들이다.{/analogy}
+
+== 이 특성들이 무엇을 낳았나 ==
+* attenuation + 거리 → 충돌이 나도 감지 못함 → [[CSMA/CD]] 대신 [[CSMA/CA]]
+* noisy 환경 → 프레임이 자주 깨짐 → 큰 프레임을 잘게 나누는 [[fragmentation]]
+* host 가 연결되어 있지 않음 → [[station mobility]] (이동 중 통신 연속성은 보장 안 됨)
+
+{quiz}Wireless LAN 의 특성 4가지를 쓰고, 그중 "같은 송신자로부터 신호를 둘 이상 받는 것"의 이름은?{/quiz}
+{answer}'''Attenuation · Interference · Multipath propagation · Error'''. 같은 송신자의 신호를 여러 개 받는 것 = '''multipath propagation''' (다른 송신자의 신호가 섞이는 것은 interference — 헷갈리지 말 것).{/answer}
+
+== 관련 문서 ==
+* [[CH04 WiFi]] · [[WiFi]] · [[IEEE 802.11]] · [[LAN]]
+* [[attenuation]] · [[noise]] · [[CRC]] · [[fragmentation]] · [[hidden station problem]]

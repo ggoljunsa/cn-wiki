@@ -1,0 +1,50 @@
+key: 802.11 physical layer
+title: 802.11 Physical Layer (802.11 / a / b / g / n 명세 표)
+category: 10강 WiFi, 용어
+---
+[[IEEE 802.11]] 은 data-link 뿐 아니라 '''physical layer''' 도 규정한다. 덱의 마지막 슬라이드(p.36)는 원조 802.11 과 a/b/g/n 의 '''Technique · Band · Modulation · Rate''' 를 표 하나로 보여 준다. 2·4·5강에서 배운 [[modulation]]([[FSK]], [[PSK]], [[QAM]])과 [[bit rate]] 가 실제 표준에서 어떻게 쓰이는지 보는 표다. L8 p.36.
+
+{def}"Physical Layer: Specification of Physical Layer of IEEE 802.11." (p.36){/def}
+
+[[img:L8-36.png|p.36 Specification of Physical Layer of IEEE 802.11 — IEEE · Technique · Band · Modulation · Rate (Mbps)|large]]
+
+== 표 (p.36 그대로) ⭐⭐ ==
+{|
+! IEEE || Technique || Band || Modulation || Rate (Mbps)
+|-
+| 802.11 || FHSS || 2.400–4.835 GHz¹ || [[FSK]] || 1 and 2
+|-
+| 802.11 || DSSS || 2.400–4.835 GHz¹ || [[PSK]] || 1 and 2
+|-
+| 802.11 || None || Infrared || PPM || 1 and 2
+|-
+| 802.11a || OFDM || 5.725–5.850 GHz || PSK or [[QAM]] || 6 to 54
+|-
+| 802.11b || DSSS || 2.400–4.835 GHz¹ || PSK || 5.5 and 11
+|-
+| 802.11g || OFDM || 2.400–4.835 GHz¹ || Different || 22 and 54
+|-
+| 802.11n || OFDM || 5.725–5.850 GHz || Different || 600
+|}
+¹ 슬라이드에는 '''"2.400–4.835 GHz"''' 로 적혀 있지만, 2.4 GHz ISM 대역의 실제 범위는 '''2.400–2.4835 GHz''' 다 — 소수점 자리가 빠진 '''오타로 보인다'''. 표는 슬라이드 그대로 옮겼다. 시험에서 이 값이 나오면 슬라이드 표기를 따르되, "2.4 GHz 대" 라는 뜻으로 이해할 것.
+
+{warn}802.11n 의 Band 가 이 표에서는 5.725–5.850 GHz 만 적혀 있다(실제 802.11n 은 2.4 GHz 대도 쓴다 — Forouzan·표준 보충). 표에 나온 값으로 답할 것.{/warn}
+
+== 표 읽는 법 ==
+* '''원조 802.11''' 은 세 가지 physical layer: FHSS(FSK) · DSSS(PSK) · Infrared(PPM), 모두 '''1 and 2 Mbps'''.
+* 대역은 두 무리: '''2.4 GHz 대'''(802.11 FHSS/DSSS, b, g) 와 '''5 GHz 대'''(a, n). [[wireless LAN의 특성|interference]] 는 "같은 frequency band" 를 쓸 때 생기므로, 같은 대역끼리 간섭한다.
+* '''속도 순''': 802.11(1, 2) < b(5.5, 11) < a(6–54) ≈ g(22, 54) < '''n(600)'''.
+* Technique 약어(FHSS, DSSS, OFDM, PPM)는 슬라이드에 풀이가 없다. Forouzan 보충: FHSS = frequency-hopping spread spectrum, DSSS = direct-sequence spread spectrum, OFDM = orthogonal frequency-division multiplexing(5강 [[FDM]] 의 발전형), PPM = pulse position modulation.
+
+== 이름에서 개념 끌어내기 ==
+* 802.11 '''뒤의 알파벳''' — 원조 표준을 고친 '''개정판(amendment)''' 이름. 알파벳 순서가 꼭 속도 순서는 아니다(a 가 b 보다 빠름).
+* Modulation 열 — 5강에서 배운 그대로: [[FSK]] 는 주파수를, [[PSK]] 는 위상을, [[QAM]] 은 위상+진폭을 바꾼다. 빠른 표준일수록 QAM 같은 '''한 신호에 많은 비트'''를 싣는 방식으로 간다(→ [[signal rate와 bit rate]]).
+
+{analogy}🎭 '''같은 "도로교통법" 아래의 도로 등급표.''' 802.11 이 원조 시골길(1–2 Mbps)이라면 b 는 국도, a·g 는 고속도로, n 은 다차선 고속도로(600). 어느 도로든 같은 교통 규칙(MAC: CSMA/CA)을 따르지만, 노면(대역)과 차선 방식(변조)이 다르다.{/analogy}
+
+{quiz}p.36 표에서 (1) 5.725–5.850 GHz 대역을 쓰는 표준 두 개, (2) 원조 802.11 의 세 technique 과 각 modulation, (3) 가장 빠른 표준과 그 rate 를 쓰시오.{/quiz}
+{answer}(1) '''802.11a''', '''802.11n'''. (2) '''FHSS–FSK''', '''DSSS–PSK''', '''None(Infrared)–PPM''' (모두 1 and 2 Mbps). (3) '''802.11n, 600 Mbps'''.{/answer}
+
+== 관련 문서 ==
+* [[IEEE 802.11]] · [[wireless LAN의 특성]] · [[physical layer]]
+* [[modulation]] · [[FSK]] · [[PSK]] · [[QAM]] · [[FDM]] · [[bit rate]] · [[CH04 WiFi]]

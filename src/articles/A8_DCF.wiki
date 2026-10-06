@@ -1,0 +1,53 @@
+key: DCF
+title: DCF (Distributed Coordination Function)
+category: 10강 WiFi, 용어
+---
+'''DCF (Distributed Coordination Function)''' 는 802.11 의 두 MAC sublayer 중 '''기본'''이 되는 쪽으로, 접근 방식으로 '''[[CSMA/CA]] (Collision Avoidance)''' 를 쓴다. 중앙 관리자 없이 '''각 스테이션이 분산(distributed)해서''' 매체 사용을 조율한다. 짝이 되는 것은 중앙집중형 [[PCF]]. L8 p.13–14.
+
+{def}"IEEE 802.11: two MAC Sublayers — '''Distributed coordination function (DCF)''' · '''Point coordination function (PCF)'''." (p.13)
+"Distributed coordination function (DCF): Employs '''CSMA/CA (Collision Avoidance)'''. DIFS: DCF interframe space · SIFS: short interframe space · RTS: request to send · CTS: clear to send · NAV: network allocation vector." (p.14){/def}
+
+[[img:L8-14.png|p.14 DCF 타임라인 — A: DIFS 후 RTS → B: SIFS 후 CTS → A: SIFS 후 Data → B: SIFS 후 ACK. 다른 스테이션 C·D 는 CTS 를 듣고 ACK 끝까지 NAV|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Distributed''' — 조율을 '''나눠서''' 한다. 누가 보낼지 정해 주는 중앙이 없고, 모두가 같은 규칙(듣고 → 기다리고 → 예약하고)을 지켜 스스로 순서를 맞춘다. → [[random access]] 계열.
+* '''Coordination Function''' — "매체를 누가 언제 쓸지 맞추는 기능". [[PCF]] 의 '''Point''' 는 한 점(AP)이 조율한다는 뜻.
+* '''DIFS''' 의 D 도 DCF 의 D — "'''D'''CF interframe space", DCF 스테이션이 보내기 전에 기다리는 간격.
+
+[[anim:csma_ca_timeline|A 의 RTS·Data 와 B 의 CTS·ACK 사이에 DIFS/SIFS 간격이 어떤 순서로 채워지는지, 그리고 C·D 의 NAV 막대가 언제 시작해 언제 끝나는지 보라]]
+
+== p.14 그림의 순서 ⭐⭐⭐ ==
+<pre class="txt">
+1. A(Source): 채널이 idle 인지 듣고 '''DIFS''' 만큼 대기
+2. A → '''RTS''' (request to send)                       ← 전송 시간(duration) 포함
+3. B(Destination): '''SIFS''' 대기 후 → '''CTS''' (clear to send)   ← C, D 도 들음
+4. C, D(Other stations): CTS 의 duration 으로 '''NAV''' 설정 → 채널 안 봄
+5. A: '''SIFS''' 대기 후 → '''Data'''
+6. B: '''SIFS''' 대기 후 → '''ACK'''
+7. ACK 가 끝나면 C, D 의 NAV 도 끝 → 다시 채널 경쟁 가능
+</pre>
+
+[[sim:csma_ca_handshake]]
+
+{|
+! || DCF || [[PCF]]
+|-
+| 조율 || '''distributed''' (각 스테이션) || '''centralized''' (AP)
+|-
+| 접근 방식 || [[CSMA/CA]] — contention(경쟁) || [[polling]] — contention-free
+|-
+| 필수/선택 || 기본 || '''optional'''
+|-
+| 네트워크 || ad-hoc · infrastructure 모두 || infrastructure 만
+|-
+| 대기 간격 || DIFS || PIFS (DIFS 보다 짧음 → 우선)
+|}
+
+{analogy}🎭 '''DCF = 신호등 없는 사거리의 양보 규칙.''' 경찰(AP)이 없어도 모두가 "일단 멈추고(DIFS) → 손짓으로 신호하고(RTS/CTS) → 건넌다" 는 규칙을 지키면 사고가 거의 안 난다. [[PCF]] 는 교통경찰이 직접 한 대씩 보내 주는 방식.{/analogy}
+
+{quiz}802.11 의 두 MAC sublayer 이름과, DCF 가 쓰는 접근 방식은?{/quiz}
+{answer}'''DCF (Distributed Coordination Function)''' 와 '''PCF (Point Coordination Function)'''. DCF 는 '''CSMA/CA''' 를 쓴다.{/answer}
+
+== 관련 문서 ==
+* [[CSMA/CA]] · [[PCF]] · [[RTS와 CTS]] · [[NAV]] · [[interframe space]] · [[repetition interval]]
+* [[random access]] · [[CSMA]] · [[CH04 WiFi]]

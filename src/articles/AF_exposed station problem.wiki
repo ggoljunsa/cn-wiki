@@ -1,0 +1,42 @@
+key: exposed station problem
+title: Exposed Station Problem (노출된 스테이션 문제)
+category: 10강 WiFi, 용어
+---
+'''Exposed station problem''' 은 [[hidden station problem]] 의 반대다: 어떤 스테이션이 채널을 '''쓸 수 있는데도 쓰지 않고 참는''' 상황. p.35 그림에서 C 는 '''A 의 RTS 를 엿들었기 때문에''' 전송을 삼가지만, C 가 D 에게 보내는 것은 B 의 수신을 방해하지 않으므로 사실 보내도 됐다. 결과는 충돌이 아니라 '''채널 낭비'''. L8 p.35.
+
+{def}"Exposed Station Problem: A station '''refrains from using a channel even when it is available'''." (p.35)
+"C can send to D because this area is free, but C '''erroneously refrains from sending''' because of '''received RTS'''." / "If C sends, the collision would be in this area." (p.35 그림){/def}
+
+[[img:L8-35.png|p.35 Exposed station — A 가 B 에게 RTS·Data(오른쪽으로도 퍼짐), C 는 A 의 RTS 를 듣고 D 로의 전송을 잘못 삼감|large]]
+
+== 그림 읽기 (p.35) ==
+* 배치: '''B — A — C — D''' 일렬. A 가 '''B 에게''' 보내려 한다.
+* A 의 RTS 는 양쪽(B 와 C)으로 퍼진다. B 는 CTS 로 답하는데, B 의 CTS 는 '''C 에 닿지 않는다'''(A 까지만).
+* A 의 Data 도 양쪽으로 퍼진다. 그림의 "If C sends, the collision would be in this area" 는 '''A–C 사이''' 구간을 가리킨다 — C 가 보내면 그쪽에서는 겹치지만, '''B 의 수신에는 영향이 없다'''.
+* 그런데 C 는 A 의 RTS 만 듣고 "채널 사용 중" 이라 판단해 '''D 로 보낼 기회를 버린다'''.
+
+== 이름에서 개념 끌어내기 ==
+* '''exposed''' — "노출된". C 는 송신자 A 의 전파에 '''노출'''되어 있어서, 자기와 상관없는 전송까지 다 들린다. 너무 많이 들려서 손해를 본다.
+* hidden 은 "못 들어서 충돌", exposed 는 "괜히 들어서 양보". 둘 다 '''무선의 범위(range)가 스테이션마다 다르기''' 때문에 생긴다.
+
+{|
+! || [[hidden station problem]] || exposed station problem
+|-
+| 상황 || 송신자들이 서로 '''못 들음''' || 상관없는 전송을 '''들음'''
+|-
+| 잘못된 판단 || "idle 이다" → 보냄 || "busy 다" → 안 보냄
+|-
+| 결과 || '''충돌''' || '''채널 낭비''' (보낼 수 있는데 안 보냄)
+|-
+| RTS/CTS 와의 관계 || CTS 가 '''해결''' || RTS 를 엿들은 것이 '''원인'''
+|}
+
+[[anim:hidden_station|마지막 장면의 exposed station — C 가 A 의 RTS 를 듣고 D 로 보낼 수 있는데도 참는 모습을 hidden station 장면과 대비하라]]
+
+{analogy}🎭 '''도서관 옆 테이블의 속삭임.''' 옆 테이블(A)이 반대편 친구(B)에게 "잠깐 얘기 좀" 하는 걸 듣고, 나(C)는 내 건너편 친구(D)에게 말 걸기를 참는다. 그런데 내 목소리는 B 까지 안 닿으니 사실 말해도 괜찮았다. 괜히 들어서 괜히 참은 것 — 그게 exposed station.{/analogy}
+
+{quiz}Exposed station problem 을 한 문장으로 정의하고, hidden station problem 과 결과가 어떻게 다른지 쓰시오.{/quiz}
+{answer}스테이션이 채널을 '''사용할 수 있는데도 사용을 삼가는''' 문제(p.35: C 가 A 의 RTS 를 듣고 D 로의 전송을 잘못 삼감). hidden station 은 '''충돌'''을 일으키고, exposed station 은 '''채널 낭비(효율 저하)''' 를 일으킨다.{/answer}
+
+== 관련 문서 ==
+* [[hidden station problem]] · [[RTS와 CTS]] · [[NAV]] · [[CSMA/CA]] · [[CH04 WiFi]]

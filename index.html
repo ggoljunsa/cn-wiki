@@ -764,21 +764,21 @@ const ARTICLES = {
   "category": [
    "안내"
   ],
-  "body": "'''컴네위키'''는 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) 중간고사 범위 — '''CH01 Introduction · CH02 Physical Layer (1)(2)(3) · CH03 Data-Link Layer (1)(2) · CH04 Local Area Networks (1) Ethernet''' — 를 나무위키 스타일로 정리한 학습 위키다. 교재는 [[Forouzan]] 6e. 강의는 영어, 문서는 한국어 산문 + 영어 용어 그대로.\n\n해설본(`정리본/CH0X_정리.md`)이 \"그림이 없고, 기호가 뭔지 그때마다 까먹어서\" 안 읽히던 문제를 풀기 위해 만들었다. 그래서 이 위키는 세 가지를 약속한다.\n\n# '''기호·용어를 까먹으면 클릭한다.''' $B$, $L$, $T_{fr}$, $G$, syndrome, divisor … 모든 기호와 용어에 사전 문서가 있고 본문 첫 등장 시 링크돼 있다.\n# '''계산이 나오면 옆에서 값이 바뀌는 걸 본다.''' Example 2.6, 2.8, 2.9, 3.7, 3.11, 3.12, 13.1 과 CRC 나눗셈·stuffing·Fast Ethernet 길이 제약을 한 단계씩 밟는 '''시뮬레이터 18종'''(◀ ▶).\n# '''보고만 있어도 흐름이 들어온다.''' 캡슐화, 사인파, PCM, 변조, ALOHA 충돌, CSMA/CD, Ethernet 프레임·4세대 진화 … '''움직이는 그림 23종'''과 실제 슬라이드 캡처.\n\n[[anim:layer_stack|이 과목의 지도. message 가 5계층을 내려가 bits 가 되고, 스위치(L1–L2)·라우터(L1–L3)를 지나 다시 올라온다. 중간고사 범위는 이 그림의 아래 두 층(Physical, Data-link)과 그 실제 구현인 Ethernet(CH04)이다]]\n\n== 어디서부터 읽나 ==\n\n* 처음이면 → [[읽는 순서]] (강의 순서대로, 한 강의 = 메인 문서 1편 + 딸린 사전 문서)\n* 시험이 코앞이면 → [[공식 모음]] → [[계산 문제 모음]] → [[자주 틀리는 함정 모음]]\n* 내가 뭘 틀렸었지 → [[0920 오답 복기]] (NotebookLM 퀴즈 8문항, 전부 개념으로 다시)\n* 시험 날짜·형식·비중 → [[시험 정보]] (10/1 공지: '''시험 1시간''', 범위는 CH04 LAN·WAN 까지 계획)\n* 모의고사 → [[중간고사 모의 v1]] · [[중간고사 모의 v2]] (v2 는 CH04 포함, 문항 전부 새것)\n\n== 강의별 메인 문서 ==\n\n{|\n! 강 || 메인 문서 || 한 줄 요약 || 핵심 시뮬레이터 / 그림\n|-\n| 1 || [[CH01 Introduction]] || 데이터 통신의 4대 특성·5요소, 토폴로지, LAN/WAN, 프로토콜 계층화, TCP/IP 5계층, [[캡슐화]], [[주소 체계]] || `sim:encapsulation` · `anim:layer_stack` · `anim:topologies`\n|-\n| 2 || [[CH02 Signals]] || data vs signal, [[사인파]] 3요소, time/frequency domain, [[composite signal]], [[bandwidth]], [[bit rate]], baseband/broadband || `anim:sine_wave_params` · `anim:composite_fourier`\n|-\n| 3 || [[CH02 Transmission]] || [[attenuation]]·[[distortion]]·[[noise]], [[데시벨]], [[SNR]], '''[[Nyquist bit rate]] vs [[Shannon capacity]]''', [[throughput]], [[latency]], [[bandwidth-delay product]], [[jitter]] || `sim:nyquist_shannon` · `sim:db_calc` · `sim:bdp_pipe` · `anim:impairments`\n|-\n| 4 || [[CH02 Digital Transmission]] || [[line coding]]/[[block coding]]([[4B/5B]]), '''[[PCM]]''' = [[sampling]]([[Nyquist sampling theorem]]) → [[quantization]] → [[encoding]], [[PCM bandwidth]], [[delta modulation]] || `sim:pcm_encoder` · `sim:block_4b5b` · `anim:sampling_nyquist` · `anim:pcm_pipeline`\n|-\n| 5 || [[CH02 Analog Transmission]] · [[CH02 Multiplexing]] || [[ASK]]/[[FSK]]/[[PSK]]/[[QAM]] 과 [[변조 대역폭]], [[baud]] vs bps, [[FDM]]/[[TDM]] || `sim:fsk_bandwidth` · `anim:ask_fsk_psk` · `anim:fdm_tdm`\n|-\n| 6 || [[CH03 Data-Link Control]] || [[node와 link]], [[DLC]]/[[MAC sublayer]], [[framing]]([[byte stuffing]]/[[bit stuffing]]), '''[[Hamming distance]]·[[minimum Hamming distance]]''', [[parity check code]], '''[[CRC]]''', [[HDLC]] || `sim:crc_division` · `sim:parity_check` · `sim:bit_stuffing` · `anim:hamming_sphere` · `anim:crc_shift`\n|-\n| 7 || [[CH03 Media Access Control]] || [[pure ALOHA]]/[[slotted ALOHA]]([[vulnerable time]], [[ALOHA throughput]]), [[CSMA]]([[persistence method]]), '''[[CSMA/CD]]([[최소 프레임 크기]])''', [[controlled access]] || `sim:aloha_throughput` · `sim:csma_cd_minframe` · `anim:vulnerable_time` · `anim:csma_cd_abort`\n|-\n| 8 || [[CH03 Link-Layer Addressing]] || [[MAC 주소]]가 따로 필요한 이유, [[IP 주소와 MAC 주소]]의 순서, unicast/multicast/broadcast, [[ARP]] || `anim:node_to_node`\n|-\n| 9 || [[CH04 Ethernet]] || LAN 의 대표 Ethernet 4세대: [[Ethernet 프레임 형식]], [[프레임 길이 제한]](64/1518), '''[[Ethernet 주소 전송 순서]]'''(LSB first), [[Fast Ethernet]]의 길이 1/10, [[Gigabit Ethernet]]의 full-duplex 스위치 || `sim:ethernet_addr_bits` · `sim:fast_ethernet_length` · `anim:ethernet_frame` · `anim:ethernet_evolution` · `anim:switch_fullduplex`\n|}\n\n== 이 위키를 읽는 법 ==\n\n{tip}\n* 📖 '''정의 박스'''는 슬라이드 영어 원문이 먼저 온다. 시험에서 \"정의 → 용어 이름\" 을 묻는 유형에 대비해 영어 문장을 그대로 외운다.\n* 🎯 '''출제 포인트 박스'''는 교수가 녹음본에서 \"remember / very important\" 라고 한 것, 해설본 ⭐⭐⭐, 그리고 내가 NotebookLM 퀴즈에서 틀린 것이다.\n* 🎭 '''비유 박스'''는 이해가 안 될 때 먼저 읽는다. 비유로 감을 잡고 정의로 돌아온다.\n* ❓ '''예상문제''' 는 정답이 접혀 있다. 먼저 답을 써 보고 펼친다.\n* 시뮬레이터는 ◀ ▶ 로 한 단계씩, 키보드 ← → 도 된다. 옵션을 바꾸면 다른 Example 로 바뀐다.\n* 움직이는 그림은 자동 재생되며, 슬라이더로 멈춰 놓고 자막을 읽을 수 있다.\n{/tip}\n\n{analogy}\n🎭 이 위키는 '''지하철 노선도'''다. 메인 문서 9편이 노선이고, 사전 문서 200여 편이 역이다. 어느 역(용어)에서 내려도 그 역이 어느 노선(강의)에 있고 옆 역이 무엇인지(관련 문서) 바로 보인다. 처음엔 노선을 따라 끝까지 타 보고, 시험 전엔 자주 갈아타는 환승역([[자주 틀리는 함정 모음]])만 다시 본다.\n{/analogy}\n\n{joke}\n교수님의 입버릇: \"'''The name itself is very important.'''\" 그래서 사전 문서마다 '이름에서 개념 끌어내기' 문단이 있다. SNR 은 Signal-to-Noise Ratio 니까 신호를 잡음으로 나눈 것이고, vulnerable time 은 \"취약한 시간\" 이니까 충돌이 날 수 있는 시간이다. 이름만 제대로 읽어도 절반은 맞힌다.\n{/joke}\n\n== 관련 문서 ==\n* [[읽는 순서]] · [[시험 정보]] · [[공식 모음]] · [[계산 문제 모음]] · [[자주 틀리는 함정 모음]] · [[0920 오답 복기]]\n* [[Forouzan]] · [[교수 소개]]"
+  "body": "'''컴네위키'''는 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) 중간고사 범위 — '''CH01 Introduction · CH02 Physical Layer (1)(2)(3) · CH03 Data-Link Layer (1)(2) · CH04 Local Area Networks (1) Ethernet''' — 를 나무위키 스타일로 정리한 학습 위키다. 교재는 [[Forouzan]] 6e. 강의는 영어, 문서는 한국어 산문 + 영어 용어 그대로.\n\n해설본(`정리본/CH0X_정리.md`)이 \"그림이 없고, 기호가 뭔지 그때마다 까먹어서\" 안 읽히던 문제를 풀기 위해 만들었다. 그래서 이 위키는 세 가지를 약속한다.\n\n# '''기호·용어를 까먹으면 클릭한다.''' $B$, $L$, $T_{fr}$, $G$, syndrome, divisor … 모든 기호와 용어에 사전 문서가 있고 본문 첫 등장 시 링크돼 있다.\n# '''계산이 나오면 옆에서 값이 바뀌는 걸 본다.''' Example 2.6, 2.8, 2.9, 3.7, 3.11, 3.12, 13.1 과 CRC 나눗셈·stuffing·Fast Ethernet 길이 제약을 한 단계씩 밟는 '''시뮬레이터 18종'''(◀ ▶).\n# '''보고만 있어도 흐름이 들어온다.''' 캡슐화, 사인파, PCM, 변조, ALOHA 충돌, CSMA/CD, Ethernet 프레임·4세대 진화 … '''움직이는 그림 23종'''과 실제 슬라이드 캡처.\n\n[[anim:layer_stack|이 과목의 지도. message 가 5계층을 내려가 bits 가 되고, 스위치(L1–L2)·라우터(L1–L3)를 지나 다시 올라온다. 중간고사 범위는 이 그림의 아래 두 층(Physical, Data-link)과 그 실제 구현인 Ethernet(CH04)이다]]\n\n== 어디서부터 읽나 ==\n\n* 처음이면 → [[읽는 순서]] (강의 순서대로, 한 강의 = 메인 문서 1편 + 딸린 사전 문서)\n* 시험이 코앞이면 → [[공식 모음]] → [[계산 문제 모음]] → [[자주 틀리는 함정 모음]]\n* 내가 뭘 틀렸었지 → [[0920 오답 복기]] (NotebookLM 퀴즈 8문항, 전부 개념으로 다시)\n* 시험 날짜·형식·비중 → [[시험 정보]] (10/1 공지: '''시험 1시간''', 범위는 CH04 LAN·WAN 까지 계획)\n* 모의고사 → [[중간고사 모의 v1]] · [[중간고사 모의 v2]] (v2 는 CH04 포함, 문항 전부 새것)\n\n== 강의별 메인 문서 ==\n\n{|\n! 강 || 메인 문서 || 한 줄 요약 || 핵심 시뮬레이터 / 그림\n|-\n| 1 || [[CH01 Introduction]] || 데이터 통신의 4대 특성·5요소, 토폴로지, LAN/WAN, 프로토콜 계층화, TCP/IP 5계층, [[캡슐화]], [[주소 체계]] || `sim:encapsulation` · `anim:layer_stack` · `anim:topologies`\n|-\n| 2 || [[CH02 Signals]] || data vs signal, [[사인파]] 3요소, time/frequency domain, [[composite signal]], [[bandwidth]], [[bit rate]], baseband/broadband || `anim:sine_wave_params` · `anim:composite_fourier`\n|-\n| 3 || [[CH02 Transmission]] || [[attenuation]]·[[distortion]]·[[noise]], [[데시벨]], [[SNR]], '''[[Nyquist bit rate]] vs [[Shannon capacity]]''', [[throughput]], [[latency]], [[bandwidth-delay product]], [[jitter]] || `sim:nyquist_shannon` · `sim:db_calc` · `sim:bdp_pipe` · `anim:impairments`\n|-\n| 4 || [[CH02 Digital Transmission]] || [[line coding]]/[[block coding]]([[4B/5B]]), '''[[PCM]]''' = [[sampling]]([[Nyquist sampling theorem]]) → [[quantization]] → [[encoding]], [[PCM bandwidth]], [[delta modulation]] || `sim:pcm_encoder` · `sim:block_4b5b` · `anim:sampling_nyquist` · `anim:pcm_pipeline`\n|-\n| 5 || [[CH02 Analog Transmission]] · [[CH02 Multiplexing]] || [[ASK]]/[[FSK]]/[[PSK]]/[[QAM]] 과 [[변조 대역폭]], [[baud]] vs bps, [[FDM]]/[[TDM]] || `sim:fsk_bandwidth` · `anim:ask_fsk_psk` · `anim:fdm_tdm`\n|-\n| 6 || [[CH03 Data-Link Control]] || [[node와 link]], [[DLC]]/[[MAC sublayer]], [[framing]]([[byte stuffing]]/[[bit stuffing]]), '''[[Hamming distance]]·[[minimum Hamming distance]]''', [[parity check code]], '''[[CRC]]''', [[HDLC]] || `sim:crc_division` · `sim:parity_check` · `sim:bit_stuffing` · `anim:hamming_sphere` · `anim:crc_shift`\n|-\n| 7 || [[CH03 Media Access Control]] || [[pure ALOHA]]/[[slotted ALOHA]]([[vulnerable time]], [[ALOHA throughput]]), [[CSMA]]([[persistence method]]), '''[[CSMA/CD]]([[최소 프레임 크기]])''', [[controlled access]] || `sim:aloha_throughput` · `sim:csma_cd_minframe` · `anim:vulnerable_time` · `anim:csma_cd_abort`\n|-\n| 8 || [[CH03 Link-Layer Addressing]] || [[MAC 주소]]가 따로 필요한 이유, [[IP 주소와 MAC 주소]]의 순서, unicast/multicast/broadcast, [[ARP]] || `anim:node_to_node`\n|-\n| 9 || [[CH04 Ethernet]] || LAN 의 대표 Ethernet 4세대: [[Ethernet 프레임 형식]], [[프레임 길이 제한]](64/1518), '''[[Ethernet 주소 전송 순서]]'''(LSB first), [[Fast Ethernet]]의 길이 1/10, [[Gigabit Ethernet]]의 full-duplex 스위치 || `sim:ethernet_addr_bits` · `sim:fast_ethernet_length` · `anim:ethernet_frame` · `anim:ethernet_evolution` · `anim:switch_fullduplex`\n|-\n| 10 || [[CH04 WiFi]] || IEEE 802.11: [[BSS]]/[[ESS]], '''[[CSMA/CA]]'''([[RTS와 CTS]], [[NAV]], [[interframe space]]) 와 왜 CSMA/CD 가 아닌가([[hidden station problem]]), [[PCF]]·[[repetition interval]], [[802.11 프레임 형식]]·[[802.11 주소 케이스]] (10/6 수업 전 선제 작성) || `sim:csma_ca_handshake` · `sim:wifi_addressing` · `anim:csma_ca_timeline` · `anim:hidden_station` · `anim:bss_ess`\n|}\n\n== 이 위키를 읽는 법 ==\n\n{tip}\n* 📖 '''정의 박스'''는 슬라이드 영어 원문이 먼저 온다. 시험에서 \"정의 → 용어 이름\" 을 묻는 유형에 대비해 영어 문장을 그대로 외운다.\n* 🎯 '''출제 포인트 박스'''는 교수가 녹음본에서 \"remember / very important\" 라고 한 것, 해설본 ⭐⭐⭐, 그리고 내가 NotebookLM 퀴즈에서 틀린 것이다.\n* 🎭 '''비유 박스'''는 이해가 안 될 때 먼저 읽는다. 비유로 감을 잡고 정의로 돌아온다.\n* ❓ '''예상문제''' 는 정답이 접혀 있다. 먼저 답을 써 보고 펼친다.\n* 시뮬레이터는 ◀ ▶ 로 한 단계씩, 키보드 ← → 도 된다. 옵션을 바꾸면 다른 Example 로 바뀐다.\n* 움직이는 그림은 자동 재생되며, 슬라이더로 멈춰 놓고 자막을 읽을 수 있다.\n{/tip}\n\n{analogy}\n🎭 이 위키는 '''지하철 노선도'''다. 메인 문서 9편이 노선이고, 사전 문서 200여 편이 역이다. 어느 역(용어)에서 내려도 그 역이 어느 노선(강의)에 있고 옆 역이 무엇인지(관련 문서) 바로 보인다. 처음엔 노선을 따라 끝까지 타 보고, 시험 전엔 자주 갈아타는 환승역([[자주 틀리는 함정 모음]])만 다시 본다.\n{/analogy}\n\n{joke}\n교수님의 입버릇: \"'''The name itself is very important.'''\" 그래서 사전 문서마다 '이름에서 개념 끌어내기' 문단이 있다. SNR 은 Signal-to-Noise Ratio 니까 신호를 잡음으로 나눈 것이고, vulnerable time 은 \"취약한 시간\" 이니까 충돌이 날 수 있는 시간이다. 이름만 제대로 읽어도 절반은 맞힌다.\n{/joke}\n\n== 관련 문서 ==\n* [[읽는 순서]] · [[시험 정보]] · [[공식 모음]] · [[계산 문제 모음]] · [[자주 틀리는 함정 모음]] · [[0920 오답 복기]]\n* [[Forouzan]] · [[교수 소개]]"
  },
  "읽는 순서": {
   "title": "읽는 순서 — 처음부터 끝까지",
   "category": [
    "안내"
   ],
-  "body": "이 문서는 '''수업 순서대로''' 위키를 통독하는 길잡이다. 한 강의는 \"메인 문서 1편을 슬라이드 순서로 읽으면서, 모르는 용어가 나올 때마다 링크를 타고 사전 문서에 다녀오는\" 방식으로 읽는다. 각 강의 끝의 `시험 대비 핵심 요약` 을 백지에 다시 써 보면 그 강의는 끝이다.\n\n{analogy}\n🎭 '''등산 코스.''' 메인 문서는 능선길이고 사전 문서는 옆으로 빠지는 전망대다. 전망대에 다 들르면 하루가 모자라니, 첫 통독 때는 '''굵게 표시된 링크'''(처음 보는 개념)만 들르고, 두 번째부터는 자기가 헷갈리는 전망대만 간다.\n{/analogy}\n\n== 0. 준비 (10분) ==\n* [[시험 정보]] — 성적 비중(중간 40%), 교재, 아직 확정되지 않은 것.\n* [[Forouzan]] — 챕터 구성. 중간고사는 CH01–CH03.\n* [[log₂ 계산법]] · [[bps와 Hz]] · [[XOR]] — 계산 문제의 손도구 3개. 5분이면 된다.\n\n== 1. CH01 Introduction (1시간) ==\n[[CH01 Introduction]] 을 통독. 반드시 들를 전망대:\n# [[데이터 통신 4대 특성]] — Delivery / Accuracy / Timeliness / '''Jitter''' (Encryption 아님).\n# [[프로토콜 계층화]] → [[논리적 연결]] — Maria·Ann 의 3계층 편지 예시. 여기서 \"identical objects\" 가 뭔지 이해하면 [[캡슐화]]가 저절로 된다.\n# [[TCP/IP 프로토콜 스위트]] → [[PDU]] → [[주소 체계]] — 5계층 × (PDU 이름, 주소, 대표 프로토콜) 표를 백지에 채울 수 있어야 한다.\n# [[스위치]] / [[라우터]] — 어디까지 구현하나(L1–L2 / L1–L3). [[end-to-end와 hop-to-hop]].\n# 토폴로지 넷: [[mesh 토폴로지]] [[star 토폴로지]] [[bus 토폴로지]] [[ring 토폴로지]] — 부품 이름(허브 / drop line·tap / 리피터)까지.\n\n== 2. CH02 Signals (1시간) ==\n[[CH02 Signals]] 통독. 들를 곳:\n# [[data와 signal]] — What vs How.\n# [[사인파]] 의 3요소 [[peak amplitude]] · [[주파수]] · [[phase]]. [[주파수]]에서 \"변하지 않으면 0 Hz, 순간 변하면 ∞\" 를 꼭.\n# [[composite signal]] → [[Fourier analysis]] → [[bandwidth]] (= 최고 − 최저). 4000 Hz 예시.\n# [[디지털 신호]] → [[signal level]] ($\\log_2 L$) → [[bit rate]] → [[bit length]]. Example 2.3·2.4.\n# [[baseband 전송]] / [[broadband 전송]] — low-pass 채널이냐 bandpass 채널이냐.\n\n== 3. CH02 Transmission (1.5시간, 계산 많음) ==\n[[CH02 Transmission]] 통독. 들를 곳:\n# [[signal impairment]] 셋: [[attenuation]]([[데시벨]], −3 dB = 절반) · [[distortion]] · [[noise]]([[SNR]]).\n# '''[[Nyquist bit rate]] vs [[Shannon capacity]]''' — 무잡음/잡음, 공식, Example 2.6 · 2.8 · 2.9. 시뮬레이터 `nyquist_shannon` 을 세 옵션 다 돌려 본다.\n# [[throughput]] · [[latency]] · [[propagation time]] · [[bandwidth-delay product]] · [[jitter]].\n# 여담으로 [[Claude Shannon]] — 교수가 \"세 가지 기여를 기억하라\" 고 했다.\n\n== 4. CH02 Digital Transmission (1시간) ==\n[[CH02 Digital Transmission]] 통독. 들를 곳:\n# [[line coding]] / [[block coding]] → [[4B/5B]] + [[NRZ-I]] (왜 붙여 쓰나).\n# '''[[PCM]]''' 3단계: [[sampling]]([[Nyquist sampling theorem]] — 최고 주파수의 2배, [[oversampling과 undersampling]]) → [[quantization]]([[quantization error]]) → [[encoding]]. Example 2.13 (64 kbps).\n# [[PCM bandwidth]] — $B_{min} = n_b B_{analog}$ 증명 4단계. [[SNR_dB와 n_b]].\n# [[delta modulation]].\n\n== 5. CH02 Analog Transmission · Multiplexing (1시간) ==\n[[CH02 Analog Transmission]] → [[CH02 Multiplexing]]. 들를 곳:\n# [[modulation]] — [[carrier]]의 3요소 중 무엇을 바꾸나: [[ASK]] / [[FSK]] / [[PSK]] / [[QAM]].\n# [[baud]] vs bps ([[signal rate와 bit rate]]) — 교수: \"terminology is very important\".\n# [[변조 대역폭]] — $B=(1+d)S$ 와 FSK 만 $+2\\Delta f$. [[roll-off factor]] $d$ 는 시험에서 준다. Example 5 (FSK, 25 kbps).\n# [[FDM]] vs [[TDM]] — 주파수를 나누나 시간을 나누나. [[guard band]].\n\n== 6. CH03 Data-Link Control (2시간, 손계산 많음) ==\n[[CH03 Data-Link Control]] 통독. 들를 곳:\n# [[node와 link]] — node-to-node vs end-to-end. [[DLC]] / [[MAC sublayer]] 의 분업.\n# [[framing]]: [[character-oriented framing]]([[byte stuffing]]) / [[bit-oriented framing]]([[bit stuffing]], flag 01111110).\n# [[block code]] → '''[[Hamming distance]] → [[minimum Hamming distance]]''' ($d_{min}=s+1$, $2t+1$) → [[linear block code]].\n# [[parity check code]] — Example 3.7 다섯 경우, 특히 짝수 개 오류.\n# '''[[CRC]]''' — [[divisor]]로 XOR 나눗셈, [[syndrome]]. 시뮬레이터 `crc_division` 을 손으로 따라 푼다. [[polynomial representation]].\n# [[HDLC]] — [[NRM]]/[[ABM]], [[HDLC 프레임]] I/S/U.\n\n== 7. CH03 Media Access Control (1.5시간) ==\n[[CH03 Media Access Control]] 통독. 들를 곳:\n# [[multiple access protocols]] 3분류.\n# '''[[pure ALOHA]] → [[slotted ALOHA]]''': [[vulnerable time]]($2T_{fr}$ / $T_{fr}$), [[ALOHA throughput]]($Ge^{-2G}$ / $Ge^{-G}$, 0.184 / 0.368), [[binary exponential backoff]]. Example 3.8 · 3.9 · 3.11.\n# [[CSMA]] — 왜 충돌을 못 없애나([[propagation time]]). [[persistence method]] 셋.\n# '''[[CSMA/CD]]''' — [[최소 프레임 크기]] $T_{fr} \\ge 2T_p$, Example 3.12 (64 bytes). [[jamming signal]].\n# [[controlled access]]: [[reservation]] / [[polling]] / [[token passing]].\n\n== 8. CH03 Link-Layer Addressing (30분) ==\n[[CH03 Link-Layer Addressing]] → [[IP 주소와 MAC 주소]](순서가 다르다!) → [[unicast]]/[[multicast]]/[[broadcast 주소]] → [[ARP]].\n\n== 9. CH04 Ethernet (1시간, 10/1 수업) ==\n[[CH04 Ethernet]] 통독 — physical + data-link 두 층의 실제 구현. 들를 곳:\n# [[IEEE Project 802]], [[Standard Ethernet]] 의 [[connectionless와 unreliable]] (CRC-32 → silently drop).\n# '''[[Ethernet 프레임 형식]]''' — [[preamble과 SFD]](physical-layer header), [[Type 필드]], [[프레임 길이 제한]](64 ↔ [[최소 프레임 크기]], 1518).\n# '''[[Ethernet 주소 전송 순서]]''' (byte 는 왼→오, byte 안은 LSB first, Ex 13.1) → [[Ethernet 주소 판별]] (둘째 hex digit 홀짝, Ex 13.2).\n# [[Ethernet implementations]] 이름 읽기(10Base5/2/T/F) → [[Fast Ethernet]]: $T_{fr} \\ge 2T_p$ 라 10배 빠르면 길이 1/10 (2500 → 250 m), [[passive hub]] vs [[link-layer 스위치와 full-duplex]].\n# [[Gigabit Ethernet]] (25 m 는 불가 → full-duplex 스위치, CSMA/CD 불필요) → [[10 Gigabit Ethernet]]. [[WiFi]]·[[Bluetooth]] 는 다음 수업.\n\n== 마무리 (시험 전날) ==\n# [[공식 모음]] 을 보지 않고 백지에 쓴다.\n# [[계산 문제 모음]] 의 Example 을 전부 다시 푼다 (시뮬레이터는 답 맞출 때만).\n# [[자주 틀리는 함정 모음]] 과 [[0920 오답 복기]] 를 훑는다.\n\n== 관련 문서 ==\n* [[main]] · [[시험 정보]] · [[공식 모음]] · [[계산 문제 모음]]"
+  "body": "이 문서는 '''수업 순서대로''' 위키를 통독하는 길잡이다. 한 강의는 \"메인 문서 1편을 슬라이드 순서로 읽으면서, 모르는 용어가 나올 때마다 링크를 타고 사전 문서에 다녀오는\" 방식으로 읽는다. 각 강의 끝의 `시험 대비 핵심 요약` 을 백지에 다시 써 보면 그 강의는 끝이다.\n\n{analogy}\n🎭 '''등산 코스.''' 메인 문서는 능선길이고 사전 문서는 옆으로 빠지는 전망대다. 전망대에 다 들르면 하루가 모자라니, 첫 통독 때는 '''굵게 표시된 링크'''(처음 보는 개념)만 들르고, 두 번째부터는 자기가 헷갈리는 전망대만 간다.\n{/analogy}\n\n== 0. 준비 (10분) ==\n* [[시험 정보]] — 성적 비중(중간 40%), 교재, 아직 확정되지 않은 것.\n* [[Forouzan]] — 챕터 구성. 중간고사는 CH01–CH03.\n* [[log₂ 계산법]] · [[bps와 Hz]] · [[XOR]] — 계산 문제의 손도구 3개. 5분이면 된다.\n\n== 1. CH01 Introduction (1시간) ==\n[[CH01 Introduction]] 을 통독. 반드시 들를 전망대:\n# [[데이터 통신 4대 특성]] — Delivery / Accuracy / Timeliness / '''Jitter''' (Encryption 아님).\n# [[프로토콜 계층화]] → [[논리적 연결]] — Maria·Ann 의 3계층 편지 예시. 여기서 \"identical objects\" 가 뭔지 이해하면 [[캡슐화]]가 저절로 된다.\n# [[TCP/IP 프로토콜 스위트]] → [[PDU]] → [[주소 체계]] — 5계층 × (PDU 이름, 주소, 대표 프로토콜) 표를 백지에 채울 수 있어야 한다.\n# [[스위치]] / [[라우터]] — 어디까지 구현하나(L1–L2 / L1–L3). [[end-to-end와 hop-to-hop]].\n# 토폴로지 넷: [[mesh 토폴로지]] [[star 토폴로지]] [[bus 토폴로지]] [[ring 토폴로지]] — 부품 이름(허브 / drop line·tap / 리피터)까지.\n\n== 2. CH02 Signals (1시간) ==\n[[CH02 Signals]] 통독. 들를 곳:\n# [[data와 signal]] — What vs How.\n# [[사인파]] 의 3요소 [[peak amplitude]] · [[주파수]] · [[phase]]. [[주파수]]에서 \"변하지 않으면 0 Hz, 순간 변하면 ∞\" 를 꼭.\n# [[composite signal]] → [[Fourier analysis]] → [[bandwidth]] (= 최고 − 최저). 4000 Hz 예시.\n# [[디지털 신호]] → [[signal level]] ($\\log_2 L$) → [[bit rate]] → [[bit length]]. Example 2.3·2.4.\n# [[baseband 전송]] / [[broadband 전송]] — low-pass 채널이냐 bandpass 채널이냐.\n\n== 3. CH02 Transmission (1.5시간, 계산 많음) ==\n[[CH02 Transmission]] 통독. 들를 곳:\n# [[signal impairment]] 셋: [[attenuation]]([[데시벨]], −3 dB = 절반) · [[distortion]] · [[noise]]([[SNR]]).\n# '''[[Nyquist bit rate]] vs [[Shannon capacity]]''' — 무잡음/잡음, 공식, Example 2.6 · 2.8 · 2.9. 시뮬레이터 `nyquist_shannon` 을 세 옵션 다 돌려 본다.\n# [[throughput]] · [[latency]] · [[propagation time]] · [[bandwidth-delay product]] · [[jitter]].\n# 여담으로 [[Claude Shannon]] — 교수가 \"세 가지 기여를 기억하라\" 고 했다.\n\n== 4. CH02 Digital Transmission (1시간) ==\n[[CH02 Digital Transmission]] 통독. 들를 곳:\n# [[line coding]] / [[block coding]] → [[4B/5B]] + [[NRZ-I]] (왜 붙여 쓰나).\n# '''[[PCM]]''' 3단계: [[sampling]]([[Nyquist sampling theorem]] — 최고 주파수의 2배, [[oversampling과 undersampling]]) → [[quantization]]([[quantization error]]) → [[encoding]]. Example 2.13 (64 kbps).\n# [[PCM bandwidth]] — $B_{min} = n_b B_{analog}$ 증명 4단계. [[SNR_dB와 n_b]].\n# [[delta modulation]].\n\n== 5. CH02 Analog Transmission · Multiplexing (1시간) ==\n[[CH02 Analog Transmission]] → [[CH02 Multiplexing]]. 들를 곳:\n# [[modulation]] — [[carrier]]의 3요소 중 무엇을 바꾸나: [[ASK]] / [[FSK]] / [[PSK]] / [[QAM]].\n# [[baud]] vs bps ([[signal rate와 bit rate]]) — 교수: \"terminology is very important\".\n# [[변조 대역폭]] — $B=(1+d)S$ 와 FSK 만 $+2\\Delta f$. [[roll-off factor]] $d$ 는 시험에서 준다. Example 5 (FSK, 25 kbps).\n# [[FDM]] vs [[TDM]] — 주파수를 나누나 시간을 나누나. [[guard band]].\n\n== 6. CH03 Data-Link Control (2시간, 손계산 많음) ==\n[[CH03 Data-Link Control]] 통독. 들를 곳:\n# [[node와 link]] — node-to-node vs end-to-end. [[DLC]] / [[MAC sublayer]] 의 분업.\n# [[framing]]: [[character-oriented framing]]([[byte stuffing]]) / [[bit-oriented framing]]([[bit stuffing]], flag 01111110).\n# [[block code]] → '''[[Hamming distance]] → [[minimum Hamming distance]]''' ($d_{min}=s+1$, $2t+1$) → [[linear block code]].\n# [[parity check code]] — Example 3.7 다섯 경우, 특히 짝수 개 오류.\n# '''[[CRC]]''' — [[divisor]]로 XOR 나눗셈, [[syndrome]]. 시뮬레이터 `crc_division` 을 손으로 따라 푼다. [[polynomial representation]].\n# [[HDLC]] — [[NRM]]/[[ABM]], [[HDLC 프레임]] I/S/U.\n\n== 7. CH03 Media Access Control (1.5시간) ==\n[[CH03 Media Access Control]] 통독. 들를 곳:\n# [[multiple access protocols]] 3분류.\n# '''[[pure ALOHA]] → [[slotted ALOHA]]''': [[vulnerable time]]($2T_{fr}$ / $T_{fr}$), [[ALOHA throughput]]($Ge^{-2G}$ / $Ge^{-G}$, 0.184 / 0.368), [[binary exponential backoff]]. Example 3.8 · 3.9 · 3.11.\n# [[CSMA]] — 왜 충돌을 못 없애나([[propagation time]]). [[persistence method]] 셋.\n# '''[[CSMA/CD]]''' — [[최소 프레임 크기]] $T_{fr} \\ge 2T_p$, Example 3.12 (64 bytes). [[jamming signal]].\n# [[controlled access]]: [[reservation]] / [[polling]] / [[token passing]].\n\n== 8. CH03 Link-Layer Addressing (30분) ==\n[[CH03 Link-Layer Addressing]] → [[IP 주소와 MAC 주소]](순서가 다르다!) → [[unicast]]/[[multicast]]/[[broadcast 주소]] → [[ARP]].\n\n== 9. CH04 Ethernet (1시간, 10/1 수업) ==\n[[CH04 Ethernet]] 통독 — physical + data-link 두 층의 실제 구현. 들를 곳:\n# [[IEEE Project 802]], [[Standard Ethernet]] 의 [[connectionless와 unreliable]] (CRC-32 → silently drop).\n# '''[[Ethernet 프레임 형식]]''' — [[preamble과 SFD]](physical-layer header), [[Type 필드]], [[프레임 길이 제한]](64 ↔ [[최소 프레임 크기]], 1518).\n# '''[[Ethernet 주소 전송 순서]]''' (byte 는 왼→오, byte 안은 LSB first, Ex 13.1) → [[Ethernet 주소 판별]] (둘째 hex digit 홀짝, Ex 13.2).\n# [[Ethernet implementations]] 이름 읽기(10Base5/2/T/F) → [[Fast Ethernet]]: $T_{fr} \\ge 2T_p$ 라 10배 빠르면 길이 1/10 (2500 → 250 m), [[passive hub]] vs [[link-layer 스위치와 full-duplex]].\n# [[Gigabit Ethernet]] (25 m 는 불가 → full-duplex 스위치, CSMA/CD 불필요) → [[10 Gigabit Ethernet]]. [[WiFi]]·[[Bluetooth]] 는 다음 수업.\n\n== 10. CH04 WiFi (1시간, 10/6 수업 — 선제 작성) ==\n[[CH04 WiFi]] 통독 — 같은 LAN 인데 매체가 공기라서 무엇이 달라지는가. 들를 곳:\n# [[wireless LAN의 특성]](attenuation·interference·multipath·error) → [[IEEE 802.11]].\n# 구조: [[BSS]]([[ad-hoc과 infrastructure]]) → [[ESS]]·[[distribution system]] → [[station mobility]] 세 종류.\n# '''[[DCF]] = [[CSMA/CA]]''': [[interframe space]](DIFS/SIFS/PIFS) → [[RTS와 CTS]] → [[NAV]]. 왜 CSMA/CD 가 아닌가 — half-duplex, [[hidden station problem]] (그리고 [[exposed station problem]]).\n# [[PCF]](polling, PIFS < DIFS) 와 [[repetition interval]]·[[beacon frame]], [[fragmentation]].\n# '''[[802.11 프레임 형식]]'''(9 필드) → [[802.11 프레임 종류]] → '''[[802.11 주소 케이스]]'''(To DS/From DS 4 케이스 표) → [[802.11 physical layer]] 표.\n\n== 마무리 (시험 전날) ==\n# [[공식 모음]] 을 보지 않고 백지에 쓴다.\n# [[계산 문제 모음]] 의 Example 을 전부 다시 푼다 (시뮬레이터는 답 맞출 때만).\n# [[자주 틀리는 함정 모음]] 과 [[0920 오답 복기]] 를 훑는다.\n\n== 관련 문서 ==\n* [[main]] · [[시험 정보]] · [[공식 모음]] · [[계산 문제 모음]]"
  },
  "시험 정보": {
   "title": "시험 정보 — 중간고사 (확정된 것과 아닌 것)",
   "category": [
    "안내"
   ],
-  "body": "CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'''과 '''아직 확인 안 된 것'''을 구분해 적는다. 확인되면 이 문서와 과목 폴더의 `_시험정보.md` 를 함께 갱신한다.\n\n== 확정 (CH00 Course Introduction 슬라이드 + 9/22 · 9/29 · 10/1 녹음 공지) ==\n\n[[img:L0-8.png|CH00 p.8 Grading — 출석 10 / 과제 10 / 중간 40 / 기말 40|medium]]\n\n{|\n! 항목 || 비중 || 출처\n|-\n| Attendance || 10% || CH00 p.8\n|-\n| Homework || 10% || CH00 p.8\n|-\n| '''Midterm exam''' || '''40%''' || CH00 p.8\n|-\n| Final exam || 40% || CH00 p.8\n|-\n| '''형식''' || 필기(손으로 작성), 개인 응시, 컴퓨터·노트북 불가 || 0922 녹음본 (9/22 녹음)\n|-\n| '''시간''' || '''1시간 (예상)''' — 10/1 교수 \"I think the time for exam '''could be''' one hour rather than one and a half\" (9/22 에는 1~1.5시간). 확정 공지는 아직 || 1001 녹음본 65:56 (0922 녹음본)\n|-\n| '''출제 범위 성격''' || 슬라이드 중심 — \"교재에만 있는 문제는 내지 않겠다\" || 0922 녹음본 (9/22 녹음)\n|-\n| '''시기''' || 9/29 기준 \"2주 뒤\" → '''10/13 주 추정''' (정확한 날짜 미공지) || 0929 녹음본 (9/29 녹음)\n|-\n| '''범위''' || CH01–CH04. 10/1 에 [[CH04 Ethernet]] 완료, 다음 수업 [[WiFi]]·[[Bluetooth]] 로 CH04 마무리, '''WAN 까지 중간고사 전에 끝낼 계획'''(\"as planned\") || 1001 녹음본 65:14\n|}\n\n{exam}🎯 교수(9/22, 수업 첫머리): \"I promise you that I will '''avoid taking some problems that are only contained in the textbooks'''. … I focus on materials [in the slides].\" / \"I will prepare exams '''in writing, by your own hands, not by computers''' or something like that.\" / \"almost '''70 or 80%''' of [your grade] depends on the two exams … they should be fair, thorough and robust.\" / \"I'm not sure whether we would spend total '''one and a half hours or just one hour''' … the exam should be maybe one hour.\" → [[CH03 Media Access Control]] 의 🎙 절.{/exam}\n\n{exam}🎯 교수(9/29): \"'''We have two more weeks before the exam.'''\" / \"For the next time, we're going to learn … an instance of application of the first two layers [physical + data link] … which was '''LAN and WAN'''.\" / \"'''After the midterm''', we will move on to the third layer, which is network layer.\" → 중간고사는 10/13 주 추정, 그 전 수업에서 [[LAN]]·[[WAN]] 을 나간다. [[ARP]] 의 자세한 동작은 중간고사 뒤 network layer 파트.{/exam}\n\n{exam}🎯 교수(10/1, 수업 끝): \"for the next class, I would like to move on to the second instance of LANs, which is '''Wi-Fi''', and the third one, '''Bluetooth''', and finish the chapter 4 … I expect that maybe we can '''finish the WAN before the midterm, which is as planned'''. This is our introduction part. So please be prepared for the midterm exam. And one more notice is for midterm, I think '''the time for exam could be one hour rather than one and a half'''. So please prepare the exam accordingly.\" → [[CH04 Ethernet]] 의 🎙 절. 모의고사는 60분 재고 푼다.{/exam}\n\n* 정책: 부정행위·표절은 과목 F. '''결석이 전체의 1/4 을 넘으면 F''' (CH00 p.9).\n* 교재: [[Forouzan]], ''Data Communications and Networking with TCP/IP Protocol Suite'', 6e (CH00 p.6).\n* 교수·조교: [[교수 소개]] — Office hours 화 10:30–12:00, E7-213.\n* 수업: 화/목 9시대, 영어 강의.\n\n== 범위 (지금까지 나간 진도 = 이 위키 전체) ==\n\n{|\n! 덱 || 날짜 || 범위 || 위키 메인 문서\n|-\n| CH01 || ~8월 || Introduction 전체 || [[CH01 Introduction]]\n|-\n| CH02 (1) || 9/1 화 || Signals, Transmission (impairment, data rate limits, performance) || [[CH02 Signals]] · [[CH02 Transmission]]\n|-\n| CH02 (2) || 9/8 화 추정 || Digital Transmission (line/block coding, PCM, DM) || [[CH02 Digital Transmission]]\n|-\n| CH02 (3) || 9/10 목 || Analog Transmission (ASK/FSK/PSK/QAM), Multiplexing (FDM/TDM) || [[CH02 Analog Transmission]] · [[CH02 Multiplexing]]\n|-\n| CH03 (1) || 9/15 화 추정 || DLC — framing, error control (Hamming, parity, CRC), HDLC || [[CH03 Data-Link Control]]\n|-\n| CH03 (2) || 9/22 화 p.2–43 + 9/29 화 p.44–63 ('''완료''') || MAC — ALOHA, CSMA, CSMA/CD, controlled access; link-layer addressing, ARP || [[CH03 Media Access Control]] · [[CH03 Link-Layer Addressing]]\n|-\n| CH04 (1) || 10/1 목 ('''완료''') || LAN — Ethernet 4세대(Standard/Fast/Gigabit/10G): frame format, 주소 전송 순서, CSMA/CD 길이 제약, 스위치·full-duplex || [[CH04 Ethernet]]\n|-\n| CH04 (2)~ || 10/6 화 예정 || WiFi, Bluetooth → (WAN) || (덱이 오면 추가)\n|}\n\n== 미확정 — 교수·조교 공지로 확인할 것 ==\n\n{warn}\n* '''시험 날짜·시간·장소''': 날짜는 9/29 \"two more weeks before the exam\" → 10/13 주 추정일 뿐, 정확한 날짜·시간·장소는 공지 없음.\n* '''세부 문항 구성''': 필기·1시간은 확정(위 표). 남은 것은 객관식/서술/계산 비율, 계산기 허용 여부, 공식 제공 여부. 단서: 녹음본(9/10)에서 교수가 \"'''시험 문제에서 $d$(roll-off factor)는 항상 내가 줄 것'''\" → 계산 문제가 나온다는 뜻.\n* '''범위 종료 지점''': 10/1 에 CH04 (1) Ethernet 완료. 교수 계획은 WiFi·Bluetooth → WAN 까지 시험 전에. WAN 을 실제로 다 나가는지는 10/6·10/8 수업에서 확인. 10/1 녹음은 09:12 부터라 '''수업 첫 12분의 공지(있었다면)는 놓쳤다''' — 시험 날짜·장소는 다음 수업에서 직접 확인.\n* 족보·이전 학기 시험지: 이 과목은 2026 Fall 이 교수의 DGIST 첫 개설이라 족보가 없다. 대신 [[계산 문제 모음]] 과 [[0920 오답 복기]] 가 그 역할을 한다.\n{/warn}\n\n== 출제 스타일 추정 ==\n\n녹음본과 슬라이드 구성에서 읽히는 것:\n# '''정의 → 용어 이름''' (교수: \"the name itself is very important\"). 📖 정의 박스의 영어 원문을 외운다.\n# '''계산 Example 변형''': Nyquist/Shannon (Ex 2.6·2.8·2.9), PCM bit rate (Ex 2.13), FSK 대역폭 (Ex 5), ALOHA (Ex 3.8·3.9·3.11), CSMA/CD 최소 프레임 (Ex 3.12). → [[계산 문제 모음]].\n# '''손으로 절차 재현''': byte/bit stuffing, parity syndrome, '''CRC 나눗셈'''. → 시뮬레이터로 연습 후 백지에.\n# '''비교표''': ASK/FSK/PSK, FDM/TDM, pure/slotted ALOHA, NRM/ABM, 스위치/라우터 계층, '''Ethernet 4세대'''(속도·길이·접근 방식·encoding). → [[공식 모음]].\n# '''Ethernet 주소 전송 순서''' (Ex 13.1: byte 는 왼→오, byte 안은 LSB first) 와 unicast/multicast 판별 (Ex 13.2). → [[Ethernet 주소 전송 순서]].\n\n{analogy}\n🎭 시험 정보는 '''일기예보'''다. 확정된 건 배점(40%)과 형식(필기·1시간·슬라이드 중심)뿐이고 나머지는 구름 모양으로 추정한 것이다. 우산(계산 연습)은 챙기고, 날짜가 발표되면 이 문서를 고친다.\n{/analogy}\n\n== 관련 문서 ==\n* [[main]] · [[읽는 순서]] · [[계산 문제 모음]] · [[공식 모음]] · [[자주 틀리는 함정 모음]] · [[중간고사 모의 v1]] · [[중간고사 모의 v2]]"
+  "body": "CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'''과 '''아직 확인 안 된 것'''을 구분해 적는다. 확인되면 이 문서와 과목 폴더의 `_시험정보.md` 를 함께 갱신한다.\n\n== 확정 (CH00 Course Introduction 슬라이드 + 9/22 · 9/29 · 10/1 녹음 공지) ==\n\n[[img:L0-8.png|CH00 p.8 Grading — 출석 10 / 과제 10 / 중간 40 / 기말 40|medium]]\n\n{|\n! 항목 || 비중 || 출처\n|-\n| Attendance || 10% || CH00 p.8\n|-\n| Homework || 10% || CH00 p.8\n|-\n| '''Midterm exam''' || '''40%''' || CH00 p.8\n|-\n| Final exam || 40% || CH00 p.8\n|-\n| '''형식''' || 필기(손으로 작성), 개인 응시, 컴퓨터·노트북 불가 || 0922 녹음본 (9/22 녹음)\n|-\n| '''시간''' || '''1시간 (예상)''' — 10/1 교수 \"I think the time for exam '''could be''' one hour rather than one and a half\" (9/22 에는 1~1.5시간). 확정 공지는 아직 || 1001 녹음본 65:56 (0922 녹음본)\n|-\n| '''출제 범위 성격''' || 슬라이드 중심 — \"교재에만 있는 문제는 내지 않겠다\" || 0922 녹음본 (9/22 녹음)\n|-\n| '''시기''' || 9/29 기준 \"2주 뒤\" → '''10/13 주 추정''' (정확한 날짜 미공지) || 0929 녹음본 (9/29 녹음)\n|-\n| '''범위''' || CH01–CH04. 10/1 에 [[CH04 Ethernet]] 완료, 다음 수업 [[WiFi]]·[[Bluetooth]] 로 CH04 마무리, '''WAN 까지 중간고사 전에 끝낼 계획'''(\"as planned\") || 1001 녹음본 65:14\n|}\n\n{exam}🎯 교수(9/22, 수업 첫머리): \"I promise you that I will '''avoid taking some problems that are only contained in the textbooks'''. … I focus on materials [in the slides].\" / \"I will prepare exams '''in writing, by your own hands, not by computers''' or something like that.\" / \"almost '''70 or 80%''' of [your grade] depends on the two exams … they should be fair, thorough and robust.\" / \"I'm not sure whether we would spend total '''one and a half hours or just one hour''' … the exam should be maybe one hour.\" → [[CH03 Media Access Control]] 의 🎙 절.{/exam}\n\n{exam}🎯 교수(9/29): \"'''We have two more weeks before the exam.'''\" / \"For the next time, we're going to learn … an instance of application of the first two layers [physical + data link] … which was '''LAN and WAN'''.\" / \"'''After the midterm''', we will move on to the third layer, which is network layer.\" → 중간고사는 10/13 주 추정, 그 전 수업에서 [[LAN]]·[[WAN]] 을 나간다. [[ARP]] 의 자세한 동작은 중간고사 뒤 network layer 파트.{/exam}\n\n{exam}🎯 교수(10/1, 수업 끝): \"for the next class, I would like to move on to the second instance of LANs, which is '''Wi-Fi''', and the third one, '''Bluetooth''', and finish the chapter 4 … I expect that maybe we can '''finish the WAN before the midterm, which is as planned'''. This is our introduction part. So please be prepared for the midterm exam. And one more notice is for midterm, I think '''the time for exam could be one hour rather than one and a half'''. So please prepare the exam accordingly.\" → [[CH04 Ethernet]] 의 🎙 절. 모의고사는 60분 재고 푼다.{/exam}\n\n* 정책: 부정행위·표절은 과목 F. '''결석이 전체의 1/4 을 넘으면 F''' (CH00 p.9).\n* 교재: [[Forouzan]], ''Data Communications and Networking with TCP/IP Protocol Suite'', 6e (CH00 p.6).\n* 교수·조교: [[교수 소개]] — Office hours 화 10:30–12:00, E7-213.\n* 수업: 화/목 9시대, 영어 강의.\n\n== 범위 (지금까지 나간 진도 = 이 위키 전체) ==\n\n{|\n! 덱 || 날짜 || 범위 || 위키 메인 문서\n|-\n| CH01 || ~8월 || Introduction 전체 || [[CH01 Introduction]]\n|-\n| CH02 (1) || 9/1 화 || Signals, Transmission (impairment, data rate limits, performance) || [[CH02 Signals]] · [[CH02 Transmission]]\n|-\n| CH02 (2) || 9/8 화 추정 || Digital Transmission (line/block coding, PCM, DM) || [[CH02 Digital Transmission]]\n|-\n| CH02 (3) || 9/10 목 || Analog Transmission (ASK/FSK/PSK/QAM), Multiplexing (FDM/TDM) || [[CH02 Analog Transmission]] · [[CH02 Multiplexing]]\n|-\n| CH03 (1) || 9/15 화 추정 || DLC — framing, error control (Hamming, parity, CRC), HDLC || [[CH03 Data-Link Control]]\n|-\n| CH03 (2) || 9/22 화 p.2–43 + 9/29 화 p.44–63 ('''완료''') || MAC — ALOHA, CSMA, CSMA/CD, controlled access; link-layer addressing, ARP || [[CH03 Media Access Control]] · [[CH03 Link-Layer Addressing]]\n|-\n| CH04 (1) || 10/1 목 ('''완료''') || LAN — Ethernet 4세대(Standard/Fast/Gigabit/10G): frame format, 주소 전송 순서, CSMA/CD 길이 제약, 스위치·full-duplex || [[CH04 Ethernet]]\n|-\n| CH04 (2) || 10/6 화 예정 (덱 도착, '''수업 전 선제 작성''') || WiFi/IEEE 802.11 — BSS/ESS, DCF(CSMA/CA, RTS/CTS, NAV, hidden station), PCF, 프레임·주소 4 케이스, physical layer || [[CH04 WiFi]]\n|-\n| CH04 (3)~ || 10/8 목 예정 || Bluetooth → (WAN) || (덱이 오면 추가)\n|}\n\n== 미확정 — 교수·조교 공지로 확인할 것 ==\n\n{warn}\n* '''시험 날짜·시간·장소''': 날짜는 9/29 \"two more weeks before the exam\" → 10/13 주 추정일 뿐, 정확한 날짜·시간·장소는 공지 없음.\n* '''세부 문항 구성''': 필기·1시간은 확정(위 표). 남은 것은 객관식/서술/계산 비율, 계산기 허용 여부, 공식 제공 여부. 단서: 녹음본(9/10)에서 교수가 \"'''시험 문제에서 $d$(roll-off factor)는 항상 내가 줄 것'''\" → 계산 문제가 나온다는 뜻.\n* '''범위 종료 지점''': 10/1 에 CH04 (1) Ethernet 완료. 교수 계획은 WiFi·Bluetooth → WAN 까지 시험 전에. WAN 을 실제로 다 나가는지는 10/6·10/8 수업에서 확인. 10/1 녹음은 09:12 부터라 '''수업 첫 12분의 공지(있었다면)는 놓쳤다''' — 시험 날짜·장소는 다음 수업에서 직접 확인.\n* 족보·이전 학기 시험지: 이 과목은 2026 Fall 이 교수의 DGIST 첫 개설이라 족보가 없다. 대신 [[계산 문제 모음]] 과 [[0920 오답 복기]] 가 그 역할을 한다.\n{/warn}\n\n== 출제 스타일 추정 ==\n\n녹음본과 슬라이드 구성에서 읽히는 것:\n# '''정의 → 용어 이름''' (교수: \"the name itself is very important\"). 📖 정의 박스의 영어 원문을 외운다.\n# '''계산 Example 변형''': Nyquist/Shannon (Ex 2.6·2.8·2.9), PCM bit rate (Ex 2.13), FSK 대역폭 (Ex 5), ALOHA (Ex 3.8·3.9·3.11), CSMA/CD 최소 프레임 (Ex 3.12). → [[계산 문제 모음]].\n# '''손으로 절차 재현''': byte/bit stuffing, parity syndrome, '''CRC 나눗셈'''. → 시뮬레이터로 연습 후 백지에.\n# '''비교표''': ASK/FSK/PSK, FDM/TDM, pure/slotted ALOHA, NRM/ABM, 스위치/라우터 계층, '''Ethernet 4세대'''(속도·길이·접근 방식·encoding). → [[공식 모음]].\n# '''Ethernet 주소 전송 순서''' (Ex 13.1: byte 는 왼→오, byte 안은 LSB first) 와 unicast/multicast 판별 (Ex 13.2). → [[Ethernet 주소 전송 순서]].\n\n{analogy}\n🎭 시험 정보는 '''일기예보'''다. 확정된 건 배점(40%)과 형식(필기·1시간·슬라이드 중심)뿐이고 나머지는 구름 모양으로 추정한 것이다. 우산(계산 연습)은 챙기고, 날짜가 발표되면 이 문서를 고친다.\n{/analogy}\n\n== 관련 문서 ==\n* [[main]] · [[읽는 순서]] · [[계산 문제 모음]] · [[공식 모음]] · [[자주 틀리는 함정 모음]] · [[중간고사 모의 v1]] · [[중간고사 모의 v2]]"
  },
  "자주 틀리는 함정 모음": {
   "title": "자주 틀리는 함정 모음",
@@ -2505,7 +2505,7 @@ const ARTICLES = {
    "9강 Ethernet",
    "용어"
   ],
-  "body": "'''WiFi''' 는 '''wireless LAN''' 의 대표 instance 로, L7 p.9 가 꼽은 LAN 의 세 instance(Ethernet · WiFi · Bluetooth) 중 둘째다. 표준은 [[IEEE Project 802|IEEE 802.11]]. 교수는 10/1 수업 끝에 \"'''다음 수업에서 WiFi 와 Bluetooth 를 다루고 chapter 4 를 끝낸다'''\"고 공지했다 — 자세한 내용은 그때 이 문서를 확장한다. L7 p.8–9.\n\n{def}\"Three instances of LANs: 1. Ethernet - wired / 2. '''WiFi (Wireless Fidelity) - wireless''' / 3. Bluetooth - wireless\" (p.9)\n\"Two broad categories: Wired LANs · '''Wireless LANs'''\" (p.8)\n→ WiFi = Wireless Fidelity, 무선(wireless) [[LAN]] 의 대표.{/def}\n\n== 이름에서 개념 끌어내기 ==\n'''Wi'''reless '''Fi'''delity — 교수(10/1): \"Wi-Fi is the acronym of '''wireless fidelity''', so we call it Wi-Fi, '''taking the first two characters'''.\" '''fidelity''' = \"충실도\". 오디오의 Hi-Fi(High Fidelity, 원음에 충실)에서 따온 말장난으로, \"선 없이도 충실하게 전달한다\"는 느낌의 이름이다.\n\n== LAN 세 instance 에서의 위치 ==\n{|\n! LAN || 분류 || 표준 || 이 강의\n|-\n| [[Standard Ethernet|Ethernet]] || '''wired''' || IEEE 802.3 || 10/1 (L7)\n|-\n| '''WiFi''' || '''wireless''' || IEEE '''802.11''' || 다음 수업 예정\n|-\n| [[Bluetooth]] || wireless || — || 다음 수업 예정\n|}\n교수(10/1): \"one very famous instance of wireless LAN is Wi-Fi.\" 그리고 IEEE 802 를 설명하며 \"there is IEEE '''802.11''' which is about Wi-Fi, about standards of Wi-Fi\".\n\n{analogy}🎭 '''유선 전화 vs 무전기.''' Ethernet 이 집 벽에 꽂힌 랜선(유선 전화)이라면 WiFi 는 같은 동네 안에서 선 없이 주고받는 무전기다. 범위는 둘 다 \"동네\"(local area) — 그래서 둘 다 LAN 이다.{/analogy}\n\n{info}10/1 공지: \"for the next class, I would like to move on to the second instance of LANs, which is Wi-Fi, and the third one, Bluetooth, and finish the chapter 4 … I expect that maybe we can finish the WAN before the midterm, which is as planned.\" 중간고사 범위에 들어갈 가능성이 높으니 다음 수업 자료가 오면 이 문서를 채운다.{/info}\n\n{quiz}WiFi 는 무엇의 약자이고, LAN 의 두 범주(wired / wireless) 중 어디에 속하며, 어떤 IEEE 표준인가?{/quiz}\n{answer}'''Wireless Fidelity'''. '''wireless LAN'''. '''IEEE 802.11'''.{/answer}\n\n== 관련 문서 ==\n* [[LAN]] · [[Bluetooth]] · [[Standard Ethernet]] · [[IEEE Project 802]] · [[CH04 Ethernet]]"
+  "body": "'''WiFi''' 는 '''wireless LAN''' 의 대표 instance 로, L7 p.9 가 꼽은 LAN 의 세 instance(Ethernet · WiFi · Bluetooth) 중 둘째다. 표준은 [[IEEE 802.11]]([[IEEE Project 802]] 의 한 갈래). '''자세한 내용은 [[CH04 WiFi]]''' — 10/6 수업 덱(CH04 (2), 36쪽 전부 WiFi)이 도착했다. 교수는 10/1 수업 끝에 \"'''다음 수업에서 WiFi 와 Bluetooth 를 다루고 chapter 4 를 끝낸다'''\"고 공지했다. L7 p.8–9.\n\n{def}\"Three instances of LANs: 1. Ethernet - wired / 2. '''WiFi (Wireless Fidelity) - wireless''' / 3. Bluetooth - wireless\" (p.9)\n\"Two broad categories: Wired LANs · '''Wireless LANs'''\" (p.8)\n→ WiFi = Wireless Fidelity, 무선(wireless) [[LAN]] 의 대표.{/def}\n\n== 이름에서 개념 끌어내기 ==\n'''Wi'''reless '''Fi'''delity — 교수(10/1): \"Wi-Fi is the acronym of '''wireless fidelity''', so we call it Wi-Fi, '''taking the first two characters'''.\" '''fidelity''' = \"충실도\". 오디오의 Hi-Fi(High Fidelity, 원음에 충실)에서 따온 말장난으로, \"선 없이도 충실하게 전달한다\"는 느낌의 이름이다.\n\n== LAN 세 instance 에서의 위치 ==\n{|\n! LAN || 분류 || 표준 || 이 강의\n|-\n| [[Standard Ethernet|Ethernet]] || '''wired''' || IEEE 802.3 || 10/1 (L7)\n|-\n| '''WiFi''' || '''wireless''' || IEEE '''802.11''' || 10/6 수업 덱(CH04 (2)) 도착, [[CH04 WiFi]] 참고\n|-\n| [[Bluetooth]] || wireless || — || 다음 수업 예정\n|}\n교수(10/1): \"one very famous instance of wireless LAN is Wi-Fi.\" 그리고 IEEE 802 를 설명하며 \"there is IEEE '''802.11''' which is about Wi-Fi, about standards of Wi-Fi\".\n\n{analogy}🎭 '''유선 전화 vs 무전기.''' Ethernet 이 집 벽에 꽂힌 랜선(유선 전화)이라면 WiFi 는 같은 동네 안에서 선 없이 주고받는 무전기다. 범위는 둘 다 \"동네\"(local area) — 그래서 둘 다 LAN 이다.{/analogy}\n\n{info}10/1 공지: \"for the next class, I would like to move on to the second instance of LANs, which is Wi-Fi, and the third one, Bluetooth, and finish the chapter 4 … I expect that maybe we can finish the WAN before the midterm, which is as planned.\" 중간고사 범위에 들어갈 가능성이 높다. → 10/6 수업 덱(CH04 (2)) 도착, [[CH04 WiFi]] 참고 (BSS/ESS, DCF·CSMA/CA, RTS/CTS·NAV, hidden/exposed station, PCF, 프레임 9 필드, 주소 4 케이스, physical layer).{/info}\n\n{quiz}WiFi 는 무엇의 약자이고, LAN 의 두 범주(wired / wireless) 중 어디에 속하며, 어떤 IEEE 표준인가?{/quiz}\n{answer}'''Wireless Fidelity'''. '''wireless LAN'''. '''IEEE 802.11'''.{/answer}\n\n== 관련 문서 ==\n* [[CH04 WiFi]] · [[IEEE 802.11]] · [[CSMA/CA]] · [[BSS]]\n* [[LAN]] · [[Bluetooth]] · [[Standard Ethernet]] · [[IEEE Project 802]] · [[CH04 Ethernet]]"
  },
  "Bluetooth": {
   "title": "Bluetooth (wireless LAN 의 세 번째 instance)",
@@ -2514,6 +2514,190 @@ const ARTICLES = {
    "용어"
   ],
   "body": "'''Bluetooth''' 는 L7 p.9 가 꼽은 LAN 의 세 instance 중 세 번째로, [[WiFi]] 와 함께 '''wireless''' LAN 에 속한다. 10/1 수업에서는 이름만 나왔고, 교수가 \"'''다음 수업에서 WiFi 와 Bluetooth 로 chapter 4 를 마친다'''\"고 공지했다 — 내용은 그때 확장한다. L7 p.9.\n\n{def}\"Three instances of LANs: 1. Ethernet - wired / 2. WiFi (Wireless Fidelity) - wireless / 3. '''Bluetooth - wireless'''\" (p.9)\n→ Bluetooth 는 무선(wireless) LAN 의 한 instance.{/def}\n\n== 이름에서 개념 끌어내기 ==\n'''Bluetooth''' 는 기술 내용을 설명하는 이름이 아니라 '''사람 이름'''에서 왔다 — 10세기에 덴마크·노르웨이 지역을 통일한 왕 Harald \"Bluetooth\" 의 별명. \"서로 다른 기기들을 하나로 묶는다(통일)\"는 뜻으로 붙였다. (슬라이드에는 없는 여담 — 시험에는 \"wireless LAN 의 instance\" 라는 분류가 중요.)\n\n== LAN 세 instance 비교 (지금까지 알려진 것) ==\n{|\n! || [[Standard Ethernet|Ethernet]] || [[WiFi]] || '''Bluetooth'''\n|-\n| wired / wireless || wired || wireless || '''wireless'''\n|-\n| 이 강의 || 10/1 || 다음 수업 || 다음 수업\n|}\n\n{analogy}🎭 '''무선 이어폰.''' WiFi 가 \"집 안 전체를 덮는 무전망\"이라면 Bluetooth 는 \"내 책상 위, 몸 주변의 기기끼리 잇는 짧은 무선 끈\"에 가깝다 — 휴대폰과 이어폰, 노트북과 마우스. 범위가 더 좁을 뿐 \"선 없는 local network\" 라는 점은 같다.{/analogy}\n\n{quiz}L7 p.9 의 LAN 세 instance 를 쓰고, 각각 wired 인지 wireless 인지 쓰시오.{/quiz}\n{answer}'''Ethernet — wired''', '''WiFi — wireless''', '''Bluetooth — wireless'''.{/answer}\n\n== 관련 문서 ==\n* [[WiFi]] · [[LAN]] · [[Standard Ethernet]] · [[CH04 Ethernet]]"
+ },
+ "CH04 WiFi": {
+  "title": "CH04 WiFi (10강 — IEEE 802.11 wireless LAN: 충돌을 감지하지 말고 피하라)",
+  "category": [
+   "10강 WiFi",
+   "메인"
+  ],
+  "body": "{warn}'''10/6 수업 전 선제 작성 — 녹음본 반영 전.''' 슬라이드(L8)만으로 쓴 문서다. 교수가 무엇을 강조했는지(🎯), 학생 Q&A, 공지는 녹음본이 오면 `🎙 실제 수업 기록` 절로 추가한다. 슬라이드 p.32–33 캡션 오류 의심, p.36 대역 오타 의심은 아래 각 절의 주의 박스 참고.{/warn}\n\n'''CH04 WiFi''' 는 L8 덱(`CH04_Local Area Networks (2).pdf`, 36쪽) p.6–36 이다. p.2–5 는 [[CH04 Ethernet]] 복습(LAN 의 정의, 세 instance, Ethernet 4세대)이고, p.5 \"'''Today's focus: WiFi, a wireless LAN'''\" 부터 끝까지 전부 [[WiFi]] = [[IEEE 802.11]] 이다. [[Bluetooth]] 는 이 덱에 없다.\n이 덱이 던지는 질문은 — '''\"매체가 선이 아니라 공기가 되면, 지금까지 배운 data-link 의 무엇이 깨지고 무엇으로 대신하나?\"'''\n답: 무선은 신호가 빨리 약해지고 섞이고(p.8), 장치는 대부분 [[half-duplex]] 이며, 서로 못 듣는 [[hidden station problem|숨은 스테이션]]이 있다. 그래서 [[CSMA/CD]] 의 '''\"보내면서 들어서 충돌을 감지\"''' 가 불가능하다 → '''[[CSMA/CA]]: 감지 대신 회피''' — 기다리고([[interframe space]]), 예약하고([[RTS와 CTS]]), 예약을 들은 쪽은 입을 다문다([[NAV]]). 프레임도 그에 맞게 바뀐다: 예약 시간 칸(D), 조각 번호 칸(SC), AP 를 거치느라 '''주소 4 개'''.\n\n페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다.\n\n{exam}🎯 슬라이드 구조로 본 출제 예상 자리 (녹음 전이라 교수 강조는 미확인)\n* '''Why not CSMA/CD for wireless?''' — half-duplex · 큰 거리 · hidden station (p.18–20). 교수가 Question/Answer 로 써 둔 자리\n* '''Collision during handshaking?''' — CTS 미수신 = 충돌 가정 → backoff → 재시도 (p.16–17)\n* DCF 타임라인 순서 '''DIFS → RTS → SIFS → CTS → SIFS → Data → SIFS → ACK''', NAV 의 뜻 (p.14–15)\n* '''To DS / From DS''' 주소 표 4 행 (p.28) — Ethernet 에서 frame format 을 강조한 패턴\n* 이름에서 개념: DCF/PCF, CD/CA, hidden/exposed, PIFS < DIFS (교수의 \"the name itself is very important\"){/exam}\n\n{analogy}🎭 '''전화 회의 → 운동장 회의.''' Ethernet(유선)은 모두가 같은 전화선에 물려 있어서, 말하다가 남과 겹치면 바로 알아채고 멈출 수 있었다(CSMA/CD). WiFi(무선)는 넓고 시끄러운 운동장이다. 멀리 있는 사람의 목소리는 안 들리고(hidden station), 내가 소리치는 동안에는 남의 말을 못 듣는다(half-duplex). 그래서 규칙이 바뀐다: '''말하기 전에 잠깐 기다리고(DIFS), 손 들어 허락을 구하고(RTS), 사회자가 \"말하세요, 30초!\"(CTS) 하면 그걸 들은 모두가 30초 동안 조용히 한다(NAV).''' 충돌을 \"감지\"하는 게 아니라 \"피하는\" 것이다.{/analogy}\n\n[[anim:bss_ess|BSS(ad-hoc / infrastructure) 두 개가 distribution system 으로 묶여 ESS 가 되고, 스테이션이 no-transition → BSS-transition → ESS-transition 으로 옮겨 가는 순서를 따라가라]]\n\n== p.2–5 — Recap: LAN, 세 instance, Ethernet 4세대 ==\n* [[LAN]]: 제한된 지역(건물·캠퍼스)의 네트워크, 대개 [[WAN]]/인터넷에 연결. '''Wired / Wireless''' 두 범주.\n* 세 instance: '''1. Ethernet (wired)''' — Standard 10 / Fast 100 / Gigabit 1000 / 10 Gigabit 10,000 Mbps — '''2. WiFi (wireless)''' — 3. [[Bluetooth]] (wireless).\n* p.5: \"'''Today's focus: WiFi, a wireless LAN'''\".\n\n== p.6–8 — WiFi, 유선 vs 무선, wireless LAN 의 특성 ⭐⭐ ==\n{def}\"WiFi (Wireless Fidelity): Based on the '''IEEE 802.11''' standard. Designed to provide services to '''wireless devices'''.\" (p.6){/def}\n\n{|\n! (p.7) || Wired LAN || Wireless LAN\n|-\n| Medium || '''wires''' || '''air''', 신호는 generally '''broadcast'''\n|-\n| Hosts || 한 지점에 '''always connected''' || '''not physically connected'''\n|}\n\np.8 의 네 가지 특성 — 자세히는 [[wireless LAN의 특성]]:\n{|\n! 특성 || 뜻 (p.8)\n|-\n| '''Attenuation''' || electromagnetic signal 세기가 '''rapidly''' 감소 ([[attenuation]])\n|-\n| '''Interference''' || 의도한 송신자 외에 '''같은 frequency band''' 의 다른 송신자 신호도 수신\n|-\n| '''Multipath propagation''' || '''같은 송신자'''의 신호를 둘 이상 수신\n|-\n| '''Error''' || 오류 검출·정정이 '''more serious''' 한 문제\n|}\n\n{warn}interference(다른 송신자) 와 multipath(같은 송신자의 여러 사본)를 헷갈리지 말 것.{/warn}\n\n== p.9 — IEEE 802.11 ==\n{def}\"IEEE 802.11: The specifications for a wireless LAN, which covers the '''physical and data-link layers'''. The public uses the term '''WiFi (Wireless Fidelity)'''. A wireless LAN '''certified by the WiFi Alliance'''.\" (p.9){/def}\n[[IEEE Project 802]] 의 한 갈래: 802.3 = Ethernet, '''802.11 = WiFi'''. 자세히는 [[IEEE 802.11]].\n\n== p.10–12 — Architecture: BSS, ESS, station mobility ⭐⭐ ==\n[[img:L8-10.png|p.10 BSS — Ad hoc BSS(AP 없음) vs Infrastructure BSS(AP 있음)|medium]]\n\n{def}\"Basic service set (BSS): BSS '''without an AP (access point)''' is called '''ad-hoc'''. BSS '''with an AP''' is referred to as '''infrastructure'''.\" (p.10){/def}\n\n[[img:L8-11.png|p.11 ESS — BSS 3 개의 AP 가 distribution system 으로 연결, 위에 server or gateway|medium]]\n\n{def}\"Extended service set (ESS): Made up of '''two or more BSSs with APs'''. BSSs are connected through a '''distribution system''', which is a '''wired or a wireless''' network.\" (p.11){/def}\n\n{def}\"Station Types: '''No-transition''' mobility — either stationary or moving only inside a BSS. '''BSS-transition''' mobility — move from one BSS to another. '''ESS-transition''' mobility — move from one ESS to another. IEEE 802.11 '''does not guarantee''' that communication is continuous during the move.\" (p.12){/def}\n\n{|\n! 개념 || 한 줄 || 문서\n|-\n| BSS || 802.11 의 기본 묶음 || [[BSS]]\n|-\n| ad-hoc / infrastructure || AP 없음 / 있음 || [[ad-hoc과 infrastructure]]\n|-\n| ESS || AP 있는 BSS 2 개 이상 + DS || [[ESS]]\n|-\n| distribution system || BSS 들을 이어 ESS 를 만드는 유선/무선 망 || [[distribution system]]\n|-\n| mobility 3 종 || 넘는 경계: 없음 / BSS / ESS. '''연속성 보장 없음''' || [[station mobility]]\n|}\n\n== p.13–14 — 두 MAC sublayer, DCF ⭐⭐⭐ ==\np.13: 802.11 MAC 은 '''두 개''' — '''[[DCF]] (Distributed coordination function)''' 와 '''[[PCF]] (Point coordination function)'''.\n\n{def}\"Distributed coordination function (DCF): Employs '''CSMA/CA (Collision Avoidance)'''. DIFS: DCF interframe space · SIFS: short interframe space · RTS: request to send · CTS: clear to send · NAV: network allocation vector.\" (p.14){/def}\n\n[[img:L8-14.png|p.14 DCF 타임라인 — Source A, Destination B, Other stations C·D. DIFS → RTS → SIFS → CTS → SIFS → Data → SIFS → ACK, C·D 는 CTS 수신부터 ACK 끝까지 NAV|large]]\n\n[[anim:csma_ca_timeline|A 의 RTS·Data, B 의 CTS·ACK 사이에 DIFS(한 번)와 SIFS(세 번)가 끼는 리듬을 보고, C·D 의 NAV 막대가 언제 켜지고 꺼지는지 확인하라]]\n\n<pre class=\"txt\">\n1. A : 채널 idle 확인 → '''DIFS''' 대기 → '''RTS''' (duration 포함)\n2. B : '''SIFS''' → '''CTS'''                  ← C, D 도 수신\n3. C, D : '''NAV''' 설정 (채널 idle 검사도 안 함)\n4. A : '''SIFS''' → '''Data'''\n5. B : '''SIFS''' → '''ACK'''                  ← NAV 종료\n<\/pre>\n\n[[sim:csma_ca_handshake]]\n\n== p.15 — NAV ⭐⭐ ==\n{def}\"An '''RTS frame includes the duration''' of time that it needs to occupy the channel. The station that are affected by this transmission create '''a timer called a NAV'''. It shows how much time must pass before these stations are allowed to '''check the channel for idleness'''.\" (p.15){/def}\nNAV 값은 프레임의 '''D(duration) 필드'''에서 온다(p.26). p.24 범례는 NAV 를 \"'''No carrier sensing'''\" 이라고 풀어 쓴다. → [[NAV]]\n\n== p.16–17 — Collision During Handshaking ⭐⭐⭐ ==\n{def}\"CSMA/CA '''does not have a mechanism for detecting collisions'''.\n'''Question''': What happens if there is a collision during handshaking period? e.g., Many stations may try to send RTS frames at the same time.\n'''Answer''': The sender '''assumes there has been a collision if it has not received a CTS frame''' from the receiver. If that happens: '''Backoff strategy''' is employed, and the sender tries again.\" (p.16–17){/def}\n\n7강의 [[binary exponential backoff]] 와 같은 발상이지만, 여기서는 충돌을 '''감지'''가 아니라 '''CTS 부재로 추정'''한다는 점이 다르다. → [[CSMA/CA]], [[RTS와 CTS]]\n\n== p.18–20 — Why CSMA/CA? CSMA/CD 가 무선에 안 맞는 이유 ⭐⭐⭐ ==\np.18: \"Remember: Standard Ethernet uses the CSMA/CD — each host contends to access the medium and sends its frame if it finds the medium idle. '''Question: why not using CSMA/CD for wireless LANs?'''\" (7강 CSMA/CD 그림을 다시 보여 줌: A 와 C 가 전송 중 충돌을 감지하고 abort)\n\n[[img:L8-18.png|p.18 Why CSMA/CA? — 7강의 CSMA/CD 그림: A·C 가 전송 도중 충돌을 감지하고 abort|medium]]\n\n{|\n! 이유 (p.19–20) || 왜 CSMA/CD 가 깨지나\n|-\n| Wireless devices are mostly '''[[half-duplex]]''' — cannot send and receive at the same time || CSMA/CD 는 '''보내는 동안 들어서''' 충돌을 감지 → 불가\n|-\n| Collision may occur but '''not be detected''': '''potentially large distances''' || 신호가 빨리 약해져 먼 곳의 충돌 신호가 안 닿음\n|-\n| Collision may occur but not be detected: '''the hidden station problem''' || 서로 못 듣는 두 송신자 → 수신자 위치에서 충돌\n|}\n\n[[img:L8-20.png|p.20 Hidden station problem — (a) Range of B 와 Range of C 가 A 에서만 겹침 (b) 장애물로 B·C 가 서로 숨겨짐|large]]\n\n== p.21 — Solution to hidden station problem ⭐⭐⭐ ==\n{def}\"The handshake frames (RTS and CTS) can '''mitigate''' the issue. The '''CTS message, which contains the duration of data transmission''' from B to A, '''reaches C'''. Station C knows that some hidden station is using the channel and '''refrains from transmitting'''.\" (p.21){/def}\n\n[[anim:hidden_station|① C 가 B 를 못 들어 A 에서 충돌 ② A 의 CTS 가 C 까지 닿아 C 가 NAV 로 기다림 ③ exposed station — 세 장면을 차례로 비교하라]]\n\n핵심: 충돌은 '''수신자 위치'''에서 나므로 '''수신자가 보내는 CTS''' 가 막아야 할 스테이션에 닿는다. → [[hidden station problem]]\n\n== p.22–24 — PCF, PIFS, repetition interval ⭐⭐ ==\n{def}\"Point Coordination Function (PCF): An '''optional''' access method that can be implemented in an '''infrastructure''' network. It is used mostly for '''time-sensitive''' transmission. PCF has a '''centralized, contention-free polling''' access method. To give '''priority to PCF over DCF''', another interframe space, '''PIFS''', has been defined. '''PIFS is shorter than DIFS'''.\" (p.22){/def}\n\n{def}\"Due to the priority of PCF over DCF, stations that only use DCF '''may not gain access''' to the medium. To prevent this, a '''repetition interval''' has been designed to cover both '''contention-free PCF''' and '''contention-based DCF''' traffic. It starts with a special control frame, called a '''beacon frame'''.\" (p.23){/def}\n\n[[img:L8-24.png|p.24 Example of repetition interval — AP: PIFS · B · SIFS · Poll · … · ACK+poll · CF end / Polled station: ACK+data / Others: NAV. Contention-free + Contention = Repetition interval|large]]\n\n{|\n! interframe space || 쓰는 곳 || 길이\n|-\n| SIFS || 진행 중 교환의 응답 (CTS·Data·ACK, Poll·ACK+data) || 가장 짧음\n|-\n| PIFS || PCF 의 AP (beacon 앞) || DIFS 보다 짧음 (p.22)\n|-\n| DIFS || DCF 스테이션의 새 전송 || 가장 긺\n|}\n'''짧게 기다리는 쪽이 먼저 채널을 잡는다.''' 슬라이드 명시는 PIFS < DIFS; SIFS < PIFS 는 Forouzan 보충. → [[interframe space]], [[PCF]], [[repetition interval]], [[beacon frame]]. PCF 의 polling 은 7강 [[controlled access]] 의 [[polling]] 그대로다.\n\n== p.25 — Fragmentation ⭐ ==\n{def}\"The wireless environment is '''very noisy''', so frames are often corrupted. A corrupt frame has to be '''retransmitted'''. The '''division of a large frame into smaller ones''' is usually recommended.\" (p.25){/def}\n작게 나눌수록 깨졌을 때 다시 보낼 양이 줄어든다. 조각 번호는 SC 필드 첫 4 bits. → [[fragmentation]]\n\n== p.26 — MAC layer frame format: 9 fields ⭐⭐⭐ ==\n[[img:L8-26.png|p.26 MAC frame 9 fields — FC 2 · D 2 · Address 1/2/3 각 6 · SC 2 · Address 4 6 · Frame body 0–2312 · FCS 4 bytes, 그리고 FC 의 하위 필드|large]]\n\n{|\n! FC || D || Address 1 || Address 2 || Address 3 || SC || Address 4 || Frame body || FCS\n|-\n| 2 B || 2 B || 6 B || 6 B || 6 B || 2 B || 6 B || 0–2312 B || 4 B\n|}\n* '''FC''': type of frame + control information. 하위 필드: Protocol version 2 · Type 2 · Subtype 4 · To DS · From DS · More frag · Retry · Pwr mgt · More data · WEP · Rsvd (각 1 bit)\n* '''D''': duration → '''NAV''' 값 · '''SC''': 첫 4 bits = '''fragment number''' · '''FCS''': '''CRC-32'''\n→ [[802.11 프레임 형식]]\n\n== p.27 — Frame type ⭐ ==\n{def}\"'''Management frames''': Used for the initial communication between stations and APs. '''Control frames''': Used for accessing the channel and acknowledging frames. The value of type field is '''01'''.\" (p.27){/def}\n\n[[img:L8-27.png|p.27 RTS(FC·D·Address 1·Address 2·FCS) / CTS or ACK(FC·D·Address 1·FCS) 와 Subtype 1011 RTS · 1100 CTS · 1101 ACK|medium]]\n→ [[802.11 프레임 종류]]\n\n== p.28–34 — Addresses: To DS / From DS 와 4 케이스 ⭐⭐⭐ ==\n[[img:L8-28.png|p.28 Addresses — To DS / From DS 에 따른 Address 1–4 표|large]]\n\n{|\n! To DS || From DS || Address 1 || Address 2 || Address 3 || Address 4 || Case (그림)\n|-\n| 0 || 0 || Destination || Source || BSS ID || N/A || 1: 한 BSS 안 [B·A·BSS-ID]\n|-\n| 0 || 1 || Destination || Sending AP || Source || N/A || 2: AP → B [B·AP·A]\n|-\n| 1 || 0 || Receiving AP || Source || Destination || N/A || 3: A → AP [AP·A·B]\n|-\n| 1 || 1 || Receiving AP || Sending AP || Destination || Source || 4: AP1 → AP2 [AP2·AP1·B·A]\n|}\np.29: \"DS: Distribution System → The infrastructure component that connects multiple BSSs together to form an ESS.\"\n\n[[img:L8-30.png|p.30 Addressing mechanisms 4 cases — a. 한 BSS 안 · b. AP → B · c. A → AP · d. AP1 → AP2 (wireless DS)|large]]\n\n{warn}'''p.32–33 캡션 주의.''' p.32 Case 2 캡션 \"Frame is '''heading into''' the DS\", p.33 Case 3 캡션 \"Frame is '''coming out of''' the DS\" 는 같은 슬라이드의 '''표 행·그림과 반대'''다(Case 2 = From DS=1, AP → B 이므로 DS 에서 '''나옴''' / Case 3 = To DS=1, A → AP 이므로 DS 로 '''들어감'''; Forouzan 원문도 Case 2 \"coming from a DS\", Case 3 \"going to a DS\"). '''p.32–33 캡션은 뒤바뀐 것으로 보인다 — 시험에서는 To DS/From DS 비트와 Address 1~4 표를 기준으로 답할 것.''' 10/6 수업에서 교수 설명을 확인할 것.{/warn}\n\n외우는 요령: '''Address 1 = 이번 hop 의 수신자, Address 2 = 이번 hop 의 송신자''', 남는 칸에 최종 목적지/출발지(Case 1 은 BSS ID). → [[802.11 주소 케이스]]\n\n[[sim:wifi_addressing]]\n\n== p.35 — Exposed Station Problem ⭐⭐ ==\n{def}\"A station '''refrains from using a channel even when it is available'''.\" (p.35)\n그림: \"C can send to D because this area is free, but C '''erroneously refrains from sending because of received RTS'''.\"{/def}\n\n[[img:L8-35.png|p.35 Exposed station — B·A·C·D 일렬. A 가 B 에게 RTS·Data, C 는 A 의 RTS 를 듣고 D 로의 전송을 잘못 삼감|large]]\n\nhidden station = 보내면 안 되는데 보냄('''충돌'''), exposed station = 보내도 되는데 안 보냄('''낭비'''). → [[exposed station problem]]\n\n== p.36 — Physical Layer ⭐⭐ ==\n[[img:L8-36.png|p.36 Specification of Physical Layer of IEEE 802.11|medium]]\n\n{|\n! IEEE || Technique || Band || Modulation || Rate (Mbps)\n|-\n| 802.11 || FHSS || 2.400–4.835 GHz¹ || FSK || 1 and 2\n|-\n| 802.11 || DSSS || 2.400–4.835 GHz¹ || PSK || 1 and 2\n|-\n| 802.11 || None || Infrared || PPM || 1 and 2\n|-\n| 802.11a || OFDM || 5.725–5.850 GHz || PSK or QAM || 6 to 54\n|-\n| 802.11b || DSSS || 2.400–4.835 GHz¹ || PSK || 5.5 and 11\n|-\n| 802.11g || OFDM || 2.400–4.835 GHz¹ || Different || 22 and 54\n|-\n| 802.11n || OFDM || 5.725–5.850 GHz || Different || 600\n|}\n¹ 슬라이드 표기 그대로. 2.4 GHz ISM 대역의 실제 범위는 '''2.400–2.4835 GHz''' — 슬라이드 값은 '''오타로 보인다'''. → [[802.11 physical layer]]\n\n== Ethernet (CSMA/CD) vs WiFi (CSMA/CA) ⭐⭐⭐ ==\n{|\n! || [[CH04 Ethernet|Ethernet]] (802.3) || WiFi (802.11)\n|-\n| 매체 || wire || '''air''' (broadcast)\n|-\n| 듀플렉스 || full-duplex 가능 (스위치) || 무선 장치는 대부분 '''half-duplex'''\n|-\n| MAC || [[CSMA/CD]] + [[1-persistent]] || [[CSMA/CA]] ([[DCF]]) + 선택적 [[PCF]](polling)\n|-\n| 충돌 || 전송 '''중 감지''' → abort + [[jamming signal]] || '''감지 메커니즘 없음''' → IFS·RTS/CTS·NAV 로 '''회피'''\n|-\n| 충돌 판단 || [[energy level]] 로 직접 || '''CTS 미수신''' = 충돌 가정\n|-\n| 실패 후 || [[binary exponential backoff|backoff]] || backoff\n|-\n| 프레임 크기 제약 || 최소 64 B ([[최소 프레임 크기]], $T_{fr} \\geq 2T_p$) || 감지를 안 하므로 그 제약 없음. 오히려 '''잡음 때문에 작게'''([[fragmentation]])\n|-\n| 주소 || 2 개 || '''4 개''' (To DS/From DS)\n|-\n| 프레임 || 7 필드, Data 46–1500 B || '''9 필드''', Frame body 0–2312 B, '''D(duration)·SC''' 추가\n|-\n| 오류 검출 || [[CRC]]-32 || FCS = CRC-32\n|-\n| 오류 처리 || 손상 시 silently drop (unreliable) || '''ACK''' 로 수신 확인 (p.14), 깨지면 재전송 (p.25)\n|}\n\n{quiz}(1) 무선 LAN 에서 CSMA/CD 대신 CSMA/CA 를 쓰는 이유 세 가지를 쓰시오. (2) CSMA/CA 에서 송신자는 RTS 충돌을 어떻게 판단하는가? (3) To DS = 0, From DS = 1 인 프레임의 Address 1–3 은?{/quiz}\n{answer}(1) 무선 장치는 대부분 '''half-duplex''' 라 보내면서 받을 수 없다 · 스테이션 사이 '''거리가 커서''' 충돌이 감지되지 않을 수 있다 · '''hidden station problem''' (p.19–20). (2) '''CTS 를 받지 못하면''' 충돌로 가정하고 '''backoff''' 후 재시도 (p.17). (3) Address 1 = '''Destination''', Address 2 = '''Sending AP''', Address 3 = '''Source''' (AP 가 DS 에서 받은 프레임을 BSS 의 목적지로 보내는 경우).{/answer}\n\n== 시험 대비 핵심 요약 ==\n# WiFi = '''Wireless Fidelity''' = '''IEEE 802.11''' — wireless LAN 의 '''physical + data-link''' 명세, '''WiFi Alliance 인증'''.\n# 유선 vs 무선(p.7): 매체 wire vs '''air(broadcast)''', 호스트 always connected vs '''not physically connected'''. 무선의 특성(p.8): '''attenuation · interference(같은 band 의 다른 송신자) · multipath(같은 송신자의 여러 신호) · error'''.\n# '''BSS''': AP 없으면 '''ad-hoc''', 있으면 '''infrastructure'''. '''ESS''' = AP 있는 BSS '''2 개 이상''' + '''distribution system'''(유선/무선).\n# Mobility: '''no-transition'''(정지/BSS 안) · '''BSS-transition''' · '''ESS-transition'''. 802.11 은 이동 중 '''연속성을 보장하지 않는다'''.\n# MAC sublayer 두 개: '''DCF'''(CSMA/CA, distributed) · '''PCF'''(optional, infrastructure, time-sensitive, centralized contention-free polling).\n# DCF 순서: '''DIFS → RTS → SIFS → CTS → SIFS → Data → SIFS → ACK'''. CTS 를 들은 다른 스테이션은 '''NAV'''.\n# '''NAV''' = RTS(/CTS)의 duration 으로 만드는 '''타이머''' — 끝날 때까지 채널 idle 검사도 안 함. 값은 '''D 필드'''.\n# CSMA/CA 에는 '''충돌 감지 메커니즘이 없다''' → '''CTS 를 못 받으면 충돌로 가정 → backoff → 재시도'''.\n# CSMA/CD 를 안 쓰는 이유: ① 무선 장치는 '''half-duplex''' ② '''큰 거리''' ③ '''hidden station''' → 충돌이 나도 감지 못함.\n# '''Hidden station''': 서로 범위 밖 → 수신자에서 충돌. 해결 = '''RTS/CTS''' — '''CTS(duration 포함)가 C 에 닿아''' C 가 삼감 (\"mitigate\"). '''Exposed station''': 쓸 수 있는데 '''RTS 를 듣고 잘못 삼감''' → 낭비.\n# PCF 우선을 위해 '''PIFS < DIFS'''. DCF 기아 방지 → '''repetition interval'''(contention-free + contention), '''beacon frame'''(control frame)으로 시작.\n# Fragmentation: noisy → 자주 깨짐 → 재전송 → '''작게 나누기 권장'''. SC 첫 4 bits = fragment number.\n# 프레임 9 필드: '''FC 2 · D 2 · Addr1 6 · Addr2 6 · Addr3 6 · SC 2 · Addr4 6 · Body 0–2312 · FCS 4'''. FCS = CRC-32. Control frame Type '''01''', Subtype RTS 1011 · CTS 1100 · ACK 1101.\n# 주소 표: '''00''' Dest·Src·BSS ID / '''01''' Dest·Sending AP·Src / '''10''' Receiving AP·Src·Dest / '''11''' Receiving AP·Sending AP·Dest·Src. (p.32–33 캡션은 반대로 적혀 있음 — 표 기준)\n# Physical layer(p.36): 802.11 FHSS-FSK / DSSS-PSK / Infrared-PPM (1, 2 Mbps), a OFDM 5 GHz 6–54, b DSSS 2.4 GHz 5.5·11, g OFDM 2.4 GHz 22·54, n OFDM 600.\n\n== 공식 모음 ==\n{|\n! 관계 || 뜻\n|-\n| $\\text{SIFS} < \\text{PIFS} < \\text{DIFS}$ || 짧게 기다리는 쪽이 우선 (슬라이드 명시: PIFS < DIFS)\n|-\n| Repetition interval = Contention-free (PCF) + Contention (DCF) || p.24\n|-\n| 802.11 헤더 = 2+2+6+6+6+2+6 = 30 bytes, + Body 0–2312 + FCS 4 || p.26 필드 합\n|-\n| FC = 2+2+4+1×8 = 16 bits || p.26\n|-\n| RTS = 20 bytes, CTS·ACK = 14 bytes || p.27 필드 합\n|}\n\n== 관련 문서 ==\n* 이전 강의: [[CH04 Ethernet]] · [[CH03 Media Access Control]] · [[CH03 Data-Link Control]]\n* 이 강의 사전: [[wireless LAN의 특성]] · [[IEEE 802.11]] · [[BSS]] · [[ad-hoc과 infrastructure]] · [[ESS]] · [[distribution system]] · [[station mobility]] · [[DCF]] · [[PCF]] · [[CSMA/CA]] · [[RTS와 CTS]] · [[NAV]] · [[interframe space]] · [[hidden station problem]] · [[exposed station problem]] · [[repetition interval]] · [[beacon frame]] · [[fragmentation]] · [[802.11 프레임 형식]] · [[802.11 프레임 종류]] · [[802.11 주소 케이스]] · [[802.11 physical layer]]\n* 다시 쓰이는 개념: [[WiFi]] · [[Bluetooth]] · [[LAN]] · [[IEEE Project 802]] · [[Standard Ethernet]] · [[CSMA/CD]] · [[CSMA]] · [[persistence method]] · [[1-persistent]] · [[binary exponential backoff]] · [[collision]] · [[random access]] · [[controlled access]] · [[polling]] · [[최소 프레임 크기]] · [[half-duplex]] · [[full-duplex]] · [[attenuation]] · [[noise]] · [[CRC]] · [[MAC 주소]] · [[Ethernet 프레임 형식]]\n* 시험: [[시험 정보]]"
+ },
+ "wireless LAN의 특성": {
+  "title": "Wireless LAN 의 특성 (유선과의 차이 · attenuation · interference · multipath · error)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''Wireless LAN''' 은 [[LAN]] 의 두 범주(wired / wireless) 중 하나로, 매체가 '''공기(air)''' 이고 신호가 '''broadcast''' 된다. 그래서 유선에 없던 네 가지 골칫거리 — '''attenuation, interference, multipath propagation, error''' — 를 안고 시작한다. 이 문서는 L8 p.7–8. 이 네 성질이 뒤에 나오는 [[CSMA/CA]], [[fragmentation]] 같은 설계를 모두 설명한다.\n\n{def}\"Wired vs. wireless LANs — '''Medium''': In a wired LAN, we use wires to connect hosts. In a wireless LAN, the medium is '''air''', and the signal is generally '''broadcast'''. '''Hosts''': In a wired LAN, a host is '''always connected''' to its network at a point. In a wireless LAN, a host is '''not physically connected''' to the network.\" (p.7)\n\"Characteristics of wireless LANs — '''Attenuation''': The strength of electromagnetic signals decreases rapidly. '''Interference''': Receive signals not only from the intended sender, but also from other senders (if they are using the same frequency band). '''Multipath propagation''': Receive more than one signal from the same sender. '''Error''': Detecting and correcting errors are more serious issues.\" (p.8)\n→ 무선 LAN 은 공기를 매체로 신호를 퍼뜨리고, 호스트가 물리적으로 묶여 있지 않다. 그 결과 신호가 빨리 약해지고(attenuation), 남의 신호가 섞이고(interference), 같은 신호가 여러 경로로 오고(multipath), 오류 처리가 더 심각한 문제가 된다.{/def}\n\n== 유선 vs 무선 (p.7) ==\n{|\n! 비교 || Wired LAN ([[Standard Ethernet|Ethernet]]) || Wireless LAN ([[WiFi]])\n|-\n| Medium || '''wires''' || '''air''', 신호는 대체로 '''broadcast'''\n|-\n| Hosts || 네트워크의 한 지점에 '''항상 연결''' || '''물리적으로 연결되지 않음''' → 이동 가능 ([[station mobility]])\n|}\n\n== 네 가지 특성 (p.8) ⭐⭐ ==\n[[img:L8-8.png|p.8 Characteristics of wireless LANs — attenuation · interference · multipath propagation · error|medium]]\n\n{|\n! 특성 || 슬라이드 정의 || 이전에 배운 것과 연결 || 결과\n|-\n| '''Attenuation''' || electromagnetic signal 의 세기가 '''빠르게(rapidly)''' 감소 || 3강 [[attenuation]] — 유선에서도 있었지만 공기 중에서는 훨씬 빠름 || 거리가 멀면 상대의 신호를 못 들음 → [[hidden station problem]]\n|-\n| '''Interference''' || 의도한 송신자뿐 아니라 '''같은 frequency band''' 를 쓰는 다른 송신자의 신호도 수신 || 3강 [[noise]] 와 비슷하지만 원인이 \"다른 송신자\" || 신호가 섞여 손상\n|-\n| '''Multipath propagation''' || '''같은 송신자'''의 신호를 둘 이상 수신 || 벽·물체에 반사된 사본이 시차를 두고 도착 || 사본끼리 겹쳐 신호 왜곡\n|-\n| '''Error''' || 오류의 검출·정정이 '''더 심각한''' 문제 || 6강 [[CRC]], 오류 검출 || 프레임이 자주 깨짐 → [[fragmentation]] 권장\n|}\n\n{info}Interference 는 슬라이드에서 '''굵게''' 표시된 유일한 항목이다. \"같은 주파수 대역을 쓰면\" 이라는 조건이 붙는다는 점 — 그래서 [[802.11 physical layer]] 표의 '''Band''' 열(2.4 GHz 대 / 5 GHz 대)이 의미를 가진다.{/info}\n\n== 이름에서 개념 끌어내기 ==\n* '''inter-ference''' — \"사이에(inter) 끼어든다\". 내 대화 사이에 남의 신호가 끼어든다.\n* '''multi-path''' — \"여러 경로\". 같은 말이 직선 경로 + 벽 반사 경로로 나뉘어 '''메아리'''처럼 두 번 들린다.\n* '''broadcast''' — 공기 중의 신호는 방향을 정할 수 없어 범위 안의 '''모두'''에게 들린다. 이 성질 때문에 [[NAV]] 처럼 \"엿들은 정보로 조용히 기다리기\" 가 가능하기도 하다.\n\n{analogy}🎭 '''유선 = 전화, 무선 = 시끄러운 운동장에서 소리치기.''' 운동장에서는 ① 멀어지면 목소리가 금방 안 들리고(attenuation), ② 옆 반 아이들 고함이 섞이고(interference), ③ 체육관 벽에 울려 같은 말이 두 번 들리고(multipath), ④ 그래서 말을 잘못 알아듣는 일이 잦다(error). 전화선으로 이야기할 때는 거의 없던 문제들이다.{/analogy}\n\n== 이 특성들이 무엇을 낳았나 ==\n* attenuation + 거리 → 충돌이 나도 감지 못함 → [[CSMA/CD]] 대신 [[CSMA/CA]]\n* noisy 환경 → 프레임이 자주 깨짐 → 큰 프레임을 잘게 나누는 [[fragmentation]]\n* host 가 연결되어 있지 않음 → [[station mobility]] (이동 중 통신 연속성은 보장 안 됨)\n\n{quiz}Wireless LAN 의 특성 4가지를 쓰고, 그중 \"같은 송신자로부터 신호를 둘 이상 받는 것\"의 이름은?{/quiz}\n{answer}'''Attenuation · Interference · Multipath propagation · Error'''. 같은 송신자의 신호를 여러 개 받는 것 = '''multipath propagation''' (다른 송신자의 신호가 섞이는 것은 interference — 헷갈리지 말 것).{/answer}\n\n== 관련 문서 ==\n* [[CH04 WiFi]] · [[WiFi]] · [[IEEE 802.11]] · [[LAN]]\n* [[attenuation]] · [[noise]] · [[CRC]] · [[fragmentation]] · [[hidden station problem]]"
+ },
+ "IEEE 802.11": {
+  "title": "IEEE 802.11 (Wireless LAN 표준 = WiFi)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''IEEE 802.11''' 은 wireless LAN 의 '''physical layer 와 data-link layer''' 를 규정하는 표준이다. 일반인은 이것을 '''[[WiFi]]''' 라고 부르고, 정확히는 '''WiFi Alliance 가 인증한''' wireless LAN 이 WiFi 다. [[IEEE Project 802]] 의 한 갈래(802.3 = Ethernet, 802.11 = WiFi). L8 p.6, p.9.\n\n{def}\"WiFi (Wireless Fidelity): Based on the '''IEEE 802.11''' standard. Designed to provide services to wireless devices.\" (p.6)\n\"IEEE 802.11: The specifications for a wireless LAN, which covers the '''physical and data-link layers'''. The public uses the term '''WiFi (Wireless Fidelity)'''. A wireless LAN '''certified by the WiFi Alliance'''.\" (p.9)\n→ 802.11 은 무선 LAN 의 1·2 계층 명세. \"WiFi\" 는 그 대중적 이름이며, WiFi Alliance 의 인증을 받은 무선 LAN 을 가리킨다.{/def}\n\n== 이름에서 개념 끌어내기 ==\n* '''802''' — [[IEEE Project 802]]: 여러 제조사 장비가 서로 통신하도록 LAN 의 '''physical + data-link''' 기능을 정한 프로젝트. 그러니 \"802.무엇\" 은 자동으로 \"1·2 계층 표준\" 이다.\n* '''.11''' — 802 가족의 11번째 작업 그룹. Ethernet 이 '''.3''' 이었다.\n* '''certified''' — 표준(문서)과 상표(WiFi)는 다르다. 표준을 지켰다고 '''WiFi Alliance''' 가 인증해 준 제품만 \"WiFi\" 로고를 단다.\n\n== 802.11 이 정하는 것 (이 덱의 지도) ==\n{|\n! 계층 || 802.11 이 정한 것 || 문서\n|-\n| Architecture || BSS(ad-hoc / infrastructure), ESS, distribution system, station mobility || [[BSS]] · [[ESS]] · [[distribution system]] · [[station mobility]]\n|-\n| MAC sublayer || '''두 개''': DCF(필수 — Forouzan 보충, [[CSMA/CA]]) 와 PCF(선택, polling) || [[DCF]] · [[PCF]] · [[repetition interval]]\n|-\n| MAC frame || 9 필드, 4 개의 주소, 3 종류 프레임(Forouzan 보충; 슬라이드는 management/control 2종) || [[802.11 프레임 형식]] · [[802.11 주소 케이스]] · [[802.11 프레임 종류]]\n|-\n| Physical layer || 802.11 / a / b / g / n 의 technique·band·modulation·rate || [[802.11 physical layer]]\n|}\n\n[[img:L8-36.png|p.36 Specification of Physical Layer of IEEE 802.11 — 802.11 FHSS/DSSS/Infrared, 802.11a/b/g/n|medium]]\n\n{analogy}🎭 '''IEEE 802 = 교통법 전체, 802.3 = 도로교통 규칙, 802.11 = 항공 규칙.''' 같은 \"교통\"이라도 땅 위(유선)와 하늘(무선)은 규칙이 다르다. 802.11 은 하늘길에 맞춘 별도 조항 묶음이고, '''WiFi''' 는 \"이 규칙을 지켰다\"고 인증받은 비행기에 붙는 마크다.{/analogy}\n\n{|\n! || [[Standard Ethernet|Ethernet]] || WiFi\n|-\n| IEEE 표준 || 802.3 || '''802.11'''\n|-\n| 분류 || wired || wireless\n|-\n| 범위 || physical + data-link || physical + data-link\n|-\n| MAC || [[CSMA/CD]] || [[CSMA/CA]] ([[DCF]]) + 선택적 [[PCF]]\n|}\n\n{quiz}IEEE 802.11 이 다루는 계층은? 그리고 \"WiFi\" 와 \"IEEE 802.11\" 의 관계를 한 문장으로.{/quiz}\n{answer}'''Physical layer 와 data-link layer'''. IEEE 802.11 은 wireless LAN 의 표준(명세)이고, WiFi 는 그 대중적 이름으로 '''WiFi Alliance 가 인증한''' wireless LAN 을 뜻한다.{/answer}\n\n== 관련 문서 ==\n* [[IEEE Project 802]] · [[WiFi]] · [[CH04 WiFi]] · [[Standard Ethernet]]\n* [[wireless LAN의 특성]] · [[802.11 physical layer]] · [[802.11 프레임 형식]]"
+ },
+ "BSS": {
+  "title": "BSS (Basic Service Set)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''BSS (Basic Service Set)''' 는 [[IEEE 802.11]] architecture 의 '''가장 작은 단위'''다. 무선 스테이션들이 모인 하나의 묶음이고, '''AP(access point)''' 가 없으면 '''ad-hoc''', 있으면 '''infrastructure''' 라고 부른다. BSS 둘 이상을 [[distribution system]] 으로 묶으면 [[ESS]]. L8 p.10.\n\n{def}\"Basic service set (BSS): BSS '''without an AP (access point)''' is called '''ad-hoc'''. BSS '''with an AP''' is referred to as '''infrastructure'''.\" (p.10)\n→ BSS = 802.11 의 기본 묶음. AP 유무로 ad-hoc / infrastructure 로 나뉜다.{/def}\n\n[[img:L8-10.png|p.10 Ad hoc BSS(AP 없이 노트북 4대) vs Infrastructure BSS(가운데 AP)|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Basic''' — 가장 기초가 되는 단위. 이보다 큰 것은 '''Extended''' service set([[ESS]]).\n* '''Service Set''' — 같은 무선 \"서비스\"를 공유하는 스테이션들의 '''집합(set)'''.\n* 그래서 BSS ⊂ ESS. 이름만으로 크기 관계가 나온다.\n\n[[anim:bss_ess|BSS 두 개(ad-hoc / infrastructure)가 먼저 그려진 뒤 distribution system 으로 묶여 ESS 가 되는 순서를 보고, 스테이션이 BSS 경계를 넘을 때 mobility 이름이 어떻게 바뀌는지 확인하라]]\n\n{|\n! 종류 || AP || 통신 방식 || 자세히\n|-\n| Ad hoc BSS || '''없음''' || 스테이션끼리 직접 || [[ad-hoc과 infrastructure]]\n|-\n| Infrastructure BSS || '''있음''' (가운데) || AP 를 거쳐서 / AP 를 통해 바깥과 || [[ad-hoc과 infrastructure]]\n|}\n\n* 주소에서도 BSS 가 나온다: 프레임이 '''한 BSS 안에서만''' 움직이면(Case 1, To DS=0·From DS=0) Address 3 에 '''BSS ID''' 가 들어간다 → [[802.11 주소 케이스]].\n* 한 BSS 안에서만 움직이거나 가만히 있는 스테이션 = '''no-transition mobility''' → [[station mobility]].\n\n{analogy}🎭 '''BSS = 교실 하나.''' 선생님(AP)이 있는 교실(infrastructure)에서는 선생님을 통해 말을 전하고, 선생님 없는 자습실(ad-hoc)에서는 학생끼리 직접 말한다. 교실 여러 개를 복도(distribution system)로 이은 학교 건물 전체가 [[ESS]].{/analogy}\n\n{quiz}AP 가 없는 BSS 와 AP 가 있는 BSS 를 각각 무엇이라 부르는가?{/quiz}\n{answer}AP 없음 = '''ad-hoc''' (BSS), AP 있음 = '''infrastructure''' (BSS).{/answer}\n\n== 관련 문서 ==\n* [[ad-hoc과 infrastructure]] · [[ESS]] · [[distribution system]] · [[station mobility]]\n* [[IEEE 802.11]] · [[802.11 주소 케이스]] · [[CH04 WiFi]]"
+ },
+ "ad-hoc과 infrastructure": {
+  "title": "Ad-hoc 과 Infrastructure (AP 가 있느냐 없느냐)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "[[BSS]] 는 '''AP(access point)''' 의 유무로 두 가지로 나뉜다. '''AP 가 없으면 ad-hoc''', '''AP 가 있으면 infrastructure'''. 이 구분은 뒤에서 두 번 더 쓰인다 — [[PCF]] 는 '''infrastructure 에서만''' 쓸 수 있고(polling 할 중앙 AP 가 필요), [[ESS]] 는 '''AP 를 가진''' BSS 들로만 만든다. L8 p.10.\n\n{def}\"BSS '''without an AP (access point)''' is called '''ad-hoc'''. BSS '''with an AP''' is referred to as '''infrastructure'''.\" (p.10)\n→ AP 없음 = ad-hoc, AP 있음 = infrastructure.{/def}\n\n[[img:L8-10.png|p.10 왼쪽 Ad hoc BSS — 노트북만 4대 / 오른쪽 Infrastructure BSS — 가운데 AP|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''ad hoc''' — 라틴어로 \"이것을 위해\", 즉 '''그때그때 임시로'''. 미리 깔아 둔 장비 없이 스테이션끼리 즉석으로 만든 네트워크.\n* '''infrastructure''' — \"기반 시설\". 도로·전기처럼 '''미리 설치해 둔''' 장비(AP)가 있는 네트워크.\n* '''access point''' — 무선 스테이션이 네트워크에 '''접속(access)하는 지점(point)'''. 유선 LAN 에서 호스트가 \"한 점에 항상 연결\"되던 것([[wireless LAN의 특성]] p.7)을 무선에서 대신하는 장치.\n\n{|\n! || Ad hoc || Infrastructure\n|-\n| AP || ✗ || ✓\n|-\n| 통신 || 스테이션끼리 직접 || AP 를 통해\n|-\n| [[ESS]] 구성 || 불가 (\"BSSs '''with APs'''\") || 가능\n|-\n| [[PCF]] || 불가 || 가능 (\"can be implemented in an '''infrastructure''' network\")\n|-\n| [[DCF]] || 가능 || 가능\n|}\n\n{analogy}🎭 '''Ad hoc = 캠핑장에서 즉석으로 모인 사람들의 대화, infrastructure = 사회자(AP)가 있는 회의.''' 캠핑장은 누구든 바로 옆 사람과 말하지만 진행자가 없다. 회의는 사회자가 발언권을 주고(→ [[PCF]] 의 polling), 다른 회의실과 연결도 해 준다(→ [[ESS]]).{/analogy}\n\n{quiz}PCF 를 ad-hoc BSS 에서 쓸 수 없는 이유는?{/quiz}\n{answer}PCF 는 '''centralized''' polling 방식이라 중앙에서 스테이션에 차례로 발언권을 줄 '''AP''' 가 필요하다. ad-hoc 은 AP 가 '''없는''' BSS 이므로 PCF 는 infrastructure network 에서만 구현 가능하다(p.22).{/answer}\n\n== 관련 문서 ==\n* [[BSS]] · [[ESS]] · [[PCF]] · [[DCF]] · [[distribution system]] · [[CH04 WiFi]]"
+ },
+ "ESS": {
+  "title": "ESS (Extended Service Set)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''ESS (Extended Service Set)''' 는 '''AP 를 가진 BSS 둘 이상'''을 '''[[distribution system]]'''(유선 또는 무선 네트워크)으로 이어 만든 더 큰 무선 네트워크다. 캠퍼스 전체에 같은 WiFi 가 잡히는 것이 ESS 다. L8 p.11.\n\n{def}\"Extended service set (ESS): Made up of '''two or more BSSs with APs'''. BSSs are connected through a '''distribution system''', which is a wired or a wireless network.\" (p.11)\n→ ESS = AP 있는 BSS 2개 이상 + 그것들을 잇는 distribution system.{/def}\n\n[[img:L8-11.png|p.11 ESS — BSS 3개의 AP 가 distribution system(가운데 스위치)으로 연결되고, 위에 server or gateway|medium]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Extended''' — [[BSS]](Basic)를 '''확장'''한 것. BSS 하나의 범위는 AP 신호가 닿는 곳까지인데, 여러 BSS 를 이으면 범위가 넓어진다.\n* 조건 두 개를 꼭 같이 쓸 것: ① '''two or more''' BSSs ② '''with APs''' (ad-hoc BSS 로는 안 됨 — 묶을 연결점이 없다).\n\n== 그림 읽기 (p.11) ==\n* 아래: BSS 3 개. 각 BSS 안에 AP 1 대 + 노트북 3 대.\n* 가운데: 세 AP 를 잇는 장치(파란 원, 스위치)와 선 = '''distribution system'''.\n* 위: '''server or gateway''' — ESS 를 바깥(인터넷 등)과 연결.\n* 스테이션이 이 BSS 에서 저 BSS 로 옮겨 가면 '''BSS-transition mobility''', 다른 ESS 로 가면 '''ESS-transition mobility''' → [[station mobility]].\n\n[[anim:bss_ess|BSS 두 개가 distribution system 으로 묶여 ESS 가 되는 장면에서 '두 개 이상', 'AP 가 있는' 두 조건을 확인하라]]\n\n{analogy}🎭 '''ESS = 여러 교실(BSS)이 복도(distribution system)로 이어진 학교 건물.''' 교실을 옮겨 다녀도 같은 학교 안이다. 건물 정문(gateway)이 바깥 세상으로 통한다.{/analogy}\n\n{quiz}\"Ad-hoc BSS 3 개를 묶어 ESS 를 만들 수 있다\" — 참/거짓과 이유.{/quiz}\n{answer}'''거짓'''. ESS 는 \"two or more BSSs '''with APs'''\" 로 만든다. ad-hoc BSS 에는 AP 가 없어 distribution system 에 연결할 지점이 없다.{/answer}\n\n== 관련 문서 ==\n* [[BSS]] · [[distribution system]] · [[ad-hoc과 infrastructure]] · [[station mobility]] · [[802.11 주소 케이스]] · [[CH04 WiFi]]"
+ },
+ "distribution system": {
+  "title": "Distribution System (DS)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''Distribution system (DS)''' 은 여러 [[BSS]] 를 이어 [[ESS]] 를 만드는 '''기반 구성 요소(infrastructure component)'''로, '''유선이든 무선이든''' 상관없다. 802.11 프레임의 FC 필드에 있는 '''To DS / From DS''' 두 비트가 바로 이 DS 를 기준으로 한 방향이다 → [[802.11 주소 케이스]]. L8 p.11, p.28–29.\n\n{def}\"BSSs are connected through a '''distribution system''', which is a '''wired or a wireless network'''.\" (p.11)\n\"DS: Distribution System → The '''infrastructure component that connects multiple BSSs together to form an ESS'''.\" (p.29){/def}\n\n[[img:L8-29.png|p.29 To DS / From DS 주소 표 + \"DS: The infrastructure component that connects multiple BSSs together to form an ESS\"|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''distribution''' — \"나눠 보내기(배급)\". 한 BSS 에서 온 프레임을 '''목적지 BSS 의 AP 로 배급'''하는 시스템.\n* '''To DS''' = 프레임이 DS '''로 들어가는''' 중(스테이션 → AP), '''From DS''' = DS '''에서 나오는''' 중(AP → 스테이션). 두 비트 조합이 4 가지 = 주소 케이스 4 개.\n\n{|\n! To DS || From DS || 프레임 위치 || Case\n|-\n| 0 || 0 || 한 BSS 안 (DS 안 거침) || 1\n|-\n| 0 || 1 || DS 에서 '''나와서''' AP → 목적지 스테이션 || 2\n|-\n| 1 || 0 || 출발 스테이션 → AP, DS 로 '''들어감''' || 3\n|-\n| 1 || 1 || AP 와 AP 사이 (wireless DS) || 4\n|}\n\n{warn}슬라이드 p.32 의 Case 2 캡션은 \"heading '''into''' the DS\", p.33 의 Case 3 캡션은 \"coming '''out of''' the DS\" 라고 적혀 있는데, '''같은 슬라이드의 표 행과 그림은 반대'''다(Case 2 그림: AP → B, To DS=0·From DS=1 / Case 3 그림: A → AP, To DS=1·From DS=0). 비트 이름 그대로 읽으면 '''From DS=1 = DS 에서 나옴, To DS=1 = DS 로 들어감'''. Forouzan 도 Case 2 = \"coming from a distribution system\", Case 3 = \"going to a distribution system\". '''p.32–33 캡션은 뒤바뀐 것으로 보인다 — 시험에서는 To DS/From DS 비트와 Address 1~4 표(p.28)를 기준으로 답할 것.''' 10/6 수업에서 교수 설명을 확인할 것.{/warn}\n\n{analogy}🎭 '''DS = 우체국 간 배송망.''' 동네 우체국(AP)에 맡긴 편지는 배송망(DS)으로 '''들어가고(To DS)''', 받는 동네 우체국에서 '''나와(From DS)''' 집으로 간다. 같은 동네끼리는 배송망을 안 거친다(00). 우체국끼리 직접 주고받는 구간이 11.{/analogy}\n\n{quiz}To DS = 1, From DS = 0 인 프레임은 어디서 어디로 가는 중인가?{/quiz}\n{answer}출발 스테이션이 '''자기 AP 로''' 보내는 중 — 즉 '''distribution system 으로 들어가는''' 프레임(Case 3). Address 1 = Receiving AP, Address 2 = Source, Address 3 = Destination.{/answer}\n\n== 관련 문서 ==\n* [[ESS]] · [[BSS]] · [[802.11 주소 케이스]] · [[802.11 프레임 형식]] · [[CH04 WiFi]]"
+ },
+ "station mobility": {
+  "title": "Station Mobility (no-transition · BSS-transition · ESS-transition)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "802.11 은 스테이션을 '''얼마나 멀리 움직이느냐'''로 세 종류로 나눈다: '''no-transition'''(가만히 있거나 한 BSS 안에서만), '''BSS-transition'''(BSS → 다른 BSS), '''ESS-transition'''(ESS → 다른 ESS). 그리고 단서 하나 — '''IEEE 802.11 은 이동 중 통신이 끊기지 않는다는 것을 보장하지 않는다.''' L8 p.12.\n\n{def}\"Station Types — '''No-transition mobility''': Either '''stationary''' (not moving) or '''moving only inside a BSS'''. '''BSS-transition mobility''': Move from '''one BSS to another'''. '''ESS-transition mobility''': Move from '''one ESS to another'''. IEEE 802.11 '''does not guarantee''' that communication is '''continuous''' during the move.\" (p.12){/def}\n\n[[img:L8-12.png|p.12 Station Types — No-transition / BSS-transition / ESS-transition mobility, 그리고 \"does not guarantee that communication is continuous\"|medium]]\n\n== 이름에서 개념 끌어내기 ==\n'''transition''' = \"경계를 넘어감\". 무엇의 경계를 넘느냐가 이름이다.\n{|\n! 종류 || 넘는 경계 || 예\n|-\n| '''No-transition''' || 없음 (정지 or [[BSS]] 내부 이동) || 강의실 자리에 앉아 노트북 사용\n|-\n| '''BSS-transition''' || BSS → BSS (같은 [[ESS]] 안) || 같은 건물에서 강의실을 옮김 (AP 가 바뀜)\n|-\n| '''ESS-transition''' || ESS → ESS || 학교 WiFi 에서 카페 WiFi 로\n|}\n\n[[anim:bss_ess|스테이션 토큰이 BSS 안에서 움직이다(no-transition) → 옆 BSS 로(BSS-transition) → 다른 ESS 로(ESS-transition, ✗ 연속성 보장 없음) 넘어가는 순서를 따라가라]]\n\n{warn}'''\"BSS-transition 은 연속성이 보장되고 ESS-transition 만 안 된다\"가 아니다.''' 슬라이드는 이동 전체에 대해 \"IEEE 802.11 does '''not guarantee''' that communication is continuous during the move\" 라고 한다. 시험에서 \"802.11 은 이동 중 연속 통신을 보장한다\" 는 '''거짓'''.{/warn}\n\n{analogy}🎭 '''전화하면서 걷기.''' 방 안을 서성이면(no-transition) 문제없다. 옆 방으로 가면(BSS-transition) 다른 공유기로 갈아타야 하고, 다른 건물로 가면(ESS-transition) 아예 다른 네트워크다. 802.11 은 \"갈아타는 동안 통화가 안 끊긴다\"고 약속해 주지 않는다.{/analogy}\n\n{quiz}같은 ESS 안에서 한 BSS 에서 다른 BSS 로 옮겨 간 스테이션의 mobility 종류는? 이때 802.11 이 통신 연속성을 보장하는가?{/quiz}\n{answer}'''BSS-transition mobility'''. 연속성은 '''보장하지 않는다'''(p.12).{/answer}\n\n== 관련 문서 ==\n* [[BSS]] · [[ESS]] · [[distribution system]] · [[wireless LAN의 특성]] · [[CH04 WiFi]]"
+ },
+ "DCF": {
+  "title": "DCF (Distributed Coordination Function)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''DCF (Distributed Coordination Function)''' 는 802.11 의 두 MAC sublayer 중 '''기본'''이 되는 쪽으로, 접근 방식으로 '''[[CSMA/CA]] (Collision Avoidance)''' 를 쓴다. 중앙 관리자 없이 '''각 스테이션이 분산(distributed)해서''' 매체 사용을 조율한다. 짝이 되는 것은 중앙집중형 [[PCF]]. L8 p.13–14.\n\n{def}\"IEEE 802.11: two MAC Sublayers — '''Distributed coordination function (DCF)''' · '''Point coordination function (PCF)'''.\" (p.13)\n\"Distributed coordination function (DCF): Employs '''CSMA/CA (Collision Avoidance)'''. DIFS: DCF interframe space · SIFS: short interframe space · RTS: request to send · CTS: clear to send · NAV: network allocation vector.\" (p.14){/def}\n\n[[img:L8-14.png|p.14 DCF 타임라인 — A: DIFS 후 RTS → B: SIFS 후 CTS → A: SIFS 후 Data → B: SIFS 후 ACK. 다른 스테이션 C·D 는 CTS 를 듣고 ACK 끝까지 NAV|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Distributed''' — 조율을 '''나눠서''' 한다. 누가 보낼지 정해 주는 중앙이 없고, 모두가 같은 규칙(듣고 → 기다리고 → 예약하고)을 지켜 스스로 순서를 맞춘다. → [[random access]] 계열.\n* '''Coordination Function''' — \"매체를 누가 언제 쓸지 맞추는 기능\". [[PCF]] 의 '''Point''' 는 한 점(AP)이 조율한다는 뜻.\n* '''DIFS''' 의 D 도 DCF 의 D — \"'''D'''CF interframe space\", DCF 스테이션이 보내기 전에 기다리는 간격.\n\n[[anim:csma_ca_timeline|A 의 RTS·Data 와 B 의 CTS·ACK 사이에 DIFS/SIFS 간격이 어떤 순서로 채워지는지, 그리고 C·D 의 NAV 막대가 언제 시작해 언제 끝나는지 보라]]\n\n== p.14 그림의 순서 ⭐⭐⭐ ==\n<pre class=\"txt\">\n1. A(Source): 채널이 idle 인지 듣고 '''DIFS''' 만큼 대기\n2. A → '''RTS''' (request to send)                       ← 전송 시간(duration) 포함\n3. B(Destination): '''SIFS''' 대기 후 → '''CTS''' (clear to send)   ← C, D 도 들음\n4. C, D(Other stations): CTS 의 duration 으로 '''NAV''' 설정 → 채널 안 봄\n5. A: '''SIFS''' 대기 후 → '''Data'''\n6. B: '''SIFS''' 대기 후 → '''ACK'''\n7. ACK 가 끝나면 C, D 의 NAV 도 끝 → 다시 채널 경쟁 가능\n<\/pre>\n\n[[sim:csma_ca_handshake]]\n\n{|\n! || DCF || [[PCF]]\n|-\n| 조율 || '''distributed''' (각 스테이션) || '''centralized''' (AP)\n|-\n| 접근 방식 || [[CSMA/CA]] — contention(경쟁) || [[polling]] — contention-free\n|-\n| 필수/선택 || 기본 || '''optional'''\n|-\n| 네트워크 || ad-hoc · infrastructure 모두 || infrastructure 만\n|-\n| 대기 간격 || DIFS || PIFS (DIFS 보다 짧음 → 우선)\n|}\n\n{analogy}🎭 '''DCF = 신호등 없는 사거리의 양보 규칙.''' 경찰(AP)이 없어도 모두가 \"일단 멈추고(DIFS) → 손짓으로 신호하고(RTS/CTS) → 건넌다\" 는 규칙을 지키면 사고가 거의 안 난다. [[PCF]] 는 교통경찰이 직접 한 대씩 보내 주는 방식.{/analogy}\n\n{quiz}802.11 의 두 MAC sublayer 이름과, DCF 가 쓰는 접근 방식은?{/quiz}\n{answer}'''DCF (Distributed Coordination Function)''' 와 '''PCF (Point Coordination Function)'''. DCF 는 '''CSMA/CA''' 를 쓴다.{/answer}\n\n== 관련 문서 ==\n* [[CSMA/CA]] · [[PCF]] · [[RTS와 CTS]] · [[NAV]] · [[interframe space]] · [[repetition interval]]\n* [[random access]] · [[CSMA]] · [[CH04 WiFi]]"
+ },
+ "PCF": {
+  "title": "PCF (Point Coordination Function)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''PCF (Point Coordination Function)''' 는 802.11 의 두 번째 MAC sublayer 로, '''infrastructure network 에서만''' 구현할 수 있는 '''선택적(optional)''' 접근 방식이다. AP 가 중앙에서 스테이션을 차례로 부르는 '''centralized, contention-free polling''' 이고, 주로 '''time-sensitive''' 전송(지연에 민감한 트래픽)에 쓴다. [[DCF]] 보다 우선권을 주려고 '''PIFS''' 라는 더 짧은 interframe space 를 쓴다. L8 p.22.\n\n{def}\"Point Coordination Function (PCF): An '''optional''' access method that can be implemented in an '''infrastructure''' network. It is used mostly for '''time-sensitive''' transmission. PCF has a '''centralized, contention-free polling''' access method. To give '''priority to PCF over DCF''', another interframe space, '''PIFS''', has been defined. '''PIFS is shorter than DIFS'''.\" (p.22){/def}\n\n== 이름에서 개념 끌어내기 ==\n* '''Point''' — 조율하는 주체가 '''한 점''', 즉 AP. ([[DCF]] 의 Distributed 와 정반대.)\n* '''contention-free''' — \"경쟁이 없다\". AP 가 부른 스테이션만 보내니 충돌도 없다. 7강 [[controlled access]] 의 [[polling]] 그대로.\n* '''PIFS''' — '''P'''CF '''I'''nter'''F'''rame '''S'''pace. DIFS(DCF 용)보다 '''짧다''' → AP 가 DCF 스테이션보다 '''먼저''' 채널을 잡는다.\n\n{|\n! 특징 (p.22) || 왜?\n|-\n| '''optional''' || DCF 만으로도 동작. 필요할 때만 켬\n|-\n| '''infrastructure''' 에서만 || 중앙에서 polling 할 AP 가 필요 ([[ad-hoc과 infrastructure]])\n|-\n| '''time-sensitive''' 전송용 || 경쟁·backoff 가 없어 '''지연이 예측 가능'''\n|-\n| '''centralized, contention-free polling''' || AP 가 한 명씩 부름 → 충돌 없음\n|-\n| '''PIFS < DIFS''' || 짧게 기다리는 쪽이 먼저 채널을 잡음 → PCF 우선\n|}\n\n[[img:L8-24.png|p.24 Repetition interval 예 — AP 가 PIFS 후 Beacon(B) → SIFS → Poll → polled station 이 SIFS 후 ACK+data → … → CF end. Others 는 contention-free 구간 내내 NAV|large]]\n\n{warn}PCF 가 우선이면 DCF 만 쓰는 스테이션은 '''영영 채널을 못 잡을 수도''' 있다(starvation). 그래서 [[repetition interval]] 로 '''contention-free(PCF) 구간 + contention(DCF) 구간'''을 번갈아 둔다(p.23).{/warn}\n\n{analogy}🎭 '''PCF = 수업 시간에 선생님이 출석부 순서대로 지목하기.''' 지목된 학생만 말하니 겹칠 일이 없고(contention-free), 순서가 정해져 있어 언제 차례가 오는지 예측된다(time-sensitive 에 유리). 다만 선생님(AP)이 있는 교실(infrastructure)에서만 가능하고, 선생님이 지목만 계속하면 자유 발언 시간(DCF)이 없어지니 쉬는 시간(contention 구간)을 따로 정해 둔다.{/analogy}\n\n{quiz}PCF 가 DCF 보다 우선권을 갖게 하는 장치는 무엇이며, 그 결과 생기는 문제와 해결책은?{/quiz}\n{answer}'''PIFS''' (DIFS 보다 짧은 interframe space) — 짧게 기다리는 AP 가 먼저 채널을 잡는다. 결과: DCF 만 쓰는 스테이션이 매체에 접근하지 못할 수 있음 → '''repetition interval''' 로 contention-free(PCF) 와 contention-based(DCF) 트래픽을 모두 포함시킨다. 각 interval 은 '''beacon frame''' 으로 시작.{/answer}\n\n== 관련 문서 ==\n* [[DCF]] · [[interframe space]] · [[repetition interval]] · [[beacon frame]]\n* [[polling]] · [[controlled access]] · [[ad-hoc과 infrastructure]] · [[CH04 WiFi]]"
+ },
+ "CSMA/CA": {
+  "title": "CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''CSMA/CA''' 는 [[DCF]] 가 쓰는 매체 접근 방식으로, [[CSMA/CD]] 처럼 충돌을 '''감지(Detection)''' 하는 대신 충돌을 '''피한다(Avoidance)'''. 피하는 도구는 세 가지 — '''interframe space'''(DIFS/SIFS 로 기다리기), '''RTS/CTS 핸드셰이크'''(먼저 예약), '''NAV'''(예약을 들은 스테이션은 조용히). CSMA/CA 에는 '''충돌을 감지하는 메커니즘이 없다'''. 그래서 CTS 가 안 오면 \"충돌이 났다고 '''가정'''\" 하고 backoff 한다. L8 p.14–21.\n\n{def}\"Distributed coordination function (DCF): Employs '''CSMA/CA (Collision Avoidance)'''.\" (p.14)\n\"CSMA/CA '''does not have a mechanism for detecting collisions'''. Question: What happens if there is a collision during handshaking period? e.g., Many stations may try to send RTS frames at the same time. Answer: The sender '''assumes there has been a collision if it has not received a CTS frame''' from the receiver. If that happens: '''Backoff strategy''' is employed, and the sender tries again.\" (p.16–17){/def}\n\n[[img:L8-14.png|p.14 CSMA/CA 타임라인 — DIFS · RTS · SIFS · CTS · SIFS · Data · SIFS · ACK, 다른 스테이션 C·D 는 NAV|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''CSMA''' — 7강 [[CSMA]] 그대로: '''C'''arrier '''S'''ense(보내기 전에 듣기) + '''M'''ultiple '''A'''ccess(여럿이 공유).\n* '''/CD''' = Collision '''Detection''': 보내는 '''도중''' 충돌을 감지하면 중단(Ethernet).\n* '''/CA''' = Collision '''Avoidance''': 보내기 '''전에''' 충돌을 피한다(WiFi). 감지가 안 되니 피하는 수밖에 없다.\n\n[[anim:csma_ca_timeline|DIFS → RTS → SIFS → CTS → SIFS → Data → SIFS → ACK 순서와, C·D 가 NAV 동안 채널을 보지 않는 모습을 확인하라. 요점 문장을 그대로 외울 것]]\n\n[[sim:csma_ca_handshake]]\n\n== 핸드셰이크 중 충돌 (p.16–17) ⭐⭐⭐ ==\n교수가 슬라이드에 '''Question / Answer''' 구조로 직접 써 둔 대목 — 그대로 서술형 문제가 된다.\n<pre class=\"txt\">\nQ. 핸드셰이크 도중 충돌이 나면? (예: 여러 스테이션이 동시에 RTS 를 보냄)\n1. CSMA/CA 에는 충돌을 '''감지'''하는 장치가 없다\n2. 송신자는 '''CTS 를 받지 못하면''' 충돌이 났다고 '''가정'''한다\n3. → '''backoff strategy''' 를 쓰고 다시 시도한다\n<\/pre>\nbackoff 는 7강의 [[binary exponential backoff]] 와 같은 생각(충돌할수록 기다리는 범위를 넓혀 다시 겹칠 확률을 줄인다). 802.11 의 정확한 backoff 수치는 슬라이드에 없다.\n\n== 왜 CSMA/CD 를 안 쓰나 (p.18–20) ⭐⭐⭐ ==\np.18 은 \"Remember: Standard Ethernet uses the CSMA/CD … '''Question: why not using CSMA/CD for wireless LANs?'''\" 를 던지고 7강 CSMA/CD 그림(A·C 의 충돌 감지 후 abort)을 다시 보여 준다. 답은 p.19–20:\n\n{|\n! 이유 (p.19–20) || 설명 || CSMA/CD 에서 무엇이 깨지나\n|-\n| Wireless devices are mostly '''[[half-duplex]]''' || 보내면서 동시에 받을 수 없다 || CSMA/CD 는 '''보내는 중에 들어서''' 충돌을 감지한다 → 불가능\n|-\n| '''Potentially large distances''' between stations || 신호가 [[attenuation|빠르게 약해짐]] || 멀리서 난 충돌의 신호가 송신자에게 닿지 않음 → 감지 못함\n|-\n| The '''[[hidden station problem]]''' || 서로의 범위 밖인 두 스테이션 || 서로를 못 들으니 채널이 idle 로 보이고, 수신자 위치에서 충돌\n|}\n결론: \"'''Collision may occur but not be detected'''\" → 감지가 안 되면 감지에 기반한 프로토콜(CD)은 의미가 없다 → '''피하자(CA)'''.\n\n[[img:L8-20.png|p.20 CSMA/CD 가 무선에 안 맞는 이유 — half-duplex, 큰 거리, hidden station problem (B 와 C 가 서로의 범위 밖, A 는 둘 다의 범위 안)|large]]\n\n== CSMA/CD vs CSMA/CA ==\n{|\n! || [[CSMA/CD]] (Ethernet) || CSMA/CA (WiFi DCF)\n|-\n| 충돌 처리 || 전송 '''중''' 감지 → abort + [[jamming signal]] || 전송 '''전''' 회피 (IFS + RTS/CTS + NAV)\n|-\n| 충돌 감지 || 있음 ([[energy level]] 비교) || '''없음'''\n|-\n| 충돌 판단 || 신호로 직접 감지 || '''CTS 미수신''' = 충돌 가정 / ACK 로 성공 확인\n|-\n| 전제 || 보내면서 들을 수 있음 || 무선 장치는 대부분 '''half-duplex'''\n|-\n| 실패 시 || [[binary exponential backoff|backoff]] 후 재전송 || '''backoff''' 후 재시도\n|-\n| 프레임 길이 제약 || [[최소 프레임 크기]] $T_{fr} \\geq 2T_p$ || 감지를 안 하므로 그 제약이 없음\n|}\n\n{analogy}🎭 '''CSMA/CD = 말하다가 남과 겹치면 바로 멈추기, CSMA/CA = 말하기 전에 손 들고 허락받기.''' 시끄러운 운동장(무선)에서는 내가 말하는 동안 남의 목소리를 들을 수 없으니(half-duplex) \"겹치면 멈추기\"가 불가능하다. 그래서 먼저 손을 들고(RTS) 사회자가 \"말하세요\"(CTS)라고 하면 말한다. 그 \"말하세요\"를 들은 주변 사람은 그동안 입을 다문다(NAV). 허락이 안 돌아오면 \"누군가와 동시에 손을 들었구나\" 하고 잠깐 뒤에 다시 든다(backoff).{/analogy}\n\n{exam}🎯 녹음본은 아직 없지만 슬라이드 구조상 거의 확실한 출제 자리\n* \"Why not CSMA/CD for wireless LANs?\" — '''half-duplex''', '''large distance''', '''hidden station''' 세 가지 (p.18–20)\n* \"Collision during handshaking?\" — '''CTS 가 안 오면 충돌로 가정 → backoff → 재시도''' (p.17)\n* 이름에서: CD = Detection(감지) vs CA = Avoidance(회피) — 교수가 Ethernet 때도 \"the name itself is very important\" 패턴을 썼다{/exam}\n\n{quiz}CSMA/CA 에는 충돌 감지 메커니즘이 없다. 그렇다면 송신자는 RTS 가 충돌했다는 것을 어떻게 알고, 무엇을 하는가?{/quiz}\n{answer}수신자로부터 '''CTS frame 을 받지 못하면''' 충돌이 났다고 '''가정(assume)''' 한다. 그러면 '''backoff strategy''' 를 써서 기다린 뒤 다시 시도한다(p.17).{/answer}\n\n== 관련 문서 ==\n* [[DCF]] · [[RTS와 CTS]] · [[NAV]] · [[interframe space]] · [[hidden station problem]] · [[exposed station problem]]\n* [[CSMA/CD]] · [[CSMA]] · [[persistence method]] · [[binary exponential backoff]] · [[collision]] · [[half-duplex]] · [[CH04 WiFi]]"
+ },
+ "RTS와 CTS": {
+  "title": "RTS 와 CTS (Request to Send / Clear to Send)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''RTS (request to send)''' 와 '''CTS (clear to send)''' 는 [[CSMA/CA]] 의 '''핸드셰이크 프레임'''이다. 송신자가 RTS 로 \"보내도 될까? 이만큼 걸려\" 하고 묻고, 수신자가 CTS 로 \"보내도 돼\" 하고 답한다. 두 프레임 모두 '''duration''' 을 실어 주변 스테이션이 [[NAV]] 를 설정하게 하고, 특히 '''CTS 는 송신자가 못 듣는 hidden station 에게도 닿아''' [[hidden station problem]] 을 완화한다. 둘 다 '''control frame''' 이다. L8 p.14–17, p.21, p.27.\n\n{def}\"RTS: '''request to send''' · CTS: '''clear to send'''\" (p.14)\n\"An '''RTS frame includes the duration''' of time that it needs to occupy the channel.\" (p.15)\n\"The handshake frames (RTS and CTS) can '''mitigate''' the [hidden station] issue. The '''CTS message, which contains the duration of data transmission''' from B to A, '''reaches C'''. Station C knows that some hidden station is using the channel and '''refrains from transmitting'''.\" (p.21){/def}\n\n[[img:L8-14.png|p.14 RTS(A→B) 뒤 SIFS, CTS(B→A, 그리고 C·D 에도) — CTS 를 들은 C·D 가 NAV 시작|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Request to Send''' — \"보내기를 '''요청'''\". 아직 데이터는 안 보냈다. 짧은 예약 신청서.\n* '''Clear to Send''' — \"보내도 '''깨끗하다(clear)'''\", 즉 길이 비었으니 보내라. 항공 관제의 \"cleared for takeoff\" 와 같은 말.\n* 순서가 이름에 들어 있다: '''Request''' 가 먼저, '''Clear''' 가 답.\n\n== 프레임 구조 (p.27) ==\n[[img:L8-27.png|p.27 Control frames — RTS: FC 2 · D 2 · Address 1 6 · Address 2 6 · FCS 4 bytes / CTS or ACK: FC 2 · D 2 · Address 1 6 · FCS 4 bytes. Subtype 1011 RTS · 1100 CTS · 1101 ACK|large]]\n\n{|\n! 프레임 || 필드 (bytes) || 합계 || Subtype\n|-\n| '''RTS''' || FC 2 · D 2 · Address 1 6 · Address 2 6 · FCS 4 || 20 bytes || '''1011'''\n|-\n| '''CTS''' || FC 2 · D 2 · Address 1 6 · FCS 4 || 14 bytes || '''1100'''\n|-\n| ACK || FC 2 · D 2 · Address 1 6 · FCS 4 || 14 bytes || '''1101'''\n|}\n* 합계는 그림의 필드 크기를 더한 값. RTS 에만 Address 2 가 있다 — 수신자가 '''누가 요청했는지''' 알아야 그쪽으로 CTS 를 돌려줄 수 있기 때문. CTS·ACK 는 Address 1(받을 쪽)만 있으면 된다.\n* 세 프레임 모두 Type = '''01''' (control) → [[802.11 프레임 종류]]. D(duration) 필드가 바로 [[NAV]] 를 설정하는 값.\n\n== 왜 CTS 가 hidden station 을 해결하나 (p.21) ⭐⭐⭐ ==\n<pre class=\"txt\">\n상황: B 와 C 는 서로의 범위 밖, A 는 둘 다의 범위 안 (p.20–21 그림)\n1. B → A : RTS          (C 는 B 의 RTS 를 '''못 듣는다''')\n2. A → B : CTS          (A 는 가운데라 C 도 '''듣는다'''; CTS 에 duration 포함)\n3. C : \"누군가 숨은 스테이션이 채널을 쓰는구나\" → NAV 설정, '''refrains from transmitting'''\n4. B → A : Data, A → B : ACK  (충돌 없음)\n<\/pre>\n핵심: '''RTS 는 송신자 주변, CTS 는 수신자 주변'''에 뿌려진다. 충돌은 '''수신자 위치'''에서 일어나므로, 수신자가 보내는 CTS 가 진짜로 막아야 할 스테이션들에게 닿는다.\n\n[[anim:hidden_station|첫 장면에서 C 가 B 의 신호를 못 들어 A 에서 충돌이 나는 것을, 둘째 장면에서 A 의 CTS 가 C 까지 닿아 C 가 NAV 로 기다리는 것을 비교하라]]\n\n{warn}RTS/CTS 는 '''충돌을 완전히 없애지 못한다'''. RTS 자체가 동시에 보내져 충돌할 수 있고(p.16–17: 그러면 CTS 가 안 옴 → 충돌로 가정 → backoff), 반대로 RTS 를 엿들은 스테이션이 '''쓸 수 있는데도 참는''' [[exposed station problem]] 을 만들기도 한다(p.35).{/warn}\n\n{analogy}🎭 '''RTS/CTS = 무전기의 \"송신 요청 — 송신 허가\".''' 조종사(송신자)가 \"활주로 써도 됩니까, 2분 걸립니다\"(RTS) 라고 하면 관제탑(수신자)이 \"허가, 2분\"(CTS) 이라고 '''모든 비행기가 듣는 주파수'''로 답한다. 조종사의 목소리가 안 닿는 먼 비행기도 관제탑 목소리는 들으니 2분 동안 착륙을 미룬다(NAV).{/analogy}\n\n{quiz}Hidden station 문제에서 RTS 가 아니라 '''CTS''' 가 해결의 열쇠인 이유는?{/quiz}\n{answer}hidden station(C)은 '''송신자(B)의 범위 밖'''이라 B 의 RTS 를 못 듣는다. 하지만 '''수신자(A)의 범위 안'''이라 A 가 보내는 CTS 는 듣는다. CTS 에는 데이터 전송 duration 이 들어 있으므로 C 는 그 시간 동안 NAV 를 설정하고 전송을 삼간다(p.21).{/answer}\n\n== 관련 문서 ==\n* [[CSMA/CA]] · [[NAV]] · [[interframe space]] · [[hidden station problem]] · [[exposed station problem]]\n* [[802.11 프레임 종류]] · [[802.11 프레임 형식]] · [[DCF]] · [[CH04 WiFi]]"
+ },
+ "NAV": {
+  "title": "NAV (Network Allocation Vector)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''NAV (Network Allocation Vector)''' 는 RTS/CTS 를 엿들은 스테이션이 만드는 '''타이머'''다. \"앞으로 이만큼은 채널이 남의 것\" 이라는 시간을 담고 있고, NAV 가 0 이 될 때까지 그 스테이션은 '''채널이 idle 인지 확인조차 하지 않는다'''. 값은 RTS/CTS 의 '''D(duration) 필드'''에서 온다. L8 p.14–15, p.24, p.26.\n\n{def}\"An '''RTS frame includes the duration''' of time that it needs to occupy the channel. The station that are affected by this transmission create '''a timer called a NAV'''. It shows '''how much time must pass before these stations are allowed to check the channel for idleness'''.\" (p.15)\n\"D: define the '''duration of the transmission to set the value of NAV'''.\" (p.26)\n→ NAV = 남의 전송에 영향을 받는 스테이션이 세우는 타이머. 끝나기 전에는 채널 idle 검사도 하지 않는다.{/def}\n\n[[img:L8-14.png|p.14 오른쪽 C·D 의 회색 NAV 구간 — CTS 를 받은 순간 시작해 ACK 가 끝날 때까지|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''Network Allocation''' — 네트워크(채널)가 '''누구에게 할당(allocate)'''되어 있는지. \"지금부터 x 초는 A–B 에게 할당됨\".\n* '''Vector''' — 여기서는 '''값을 담은 카운터''' 정도로 이해. 슬라이드도 \"a '''timer''' called a NAV\" 라고 부른다.\n* p.24 범례는 NAV 를 \"'''No carrier sensing'''\" 이라고 풀어 쓴다 — NAV 동안에는 carrier sense 를 안 한다는 뜻이 그대로 이름 대신 들어 있다.\n\n[[anim:csma_ca_timeline|C·D 의 NAV 막대가 CTS 를 받은 순간 시작해 ACK 끝과 함께 사라지는 것을 확인하라]]\n\n== NAV 가 하는 일 ==\n<pre class=\"txt\">\n1. A 가 RTS 를 보냄 — D 필드에 \"채널을 얼마나 쓸지\" 기록\n2. B 가 CTS 로 답함 — 역시 duration 포함\n3. RTS 나 CTS 를 들은 다른 스테이션: NAV = duration 으로 타이머 시작\n4. NAV > 0 인 동안: 채널을 '''보지도 않음''' (physical carrier sense 대신 \"가상의 busy\" — Forouzan 보충)\n5. NAV = 0 이 되면: 다시 DIFS 기다리고 채널 경쟁 (Forouzan 보충)\n<\/pre>\n* p.14 그림에서 C·D 의 NAV 는 '''CTS 수신''' 시점에서 시작해 '''ACK 끝'''에서 끝난다.\n* p.24 [[repetition interval]] 그림에서는 PCF 의 '''beacon''' 이후 contention-free 구간 내내 \"Others\" 의 NAV 가 켜져 있다 — DCF 스테이션이 PCF 구간을 방해하지 않게.\n\n{info}왜 \"채널을 보지 않는\" 타이머가 필요한가? 무선은 [[hidden station problem|숨은 스테이션]]이 있어서 '''직접 들어서는(carrier sense) 채널이 idle 로 보여도 실제로는 쓰이고 있을 수 있다'''. 그래서 \"들은 것\"보다 \"예약 정보(duration)\"를 믿는다.{/info}\n\n{analogy}🎭 '''NAV = 회의실 문 앞의 \"사용 중 — 15:00 까지\" 팻말.''' 안에서 소리가 안 들려도(carrier sense 로는 idle) 팻말을 본 사람은 15:00 까지 문을 열어 보지도 않는다. 팻말 시간은 예약자가 신청서(RTS)와 승인서(CTS)에 적은 duration 이다.{/analogy}\n\n{quiz}NAV 는 무엇의 약자이며, NAV 가 설정된 스테이션은 무엇을 하지 않는가? NAV 값은 802.11 프레임의 어느 필드에서 오는가?{/quiz}\n{answer}'''Network Allocation Vector'''. NAV 가 끝날 때까지 '''채널이 idle 인지 검사하는 것(carrier sensing) 자체를 하지 않는다'''. 값은 '''D (duration) 필드''' — RTS(그리고 CTS)에 담긴 전송 시간.{/answer}\n\n== 관련 문서 ==\n* [[RTS와 CTS]] · [[CSMA/CA]] · [[DCF]] · [[interframe space]] · [[802.11 프레임 형식]] · [[repetition interval]] · [[CH04 WiFi]]"
+ },
+ "interframe space": {
+  "title": "Interframe Space (IFS: DIFS · SIFS · PIFS)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''Interframe space (IFS)''' 는 802.11 에서 프레임과 프레임 사이에 '''일부러 비워 두는 대기 시간'''이다. 슬라이드에 나오는 것은 세 가지 — '''DIFS'''(DCF interframe space: DCF 스테이션이 새 전송을 시작하기 전), '''SIFS'''(short interframe space: 핸드셰이크 안에서 응답하기 전), '''PIFS'''(PCF 용, DIFS 보다 짧음). 원리는 하나다: '''짧게 기다리는 쪽이 먼저 채널을 잡는다 = 우선권.''' L8 p.14, p.22, p.24.\n\n{def}\"DIFS: '''DCF interframe space''' · SIFS: '''short interframe space'''\" (p.14)\n\"To give priority to PCF over DCF, another interframe space, '''PIFS''', has been defined. '''PIFS is shorter than DIFS'''.\" (p.22){/def}\n\n[[img:L8-14.png|p.14 A 는 DIFS 를 기다린 뒤 RTS, 그 뒤 모든 응답(CTS·Data·ACK) 앞에는 SIFS|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''inter-frame space''' — 프레임 '''사이(inter)'''의 '''빈 칸(space)'''.\n* 앞 글자가 '''누가 쓰는 간격'''인지 알려 준다: '''D'''IFS = '''D'''CF, '''P'''IFS = '''P'''CF, '''S'''IFS = '''S'''hort.\n\n== 길이 순서와 우선권 ⭐⭐ ==\n$$\\text{SIFS} < \\text{PIFS} < \\text{DIFS}$$\n\n{|\n! IFS || 누가 / 언제 (슬라이드 그림) || 상대적 길이 || 우선권\n|-\n| '''SIFS''' || 이미 시작된 교환 안의 응답: CTS, Data, ACK 앞 (p.14) / AP 의 Beacon→Poll 사이, polled station 의 응답 (p.24) || 가장 짧음 || 가장 높음\n|-\n| '''PIFS''' || PCF 의 AP 가 contention-free 구간을 열 때 (p.24: Beacon 앞) || 중간 || PCF 가 DCF 보다 우선\n|-\n| '''DIFS''' || DCF 스테이션이 '''새''' 전송(RTS)을 시작할 때 (p.14) || 가장 긺 || 가장 낮음\n|}\n\n{info}슬라이드가 명시하는 부등식은 '''PIFS < DIFS''' (p.22) 뿐이다. SIFS 가 가장 짧다는 것은 이름(\"short\")과 그림의 쓰임새에서 나오며, 802.11 표준·Forouzan 의 정리(SIFS < PIFS < DIFS)와 같다 (Forouzan 보충).{/info}\n\n== 왜 짧은 쪽이 우선권인가 ==\n<pre class=\"txt\">\n채널이 idle 이 되는 순간, 모두가 각자 정해진 IFS 만큼 기다린다.\n1. SIFS 를 쓰는 스테이션(진행 중 교환의 응답자)이 가장 먼저 끝남 → 즉시 송신\n2. 그 송신 때문에 채널이 다시 busy → PIFS·DIFS 로 기다리던 쪽은 \"아직 busy\" 를 보고 물러남\n3. 그래서: 진행 중인 RTS-CTS-Data-ACK 교환은 '''끊기지 않고''' 이어지고,\n           PCF(PIFS) 는 DCF(DIFS) 보다 '''먼저''' 채널을 잡는다\n<\/pre>\n\n[[anim:csma_ca_timeline|DIFS(긴 간격)는 맨 처음 한 번, 그 뒤 SIFS(짧은 간격)가 CTS·Data·ACK 앞에 끼어드는 리듬을 보라]]\n\n{analogy}🎭 '''엘리베이터 앞 줄서기.''' 문이 열리면 이미 대화 중인 일행(SIFS)은 바로 이어서 탄다. 그다음 VIP(PIFS, AP). 일반 손님(DIFS)은 한 박자 더 기다렸다가 \"아무도 안 타네\" 할 때 탄다. 기다리는 시간이 짧을수록 먼저 탄다.{/analogy}\n\n{quiz}PCF 가 DCF 보다 우선권을 갖는 이유를 interframe space 로 설명하시오.{/quiz}\n{answer}PCF 의 AP 는 '''PIFS''' 만 기다린 뒤 전송하고, DCF 스테이션은 '''DIFS''' 를 기다린다. '''PIFS 가 DIFS 보다 짧으므로''' 채널이 idle 이 되면 AP 가 먼저 전송을 시작하고, DCF 스테이션은 그때 채널이 busy 임을 보고 물러난다(p.22).{/answer}\n\n== 관련 문서 ==\n* [[DCF]] · [[PCF]] · [[CSMA/CA]] · [[RTS와 CTS]] · [[NAV]] · [[repetition interval]] · [[CH04 WiFi]]"
+ },
+ "hidden station problem": {
+  "title": "Hidden Station Problem (숨은 스테이션 문제)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''Hidden station problem''' 은 두 스테이션(B, C)이 '''서로의 범위 밖'''이라 상대의 전송을 듣지 못하는데, 둘 다 '''가운데 스테이션 A 의 범위 안'''에 있는 상황에서 생긴다. B 가 A 에게 보내는 중에 C 는 채널이 idle 이라고 착각하고 A 에게 보내 → '''A 에서 충돌'''. 송신자들은 충돌을 감지하지 못한다. [[CSMA/CD]] 가 무선에 맞지 않는 세 번째 이유이고, 해결책은 '''[[RTS와 CTS|RTS/CTS 핸드셰이크]]'''(특히 CTS). L8 p.20–21.\n\n{def}\"Collision may occur but not be detected — Potentially large distances between stations · '''The hidden station problem'''.\" (p.20)\n\"a. Stations B and C are '''not in each other's range'''. b. Stations B and C are '''hidden from each other'''.\" (p.20 그림)\n\"Solution: The handshake frames (RTS and CTS) can '''mitigate''' the issue. The '''CTS message''', which contains the duration of data transmission from B to A, '''reaches C'''. Station C knows that some hidden station is using the channel and '''refrains from transmitting'''.\" (p.21){/def}\n\n[[img:L8-20.png|p.20 Hidden station problem — (a) Range of B 와 Range of C 가 A 에서만 겹침 (b) 장애물 때문에 B 와 C 가 서로 숨겨짐|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''hidden''' — 누가 누구에게 숨겨졌나? '''B 와 C 가 서로에게'''. A 는 둘 다 보인다.\n* 숨겨지는 원인 두 가지(p.20 그림 a, b): ① '''거리''' — 범위(range)가 겹치지 않음 ② '''장애물''' — 벽 같은 것이 가로막음.\n* 결과: carrier sense(\"보내기 전에 듣기\")가 '''거짓 idle''' 을 보고한다. 듣는 쪽(송신자)과 충돌이 나는 쪽(수신자)의 위치가 다르기 때문.\n\n[[anim:hidden_station|① C 가 B 의 신호를 못 들어 A 에서 충돌이 나는 장면과 ② A 의 CTS 가 C 에 닿아 C 가 NAV 로 기다리는 장면을 비교하라]]\n\n== 문제 → 해결 (p.20–21) ⭐⭐⭐ ==\n<pre class=\"txt\">\n[문제]\n1. B → A 전송 시작. C 는 B 의 범위 밖이라 '''못 듣는다'''\n2. C 가 보기엔 채널 idle → C → A 전송\n3. 두 신호가 '''A 에서 충돌'''. B·C 는 서로 못 들으니 '''충돌을 감지 못함'''\n\n[해결: RTS/CTS]\n1. B → A : RTS        (C 는 못 들음 — 상관없음)\n2. A → B : '''CTS''' (duration 포함) — A 는 가운데라 '''C 에도 닿음'''\n3. C : 숨은 스테이션이 채널을 쓰는 중임을 알고 NAV 동안 '''전송 삼감'''\n4. B → A : Data → A → B : ACK, 충돌 없음\n<\/pre>\n\n{warn}슬라이드는 해결책을 \"can '''mitigate'''\"(완화)라고 쓴다 — '''완전히 없애지는 못한다'''. RTS 끼리는 여전히 충돌할 수 있고, 그때는 \"CTS 미수신 → 충돌 가정 → backoff\" 로 처리한다(p.17).{/warn}\n\n{|\n! || hidden station problem || [[exposed station problem]]\n|-\n| 무엇이 잘못되나 || 보내면 '''안 되는데''' 보냄 || 보내도 '''되는데''' 안 보냄\n|-\n| 결과 || 수신자 위치에서 '''충돌''' || 채널 '''낭비'''\n|-\n| 관련 프레임 || CTS 가 해결 || RTS 를 엿들은 것이 원인\n|}\n\n{analogy}🎭 '''가운데 앉은 친구에게 양쪽에서 동시에 말 걸기.''' B 와 C 는 A 의 양옆 멀리 앉아 서로의 목소리가 안 들린다. 둘 다 \"아무도 말 안 하네\" 하고 A 에게 말을 걸면 A 의 귀에서 두 목소리가 섞인다. 해결: A 가 \"B 야, 말해. 30 초 동안!\" 이라고 크게 대답(CTS)하면 C 도 그 말을 듣고 30 초 기다린다.{/analogy}\n\n{quiz}Hidden station problem 에서 왜 송신자(B, C)는 충돌을 감지하지 못하는가? 그리고 이 문제를 완화하는 방법은?{/quiz}\n{answer}B 와 C 는 '''서로의 범위 밖'''이라 상대의 신호를 듣지 못하고, 충돌은 둘 다의 범위 안인 '''수신자 A 의 위치'''에서 일어나기 때문이다. 완화: '''RTS/CTS 핸드셰이크''' — A 가 보내는 '''CTS''' 에 데이터 전송 duration 이 담겨 C 에도 닿고, C 는 그동안 전송을 삼간다(p.21).{/answer}\n\n== 관련 문서 ==\n* [[RTS와 CTS]] · [[NAV]] · [[CSMA/CA]] · [[exposed station problem]] · [[wireless LAN의 특성]]\n* [[CSMA/CD]] · [[collision]] · [[CH04 WiFi]]"
+ },
+ "exposed station problem": {
+  "title": "Exposed Station Problem (노출된 스테이션 문제)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''Exposed station problem''' 은 [[hidden station problem]] 의 반대다: 어떤 스테이션이 채널을 '''쓸 수 있는데도 쓰지 않고 참는''' 상황. p.35 그림에서 C 는 '''A 의 RTS 를 엿들었기 때문에''' 전송을 삼가지만, C 가 D 에게 보내는 것은 B 의 수신을 방해하지 않으므로 사실 보내도 됐다. 결과는 충돌이 아니라 '''채널 낭비'''. L8 p.35.\n\n{def}\"Exposed Station Problem: A station '''refrains from using a channel even when it is available'''.\" (p.35)\n\"C can send to D because this area is free, but C '''erroneously refrains from sending''' because of '''received RTS'''.\" / \"If C sends, the collision would be in this area.\" (p.35 그림){/def}\n\n[[img:L8-35.png|p.35 Exposed station — A 가 B 에게 RTS·Data(오른쪽으로도 퍼짐), C 는 A 의 RTS 를 듣고 D 로의 전송을 잘못 삼감|large]]\n\n== 그림 읽기 (p.35) ==\n* 배치: '''B — A — C — D''' 일렬. A 가 '''B 에게''' 보내려 한다.\n* A 의 RTS 는 양쪽(B 와 C)으로 퍼진다. B 는 CTS 로 답하는데, B 의 CTS 는 '''C 에 닿지 않는다'''(A 까지만).\n* A 의 Data 도 양쪽으로 퍼진다. 그림의 \"If C sends, the collision would be in this area\" 는 '''A–C 사이''' 구간을 가리킨다 — C 가 보내면 그쪽에서는 겹치지만, '''B 의 수신에는 영향이 없다'''.\n* 그런데 C 는 A 의 RTS 만 듣고 \"채널 사용 중\" 이라 판단해 '''D 로 보낼 기회를 버린다'''.\n\n== 이름에서 개념 끌어내기 ==\n* '''exposed''' — \"노출된\". C 는 송신자 A 의 전파에 '''노출'''되어 있어서, 자기와 상관없는 전송까지 다 들린다. 너무 많이 들려서 손해를 본다.\n* hidden 은 \"못 들어서 충돌\", exposed 는 \"괜히 들어서 양보\". 둘 다 '''무선의 범위(range)가 스테이션마다 다르기''' 때문에 생긴다.\n\n{|\n! || [[hidden station problem]] || exposed station problem\n|-\n| 상황 || 송신자들이 서로 '''못 들음''' || 상관없는 전송을 '''들음'''\n|-\n| 잘못된 판단 || \"idle 이다\" → 보냄 || \"busy 다\" → 안 보냄\n|-\n| 결과 || '''충돌''' || '''채널 낭비''' (보낼 수 있는데 안 보냄)\n|-\n| RTS/CTS 와의 관계 || CTS 가 '''해결''' || RTS 를 엿들은 것이 '''원인'''\n|}\n\n[[anim:hidden_station|마지막 장면의 exposed station — C 가 A 의 RTS 를 듣고 D 로 보낼 수 있는데도 참는 모습을 hidden station 장면과 대비하라]]\n\n{analogy}🎭 '''도서관 옆 테이블의 속삭임.''' 옆 테이블(A)이 반대편 친구(B)에게 \"잠깐 얘기 좀\" 하는 걸 듣고, 나(C)는 내 건너편 친구(D)에게 말 걸기를 참는다. 그런데 내 목소리는 B 까지 안 닿으니 사실 말해도 괜찮았다. 괜히 들어서 괜히 참은 것 — 그게 exposed station.{/analogy}\n\n{quiz}Exposed station problem 을 한 문장으로 정의하고, hidden station problem 과 결과가 어떻게 다른지 쓰시오.{/quiz}\n{answer}스테이션이 채널을 '''사용할 수 있는데도 사용을 삼가는''' 문제(p.35: C 가 A 의 RTS 를 듣고 D 로의 전송을 잘못 삼감). hidden station 은 '''충돌'''을 일으키고, exposed station 은 '''채널 낭비(효율 저하)''' 를 일으킨다.{/answer}\n\n== 관련 문서 ==\n* [[hidden station problem]] · [[RTS와 CTS]] · [[NAV]] · [[CSMA/CA]] · [[CH04 WiFi]]"
+ },
+ "repetition interval": {
+  "title": "Repetition Interval (PCF 와 DCF 의 시간 나눠 쓰기)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''Repetition interval''' 은 [[PCF]] 가 [[DCF]] 보다 우선이라 생기는 문제 — '''DCF 만 쓰는 스테이션이 매체를 영영 못 잡는 것''' — 을 막으려고 시간을 반복 주기로 나눈 것이다. 한 interval 안에 '''contention-free 구간(PCF)''' 과 '''contention 구간(DCF)''' 이 둘 다 들어 있고, 매 interval 은 '''[[beacon frame]]''' 이라는 특별한 control frame 으로 시작한다. L8 p.23–24.\n\n{def}\"Due to the '''priority of PCF over DCF''', stations that only use DCF '''may not gain access''' to the medium. To prevent this, a '''repetition interval''' has been designed to cover '''both contention-free PCF and contention-based DCF''' traffic. It starts with a special control frame, called a '''beacon frame'''.\" (p.23){/def}\n\n[[img:L8-24.png|p.24 Example of repetition interval — 위: AP 의 PIFS·B·SIFS·Poll·…·CF end / 가운데: polled station 의 ACK+data / 아래: Others 의 NAV. 전체 = Contention-free + Contention|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''repetition''' — '''반복'''. 같은 구조(beacon → PCF 구간 → DCF 구간)가 주기적으로 되풀이된다.\n* '''interval''' — 그 한 주기의 길이.\n* 그림 위쪽 화살표가 정의 그대로다: '''Repetition interval = Contention-free + Contention'''.\n\n== p.24 그림 순서 ⭐⭐ ==\n<pre class=\"txt\">\n[Contention-free 구간 — PCF]\n1. AP : '''PIFS''' 대기 (DIFS 보다 짧아 DCF 스테이션보다 먼저)\n2. AP : '''B''' (Beacon frame) → interval 시작 알림\n   Others : beacon 을 듣고 '''NAV''' 설정 (CF 구간 끝까지)\n3. AP : SIFS → '''Poll''' (한 스테이션 지목)\n4. Polled station : SIFS → '''ACK + data'''\n5. AP : SIFS → '''ACK + poll''' (응답 확인 + 다음 스테이션 지목) … 반복\n6. AP : '''CF end''' (contention-free 끝) → Others 의 NAV 해제\n[Contention 구간 — DCF]\n7. 모든 스테이션이 [[CSMA/CA]] 로 경쟁\n→ 다음 repetition interval 은 다시 beacon 으로 시작\n<\/pre>\n\n범례 (p.24): '''B: Beacon frame · CF: Contention-free · AP: Access point · NAV: No carrier sensing'''.\n\n{info}\"ACK + poll\", \"ACK + data\" 처럼 한 프레임에 확인과 다음 내용을 같이 싣는 것은 6강 [[piggybacking]] 과 같은 아이디어다.{/info}\n\n{analogy}🎭 '''회의 시간표.''' 한 시간짜리 회의(repetition interval)를 \"앞 40 분은 사회자가 지목한 사람만 발언(PCF, contention-free), 뒤 20 분은 자유 발언(DCF, contention)\" 으로 나눈다. 매 시간 시작종(beacon)이 울리고, 지목 시간 동안 나머지 사람은 손도 들지 않는다(NAV). 이렇게 해야 자유 발언만 하는 사람도 발언 기회를 얻는다.{/analogy}\n\n{quiz}Repetition interval 이 필요한 이유와, interval 을 시작하는 프레임의 이름은?{/quiz}\n{answer}PCF 가 DCF 보다 우선(PIFS < DIFS)이라 '''DCF 만 쓰는 스테이션이 매체에 접근하지 못할 수 있기 때문'''. 그래서 contention-free(PCF) 와 contention-based(DCF) 트래픽을 모두 담는 반복 주기를 둔다. 시작 프레임 = '''beacon frame'''(특별한 control frame).{/answer}\n\n== 관련 문서 ==\n* [[PCF]] · [[DCF]] · [[beacon frame]] · [[interframe space]] · [[NAV]] · [[polling]] · [[CH04 WiFi]]"
+ },
+ "beacon frame": {
+  "title": "Beacon Frame",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''Beacon frame''' 은 [[repetition interval]] 을 '''시작하는 특별한 control frame''' 이다. AP 가 [[interframe space|PIFS]] 만 기다린 뒤 보내며, 이를 들은 다른 스테이션은 contention-free 구간 동안 [[NAV]] 를 켠다. p.24 그림의 '''B'''. L8 p.23–24.\n\n{def}\"It [repetition interval] starts with a '''special control frame, called a beacon frame'''.\" (p.23)\n\"Legend — '''B: Beacon frame'''\" (p.24){/def}\n\n[[img:L8-24.png|p.24 AP 가 PIFS 후 B(Beacon) — 그 순간부터 Others 의 NAV 가 CF end 까지|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''beacon''' — \"봉화, 등대 신호\". 멀리서도 보이도록 '''주기적으로 깜빡이는 신호'''. AP 가 \"새 주기 시작, 여기 AP 있음\" 을 범위 안 모두에게 알린다.\n* 매 repetition interval 마다 한 번 → 주기적으로 반복된다는 점도 등대와 같다.\n\n== 하는 일 (슬라이드 기준) ==\n{|\n! 시점 || 일\n|-\n| AP 가 PIFS 대기 후 || '''B''' 송신 — repetition interval(그리고 contention-free 구간) 시작\n|-\n| B 를 들은 Others || '''NAV''' 설정 → CF 구간 동안 carrier sensing 안 함\n|-\n| 이후 || SIFS → Poll → … → CF end → contention 구간\n|}\n\n{info}Beacon 이 AP 의 존재·네트워크 정보를 주기적으로 알리는 역할도 한다는 것(스마트폰 WiFi 목록이 뜨는 이유)은 Forouzan·표준 보충 내용으로, 이 슬라이드에서는 \"repetition interval 을 시작하는 control frame\" 까지만 다룬다.{/info}\n\n{info}802.11 표준 자체는 beacon 을 management frame(type 00, subtype 1000)으로 분류하지만 슬라이드·Forouzan 은 \"special control frame\" 이라 부른다 — 시험은 슬라이드 기준.{/info}\n\n{analogy}🎭 '''학교 시작종.''' 종(beacon)이 울리면 \"이제 수업(contention-free) 시간이니 선생님이 지목할 때만 말할 것\" 이 시작되고, 모두가 조용해진다(NAV). 종은 매 교시 울린다.{/analogy}\n\n{quiz}Repetition interval 은 어떤 프레임으로 시작하며, 그 프레임은 어느 종류(management / control / data)인가?{/quiz}\n{answer}'''Beacon frame''' — 슬라이드 표현으로 \"a special '''control''' frame\" (p.23).{/answer}\n\n== 관련 문서 ==\n* [[repetition interval]] · [[PCF]] · [[NAV]] · [[interframe space]] · [[802.11 프레임 종류]] · [[CH04 WiFi]]"
+ },
+ "fragmentation": {
+  "title": "Fragmentation (큰 프레임을 잘게 나누기)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "'''Fragmentation''' 은 큰 프레임을 '''작은 프레임 여러 개로 나누는 것'''이다. 무선 환경은 '''매우 noisy''' 해서 프레임이 자주 깨지고, 깨진 프레임은 '''통째로 재전송'''해야 한다. 그러니 작게 나눠 두면 하나가 깨져도 '''그 조각만''' 다시 보내면 된다. 조각 번호는 802.11 프레임 '''SC 필드의 첫 4 비트(fragment number)''' 에 들어간다. L8 p.25–26.\n\n{def}\"Fragmentation: The wireless environment is '''very noisy''', so frames are '''often corrupted'''. A corrupt frame '''has to be retransmitted'''. The '''division of a large frame into smaller ones''' is usually recommended.\" (p.25)\n\"SC: the '''first 4 bits define the fragment number'''.\" (p.26){/def}\n\n[[img:L8-26.png|p.26 802.11 MAC frame — SC(2 bytes) 의 첫 4 bits 가 fragment number, FC 안의 More frag 비트|large]]\n\n== 이름에서 개념 끌어내기 ==\n* '''fragment''' — \"파편, 조각\". fragment-ation = 조각내기.\n* 슬라이드의 논리 사슬이 그대로 이유다: '''noisy → corrupted → retransmitted → (그러니) 작게'''.\n\n== 왜 작게 나누면 이득인가 ==\n<pre class=\"txt\">\n가정: 큰 프레임 1개 vs 같은 데이터를 4조각\n1. 잡음 한 번이 프레임 어딘가를 깨뜨림\n2. 큰 프레임 → 전체를 다시 보냄 (재전송량 = 100%)\n3. 4조각     → 깨진 조각 1개만 다시 보냄 (재전송량 ≈ 25%)\n4. 게다가 프레임이 짧을수록 잡음을 맞을 확률 자체도 작다\n<\/pre>\n\n== 프레임 형식과의 연결 ==\n{|\n! 필드 / 비트 || 위치 || fragmentation 에서의 역할\n|-\n| '''SC''' (sequence control, 2 bytes) || Address 3 다음 || '''첫 4 bits = fragment number''' (몇 번째 조각인지)\n|-\n| '''More frag''' (1 bit) || FC 안 || 뒤에 조각이 더 있는지 (그림의 필드 이름; 설명은 Forouzan 보충)\n|-\n| '''Retry''' (1 bit) || FC 안 || 재전송된 프레임 표시 (그림의 필드 이름; 설명은 Forouzan 보충)\n|}\n자세히는 [[802.11 프레임 형식]].\n\n{info}[[Standard Ethernet|Ethernet]] 은 반대로 프레임을 '''일정 크기 이상'''으로 유지해야 했다([[최소 프레임 크기]] 64 B — CSMA/CD 때문). WiFi 는 CSMA/CD 를 쓰지 않으니 그 제약이 없고, 오히려 '''잡음''' 때문에 작은 프레임이 유리하다. 같은 data-link 계층이라도 매체가 설계를 바꾼다.{/info}\n\n{analogy}🎭 '''비 오는 날 택배.''' 큰 상자 하나가 젖으면(corrupted) 통째로 다시 보내야 하지만, 작은 상자 열 개로 나눠 보내면 젖은 한 상자만 다시 보내면 된다. 상자마다 \"10 개 중 3 번째\"(fragment number) 를 붙여 두면 받는 쪽이 순서대로 다시 맞춘다.{/analogy}\n\n{quiz}무선 LAN 에서 큰 프레임을 작은 프레임으로 나누는 것을 권장하는 이유를 슬라이드의 세 문장 순서대로 쓰고, 조각 번호가 들어가는 필드를 쓰시오.{/quiz}\n{answer}① 무선 환경은 '''매우 noisy''' 해서 프레임이 자주 '''깨진다(corrupted)'''. ② 깨진 프레임은 '''재전송'''해야 한다. ③ 그래서 큰 프레임을 작게 나누는 것이 권장된다(재전송 비용 감소). 조각 번호 = '''SC 필드의 첫 4 bits (fragment number)'''.{/answer}\n\n== 관련 문서 ==\n* [[802.11 프레임 형식]] · [[wireless LAN의 특성]] · [[noise]] · [[CRC]] · [[최소 프레임 크기]] · [[CH04 WiFi]]"
+ },
+ "802.11 프레임 형식": {
+  "title": "802.11 MAC 프레임 형식 (9 fields)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "802.11 의 MAC layer frame 은 '''9 개 필드'''로 되어 있다: '''FC 2 · D 2 · Address 1 6 · Address 2 6 · Address 3 6 · SC 2 · Address 4 6 · Frame body 0–2312 · FCS 4''' (bytes). Ethernet 프레임과 가장 크게 다른 점은 '''주소가 4 개'''라는 것(→ [[802.11 주소 케이스]])과 [[NAV]] 를 위한 '''D(duration)''' 필드, [[fragmentation]] 을 위한 '''SC''' 필드가 있다는 것. L8 p.26.\n\n{def}\"MAC layer frame format: 9 fields.\n'''FC''': define '''type of frame''' and some '''control information'''.\n'''D''': define the '''duration of the transmission''' to set the value of '''NAV'''.\n'''SC''': the first 4 bits define '''the fragment number'''.\n'''FCS''': '''CRC-32'''.\" (p.26){/def}\n\n[[img:L8-26.png|p.26 MAC layer frame format: 9 fields — 위: 9 필드와 bytes / 아래: FC 2 bytes 를 펼친 11 개 하위 필드와 bits|large]]\n\n== 9 필드 (p.26 그림 그대로) ⭐⭐⭐ ==\n{|\n! # || 필드 || 크기 || 역할 (슬라이드)\n|-\n| 1 || '''FC''' (frame control; 풀네임은 Forouzan 보충) || 2 bytes || 프레임 '''type''' 과 control information (아래 하위 필드)\n|-\n| 2 || '''D''' (duration) || 2 bytes || 전송 '''duration''' → '''NAV''' 값 설정\n|-\n| 3 || '''Address 1''' || 6 bytes || To DS/From DS 에 따라 의미가 달라짐 → [[802.11 주소 케이스]]\n|-\n| 4 || '''Address 2''' || 6 bytes || 〃\n|-\n| 5 || '''Address 3''' || 6 bytes || 〃\n|-\n| 6 || '''SC''' (sequence control; 풀네임은 Forouzan 보충) || 2 bytes || '''첫 4 bits = fragment number''' → [[fragmentation]]\n|-\n| 7 || '''Address 4''' || 6 bytes || 〃 (Case 4 에서만 사용, 나머지 N/A)\n|-\n| 8 || '''Frame body''' || '''0 to 2312''' bytes || 상위 계층 데이터\n|-\n| 9 || '''FCS''' || 4 bytes || '''CRC-32''' 오류 검출 ([[CRC]])\n|}\n* 순서 주의: '''Address 3 다음에 SC, 그다음 Address 4''' 다. 주소 넷이 붙어 있지 않다.\n* 헤더 합계(FCS 제외, Frame body 제외): 2+2+6+6+6+2+6 = '''30 bytes''' — 그림 값을 더한 것.\n\n== FC 필드 안 (2 bytes = 16 bits) ==\n{|\n! 하위 필드 || Protocol version || Type || Subtype || To DS || From DS || More frag || Retry || Pwr mgt || More data || WEP || Rsvd\n|-\n| 크기 || 2 bits || 2 bits || 4 bits || 1 bit || 1 bit || 1 bit || 1 bit || 1 bit || 1 bit || 1 bit || 1 bit\n|}\n* '''Type''' (2 bits) + '''Subtype''' (4 bits): 어떤 종류의 프레임인지 — control 은 Type '''01''', RTS 1011 · CTS 1100 · ACK 1101 → [[802.11 프레임 종류]].\n* '''To DS / From DS''': [[distribution system]] 기준 방향. 두 비트 조합이 Address 1~4 의 의미를 정한다 → [[802.11 주소 케이스]].\n* '''More frag''': 조각이 더 있음([[fragmentation]]; 그림의 필드 이름, 설명은 Forouzan 보충). Retry·Pwr mgt·More data·WEP·Rsvd 는 그림에 이름만 있고 슬라이드 설명은 없다.\n* 합계 2+2+4+1×8 = 16 bits = 2 bytes ✓.\n\n[[sim:wifi_addressing]]\n\n== Ethernet 프레임과 비교 ==\n{|\n! || [[Ethernet 프레임 형식|Ethernet (802.3)]] || 802.11\n|-\n| 필드 수 || 7 (Preamble·SFD 포함) || '''9'''\n|-\n| 주소 || 2 개 (Destination, Source) || '''4 개''' (Address 1–4, 의미는 To DS/From DS 로 결정)\n|-\n| 주소 순서 || Destination 이 먼저 || Address 1 이 먼저 (대개 받는 쪽)\n|-\n| 길이·종류 표시 || Type 2 bytes (상위 프로토콜) || FC 2 bytes (Type·Subtype 등 control 정보)\n|-\n| 시간 정보 || 없음 || '''D (duration)''' → NAV\n|-\n| 조각 정보 || 없음 || '''SC''' (fragment number)\n|-\n| 데이터 || 46–1500 bytes || '''0–2312''' bytes\n|-\n| 오류 검출 || CRC 4 bytes (CRC-32) || FCS 4 bytes ('''CRC-32''')\n|}\n\n{info}D 는 무선에만 있는 이유가 있다: [[CSMA/CA]] 는 충돌을 감지하지 못하니 미리 '''예약'''해야 하고, 그 예약 시간이 D 다. SC 는 무선이 noisy 해서 [[fragmentation]] 을 하기 때문. 주소가 4 개인 것은 프레임이 AP 와 [[distribution system]] 을 거치기 때문. '''필드 하나하나가 무선의 특성에서 나왔다.'''{/info}\n\n{analogy}🎭 '''국제 소포 운송장.''' Ethernet 운송장에는 \"받는 사람·보내는 사람\" 두 칸이면 됐다. 무선 운송장(802.11)에는 \"이번에 받을 중계소(AP)·이번에 보낸 중계소·최종 수취인·최초 발송인\" 네 칸, 그리고 \"도로 점유 예정 시간(D)\", \"10 상자 중 몇 번째(SC)\" 칸이 더 있다.{/analogy}\n\n{quiz}802.11 프레임의 9 필드를 순서대로 쓰고, D 필드와 SC 필드의 역할을 쓰시오.{/quiz}\n{answer}'''FC(2) · D(2) · Address 1(6) · Address 2(6) · Address 3(6) · SC(2) · Address 4(6) · Frame body(0–2312) · FCS(4)'''. D = 전송 '''duration''', '''NAV''' 값을 설정. SC = 첫 4 bits 가 '''fragment number'''.{/answer}\n\n== 관련 문서 ==\n* [[802.11 주소 케이스]] · [[802.11 프레임 종류]] · [[fragmentation]] · [[NAV]] · [[distribution system]]\n* [[Ethernet 프레임 형식]] · [[CRC]] · [[MAC 주소]] · [[CH04 WiFi]]"
+ },
+ "802.11 프레임 종류": {
+  "title": "802.11 프레임 종류 (Management / Control / Data)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "802.11 프레임은 FC 필드의 '''Type''' 2 bits 로 종류를 나눈다. 슬라이드(p.27)가 다루는 것은 두 가지 — '''management frames'''(스테이션과 AP 의 '''초기 통신''')와 '''control frames'''(채널 접근과 '''acknowledgment''', '''Type = 01''') — 이고, control frame 의 '''Subtype''' 이 RTS(1011) · CTS(1100) · ACK(1101) 를 구분한다. 셋째 종류인 data frame 은 Forouzan 보충. L8 p.27.\n\n{def}\"Frame type — '''Management frames''': Used for the '''initial communication between stations and APs'''. '''Control frames''': Used for '''accessing the channel and acknowledging frames'''. The value of type field is '''01'''.\" (p.27){/def}\n\n[[img:L8-27.png|p.27 Control frame 구조 — RTS: FC·D·Address 1·Address 2·FCS / CTS or ACK: FC·D·Address 1·FCS, 그리고 Subtype 표|large]]\n\n== 종류 ==\n{|\n! 종류 || Type (2 bits) || 용도 || 예\n|-\n| '''Management''' || (슬라이드에 값 없음; Forouzan: 00) || 스테이션과 AP 사이 '''초기 통신''' || —\n|-\n| '''Control''' || '''01''' || 채널 '''접근''' + 프레임 '''확인(ACK)''' || RTS · CTS · ACK, [[beacon frame]] (p.23 \"special control frame\")\n|-\n| Data || (Forouzan 보충: 10) || 실제 데이터 운반 || —\n|}\n\n== Control frame 의 Subtype (p.27 표) ⭐⭐ ==\n{|\n! Subtype || Meaning\n|-\n| '''1011''' || Request to send ('''RTS''')\n|-\n| '''1100''' || Clear to send ('''CTS''')\n|-\n| '''1101''' || Acknowledgment ('''ACK''')\n|}\n\n== Control frame 구조 (p.27 그림) ==\n{|\n! 프레임 || FC || D || Address 1 || Address 2 || FCS\n|-\n| '''RTS''' || 2 bytes || 2 bytes || 6 bytes || 6 bytes || 4 bytes\n|-\n| '''CTS''' or '''ACK''' || 2 bytes || 2 bytes || 6 bytes || — || 4 bytes\n|}\nControl frame 에는 Frame body 가 없다 — 실어 나르는 데이터가 아니라 \"채널 조율\" 용도이기 때문. 9 필드짜리 전체 형식은 [[802.11 프레임 형식]].\n\n== 이름에서 개념 끌어내기 ==\n* '''management''' — 네트워크를 '''관리''': 처음 AP 를 찾고 붙는 등 \"초기 통신\".\n* '''control''' — 매체 접근을 '''통제''': 누가 보낼지(RTS/CTS), 잘 받았는지(ACK).\n* RTS·CTS·ACK 는 모두 [[CSMA/CA]] 핸드셰이크의 부품이라 '''control''' 이다.\n\n{analogy}🎭 '''회사 메일함의 세 폴더.''' management = 입사 서류(처음 등록할 때), control = \"회의실 예약/예약 승인/수신 확인\" 같은 짧은 업무 연락, data = 실제 업무 파일. control 메일에는 첨부파일(Frame body)이 없다.{/analogy}\n\n{quiz}Control frame 의 Type 값은? RTS, CTS, ACK 의 Subtype 값은 각각?{/quiz}\n{answer}Type = '''01'''. Subtype: RTS '''1011''', CTS '''1100''', ACK '''1101''' (p.27).{/answer}\n\n== 관련 문서 ==\n* [[802.11 프레임 형식]] · [[RTS와 CTS]] · [[beacon frame]] · [[CSMA/CA]] · [[CH04 WiFi]]"
+ },
+ "802.11 주소 케이스": {
+  "title": "802.11 주소 케이스 (To DS / From DS 와 Address 1–4)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "802.11 프레임에는 주소 칸이 '''4 개''' 있고, 각 칸에 무엇이 들어가는지는 FC 필드의 '''To DS''' 와 '''From DS''' 두 비트가 정한다. 두 비트의 조합 4 가지 = '''주소 케이스 4 개'''. 외우는 요령은 하나다: '''Address 1 = 이번 hop 에서 받는 쪽, Address 2 = 이번 hop 에서 보내는 쪽''', 남는 칸에 최종 목적지·최초 출발지(그리고 Case 1 에서는 BSS ID). L8 p.28–34.\n\n{def}\"Addresses — DS: '''Distribution System''' → The infrastructure component that connects multiple BSSs together to form an ESS.\" (p.28–29)\n\"Addressing mechanisms: Cover '''4 different cases'''.\" (p.30)\nCase 1 \"Frame is moving '''within a single BSS'''\" (p.31) · Case 4 \"Frame is traveling '''between two APs'''\" (p.34){/def}\n\n[[img:L8-28.png|p.28 Addresses — 9 필드 프레임 + To DS/From DS 에 따른 Address 1–4 표|large]]\n\n== 주소 표 (p.28 그대로) ⭐⭐⭐ ==\n{|\n! To DS || From DS || Address 1 || Address 2 || Address 3 || Address 4\n|-\n| 0 || 0 || Destination || Source || BSS ID || N/A\n|-\n| 0 || 1 || Destination || Sending AP || Source || N/A\n|-\n| 1 || 0 || Receiving AP || Source || Destination || N/A\n|-\n| 1 || 1 || Receiving AP || Sending AP || Destination || Source\n|}\n\n[[img:L8-30.png|p.30 Addressing mechanisms — a. Case 1 (BSS 안) · b. Case 2 (AP → B) · c. Case 3 (A → AP) · d. Case 4 (AP1 → AP2, wireless DS)|large]]\n\n== 네 케이스 (p.31–34 그림 기준) ==\n{|\n! Case || To DS · From DS || 그림 (p.30–34) || 프레임 주소 칸 [1 · 2 · 3 · 4] || 의미\n|-\n| 1 || 0 · 0 || A → B, 같은 BSS || '''B · A · BSS-ID''' · — || '''한 BSS 안'''에서 이동 (p.31)\n|-\n| 2 || 0 · 1 || AP → B || '''B · AP · A''' · — || DS 에서 '''나와''' 목적지 BSS 의 스테이션으로\n|-\n| 3 || 1 · 0 || A → AP || '''AP · A · B''' · — || 출발 스테이션에서 AP 를 거쳐 DS 로 '''들어감'''\n|-\n| 4 || 1 · 1 || AP1 → AP2 (wireless DS) || '''AP2 · AP1 · B · A''' || '''두 AP 사이'''를 이동 (p.34)\n|}\n\n{warn}'''슬라이드 캡션 주의 (p.32–33).''' p.32 Case 2 의 캡션은 \"Frame is '''heading into''' the Distribution System\", p.33 Case 3 의 캡션은 \"Frame is '''coming out of''' the Distribution System\" 인데, 같은 슬라이드의 '''표 행과 그림은 반대'''를 보여 준다: Case 2(0·1) 그림은 '''AP → B''' 로 [B · AP · A], Case 3(1·0) 그림은 '''A → AP''' 로 [AP · A · B]. 비트 이름(From DS = DS 에서 나옴, To DS = DS 로 감)과 Forouzan 원문(Case 2 \"coming from a distribution system\", Case 3 \"going to a distribution system\")도 표·그림 쪽이다. '''p.32–33 캡션은 뒤바뀐 것으로 보인다 — 시험에서는 To DS/From DS 비트와 Address 1~4 표를 기준으로 답할 것.''' 10/6 수업에서 교수 설명을 확인할 것.{/warn}\n\n[[sim:wifi_addressing]]\n\n== 표를 외우지 않고 만드는 법 ==\n<pre class=\"txt\">\n규칙 1. Address 1 = 이번 무선 hop 의 '''수신자''', Address 2 = 이번 hop 의 '''송신자'''\n        (To DS=1 이면 받는 쪽이 AP → Receiving AP / From DS=1 이면 보내는 쪽이 AP → Sending AP)\n규칙 2. 1·2 에 안 들어간 최종 주소를 3 에 (To DS=1 이면 Destination, From DS=1 이면 Source)\n규칙 3. 둘 다 1 (Case 4) 이면 주소가 하나 남음 → Address 4 = Source\n규칙 4. 둘 다 0 (Case 1) 이면 1·2 가 이미 최종 주소 → Address 3 = BSS ID\n<\/pre>\n\n{|\n! 직관 || To DS = 0 || To DS = 1\n|-\n| '''From DS = 0''' || Case 1: 같은 BSS 안 — 받는 사람·보낸 사람·'''BSS ID''' || Case 3: '''AP 로 보냄''' — AP·보낸 사람·최종 목적지\n|-\n| '''From DS = 1''' || Case 2: '''AP 가 보냄''' — 받는 사람·AP·최초 출발지 || Case 4: AP 끼리 — 받는 AP·보내는 AP·목적지·출발지\n|}\n\n{analogy}🎭 '''택배 운송장의 \"이번 구간\" 칸과 \"최종\" 칸.''' 기사가 보는 건 맨 앞 두 칸 — \"이번에 넘겨줄 곳(Address 1)\" 과 \"이번에 받아 온 곳(Address 2)\". 같은 동네면(Case 1) 그게 곧 최종 주소라 셋째 칸엔 동네 이름(BSS ID). 동네 지점(AP)으로 맡기면(Case 3) 셋째 칸에 최종 수취인. 지점에서 배달 나가면(Case 2) 셋째 칸에 최초 발송인. 지점끼리 옮기면(Case 4) 칸이 하나 모자라 넷째 칸까지 쓴다.{/analogy}\n\n{quiz}To DS = 1, From DS = 1 인 프레임의 Address 1–4 를 쓰고, 이 프레임이 어디를 지나는 중인지 쓰시오.{/quiz}\n{answer}Address 1 = '''Receiving AP''', Address 2 = '''Sending AP''', Address 3 = '''Destination''', Address 4 = '''Source'''. (wireless) distribution system 을 통해 '''두 AP 사이'''를 이동 중(Case 4, p.34 그림: AP2 · AP1 · B · A).{/answer}\n\n== 관련 문서 ==\n* [[802.11 프레임 형식]] · [[distribution system]] · [[BSS]] · [[ESS]]\n* [[MAC 주소]] · [[CH04 WiFi]]"
+ },
+ "802.11 physical layer": {
+  "title": "802.11 Physical Layer (802.11 / a / b / g / n 명세 표)",
+  "category": [
+   "10강 WiFi",
+   "용어"
+  ],
+  "body": "[[IEEE 802.11]] 은 data-link 뿐 아니라 '''physical layer''' 도 규정한다. 덱의 마지막 슬라이드(p.36)는 원조 802.11 과 a/b/g/n 의 '''Technique · Band · Modulation · Rate''' 를 표 하나로 보여 준다. 2·4·5강에서 배운 [[modulation]]([[FSK]], [[PSK]], [[QAM]])과 [[bit rate]] 가 실제 표준에서 어떻게 쓰이는지 보는 표다. L8 p.36.\n\n{def}\"Physical Layer: Specification of Physical Layer of IEEE 802.11.\" (p.36){/def}\n\n[[img:L8-36.png|p.36 Specification of Physical Layer of IEEE 802.11 — IEEE · Technique · Band · Modulation · Rate (Mbps)|large]]\n\n== 표 (p.36 그대로) ⭐⭐ ==\n{|\n! IEEE || Technique || Band || Modulation || Rate (Mbps)\n|-\n| 802.11 || FHSS || 2.400–4.835 GHz¹ || [[FSK]] || 1 and 2\n|-\n| 802.11 || DSSS || 2.400–4.835 GHz¹ || [[PSK]] || 1 and 2\n|-\n| 802.11 || None || Infrared || PPM || 1 and 2\n|-\n| 802.11a || OFDM || 5.725–5.850 GHz || PSK or [[QAM]] || 6 to 54\n|-\n| 802.11b || DSSS || 2.400–4.835 GHz¹ || PSK || 5.5 and 11\n|-\n| 802.11g || OFDM || 2.400–4.835 GHz¹ || Different || 22 and 54\n|-\n| 802.11n || OFDM || 5.725–5.850 GHz || Different || 600\n|}\n¹ 슬라이드에는 '''\"2.400–4.835 GHz\"''' 로 적혀 있지만, 2.4 GHz ISM 대역의 실제 범위는 '''2.400–2.4835 GHz''' 다 — 소수점 자리가 빠진 '''오타로 보인다'''. 표는 슬라이드 그대로 옮겼다. 시험에서 이 값이 나오면 슬라이드 표기를 따르되, \"2.4 GHz 대\" 라는 뜻으로 이해할 것.\n\n{warn}802.11n 의 Band 가 이 표에서는 5.725–5.850 GHz 만 적혀 있다(실제 802.11n 은 2.4 GHz 대도 쓴다 — Forouzan·표준 보충). 표에 나온 값으로 답할 것.{/warn}\n\n== 표 읽는 법 ==\n* '''원조 802.11''' 은 세 가지 physical layer: FHSS(FSK) · DSSS(PSK) · Infrared(PPM), 모두 '''1 and 2 Mbps'''.\n* 대역은 두 무리: '''2.4 GHz 대'''(802.11 FHSS/DSSS, b, g) 와 '''5 GHz 대'''(a, n). [[wireless LAN의 특성|interference]] 는 \"같은 frequency band\" 를 쓸 때 생기므로, 같은 대역끼리 간섭한다.\n* '''속도 순''': 802.11(1, 2) < b(5.5, 11) < a(6–54) ≈ g(22, 54) < '''n(600)'''.\n* Technique 약어(FHSS, DSSS, OFDM, PPM)는 슬라이드에 풀이가 없다. Forouzan 보충: FHSS = frequency-hopping spread spectrum, DSSS = direct-sequence spread spectrum, OFDM = orthogonal frequency-division multiplexing(5강 [[FDM]] 의 발전형), PPM = pulse position modulation.\n\n== 이름에서 개념 끌어내기 ==\n* 802.11 '''뒤의 알파벳''' — 원조 표준을 고친 '''개정판(amendment)''' 이름. 알파벳 순서가 꼭 속도 순서는 아니다(a 가 b 보다 빠름).\n* Modulation 열 — 5강에서 배운 그대로: [[FSK]] 는 주파수를, [[PSK]] 는 위상을, [[QAM]] 은 위상+진폭을 바꾼다. 빠른 표준일수록 QAM 같은 '''한 신호에 많은 비트'''를 싣는 방식으로 간다(→ [[signal rate와 bit rate]]).\n\n{analogy}🎭 '''같은 \"도로교통법\" 아래의 도로 등급표.''' 802.11 이 원조 시골길(1–2 Mbps)이라면 b 는 국도, a·g 는 고속도로, n 은 다차선 고속도로(600). 어느 도로든 같은 교통 규칙(MAC: CSMA/CA)을 따르지만, 노면(대역)과 차선 방식(변조)이 다르다.{/analogy}\n\n{quiz}p.36 표에서 (1) 5.725–5.850 GHz 대역을 쓰는 표준 두 개, (2) 원조 802.11 의 세 technique 과 각 modulation, (3) 가장 빠른 표준과 그 rate 를 쓰시오.{/quiz}\n{answer}(1) '''802.11a''', '''802.11n'''. (2) '''FHSS–FSK''', '''DSSS–PSK''', '''None(Infrared)–PPM''' (모두 1 and 2 Mbps). (3) '''802.11n, 600 Mbps'''.{/answer}\n\n== 관련 문서 ==\n* [[IEEE 802.11]] · [[wireless LAN의 특성]] · [[physical layer]]\n* [[modulation]] · [[FSK]] · [[PSK]] · [[QAM]] · [[FDM]] · [[bit rate]] · [[CH04 WiFi]]"
  },
  "중간고사 모의 v1": {
   "title": "중간고사 모의 v1 — 96문항 (정의→용어 · T/F · 객관식 · 서술·계산)",
@@ -2844,6 +3028,34 @@ const NAV_ORDER = [
    "10 Gigabit Ethernet",
    "WiFi",
    "Bluetooth"
+  ]
+ },
+ {
+  "group": "10강 WiFi",
+  "items": [
+   "CH04 WiFi",
+   "wireless LAN의 특성",
+   "IEEE 802.11",
+   "BSS",
+   "ad-hoc과 infrastructure",
+   "ESS",
+   "distribution system",
+   "station mobility",
+   "DCF",
+   "PCF",
+   "CSMA/CA",
+   "RTS와 CTS",
+   "NAV",
+   "interframe space",
+   "hidden station problem",
+   "exposed station problem",
+   "repetition interval",
+   "beacon frame",
+   "fragmentation",
+   "802.11 프레임 형식",
+   "802.11 프레임 종류",
+   "802.11 주소 케이스",
+   "802.11 physical layer"
   ]
  },
  {
@@ -4471,6 +4683,243 @@ window.SIMS = window.SIMS || {};
   };
 })(typeof window !== "undefined" ? window : globalThis);
 
+// ===== sims/csma_ca_handshake.js =====
+window.SIMS = window.SIMS || {};
+// csma_ca_handshake — L8 p.14–17 DCF (CSMA/CA): DIFS → RTS → SIFS → CTS → SIFS → Data → SIFS → ACK, NAV, 핸드셰이크 충돌
+(function (global) {
+  "use strict";
+
+  // 시간 단위: 슬롯 (설명용 길이 — 슬라이드에는 수치가 없다)
+  // DIFS 2, RTS 2, SIFS 1, CTS 2, Data 6, ACK 2
+  var COL = { RTS: "#333", CTS: "#333", Data: "#1aa3e0", ACK: "#333", NAV: "#cfd3d8", X: "#d6465f" };
+
+  function makeSvg(segs, marks, T, t, title) {
+    return function () {
+      var W = 640, H = 230, x0 = 56, x1 = W - 20, rows = { A: 50, B: 105, C: 160 };
+      var sx = function (v) { return x0 + (x1 - x0) * v / T; };
+      var s = '<svg viewBox="0 0 ' + W + " " + H + '" width="' + W + '" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">';
+      s += '<rect width="' + W + '" height="' + H + '" rx="8" fill="#fff"/>';
+      s += '<text x="' + (W / 2) + '" y="18" text-anchor="middle" font-weight="700" fill="#1d65b3">' + title + '</text>';
+      var names = { A: "A (Source)", B: "B (Dest.)", C: "C (Other)" };
+      Object.keys(rows).forEach(function (r) {
+        var y = rows[r];
+        s += '<line x1="' + x0 + '" y1="' + (y + 14) + '" x2="' + x1 + '" y2="' + (y + 14) + '" stroke="#bbb" stroke-dasharray="3,3"/>';
+        s += '<text x="6" y="' + (y + 18) + '" font-weight="700" font-size="11">' + names[r] + '</text>';
+      });
+      segs.forEach(function (g) {
+        if (g.s >= t) return;
+        var e = Math.min(g.e, t), y = rows[g.row];
+        var fill = COL[g.kind] || "#333";
+        s += '<rect x="' + sx(g.s) + '" y="' + (y + 2) + '" width="' + Math.max(1, sx(e) - sx(g.s)) + '" height="22" rx="2" fill="' + fill + '"' +
+          (g.kind === "X" ? ' fill-opacity="0.85"' : "") + '/>';
+        var tc = g.kind === "NAV" ? "#333" : "#fff";
+        if (e - g.s >= 1) s += '<text x="' + ((sx(g.s) + sx(e)) / 2) + '" y="' + (y + 17) + '" text-anchor="middle" fill="' + tc + '" font-weight="700" font-size="11">' + g.label + '</text>';
+      });
+      marks.forEach(function (m) {
+        if (m.s >= t) return;
+        var e = Math.min(m.e, t), y = rows[m.row];
+        s += '<path d="M' + sx(m.s) + ',' + (y - 4) + ' v-4 H' + sx(e) + ' v4" fill="none" stroke="#e09a40" stroke-width="1.5"/>';
+        s += '<text x="' + ((sx(m.s) + sx(e)) / 2) + '" y="' + (y - 11) + '" text-anchor="middle" fill="#b8741a" font-size="10">' + m.label + '</text>';
+      });
+      // 시간축
+      var ya = 200;
+      s += '<line x1="' + x0 + '" y1="' + ya + '" x2="' + x1 + '" y2="' + ya + '" stroke="#555"/>';
+      for (var k = 0; k <= T; k++) {
+        s += '<line x1="' + sx(k) + '" y1="' + ya + '" x2="' + sx(k) + '" y2="' + (ya + 4) + '" stroke="#555"/>';
+        if (k % 2 === 0 || k === T) s += '<text x="' + sx(k) + '" y="' + (ya + 16) + '" text-anchor="middle" font-size="10" fill="#555">' + k + '</text>';
+      }
+      s += '<text x="' + x1 + '" y="' + (ya - 4) + '" text-anchor="end" font-size="10" fill="#555">Time (slot)</text>';
+      s += '<line x1="' + sx(t) + '" y1="30" x2="' + sx(t) + '" y2="' + ya + '" stroke="#d6465f" stroke-width="1.5"/>';
+      s += '<text x="' + sx(t) + '" y="28" text-anchor="middle" fill="#d6465f" font-size="10">t=' + t + '</text>';
+      s += "</svg>";
+      return s;
+    };
+  }
+
+  function buildNormal() {
+    var T = 17;
+    var segs = [
+      { row: "A", s: 2, e: 4, kind: "RTS", label: "RTS" },
+      { row: "B", s: 5, e: 7, kind: "CTS", label: "CTS" },
+      { row: "C", s: 5, e: 7, kind: "CTS", label: "CTS" },
+      { row: "C", s: 7, e: 17, kind: "NAV", label: "NAV" },
+      { row: "A", s: 8, e: 14, kind: "Data", label: "Data" },
+      { row: "B", s: 15, e: 17, kind: "ACK", label: "ACK" }
+    ];
+    var marks = [
+      { row: "A", s: 0, e: 2, label: "DIFS" },
+      { row: "B", s: 4, e: 5, label: "SIFS" },
+      { row: "A", s: 7, e: 8, label: "SIFS" },
+      { row: "B", s: 14, e: 15, label: "SIFS" }
+    ];
+    var panels = [
+      { id: "A", title: "A (송신)", lang: "txt", lines: [
+        "채널 감지: DIFS 동안 idle 인지 확인",
+        "RTS 전송 (duration 필드 포함)",
+        "CTS 대기",
+        "CTS 수신 → SIFS 후 Data 전송",
+        "ACK 대기",
+        "ACK 수신 → 전송 성공"] },
+      { id: "B", title: "B (수신)", lang: "txt", lines: [
+        "대기 (수신 준비)",
+        "RTS 수신 → SIFS 기다림",
+        "CTS 전송 (duration 필드 포함)",
+        "Data 수신 → SIFS 기다림",
+        "ACK 전송"] },
+      { id: "C", title: "C (제3자)", lang: "txt", lines: [
+        "채널 감지 (자기 프레임 보낼 기회 대기)",
+        "CTS 수신 → duration 값으로 NAV 설정",
+        "NAV 카운트다운 — 채널 idle 확인 안 함",
+        "NAV = 0 → DIFS 부터 채널 확인 가능"] }
+    ];
+    var steps = [];
+    function push(t, desc, pc, v, note) {
+      steps.push({ desc: desc, pc: pc, vars: v, note: note, svg: makeSvg(segs, marks, T, t, "정상: RTS/CTS 핸드셰이크") });
+    }
+    function V(t, ch, a, b, nav, ifs, dur) {
+      return { t: t, channel: ch, A: a, B: b, C_NAV: nav, IFS: ifs, duration: dur };
+    }
+    push(0, "A 에게 보낼 프레임이 생겼다. [[CSMA/CA]] 는 바로 보내지 않고 먼저 채널을 감지한다.",
+      { A: 1, B: 1, C: 1 }, V(0, "idle", "채널 감지", "대기", "-", "-", "-"));
+    push(2, "'''DIFS''' (DCF interframe space) 동안 채널이 계속 idle → A 는 보낼 수 있다. DIFS 는 [[interframe space]] 중 일반 데이터 경쟁용으로 가장 길다(Forouzan 보충).",
+      { A: 1, B: 1, C: 1 }, V(2, "idle", "DIFS 완료", "대기", "-", "DIFS", "-"));
+    push(4, "A 가 '''RTS'''(request to send) 를 보낸다. RTS 에는 채널을 점유할 '''duration''' (SIFS+CTS+SIFS+Data+SIFS+ACK = 13 slot) 이 들어 있다. C 는 A 의 전파가 닿지 않는 위치(hidden station)라 RTS 를 못 듣는다.",
+      { A: 2, B: 2, C: 1 }, V(4, "busy (RTS)", "RTS 전송", "RTS 수신", "-", "-", "RTS: 13"));
+    push(5, "B 는 '''SIFS''' (short interframe space) 만큼만 기다린다. SIFS < DIFS 이므로 응답 프레임(CTS·ACK)이 다른 스테이션보다 '''먼저''' 채널을 잡는다.",
+      { A: 3, B: 2, C: 1 }, V(5, "idle (SIFS)", "CTS 대기", "SIFS", "-", "SIFS", "RTS: 13"));
+    push(7, "B 가 '''CTS'''(clear to send) 를 보낸다. CTS 에도 duration (SIFS+Data+SIFS+ACK = 10 slot) 이 들어 있다. 이 CTS 는 A 뿐 아니라 B 주변의 C 에게도 들린다 — [[RTS와 CTS]].",
+      { A: 3, B: 3, C: 2 }, V(7, "busy (CTS)", "CTS 수신", "CTS 전송", "-", "-", "CTS: 10"));
+    push(7, "C 는 CTS 의 duration 으로 '''[[NAV]]''' (network allocation vector) 라는 timer 를 10 으로 설정한다. NAV 가 0 이 될 때까지 C 는 채널이 idle 인지 '''확인조차 하지 않는다'''.",
+      { A: 4, B: 3, C: 2 }, V(7, "busy (CTS)", "CTS 수신", "CTS 전송", 10, "-", "CTS: 10"));
+    push(8, "A 는 CTS 를 받고 '''SIFS''' 후 Data 를 보낼 준비. C 의 NAV 는 9.",
+      { A: 4, B: 4, C: 3 }, V(8, "idle (SIFS)", "SIFS", "Data 대기", 9, "SIFS", "CTS: 10"));
+    push(14, "A 가 '''Data''' 를 보낸다 (6 slot). 그동안 C 의 NAV 는 계속 줄어 3.",
+      { A: 5, B: 4, C: 3 }, V(14, "busy (Data)", "Data 전송 → ACK 대기", "Data 수신", 3, "-", "CTS: 10"));
+    push(15, "B 는 Data 를 받고 '''SIFS''' 후 ACK. NAV 2.",
+      { A: 5, B: 4, C: 3 }, V(15, "idle (SIFS)", "ACK 대기", "SIFS", 2, "SIFS", "CTS: 10"));
+    push(17, "B 가 '''ACK''' 를 보내고 A 가 받는다 → 전송 성공. '''ACK 가 끝나는 순간 C 의 NAV 도 0''' — duration 이 정확히 여기까지를 덮도록 계산되었기 때문.",
+      { A: 6, B: 5, C: 3 }, V(17, "busy (ACK) → idle", "전송 성공", "ACK 전송", 0, "-", "-"));
+    push(17, "NAV = 0 → C 는 이제 채널을 감지할 수 있고, 자기 프레임이 있으면 다시 DIFS 부터 시작한다.",
+      { A: 6, B: 5, C: 4 }, V(17, "idle", "전송 성공", "완료", 0, "-", "-"),
+      "슬롯 길이(DIFS 2, SIFS 1, RTS·CTS·ACK 2, Data 6)는 설명용 수치다. 슬라이드에는 순서와 PIFS < DIFS(p.22)만 있다. SIFS 가 가장 짧다는 것은 Forouzan 보충.");
+    return { panels: panels, steps: steps };
+  }
+
+  function buildCollision() {
+    var T = 24;
+    var segs = [
+      { row: "A", s: 2, e: 4, kind: "RTS", label: "RTS" },
+      { row: "C", s: 2, e: 4, kind: "RTS", label: "RTS" },
+      { row: "B", s: 2, e: 4, kind: "X", label: "충돌" },
+      { row: "A", s: 9, e: 11, kind: "RTS", label: "RTS" },
+      { row: "B", s: 12, e: 14, kind: "CTS", label: "CTS" },
+      { row: "C", s: 12, e: 14, kind: "CTS", label: "CTS" },
+      { row: "C", s: 14, e: 24, kind: "NAV", label: "NAV" },
+      { row: "A", s: 15, e: 21, kind: "Data", label: "Data" },
+      { row: "B", s: 22, e: 24, kind: "ACK", label: "ACK" }
+    ];
+    var marks = [
+      { row: "A", s: 0, e: 2, label: "DIFS" },
+      { row: "C", s: 0, e: 2, label: "DIFS" },
+      { row: "A", s: 4, e: 7, label: "CTS 대기" },
+      { row: "A", s: 7, e: 9, label: "DIFS" },
+      { row: "C", s: 7, e: 9, label: "DIFS" },
+      { row: "C", s: 9, e: 10, label: "R=1" },
+      { row: "B", s: 11, e: 12, label: "SIFS" },
+      { row: "A", s: 14, e: 15, label: "SIFS" },
+      { row: "B", s: 21, e: 22, label: "SIFS" }
+    ];
+    var panels = [
+      { id: "A", title: "A (송신)", lang: "txt", lines: [
+        "채널 감지: DIFS 동안 idle 인지 확인",
+        "RTS 전송 (duration 필드 포함)",
+        "CTS 대기",
+        "CTS 미수신 → 충돌로 가정, K = K + 1",
+        "backoff: R ∈ {0, …, 2^K − 1} 고르고 R slot 대기",
+        "DIFS + backoff 후 RTS 재전송",
+        "CTS 수신 → SIFS 후 Data 전송",
+        "ACK 수신 → 전송 성공"] },
+      { id: "B", title: "B (수신)", lang: "txt", lines: [
+        "대기 (수신 준비)",
+        "RTS 두 개가 겹침 → 해독 불가, CTS 안 보냄",
+        "RTS 수신 → SIFS 기다림",
+        "CTS 전송 (duration 필드 포함)",
+        "Data 수신 → SIFS 기다림",
+        "ACK 전송"] },
+      { id: "C", title: "C (제3자 · 경쟁자)", lang: "txt", lines: [
+        "채널 감지: DIFS 동안 idle 인지 확인",
+        "RTS 전송 (A 와 같은 순간)",
+        "CTS 미수신 → 충돌로 가정 → backoff",
+        "backoff 끝났지만 채널 busy → 대기",
+        "CTS 수신 → duration 값으로 NAV 설정",
+        "NAV 카운트다운 — 채널 확인 안 함",
+        "NAV = 0 → 다시 DIFS 부터 시도"] }
+    ];
+    var steps = [];
+    function push(t, desc, pc, v, note) {
+      steps.push({ desc: desc, pc: pc, vars: v, note: note, svg: makeSvg(segs, marks, T, t, "RTS 충돌 → CTS 없음 → backoff 재시도") });
+    }
+    function V(t, ch, a, b, nav, ifs, dur, K, R) {
+      return { t: t, channel: ch, A: a, B: b, C_NAV: nav, IFS: ifs, duration: dur, K: K, R: R };
+    }
+    push(0, "A 와 C 모두 B 에게 보낼 프레임이 있다. 둘 다 채널을 감지한다.",
+      { A: 1, B: 1, C: 1 }, V(0, "idle", "채널 감지", "대기", "-", "-", "-", 0, "-"));
+    push(2, "둘 다 '''DIFS''' 동안 idle 을 확인 — 같은 순간에 끝났다.",
+      { A: 1, B: 1, C: 1 }, V(2, "idle", "DIFS 완료", "대기", "-", "DIFS", "-", 0, "-"));
+    push(4, "A 와 C 가 '''동시에 RTS''' 를 보낸다 → B 에서 두 신호가 겹쳐 둘 다 깨진다. 핸드셰이크 구간의 충돌 (슬라이드 \"Many stations may try to send RTS frames at the same time\").",
+      { A: 2, B: 2, C: 2 }, V(4, "collision (RTS+RTS)", "RTS 전송", "해독 불가", "-", "-", "RTS: 13", 0, "-"));
+    push(7, "B 는 아무것도 못 알아들었으니 '''CTS 를 보내지 않는다'''. A 와 C 는 SIFS+CTS 시간만큼 기다려도 CTS 가 오지 않는다.",
+      { A: 4, B: 2, C: 3 }, V(7, "idle", "CTS 미수신 → 충돌 가정", "대기", "-", "-", "-", 0, "-"),
+      "CSMA/CA 에는 충돌을 '''감지'''하는 장치가 없다. 송신자는 \"CTS 를 못 받았다 = 충돌이 있었다\"고 '''가정'''할 뿐이다.");
+    push(7, "CTS 미수신 → '''충돌로 가정''' → [[binary exponential backoff]]: K = 1 이므로 R ∈ {0, 1}. 이 시나리오에서는 A 가 R = 0, C 가 R = 1 을 뽑았다.",
+      { A: 5, B: 1, C: 3 }, V(7, "idle", "backoff (R=0)", "대기", "-", "-", "-", 1, "A: 0, C: 1"),
+      "R 값은 무작위다. 둘이 같은 R 을 뽑으면 또 충돌하고 K = 2 로 늘어난다.");
+    push(9, "둘 다 다시 '''DIFS''' 를 기다린다. A 는 R = 0 이므로 DIFS 직후 바로 RTS 재전송 시작.",
+      { A: 6, B: 1, C: 3 }, V(9, "idle → busy", "RTS 재전송 시작", "대기", "-", "DIFS", "RTS: 13", 1, "A: 0, C: 1"));
+    push(10, "C 는 backoff 1 slot 이 끝났지만 채널이 이미 busy (A 의 RTS) → 보내지 않고 기다린다. 먼저 끝난 쪽이 채널을 잡는다. (이 시나리오의 C 는 A 의 RTS 를 해독하지 못하고 carrier 만 감지한다고 가정; RTS 를 해독했다면 p.15 대로 그 duration 으로 NAV 를 세팅한다)",
+      { A: 6, B: 3, C: 4 }, V(10, "busy (RTS)", "RTS 전송 중", "RTS 수신 중", "-", "-", "RTS: 13", 1, "A: 0, C: 1"));
+    push(12, "RTS 가 끝나고 B 는 '''SIFS''' 만 기다린다.",
+      { A: 3, B: 3, C: 4 }, V(12, "idle (SIFS)", "CTS 대기", "SIFS", "-", "SIFS", "RTS: 13", 1, "A: 0, C: 1"));
+    push(14, "이번에는 B 가 '''CTS''' (duration 10) 를 보낸다. A 는 CTS 수신 = 핸드셰이크 성공. C 는 CTS 를 듣고 [[NAV]] = 10 을 설정한다.",
+      { A: 7, B: 4, C: 5 }, V(14, "busy (CTS)", "CTS 수신", "CTS 전송", 10, "-", "CTS: 10", 1, "A: 0, C: 1"));
+    push(21, "A 가 SIFS 후 '''Data''' 를 보낸다. C 의 NAV 는 3 까지 줄었다.",
+      { A: 7, B: 5, C: 6 }, V(21, "busy (Data)", "Data 전송", "Data 수신", 3, "SIFS", "CTS: 10", 1, "A: 0, C: 1"));
+    push(24, "B 가 SIFS 후 '''ACK''' → A 의 '''재시도 성공'''. ACK 가 끝나는 순간 NAV = 0.",
+      { A: 8, B: 6, C: 6 }, V(24, "busy (ACK) → idle", "전송 성공", "ACK 전송", 0, "-", "-", 1, "A: 0, C: 1"));
+    push(24, "C 는 이제 다시 DIFS 부터 채널을 감지하고 자기 RTS 를 보낼 수 있다.",
+      { A: 8, B: 6, C: 7 }, V(24, "idle", "전송 성공", "완료", 0, "-", "-", 1, "A: 0, C: 1"),
+      "슬롯 길이와 R 값은 설명용으로 고정한 것이다. 슬라이드의 답: \"The sender assumes there has been a collision if it has not received a CTS frame\" → backoff 후 재시도.");
+    return { panels: panels, steps: steps };
+  }
+
+  global.SIMS["csma_ca_handshake"] = {
+    title: "CSMA/CA — DIFS · RTS · CTS · Data · ACK 와 NAV",
+    desc: "L8 p.14–17, DCF. [[CSMA/CA]] 는 충돌을 감지하는 대신 '''피한다''': DIFS 동안 idle 확인 → [[RTS와 CTS]] 핸드셰이크 → 각 응답은 SIFS 뒤 → 제3 스테이션은 duration 으로 [[NAV]] 를 세팅하고 그동안 채널을 안 본다.",
+    options: [
+      { key: "scenario", label: "시나리오", values: [
+        { value: "normal", label: "정상 (RTS/CTS 성공)" },
+        { value: "collision", label: "RTS 충돌 → backoff 재시도" }] }
+    ],
+    build: function (opts) {
+      var r = opts.scenario === "collision" ? buildCollision() : buildNormal();
+      var vars = [
+        { name: "t", label: "시각 (slot)", group: "채널" },
+        { name: "channel", label: "채널 상태", group: "채널" },
+        { name: "IFS", label: "현재 IFS", group: "채널" },
+        { name: "duration", label: "duration 필드", group: "채널" },
+        { name: "A", label: "A 단계", group: "스테이션" },
+        { name: "B", label: "B 단계", group: "스테이션" },
+        { name: "C_NAV", label: "C 의 NAV 남은 값", group: "스테이션" }
+      ];
+      if (opts.scenario === "collision") {
+        vars.push({ name: "K", label: "K (충돌 횟수)", group: "backoff" });
+        vars.push({ name: "R", label: "R (뽑은 값)", group: "backoff" });
+      }
+      return { panels: r.panels, vars: vars, steps: r.steps };
+    }
+  };
+})(typeof window !== "undefined" ? window : globalThis);
+
 // ===== sims/csma_cd_minframe.js =====
 window.SIMS = window.SIMS || {};
 // csma_cd_minframe — L6 p.46 Example 3.12: CSMA/CD 최소 프레임 크기 = bandwidth × 2T_p
@@ -6061,6 +6510,194 @@ window.SIMS = window.SIMS || {};
   };
 })(typeof window !== "undefined" ? window : globalThis);
 
+// ===== sims/wifi_addressing.js =====
+window.SIMS = window.SIMS || {};
+// wifi_addressing — L8 p.28–34 IEEE 802.11 addressing: To DS / From DS → Address 1~4 (표 값 그대로)
+(function (global) {
+  "use strict";
+
+  var TABLE = [
+    "ToDS FromDS | Addr1 | Addr2 | Addr3 | Addr4",
+    "0 0 | Dest | Src | BSS ID | N/A",
+    "0 1 | Dest | Send AP | Src | N/A",
+    "1 0 | Recv AP | Src | Dest | N/A",
+    "1 1 | Recv AP | Send AP | Dest | Src"
+  ];
+  var PROC = [
+    "케이스(어디서 어디로) 확인",
+    "To DS / From DS 비트 정하기",
+    "Addr1 = 이 hop 의 수신자",
+    "Addr2 = 이 hop 의 송신자",
+    "Addr3 = 남은 한 끝",
+    "Addr4 = Case 4 만 원래 출발지"
+  ];
+
+  var CASES = {
+    "1": {
+      row: 2, toDS: "0", fromDS: "0", title: "Case 1 — Frame is moving within a single BSS",
+      frame: ["B", "A", "BSS-ID", ""],
+      addr: ["Destination (B)", "Source (A)", "BSS ID", "N/A"],
+      what: "같은 BSS 안에서 A → B 로 직접 (DS 를 거치지 않음)",
+      why: [
+        "DS 로 가지도 않고(To DS = 0) DS 에서 오지도 않는다(From DS = 0) — 같은 BSS 안의 스테이션끼리.",
+        "Address 1 = 이 hop 을 받는 노드 = 최종 목적지 '''B''' → 표의 '''Destination'''.",
+        "Address 2 = 이 hop 을 보내는 노드 = 원래 출발지 '''A''' → '''Source'''.",
+        "Address 3 = '''BSS ID''' — 수신·송신이 이미 1·2 에 다 들어가므로, 남은 칸에는 어느 BSS 의 프레임인지를 적는다.",
+        "Address 4 = '''N/A''' — Address 4 는 To DS·From DS 가 둘 다 1 일 때만 쓴다."
+      ]
+    },
+    "2": {
+      row: 3, toDS: "0", fromDS: "1", title: "Case 2 — AP → B (frame comes out of the DS)",
+      frame: ["B", "AP", "A", ""],
+      addr: ["Destination (B)", "Sending AP (AP)", "Source (A)", "N/A"],
+      what: "DS 에서 나온 프레임을 AP 가 자기 BSS 의 B 에게 전달",
+      why: [
+        "From DS = 1: 프레임이 [[distribution system]] '''에서 나와''' AP 를 통해 B 에게 간다 (그림: AP → B). To DS = 0.",
+        "Address 1 = 이 hop 의 수신자 = '''B''' → '''Destination'''. 무선 구간에서 B 가 받으니까.",
+        "Address 2 = 이 hop 의 송신자 = '''AP''' → '''Sending AP'''. 실제로 전파를 쏘는 것은 A 가 아니라 AP.",
+        "Address 3 = 원래 출발지 '''A''' → '''Source'''. 1·2 가 hop 주소로 쓰였으니, B 가 \"누가 보낸 것인지\" 알려면 원래 출발지가 3 에 있어야 한다.",
+        "Address 4 = '''N/A'''."
+      ]
+    },
+    "3": {
+      row: 4, toDS: "1", fromDS: "0", title: "Case 3 — A → AP (frame goes into the DS)",
+      frame: ["AP", "A", "B", ""],
+      addr: ["Receiving AP (AP)", "Source (A)", "Destination (B)", "N/A"],
+      what: "A 가 자기 AP 에게 보내고, AP 가 DS 로 넘김 (B 는 다른 BSS)",
+      why: [
+        "To DS = 1: A 의 프레임이 AP 를 거쳐 [[distribution system]] '''으로 들어간다''' (그림: A → AP, B 는 다른 BSS). From DS = 0.",
+        "Address 1 = 이 hop 의 수신자 = '''AP''' → '''Receiving AP'''. 무선으로 이 프레임을 받는 건 B 가 아니라 A 의 AP.",
+        "Address 2 = 이 hop 의 송신자 = '''A''' → '''Source'''.",
+        "Address 3 = 최종 목적지 '''B''' → '''Destination'''. AP 가 DS 로 어디까지 보낼지 알아야 하므로.",
+        "Address 4 = '''N/A'''."
+      ]
+    },
+    "4": {
+      row: 5, toDS: "1", fromDS: "1", title: "Case 4 — Frame is traveling between two APs",
+      frame: ["AP2", "AP1", "B", "A"],
+      addr: ["Receiving AP (AP2)", "Sending AP (AP1)", "Destination (B)", "Source (A)"],
+      what: "wireless distribution system 위에서 AP1 → AP2",
+      why: [
+        "To DS = 1, From DS = 1: 프레임이 DS 안(Wireless distribution system)에서 AP1 → AP2 로 이동. 출발지 A, 목적지 B 는 둘 다 이 hop 의 양 끝이 아니다.",
+        "Address 1 = 이 hop 의 수신자 = '''AP2''' → '''Receiving AP'''.",
+        "Address 2 = 이 hop 의 송신자 = '''AP1''' → '''Sending AP'''.",
+        "Address 3 = 최종 목적지 '''B''' → '''Destination'''.",
+        "Address 4 = 원래 출발지 '''A''' → '''Source'''. 네 칸이 모두 쓰이는 유일한 경우."
+      ]
+    }
+  };
+
+  function laptop(x, y, name) {
+    return '<rect x="' + (x - 16) + '" y="' + (y - 12) + '" width="32" height="20" rx="2" fill="#bfe3f5" stroke="#555"/>' +
+      '<rect x="' + (x - 20) + '" y="' + (y + 8) + '" width="40" height="5" rx="1" fill="#888"/>' +
+      '<text x="' + x + '" y="' + (y + 30) + '" text-anchor="middle" font-weight="700">' + name + '</text>';
+  }
+  function ap(x, y, name) {
+    return '<rect x="' + (x - 20) + '" y="' + (y - 11) + '" width="40" height="22" rx="3" fill="#cfe8f7" stroke="#1d65b3"/>' +
+      '<text x="' + x + '" y="' + (y + 5) + '" text-anchor="middle" font-weight="700" fill="#1d65b3">' + name + '</text>';
+  }
+  function bss(x, y, w, h) {
+    return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="none" stroke="#777" stroke-dasharray="6,4"/>' +
+      '<text x="' + (x + 6) + '" y="' + (y + 16) + '" fill="#555">BSS</text>';
+  }
+
+  function makeSvg(cs, nFilled) {
+    return function () {
+      var W = 640, H = 260;
+      var s = '<svg viewBox="0 0 ' + W + " " + H + '" width="' + W + '" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">';
+      s += '<rect width="' + W + '" height="' + H + '" rx="8" fill="#fff"/>';
+      s += '<defs><marker id="wfa-ah" markerWidth="9" markerHeight="9" refX="9" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#333"/></marker></defs>';
+      var key = cs.key, fx, fy, ax1, ax2;
+      if (key === "1") {
+        s += bss(40, 40, 560, 170);
+        s += laptop(90, 130, "B") + laptop(550, 130, "A");
+        ax1 = 500; ax2 = 140; fy = 125;
+      } else {
+        s += '<rect x="30" y="20" width="580" height="38" fill="#f7b24a" stroke="#777" stroke-dasharray="6,4"/>';
+        s += '<text x="320" y="44" text-anchor="middle" font-size="14">' + (key === "4" ? "Wireless distribution system" : "Distribution system") + '</text>';
+        if (key === "2") {
+          s += bss(30, 70, 400, 150) + bss(450, 70, 160, 150);
+          s += ap(390, 70, "AP") + laptop(90, 160, "B") + laptop(530, 160, "A");
+          ax1 = 370; ax2 = 120; fy = 120;
+        } else if (key === "3") {
+          s += bss(30, 70, 160, 150) + bss(210, 70, 400, 150);
+          s += ap(250, 70, "AP") + laptop(90, 160, "B") + laptop(550, 160, "A");
+          ax1 = 520; ax2 = 270; fy = 120;
+        } else {
+          s += bss(30, 70, 150, 150) + bss(460, 70, 150, 150);
+          s += ap(160, 70, "AP2") + ap(480, 70, "AP1") + laptop(90, 160, "B") + laptop(550, 160, "A");
+          ax1 = 455; ax2 = 185; fy = 95;
+        }
+      }
+      // 화살표 + 프레임 (Address 1~4 칸)
+      s += '<line x1="' + ax1 + '" y1="' + fy + '" x2="' + ax2 + '" y2="' + fy + '" stroke="#333" stroke-width="1.5" marker-end="url(#wfa-ah)"/>';
+      var cw = 46, fw = cw * 4 + 14, fx0 = (ax1 + ax2) / 2 - fw / 2, y = fy - 12;
+      for (var i = 0; i < 4; i++) {
+        var x = fx0 + i * cw + (i === 3 ? 14 : 0);
+        if (i === 3) s += '<rect x="' + (x - 14) + '" y="' + y + '" width="14" height="24" fill="#ddd" stroke="#555"/>';
+        var on = i < nFilled, txt = on ? cs.frame[i] : "";
+        var fill = !on ? "#f2f2f2" : (txt ? "#ffef3a" : "#555");
+        s += '<rect x="' + x + '" y="' + y + '" width="' + cw + '" height="24" fill="' + fill + '" stroke="#555"' + (i === nFilled - 1 ? ' stroke-width="2.5"' : "") + '/>';
+        if (txt) s += '<text x="' + (x + cw / 2) + '" y="' + (y + 16) + '" text-anchor="middle" font-weight="700" font-size="' + (txt.length > 3 ? 10 : 12) + '">' + txt + '</text>';
+        s += '<text x="' + (x + cw / 2) + '" y="' + (y + 38) + '" text-anchor="middle" fill="#555" font-size="11">' + (i + 1) + '</text>';
+      }
+      s += '<text x="' + (W / 2) + '" y="' + (H - 14) + '" text-anchor="middle" font-weight="700" fill="#1d65b3">' + cs.title +
+        '  (To DS = ' + cs.toDS + ', From DS = ' + cs.fromDS + ')</text>';
+      s += "</svg>";
+      return s;
+    };
+  }
+
+  global.SIMS["wifi_addressing"] = {
+    title: "802.11 주소 — To DS / From DS 와 Address 1~4",
+    desc: "L8 p.28–34. 802.11 프레임에는 주소 칸이 4 개 있다. FC 의 To DS / From DS 두 비트가 [[802.11 주소 케이스]] 를 정하고, " +
+      "'''Address 1 = 이 hop 의 수신자, Address 2 = 이 hop 의 송신자''' 라는 원칙에서 나머지가 따라 나온다. 값은 p.28 표 그대로.",
+    options: [
+      { key: "case", label: "케이스", values: [
+        { value: "1", label: "Case 1 (To DS 0, From DS 0)" },
+        { value: "2", label: "Case 2 (To DS 0, From DS 1)" },
+        { value: "3", label: "Case 3 (To DS 1, From DS 0)" },
+        { value: "4", label: "Case 4 (To DS 1, From DS 1)" }] }
+    ],
+    build: function (opts) {
+      var key = CASES[opts["case"]] ? opts["case"] : "1";
+      var cs = CASES[key]; cs.key = key;
+      var steps = [];
+      var v = { ToDS: "?", FromDS: "?", Addr1: "?", Addr2: "?", Addr3: "?", Addr4: "?", meaning: cs.what };
+      function push(desc, pp, filled, note) {
+        var snap = {}; Object.keys(v).forEach(function (k) { snap[k] = v[k]; });
+        steps.push({ desc: desc, pc: { T: pp.T, P: pp.P }, vars: snap, note: note, svg: makeSvg(cs, filled) });
+      }
+      var capNote = (key === "2" || key === "3") ?
+        "슬라이드 캡션은 뒤바뀐 것으로 보인다 (p.32 Case 2 \"heading into\", p.33 Case 3 \"coming out of\"). 표·그림 기준으로는 Case 2 = DS 에서 나옴, Case 3 = DS 로 들어감." : undefined;
+      push("'''" + cs.title + "''' — " + cs.what + ".", { T: null, P: 1 }, 0, capNote);
+      v.ToDS = cs.toDS; v.FromDS = cs.fromDS;
+      push(cs.why[0], { T: cs.row, P: 2 }, 0);
+      var keys = ["Addr1", "Addr2", "Addr3", "Addr4"];
+      for (var i = 0; i < 4; i++) {
+        v[keys[i]] = cs.addr[i];
+        push(cs.why[i + 1], { T: cs.row, P: 3 + i }, i + 1);
+      }
+      return {
+        panels: [
+          { id: "T", title: "p.28 표 (To DS / From DS → Address 1–4)", lang: "txt", lines: TABLE },
+          { id: "P", title: "채우는 순서", lang: "txt", lines: PROC }
+        ],
+        vars: [
+          { name: "ToDS", label: "To DS", group: "FC 비트" },
+          { name: "FromDS", label: "From DS", group: "FC 비트" },
+          { name: "Addr1", label: "Address 1", group: "주소" },
+          { name: "Addr2", label: "Address 2", group: "주소" },
+          { name: "Addr3", label: "Address 3", group: "주소" },
+          { name: "Addr4", label: "Address 4", group: "주소" },
+          { name: "meaning", label: "의미", group: "상황" }
+        ],
+        steps: steps
+      };
+    }
+  };
+})(typeof window !== "undefined" ? window : globalThis);
+
 // ===== AnimEngine =====
 // ============================================================
 // AnimEngine — 움직이는 그림(SVG + SMIL) 공용 재생기 (CONTRACT §7)
@@ -6565,6 +7202,120 @@ ANIMS["bit_stuffing_anim"] = {
   }
 };
 
+// ===== anims/bss_ess.js =====
+// ============================================================
+// bss_ess — L8 p.10–12 (BSS: ad hoc / infrastructure, ESS + distribution system, station mobility 3종)
+// 0–1.5s 구성 → 1.5–4.0 no-transition(BSS1 안) → 4.6–7.0 BSS-transition(AP1→AP2) → 7.6–10.0 ESS-transition(다른 ESS) → 10–13 "연속성 보장 ✗"
+// ============================================================
+window.ANIMS = window.ANIMS || {};
+ANIMS["bss_ess"] = {
+  title: "BSS · ESS 와 station mobility — 13초",
+  desc: "AP 가 없는 BSS 는 ad hoc, AP 가 있으면 infrastructure([[ad-hoc과 infrastructure]]). AP 가 있는 [[BSS]] 둘 이상을 [[distribution system]] 으로 묶으면 [[ESS]]. 스테이션은 BSS 안에서만(no-transition) → 다른 BSS 로(BSS-transition) → 다른 ESS 로(ESS-transition) 움직이며, IEEE 802.11 은 이동 중 연속성을 보장하지 않는다([[station mobility]])",
+  duration: 13,
+  build: function () {
+    var D = 13;
+    var C = {
+      a: "#1d65b3", aL: "#dbe8f7", b: "#2e9e4f", bL: "#dff3e4", c: "#e09a40", cL: "#fdeec2",
+      dev: "#3b2f4a", devL: "#efe9f6", red: "#d6465f", muted: "#777"
+    };
+    function r4(v) { return Math.round(v * 10000) / 10000; }
+    function txt(x, y, s, size, fill, extra) {
+      return '<text x="' + x + '" y="' + y + '" font-size="' + (size || 13) + '" fill="' + (fill || "#222") + '"' + (/text-anchor/.test(extra || "") ? "" : ' text-anchor="middle"') + (extra || "") + '>' + s + '</text>';
+    }
+    function show(from, to) {
+      var f = 0.12 / D, a = r4(from / D), b = r4(Math.min(from / D + f, (from + to) / 2 / D));
+      if (to >= D) return '<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;' + a + ';' + b + ';1" dur="' + D + 's" fill="freeze"/>';
+      var c = r4(Math.max(b, to / D - f)), d = r4(to / D);
+      return '<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;' + a + ';' + b + ';' + c + ';' + d + ';1" dur="' + D + 's" fill="freeze"/>';
+    }
+    function vis(from, to, inner) { return '<g opacity="0">' + inner + show(from, to) + '</g>'; }
+    function sta(x, y, col, colL) {
+      return '<rect x="' + (x - 13) + '" y="' + (y - 9) + '" width="26" height="18" rx="3" fill="' + (colL || "#eee") + '" stroke="' + (col || "#999") + '" stroke-width="1.5"/>' +
+        '<line x1="' + (x - 15) + '" y1="' + (y + 11) + '" x2="' + (x + 15) + '" y2="' + (y + 11) + '" stroke="' + (col || "#999") + '" stroke-width="2"/>';
+    }
+    function ap(x, y, name) {
+      return '<line x1="' + (x + 12) + '" y1="' + (y - 11) + '" x2="' + (x + 12) + '" y2="' + (y - 20) + '" stroke="' + C.dev + '" stroke-width="2"/>' +
+        '<rect x="' + (x - 22) + '" y="' + (y - 11) + '" width="44" height="22" rx="4" fill="' + C.dev + '"/>' + txt(x, y + 5, name, 12, "#fff", ' font-weight="700"');
+    }
+
+    var s = '<svg viewBox="0 0 760 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BSS, ESS, distribution system 과 station mobility 애니메이션">';
+
+    // ---- 단계 자막 ----
+    var caps = [
+      [0, 1.5, "BSS = 스테이션들의 묶음. AP 가 있으면 infrastructure, 없으면 ad hoc"],
+      [1.5, 4.0, "① No-transition mobility: 정지해 있거나 한 BSS 안에서만 움직인다"],
+      [4.0, 4.6, "AP 가 있는 BSS 들이 distribution system 으로 연결 = ESS"],
+      [4.6, 7.6, "② BSS-transition mobility: 같은 ESS 안에서 다른 BSS 로 (AP1 → AP2)"],
+      [7.6, 10.0, "③ ESS-transition mobility: 한 ESS 에서 다른 ESS 로"],
+      [10.0, D, "IEEE 802.11 은 이동 중 통신이 끊기지 않는다(continuous)고 보장하지 않는다 ✗"]
+    ];
+    caps.forEach(function (c) { s += vis(c[0], c[1], txt(380, 26, c[2], 14, "#222", ' font-weight="700"')); });
+
+    // ---- ad hoc BSS (오른쪽 위) ----
+    var AH = [[620, 70], [700, 62], [665, 98]];
+    s += '<rect x="585" y="42" width="160" height="78" rx="10" fill="#fffaf0" stroke="' + C.c + '" stroke-width="1.6"/>';
+    [[0, 1], [1, 2], [0, 2]].forEach(function (p) {
+      s += '<line x1="' + AH[p[0]][0] + '" y1="' + AH[p[0]][1] + '" x2="' + AH[p[1]][0] + '" y2="' + AH[p[1]][1] + '" stroke="' + C.c + '" stroke-width="1.5" stroke-dasharray="4 3">' +
+        '<animate attributeName="stroke-dashoffset" values="0;-140" dur="' + D + 's" fill="freeze"/></line>';
+    });
+    AH.forEach(function (p) { s += sta(p[0], p[1], C.c, C.cL); });
+    s += txt(665, 136, "Ad hoc BSS (AP 없음, 직접 통신)", 11, C.c, ' font-weight="700"');
+
+    // ---- ESS 1 ----
+    s += '<rect x="18" y="108" width="546" height="196" rx="10" fill="none" stroke="' + C.dev + '" stroke-width="1.6" stroke-dasharray="7 4"/>';
+    s += txt(30, 124, "ESS", 13, C.dev, ' text-anchor="start" font-weight="700"');
+    // BSS 박스
+    s += '<rect x="30" y="152" width="252" height="140" rx="8" fill="' + C.aL + '" fill-opacity="0.45" stroke="' + C.a + '" stroke-width="1.5"/>';
+    s += '<rect x="298" y="152" width="252" height="140" rx="8" fill="' + C.bL + '" fill-opacity="0.55" stroke="' + C.b + '" stroke-width="1.5"/>';
+    s += txt(156, 286, "BSS 1 (infrastructure)", 11, C.a, ' font-weight="700"');
+    s += txt(424, 286, "BSS 2 (infrastructure)", 11, C.b, ' font-weight="700"');
+    // distribution system
+    var A1 = [156, 180], A2 = [424, 180], A3 = [665, 190];
+    s += '<path d="M' + A1[0] + ',' + (A1[1] - 11) + ' V140 H' + A2[0] + ' V' + (A2[1] - 11) + '" fill="none" stroke="' + C.dev + '" stroke-width="5"/>';
+    s += txt(290, 133, "distribution system (wired / wireless)", 12, C.red, ' font-weight="700"');
+    s += vis(4.0, 4.7, '<path d="M' + A1[0] + ',' + (A1[1] - 11) + ' V140 H' + A2[0] + ' V' + (A2[1] - 11) + '" fill="none" stroke="' + C.c + '" stroke-width="9" stroke-opacity="0.5"/>');
+    // 다른 스테이션들
+    [[70, 248], [245, 230], [340, 220], [515, 250], [470, 215]].forEach(function (p) { s += sta(p[0], p[1]); });
+
+    // ---- 다른 ESS ----
+    s += '<rect x="585" y="152" width="160" height="152" rx="10" fill="none" stroke="' + C.muted + '" stroke-width="1.6" stroke-dasharray="7 4"/>';
+    s += txt(665, 286, "다른 ESS", 11, C.muted, ' font-weight="700"');
+    s += sta(715, 255);
+    s += ap(A3[0], A3[1], "AP3");
+
+    // ---- 이동하는 스테이션 ----
+    var T = [0, 1.5, 2.7, 4.0, 4.6, 7.0, 7.6, 10.0, D];
+    var P = [[105, 222], [105, 222], [215, 258], [150, 228], [150, 228], [390, 252], [390, 252], [650, 248], [650, 248]];
+    var kt = T.map(function (t) { return r4(t / D); }).join(";");
+    var px = P.map(function (p) { return p[0]; }).join(";"), py = P.map(function (p) { return p[1]; }).join(";");
+    function link(apx, apy, from, to, col, dash) {
+      return vis(from, to, '<line x1="' + apx + '" y1="' + (apy + 11) + '" x2="' + P[0][0] + '" y2="' + P[0][1] + '" stroke="' + col + '" stroke-width="2" stroke-dasharray="' + dash + '">' +
+        '<animate attributeName="x2" values="' + px + '" keyTimes="' + kt + '" dur="' + D + 's" fill="freeze"/>' +
+        '<animate attributeName="y2" values="' + py + '" keyTimes="' + kt + '" dur="' + D + 's" fill="freeze"/></line>');
+    }
+    s += link(A1[0], A1[1], 0, 5.8, C.a, "5 3");
+    s += link(A2[0], A2[1], 5.8, 8.7, C.b, "5 3");
+    s += link(A3[0], A3[1], 9.6, D, C.muted, "2 4");
+    s += ap(A1[0], A1[1], "AP1") + ap(A2[0], A2[1], "AP2");
+    s += '<g><g>' + sta(0, 0, C.a, C.aL) + txt(0, 4, "S", 11, C.a, ' font-weight="700"') + '</g>' +
+      '<animateTransform attributeName="transform" type="translate" values="' + P.map(function (p) { return p[0] + ',' + p[1]; }).join(";") + '" keyTimes="' + kt + '" dur="' + D + 's" fill="freeze"/></g>';
+
+    // ---- 단계별 표지 ----
+    s += vis(1.5, 4.0, '<rect x="30" y="80" width="260" height="22" rx="11" fill="#fff" stroke="' + C.a + '"/>' + txt(160, 95, "① no-transition (BSS 1 안)", 11, C.a, ' font-weight="700"'));
+    s += vis(5.8, 7.6, '<rect x="30" y="80" width="260" height="22" rx="11" fill="#fff" stroke="' + C.b + '"/>' + txt(160, 95, "② BSS-transition: AP1 → AP2", 11, C.b, ' font-weight="700"'));
+    s += vis(8.6, 9.7, '<circle cx="572" cy="250" r="18" fill="' + C.red + '" fill-opacity="0.15" stroke="' + C.red + '" stroke-width="2"/>' + txt(572, 256, "✗", 16, C.red, ' font-weight="700"') +
+      txt(572, 222, "연결 끊김", 11, C.red, ' font-weight="700"'));
+    s += vis(9.6, D, '<rect x="30" y="80" width="260" height="22" rx="11" fill="#fff" stroke="' + C.red + '"/>' + txt(160, 95, "③ ESS-transition: 다른 ESS 로", 11, C.red, ' font-weight="700"') +
+      '<rect x="620" y="215" width="90" height="18" rx="3" fill="#fff" stroke="' + C.red + '"/>' + txt(665, 228, "연속성 보장 ✗", 12, C.red, ' font-weight="700"'));
+
+    // ---- 요점 ----
+    s += '<rect x="20" y="326" width="720" height="32" rx="6" fill="#f6f6f6" stroke="#ddd"/>';
+    s += txt(380, 347, "BSS(ad hoc / infrastructure) 여럿 + distribution system = ESS  |  mobility: no-transition · BSS-transition · ESS-transition", 12, "#333", ' font-weight="700"');
+    s += '</svg>';
+    return s;
+  }
+};
+
 // ===== anims/composite_fourier.js =====
 // ============================================================
 // composite_fourier — f, 3f, 5f 사인파를 더하면 사각파에 가까워진다 + frequency domain 막대 + bandwidth
@@ -7001,6 +7752,118 @@ ANIMS["crc_shift"] = {
 
     // ---- 요점 ----
     s += txt(380, 368, "CRC: 덧셈·뺄셈 모두 XOR · 최상위 비트가 0 이면 0000 으로 나눔 · 송신은 remainder 를 붙이고, 수신은 syndrome 이 0 인지 본다", 12, "#333");
+    s += '</svg>';
+    return s;
+  }
+};
+
+// ===== anims/csma_ca_timeline.js =====
+// ============================================================
+// csma_ca_timeline — L8 p.14–15 (DCF 그림 · NAV). 슬라이드의 세로 시간축을 가로로 눕힘
+// 줄: A(Source) / B(Destination) / Other stations(C, D)
+// 1.2s DIFS → 2.2 RTS → 3.4 SIFS → 4.0 CTS → 5.2 SIFS → 5.8 Data → 8.4 SIFS → 9.0 ACK → 10.2 끝 (NAV 는 RTS 끝~ACK 끝)
+// ============================================================
+window.ANIMS = window.ANIMS || {};
+ANIMS["csma_ca_timeline"] = {
+  title: "CSMA/CA 타임라인 — DIFS·RTS·CTS·Data·ACK 와 NAV",
+  desc: "[[DCF]] 의 [[CSMA/CA]]: A 는 DIFS 를 기다린 뒤 RTS, B 는 SIFS 뒤 CTS, A 는 SIFS 뒤 Data, B 는 SIFS 뒤 ACK. 다른 스테이션들은 RTS/CTS 에 담긴 duration 으로 [[NAV]] 를 세우고 그동안 채널을 보지 않는다. 간격은 [[interframe space]]",
+  duration: 13,
+  build: function () {
+    var D = 13;
+    var C = {
+      a: "#1d65b3", aL: "#dbe8f7", b: "#2e9e4f", bL: "#dff3e4", c: "#e09a40", cL: "#fdeec2",
+      dev: "#3b2f4a", devL: "#efe9f6", red: "#d6465f", muted: "#777"
+    };
+    function r4(v) { return Math.round(v * 10000) / 10000; }
+    function txt(x, y, s, size, fill, extra) {
+      return '<text x="' + x + '" y="' + y + '" font-size="' + (size || 13) + '" fill="' + (fill || "#222") + '"' + (/text-anchor/.test(extra || "") ? "" : ' text-anchor="middle"') + (extra || "") + '>' + s + '</text>';
+    }
+    function show(from, to) {
+      var f = 0.12 / D, a = r4(from / D), b = r4(Math.min(from / D + f, (from + to) / 2 / D));
+      if (to >= D) return '<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;' + a + ';' + b + ';1" dur="' + D + 's" fill="freeze"/>';
+      var c = r4(Math.max(b, to / D - f)), d = r4(to / D);
+      return '<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;' + a + ';' + b + ';' + c + ';' + d + ';1" dur="' + D + 's" fill="freeze"/>';
+    }
+    function vis(from, to, inner) { return '<g opacity="0">' + inner + show(from, to) + '</g>'; }
+    function grow(w, t0, t1) {
+      return '<animate attributeName="width" values="0;0;' + w + ';' + w + '" keyTimes="0;' + r4(t0 / D) + ';' + r4(t1 / D) + ';1" dur="' + D + 's" fill="freeze"/>';
+    }
+    var X0 = 160, RH = 34;
+    var ROWS = [[95, "A", "Source", C.a, C.aL], [165, "B", "Destination", C.b, C.bL], [235, "C, D", "Other stations", C.muted, "#eee"]];
+    // 왼쪽→오른쪽 픽셀 구간: [x0, x1, row, label, t0, t1, kind]
+    var SEG = [
+      [160, 205, 0, "DIFS", 1.2, 2.2, "ifs"],
+      [205, 275, 0, "RTS", 2.2, 3.4, "frame"],
+      [275, 297, 1, "SIFS", 3.4, 4.0, "ifs"],
+      [297, 367, 1, "CTS", 4.0, 5.2, "frame"],
+      [367, 389, 0, "SIFS", 5.2, 5.8, "ifs"],
+      [389, 589, 0, "Data", 5.8, 8.4, "frame"],
+      [589, 611, 1, "SIFS", 8.4, 9.0, "ifs"],
+      [611, 681, 1, "ACK", 9.0, 10.2, "frame"]
+    ];
+
+    var s = '<svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CSMA/CA DCF 타임라인 애니메이션">';
+    s += '<defs><pattern id="ct_hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#f3f3f3"/><line x1="0" y1="0" x2="0" y2="6" stroke="#bbb" stroke-width="2"/></pattern>' +
+      '<marker id="ct_arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker></defs>';
+
+    // ---- 단계 자막 ----
+    var caps = [
+      [0, 1.2, "송신 A 에 보낼 frame 이 생겼다 — 먼저 채널이 idle 인지 감지(carrier sense)"],
+      [1.2, 2.2, "채널 idle → DIFS(DCF interframe space) 만큼 더 기다린다"],
+      [2.2, 3.4, "A → B: RTS (Request To Send) — 채널을 점유할 duration 을 담는다"],
+      [3.4, 4.0, "B 는 SIFS(short interframe space) 만큼 기다린 뒤"],
+      [4.0, 5.2, "B → A: CTS (Clear To Send) — 다른 스테이션들은 NAV 를 세운다"],
+      [5.2, 5.8, "A 도 SIFS 를 기다린 뒤"],
+      [5.8, 8.4, "A → B: Data — 다른 스테이션들은 NAV 가 끝날 때까지 채널을 보지 않는다"],
+      [8.4, 9.0, "B 는 SIFS 뒤에"],
+      [9.0, 10.2, "B → A: ACK — 충돌을 감지하는 대신 ACK 로 성공을 확인한다"],
+      [10.2, D, "ACK 끝 = NAV 끝 → 다른 스테이션들이 다시 채널을 감지할 수 있다"]
+    ];
+    caps.forEach(function (c) { s += vis(c[0], c[1], txt(380, 26, c[2], 14, "#222", ' font-weight="700"')); });
+
+    // ---- 줄 라벨·기준선 ----
+    ROWS.forEach(function (r) {
+      s += '<line x1="' + X0 + '" y1="' + (r[0] + RH / 2) + '" x2="725" y2="' + (r[0] + RH / 2) + '" stroke="#ccc" stroke-width="1.2"/>';
+      s += txt(80, r[0] + 14, r[1], 15, r[3], ' font-weight="700"');
+      s += txt(80, r[0] + 30, r[2], 11, C.muted);
+    });
+    s += '<line x1="' + X0 + '" y1="62" x2="' + X0 + '" y2="280" stroke="#ccc" stroke-dasharray="3 3"/>';
+    s += '<line x1="' + X0 + '" y1="290" x2="730" y2="290" stroke="#555" stroke-width="1.5" marker-end="url(#ct_arr)"/>';
+    s += txt(722, 284, "Time", 12, "#555", ' text-anchor="end"');
+
+    // ---- 블록들 ----
+    SEG.forEach(function (g) {
+      var r = ROWS[g[2]], y = r[0], w = g[1] - g[0], mid = (g[0] + g[1]) / 2;
+      if (g[6] === "ifs") {
+        s += '<rect x="' + g[0] + '" y="' + (y + 6) + '" height="' + (RH - 12) + '" width="0" fill="url(#ct_hatch)" stroke="#999">' + grow(w, g[4], g[5]) + '</rect>';
+        s += vis(g[4], D, txt(mid, y - 4, g[3], 11, "#555", ' font-weight="700"'));
+      } else {
+        s += '<rect x="' + g[0] + '" y="' + y + '" height="' + RH + '" width="0" rx="2" fill="' + r[4] + '" stroke="' + r[3] + '" stroke-width="2">' + grow(w, g[4], g[5]) + '</rect>';
+        s += vis(Math.max(g[4] + 0.3, g[5] - 0.4), D, txt(mid, y + 22, g[3], 14, r[3], ' font-weight="700"'));
+      }
+    });
+    // A↔B 방향 표시 (frame 이 끝날 때 상대 줄로)
+    [[1, 240, 0, 1], [3, 332, 1, 0], [5, 489, 0, 1], [7, 646, 1, 0]].forEach(function (q) {
+      var g = SEG[q[0]], y0 = ROWS[q[2]][0], y1 = ROWS[q[3]][0];
+      var ya = q[2] < q[3] ? y0 + RH + 2 : y0 - 2, yb = q[2] < q[3] ? y1 - 2 : y1 + RH + 2;
+      s += vis(g[5], D, '<line x1="' + q[1] + '" y1="' + ya + '" x2="' + q[1] + '" y2="' + yb + '" stroke="#555" stroke-width="1.4" stroke-dasharray="3 2" marker-end="url(#ct_arr)"/>');
+    });
+
+    // ---- NAV: RTS 끝(275) → ACK 끝(681), 지금 진행 중인 블록의 오른쪽 끝을 따라 자란다 ----
+    var NY = ROWS[2][0], NX = 275;
+    var kt = [0, 3.4, 4.0, 5.2, 5.8, 8.4, 9.0, 10.2, D].map(function (t) { return r4(t / D); }).join(";");
+    var wv = [0, 0, 297, 367, 389, 589, 611, 681, 681].map(function (x, i) { return i < 2 ? 0 : x - NX; }).join(";");
+    s += '<rect x="' + NX + '" y="' + NY + '" height="' + RH + '" width="0" fill="#d9d9d9" stroke="#777" stroke-width="1.5">' +
+      '<animate attributeName="width" values="' + wv + '" keyTimes="' + kt + '" dur="' + D + 's" fill="freeze"/></rect>';
+    s += vis(4.0, 9.0, txt(NX + 8, NY + 22, "NAV", 13, "#333", ' text-anchor="start" font-weight="700"'));
+    s += vis(9.0, D, txt(478, NY + 22, "NAV — 이 시간 동안 채널을 감지하지 않음", 13, "#333", ' font-weight="700"'));
+    s += vis(3.4, D, txt(NX, NY + RH + 15, "RTS 의 duration 으로 설정 (CTS 를 들은 쪽도)", 10, C.muted, ' text-anchor="start"'));
+    s += vis(10.2, D, '<line x1="681" y1="62" x2="681" y2="280" stroke="' + C.b + '" stroke-dasharray="4 3" stroke-width="1.5"/>' +
+      txt(690, NY + 14, "이제", 11, C.b, ' text-anchor="start" font-weight="700"') + txt(690, NY + 28, "감지 가능", 11, C.b, ' text-anchor="start" font-weight="700"'));
+
+    // ---- 요점 ----
+    s += '<rect x="20" y="302" width="720" height="30" rx="6" fill="#f6f6f6" stroke="#ddd"/>';
+    s += txt(380, 322, "CSMA/CA 는 충돌을 감지하지 않고(무선은 half-duplex) 피한다: RTS/CTS + NAV + IFS", 13, "#333", ' font-weight="700"');
     s += '</svg>';
     return s;
   }
@@ -7854,6 +8717,141 @@ ANIMS["hamming_sphere"] = {
 
     // ---- 요점 ----
     s += txt(380, 360, "s 개 오류 검출 ⟺ " + DM + " = s + 1 · t 개 오류 정정 ⟺ " + DM + " = 2t + 1 — 정정은 영역 두 개가 안 겹칠 만큼 멀어야 한다", 12, "#333");
+    s += '</svg>';
+    return s;
+  }
+};
+
+// ===== anims/hidden_station.js =====
+// ============================================================
+// hidden_station — L8 p.20–21 (hidden station problem / RTS·CTS 해결), p.35 (exposed station)
+// ① 0–5.8s: A→B Data 중 C 가 채널 idle 로 보고 전송 → B 에서 collision (A·C 는 모름)
+// ② 5.8–11.6s: A 의 RTS → B 의 CTS 가 A·C 양쪽에 닿음 → C 가 NAV 타이머 → A 의 Data 무사
+// ③ 11.6–14s: exposed station — A→B 전송 중, C 는 D 에게 보내도 되는데 A 의 RTS 때문에 참음
+// ============================================================
+window.ANIMS = window.ANIMS || {};
+ANIMS["hidden_station"] = {
+  title: "Hidden station 과 RTS/CTS — 14초",
+  desc: "A 와 C 는 서로의 전파 범위 밖이라 C 는 A 의 전송을 못 듣고 보내 버린다 → B 에서 [[collision]], 그런데 아무도 감지 못 함([[hidden station problem]]). [[RTS와 CTS]] 핸드셰이크에서 B 의 CTS 가 C 에게도 닿으면 C 는 [[NAV]] 를 세우고 기다린다. 마지막 장면은 반대 경우인 [[exposed station problem]]",
+  duration: 14,
+  build: function () {
+    var D = 14;
+    var C = {
+      a: "#1d65b3", aL: "#dbe8f7", b: "#2e9e4f", bL: "#dff3e4", c: "#e09a40", cL: "#fdeec2",
+      dev: "#3b2f4a", devL: "#efe9f6", red: "#d6465f", muted: "#777"
+    };
+    function r4(v) { return Math.round(v * 10000) / 10000; }
+    function txt(x, y, s, size, fill, extra) {
+      return '<text x="' + x + '" y="' + y + '" font-size="' + (size || 13) + '" fill="' + (fill || "#222") + '"' + (/text-anchor/.test(extra || "") ? "" : ' text-anchor="middle"') + (extra || "") + '>' + s + '</text>';
+    }
+    function show(from, to) {
+      var f = 0.12 / D, a = r4(from / D), b = r4(Math.min(from / D + f, (from + to) / 2 / D));
+      if (to >= D) return '<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;' + a + ';' + b + ';1" dur="' + D + 's" fill="freeze"/>';
+      var c = r4(Math.max(b, to / D - f)), d = r4(to / D);
+      return '<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;' + a + ';' + b + ';' + c + ';' + d + ';1" dur="' + D + 's" fill="freeze"/>';
+    }
+    function vis(from, to, inner) { return '<g opacity="0">' + inner + show(from, to) + '</g>'; }
+    function frame(x0, y0, x1, y1, t0, t1, from, to, col, colL, label, w) {
+      w = w || 40;
+      return '<g opacity="0">' +
+        '<g><rect x="' + (-w / 2) + '" y="-9" width="' + w + '" height="18" rx="2" fill="' + colL + '" stroke="' + col + '" stroke-width="1.8"/>' +
+        txt(0, 4, label, 11, col, ' font-weight="700"') +
+        '<animateTransform attributeName="transform" type="translate" values="' + x0 + ',' + y0 + ';' + x0 + ',' + y0 + ';' + x1 + ',' + y1 + ';' + x1 + ',' + y1 +
+        '" keyTimes="0;' + r4(t0 / D) + ';' + r4(t1 / D) + ';1" dur="' + D + 's" fill="freeze"/></g>' +
+        show(from, to) + '</g>';
+    }
+    // 전파가 퍼지는 원 (t0→t1 동안 반지름 0→rx)
+    function ring(cx, cy, rx, ry, t0, t1, from, to, col) {
+      var kt = '0;' + r4(t0 / D) + ';' + r4(t1 / D) + ';1';
+      return '<g opacity="0"><ellipse cx="' + cx + '" cy="' + cy + '" rx="0" ry="0" fill="' + col + '" fill-opacity="0.07" stroke="' + col + '" stroke-width="2" stroke-dasharray="5 3">' +
+        '<animate attributeName="rx" values="0;0;' + rx + ';' + rx + '" keyTimes="' + kt + '" dur="' + D + 's" fill="freeze"/>' +
+        '<animate attributeName="ry" values="0;0;' + ry + ';' + ry + '" keyTimes="' + kt + '" dur="' + D + 's" fill="freeze"/>' +
+        '</ellipse>' + show(from, to) + '</g>';
+    }
+    function host(x, y, name, col, colL) {
+      return '<rect x="' + (x - 20) + '" y="' + (y - 15) + '" width="40" height="30" rx="4" fill="' + colL + '" stroke="' + col + '" stroke-width="2"/>' + txt(x, y + 5, name, 15, col, ' font-weight="700"');
+    }
+
+    var s = '<svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="hidden station 문제와 RTS/CTS 해결, exposed station 애니메이션">';
+
+    // ---- 단계 자막 ----
+    var caps = [
+      [0, 1.5, "A 와 C 는 서로의 전파 범위 밖 — 가운데 B 만 둘 다 들린다"],
+      [1.5, 2.6, "A → B 로 Data 전송 시작 (A 의 신호는 C 까지 못 간다)"],
+      [2.6, 3.5, "C 가 carrier sense: 아무것도 안 들림 → 채널 idle 로 판단"],
+      [3.5, 4.4, "C 도 B 에게 전송 시작 — C 에게 A 는 숨은(hidden) 스테이션"],
+      [4.4, 5.8, "B 에서 collision! — A·C 는 서로 못 들으니 CSMA/CD 로는 감지 못 함"],
+      [5.8, 7.0, "해결: A 가 먼저 짧은 RTS(Request To Send) 를 보낸다"],
+      [7.0, 8.6, "B 의 CTS(Clear To Send, duration 포함) 가 A 와 C 양쪽에 닿는다"],
+      [8.6, 10.6, "C 는 CTS 의 duration 으로 NAV 타이머를 세우고 조용히 기다린다"],
+      [10.6, 11.6, "A 의 Data 가 충돌 없이 B 에 도착 — hidden station 문제 해결"],
+      [11.6, D, "반대 경우 exposed station: C→D 는 괜찮은데 A 의 RTS 를 들어서 참는다"]
+    ];
+    caps.forEach(function (c) { s += vis(c[0], c[1], txt(380, 26, c[2], 14, "#222", ' font-weight="700"')); });
+
+    // ---- 장면 제목 ----
+    s += vis(0, 5.8, txt(380, 54, "① 문제: hidden station problem", 13, C.red, ' font-weight="700"'));
+    s += vis(5.8, 11.6, txt(380, 54, "② 해결: RTS/CTS handshake + NAV", 13, C.b, ' font-weight="700"'));
+    s += vis(11.6, D, txt(380, 54, "③ 반대 경우: exposed station problem (p.35)", 13, C.dev, ' font-weight="700"'));
+
+    // ================= ①·② 공통 그림 (0–11.6s) =================
+    var Y = 175, AX = 225, BX = 380, CX = 535, RX = 215, RY = 92;
+    var m = '';
+    m += '<ellipse cx="' + AX + '" cy="' + Y + '" rx="' + RX + '" ry="' + RY + '" fill="' + C.a + '" fill-opacity="0.04" stroke="' + C.a + '" stroke-width="1.4"/>';
+    m += '<ellipse cx="' + CX + '" cy="' + Y + '" rx="' + RX + '" ry="' + RY + '" fill="' + C.c + '" fill-opacity="0.05" stroke="' + C.c + '" stroke-width="1.4"/>';
+    m += txt(AX - 70, Y - RY + 18, "Range of A", 12, C.a);
+    m += txt(CX + 70, Y - RY + 18, "Range of C", 12, C.c);
+    m += txt(BX, Y + 32, "겹친 영역", 11, C.muted);
+    // 장면별 동적 요소
+    // ① A→B Data, C→B Data, 충돌
+    m += ring(AX, Y, RX, RY, 1.5, 2.6, 1.5, 4.4, C.a);
+    m += frame(AX + 30, Y - 34, BX - 34, Y - 34, 1.5, 4.4, 1.5, 5.8, C.a, C.aL, "Data");
+    m += vis(2.6, 3.5, '<rect x="' + (CX - 68) + '" y="' + (Y - 66) + '" width="136" height="22" rx="11" fill="#fff" stroke="' + C.c + '"/>' + txt(CX, Y - 51, "…조용함 = idle?", 12, C.c, ' font-weight="700"'));
+    m += vis(2.6, 5.8, '<line x1="' + (AX + RX) + '" y1="' + (Y + 40) + '" x2="' + (AX + RX) + '" y2="' + (Y + 66) + '" stroke="' + C.a + '" stroke-width="3"/>' + txt(AX + RX + 6, Y + 62, "← A 신호는 여기까지 (C 에 못 닿음)", 11, C.a, ' text-anchor="start"'));
+    m += frame(CX - 30, Y - 34, BX + 34, Y - 34, 3.5, 4.4, 3.5, 5.8, C.c, C.cL, "Data");
+    m += vis(4.4, 5.8, '<circle cx="' + BX + '" cy="' + (Y - 34) + '" r="30" fill="' + C.red + '" fill-opacity="0.18" stroke="' + C.red + '" stroke-width="2.5">' +
+      '<animate attributeName="r" values="24;36;24" begin="4.4s" dur="0.7s" repeatCount="2"/></circle>' +
+      txt(BX, Y - 74, "collision!", 15, C.red, ' font-weight="700"'));
+    m += vis(4.4, 5.8, txt(AX, Y + 46, "A: 충돌 모름", 12, C.red, ' font-weight="700"') + txt(CX, Y + 46, "C: 충돌 모름", 12, C.red, ' font-weight="700"'));
+    // ② RTS, CTS, NAV, Data
+    m += ring(AX, Y, RX, RY, 5.8, 6.8, 5.8, 7.0, C.a);
+    m += frame(AX + 30, Y - 34, BX - 30, Y - 34, 5.8, 6.9, 5.8, 7.1, C.a, C.aL, "RTS", 34);
+    m += ring(BX, Y, 200, 80, 7.0, 8.0, 7.0, 8.7, C.b);
+    m += frame(BX - 30, Y - 34, AX + 30, Y - 34, 7.0, 8.1, 7.0, 8.7, C.b, C.bL, "CTS", 34);
+    m += frame(BX + 30, Y - 34, CX - 30, Y - 34, 7.0, 8.1, 7.0, 8.7, C.b, C.bL, "CTS", 34);
+    m += vis(7.6, 8.7, txt(BX, Y + 110, "CTS 안에 duration(= Data+ACK 시간) 이 들어 있다", 12, C.b, ' font-weight="700"'));
+    // NAV 막대 (C 아래, 줄어드는 타이머)
+    var NW = 110, NX = CX - NW / 2, NY = Y + 28;
+    m += vis(8.6, 11.6, '<rect x="' + NX + '" y="' + NY + '" width="' + NW + '" height="14" rx="2" fill="#fff" stroke="' + C.muted + '"/>' +
+      '<rect x="' + NX + '" y="' + NY + '" width="' + NW + '" height="14" rx="2" fill="#ccc">' +
+      '<animate attributeName="width" values="' + NW + ';' + NW + ';0;0" keyTimes="0;' + r4(8.6 / D) + ';' + r4(11.4 / D) + ';1" dur="' + D + 's" fill="freeze"/></rect>' +
+      txt(CX, NY + 11, "NAV", 10, "#333", ' font-weight="700"') +
+      txt(CX, NY + 30, "C: 타이머 끝날 때까지 대기", 11, C.c, ' font-weight="700"'));
+    m += frame(AX + 30, Y - 34, BX - 34, Y - 34, 8.8, 10.6, 8.8, 11.6, C.a, C.aL, "Data");
+    m += vis(10.6, 11.6, txt(BX, Y - 58, "✓ 무사 도착", 13, C.b, ' font-weight="700"'));
+    // 호스트
+    m += host(AX, Y, "A", C.a, C.aL) + host(BX, Y, "B", C.b, C.bL) + host(CX, Y, "C", C.c, C.cL);
+    s += '<g>' + m + '<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;' + r4(11.5 / D) + ';' + r4(11.6 / D) + ';1" dur="' + D + 's" fill="freeze"/></g>';
+
+    // ================= ③ exposed station (11.6–14s) =================
+    var e = '', EY = 165, EB = 150, EA = 320, EC = 490, ED = 660;
+    e += '<ellipse cx="' + EA + '" cy="' + EY + '" rx="200" ry="80" fill="' + C.a + '" fill-opacity="0.05" stroke="' + C.a + '" stroke-width="1.4"/>';
+    e += txt(EA, EY - 86, "Range of A", 12, C.a);
+    e += frame(EA - 30, EY - 32, EB + 30, EY - 32, 11.8, 13.0, 11.8, D, C.a, C.aL, "Data");
+    e += txt(EB + 28, EY + 40, "A → B 전송 중", 11, C.a);
+    e += '<line x1="' + (EC + 24) + '" y1="' + EY + '" x2="' + (ED - 26) + '" y2="' + EY + '" stroke="' + C.muted + '" stroke-width="2" stroke-dasharray="6 4"/>';
+    e += '<path d="M' + (ED - 26) + ',' + EY + ' l-9,-5 v10 z" fill="' + C.muted + '"/>';
+    e += txt((EC + ED) / 2, EY - 10, "C→D ?", 12, C.muted, ' font-weight="700"');
+    e += vis(12.4, D, txt((EC + ED) / 2 + 2, EY + 6, "✗", 20, C.red, ' font-weight="700"') +
+      '<rect x="' + (EC - 70) + '" y="' + (EY + 30) + '" width="250" height="40" rx="6" fill="#fff" stroke="' + C.red + '"/>' +
+      txt(EC + 55, EY + 47, "A 의 RTS 를 들었으니 참는다…", 12, C.red, ' font-weight="700"') +
+      txt(EC + 55, EY + 63, "사실 D 쪽은 B 와 무관 → 보내도 됐다", 11, C.muted));
+    e += host(EB, EY, "B", C.b, C.bL) + host(EA, EY, "A", C.a, C.aL) + host(EC, EY, "C", C.c, C.cL) + host(ED, EY, "D", C.muted, "#eee");
+    s += vis(11.6, D, e);
+
+    // ---- 요점 ----
+    s += '<rect x="20" y="318" width="720" height="30" rx="6" fill="#f6f6f6" stroke="#ddd"/>';
+    s += txt(380, 338, "Hidden: 못 들어서 충돌(감지도 못 함) → RTS/CTS + NAV 로 완화  |  Exposed: 들려서 괜히 참음 → 효율 ↓", 12, "#333", ' font-weight="700"');
     s += '</svg>';
     return s;
   }
@@ -9738,7 +10736,7 @@ window.addEventListener("load", function () {
 })();
 
 // ===== offline (build.py 생성) =====
-const OFFLINE_VER = "d1fb1cd816";
+const OFFLINE_VER = "e3a87551e7";
 const OFFLINE_IMAGES = [
  "images/L0-3.png",
  "images/L0-5.png",
@@ -9892,7 +10890,22 @@ const OFFLINE_IMAGES = [
  "images/L7-34.png",
  "images/L7-36.png",
  "images/L7-41.png",
- "images/L7-42.png"
+ "images/L7-42.png",
+ "images/L8-10.png",
+ "images/L8-11.png",
+ "images/L8-12.png",
+ "images/L8-14.png",
+ "images/L8-18.png",
+ "images/L8-20.png",
+ "images/L8-24.png",
+ "images/L8-26.png",
+ "images/L8-27.png",
+ "images/L8-28.png",
+ "images/L8-29.png",
+ "images/L8-30.png",
+ "images/L8-35.png",
+ "images/L8-36.png",
+ "images/L8-8.png"
 ];
 
 </script>

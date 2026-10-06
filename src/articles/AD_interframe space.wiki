@@ -1,0 +1,48 @@
+key: interframe space
+title: Interframe Space (IFS: DIFS · SIFS · PIFS)
+category: 10강 WiFi, 용어
+---
+'''Interframe space (IFS)''' 는 802.11 에서 프레임과 프레임 사이에 '''일부러 비워 두는 대기 시간'''이다. 슬라이드에 나오는 것은 세 가지 — '''DIFS'''(DCF interframe space: DCF 스테이션이 새 전송을 시작하기 전), '''SIFS'''(short interframe space: 핸드셰이크 안에서 응답하기 전), '''PIFS'''(PCF 용, DIFS 보다 짧음). 원리는 하나다: '''짧게 기다리는 쪽이 먼저 채널을 잡는다 = 우선권.''' L8 p.14, p.22, p.24.
+
+{def}"DIFS: '''DCF interframe space''' · SIFS: '''short interframe space'''" (p.14)
+"To give priority to PCF over DCF, another interframe space, '''PIFS''', has been defined. '''PIFS is shorter than DIFS'''." (p.22){/def}
+
+[[img:L8-14.png|p.14 A 는 DIFS 를 기다린 뒤 RTS, 그 뒤 모든 응답(CTS·Data·ACK) 앞에는 SIFS|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''inter-frame space''' — 프레임 '''사이(inter)'''의 '''빈 칸(space)'''.
+* 앞 글자가 '''누가 쓰는 간격'''인지 알려 준다: '''D'''IFS = '''D'''CF, '''P'''IFS = '''P'''CF, '''S'''IFS = '''S'''hort.
+
+== 길이 순서와 우선권 ⭐⭐ ==
+$$\text{SIFS} < \text{PIFS} < \text{DIFS}$$
+
+{|
+! IFS || 누가 / 언제 (슬라이드 그림) || 상대적 길이 || 우선권
+|-
+| '''SIFS''' || 이미 시작된 교환 안의 응답: CTS, Data, ACK 앞 (p.14) / AP 의 Beacon→Poll 사이, polled station 의 응답 (p.24) || 가장 짧음 || 가장 높음
+|-
+| '''PIFS''' || PCF 의 AP 가 contention-free 구간을 열 때 (p.24: Beacon 앞) || 중간 || PCF 가 DCF 보다 우선
+|-
+| '''DIFS''' || DCF 스테이션이 '''새''' 전송(RTS)을 시작할 때 (p.14) || 가장 긺 || 가장 낮음
+|}
+
+{info}슬라이드가 명시하는 부등식은 '''PIFS < DIFS''' (p.22) 뿐이다. SIFS 가 가장 짧다는 것은 이름("short")과 그림의 쓰임새에서 나오며, 802.11 표준·Forouzan 의 정리(SIFS < PIFS < DIFS)와 같다 (Forouzan 보충).{/info}
+
+== 왜 짧은 쪽이 우선권인가 ==
+<pre class="txt">
+채널이 idle 이 되는 순간, 모두가 각자 정해진 IFS 만큼 기다린다.
+1. SIFS 를 쓰는 스테이션(진행 중 교환의 응답자)이 가장 먼저 끝남 → 즉시 송신
+2. 그 송신 때문에 채널이 다시 busy → PIFS·DIFS 로 기다리던 쪽은 "아직 busy" 를 보고 물러남
+3. 그래서: 진행 중인 RTS-CTS-Data-ACK 교환은 '''끊기지 않고''' 이어지고,
+           PCF(PIFS) 는 DCF(DIFS) 보다 '''먼저''' 채널을 잡는다
+</pre>
+
+[[anim:csma_ca_timeline|DIFS(긴 간격)는 맨 처음 한 번, 그 뒤 SIFS(짧은 간격)가 CTS·Data·ACK 앞에 끼어드는 리듬을 보라]]
+
+{analogy}🎭 '''엘리베이터 앞 줄서기.''' 문이 열리면 이미 대화 중인 일행(SIFS)은 바로 이어서 탄다. 그다음 VIP(PIFS, AP). 일반 손님(DIFS)은 한 박자 더 기다렸다가 "아무도 안 타네" 할 때 탄다. 기다리는 시간이 짧을수록 먼저 탄다.{/analogy}
+
+{quiz}PCF 가 DCF 보다 우선권을 갖는 이유를 interframe space 로 설명하시오.{/quiz}
+{answer}PCF 의 AP 는 '''PIFS''' 만 기다린 뒤 전송하고, DCF 스테이션은 '''DIFS''' 를 기다린다. '''PIFS 가 DIFS 보다 짧으므로''' 채널이 idle 이 되면 AP 가 먼저 전송을 시작하고, DCF 스테이션은 그때 채널이 busy 임을 보고 물러난다(p.22).{/answer}
+
+== 관련 문서 ==
+* [[DCF]] · [[PCF]] · [[CSMA/CA]] · [[RTS와 CTS]] · [[NAV]] · [[repetition interval]] · [[CH04 WiFi]]

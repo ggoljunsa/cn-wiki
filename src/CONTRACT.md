@@ -38,6 +38,7 @@
 | L5 | CH03_Data Link Layer (1) | 56 | p.7– (p.2–6 복습) | `../정리본/CH03_정리.md` |
 | L6 | CH03_Data Link Layer (2) | 63 | 전부 (recap 없음) | `../정리본/CH03(2)_정리.md` |
 | L7 | CH04_Local Area Networks (1) | 42 | 전부 (p.2–3 은 L6 Ex 3.13/3.14 의 정정판, p.4–8 복습) — Ethernet 4세대 | `../정리본/CH04_정리.md` |
+| L8 | CH04_Local Area Networks (2) | 36 | p.6– (p.2–5 복습) — WiFi/IEEE 802.11 전부: wireless LAN 특성, BSS/ESS, DCF(CSMA/CA, RTS/CTS, NAV, hidden/exposed station), PCF, repetition interval, fragmentation, 프레임 9 필드, 주소 4 케이스, physical layer 표. Bluetooth 는 이 덱에 없음(다음 덱). 10/6 수업 전 선제 작성, 녹음본 없음 | `../정리본/CH04(2)_정리.md` |
 
 복습 슬라이드는 내용이 같으면 **원 덱의 페이지를 캡처**한다(예: attenuation 그림은 L2-41). 다만 복습 덱에서 그림이 더 좋으면 그쪽을 써도 된다.
 
@@ -140,6 +141,11 @@ main(대문) · 읽는 순서 · 시험 정보 · 자주 틀리는 함정 모음
 **사전**: IEEE Project 802 · Standard Ethernet · connectionless와 unreliable · Ethernet 프레임 형식 · preamble과 SFD · Type 필드 · 프레임 길이 제한 · Ethernet 주소 전송 순서 · Ethernet 주소 판별 · Ethernet implementations · Fast Ethernet · passive hub · link-layer 스위치와 full-duplex · Gigabit Ethernet · 10 Gigabit Ethernet · WiFi · Bluetooth
 (기존 키 재사용: LAN · WAN · CSMA/CD · 1-persistent · 최소 프레임 크기 · T_fr · T_p · line coding · block coding · 4B/5B · NRZ-I · MAC 주소 · unicast · multicast · broadcast 주소 · CRC · flag · variable-size framing · bus 토폴로지 · star 토폴로지 · 허브 · 스위치 · ARP · IP · jamming signal · energy level)
 
+### 10강 CH04 WiFi (`10강 WiFi`) [A0_–] — L8 (10/6 수업 예정, 선제 작성)
+**메인**: CH04 WiFi
+**사전**: wireless LAN의 특성 · IEEE 802.11 · BSS · ad-hoc과 infrastructure · ESS · distribution system · station mobility · DCF · PCF · CSMA/CA · RTS와 CTS · NAV · interframe space · hidden station problem · exposed station problem · repetition interval · beacon frame · fragmentation · 802.11 프레임 형식 · 802.11 프레임 종류 · 802.11 주소 케이스 · 802.11 physical layer
+(기존 키 재사용: WiFi(9G, 10/1 수업 기준의 짧은 문서 — 10강 메인으로 링크하도록 갱신) · Bluetooth · LAN · CSMA/CD · CSMA · persistence method · binary exponential backoff · collision · 최소 프레임 크기 · half-duplex · full-duplex · attenuation · noise · CRC · MAC 주소 · Standard Ethernet · IEEE Project 802 · polling · controlled access · random access · 1-persistent)
+
 ### 기타 용어 (`용어`) [Z0_]
 Forouzan · 교수 소개 · bps와 Hz · log₂ 계산법 · XOR · modular arithmetic
 
@@ -166,6 +172,8 @@ Forouzan · 교수 소개 · bps와 Hz · log₂ 계산법 · XOR · modular ari
 | aloha_throughput | Ex 3.11: frames/s → G → S=Ge^{-G} → 생존 프레임 (옵션: a 1000 / b 500 / c 250, 그리고 pure vs slotted) | 368 / 151 / 49 | ALOHA throughput, slotted ALOHA, 계산 문제 모음 |
 | ethernet_addr_bits | Ex 13.1/13.2: 주소를 바이트별 binary 로 → 각 바이트 LSB first 로 뒤집어 전송 순서 → 첫 바이트 LSB(둘째 hex digit 홀짝)로 unicast/multicast/broadcast 판정 (옵션: addr = 47:20:1B:2E:08:EE / 4A:30:10:21:10:1A / FF:FF:FF:FF:FF:FF) | 47… → 11100010 00000100 11011000 01110100 00010000 01110111, multicast · 4A… unicast · FF… broadcast | Ethernet 주소 전송 순서, Ethernet 주소 판별, CH04 Ethernet |
 | fast_ethernet_length | L7 p.31–33: 최소 프레임 512 bits 고정 → T_fr = 512/rate → T_p ≤ T_fr/2 → 최대 길이 = T_p × 2×10⁸ m/s (옵션: 10 Mbps / 100 Mbps / 1 Gbps) | 10 M: 51.2 μs, ≈5120 m(표준 2500 m) · 100 M: 5.12 μs, ≈512 m(표준 250 m) · 1 G: 0.512 μs, ≈51 m(슬라이드 "< 25 m?") | Fast Ethernet, Gigabit Ethernet, 최소 프레임 크기, CH04 Ethernet |
+| csma_ca_handshake | L8 p.15–17: DCF 타임라인 — 송신 A: DIFS 대기 → RTS → (SIFS) 수신 B: CTS → (SIFS) A: Data → (SIFS) B: ACK. 제3 스테이션 C·D 는 RTS/CTS 의 duration 으로 NAV 를 설정하고 끝날 때까지 채널을 안 본다 (옵션: 정상 / RTS 충돌 → CTS 없음 → backoff 재시도) | 정상: NAV 가 ACK 끝과 함께 0 · 충돌 옵션: "CTS 미수신 → collision 가정 → backoff" | CSMA/CA, RTS와 CTS, NAV, interframe space, CH04 WiFi |
+| wifi_addressing | L8 p.28–34: To DS / From DS 두 비트 조합(00/01/10/11) → Address 1~4 에 무엇이 들어가는지(p.28–29 표 기준 — Case 1 (0,0) BSS 안: Destination·Source·BSS ID / Case 2 (0,1) DS 에서 나와 스테이션으로: Destination·Sending AP·Source / Case 3 (1,0) DS 로 들어감: Receiving AP·Source·Destination / Case 4 (1,1) AP 간: Receiving AP·Sending AP·Destination·Source. p.32–33 캡션은 표·그림과 반대로 적혀 있음). 옵션: case 1~4 | 슬라이드 표(p.28–29)의 Address 1–4 값 그대로 | 802.11 주소 케이스, 802.11 프레임 형식, distribution system |
 | csma_cd_minframe | Ex 3.12: T_p=25.6 μs → 2T_p=51.2 μs → ×10 Mbps → 512 bits = 64 bytes (옵션: 10 Mbps / 100 Mbps) svg 로 왕복 | 512 bits = 64 bytes | 최소 프레임 크기, CSMA/CD, 계산 문제 모음 |
 
 ### 엔진 API (`src/sims/_engine.js`, 모든 sim 파일이 따를 것 — 참조 구현 `src/sims/_reference_ticket_lock.js.txt`)
@@ -259,5 +267,8 @@ python3 build.py                        # index.html 재생성 + 문서에서 �
 | persistence_methods | 채널이 busy → idle 로 바뀌는 시간축 위에 1-persistent(계속 듣다 즉시), nonpersistent(랜덤 대기 후 다시), p-persistent(idle 마다 확률 p 로) 세 스테이션의 행동 | persistence method, 1-persistent, nonpersistent, p-persistent |
 | ethernet_frame | Ethernet 프레임 7 필드가 차례로 나타남(Preamble 7B → SFD 10101011 → Dest 6B → Src 6B → Type 2B → Data+padding 46–1500B → CRC 4B), 최소 64B/최대 1518B 괄호, "Preamble+SFD 는 physical-layer header" | Ethernet 프레임 형식, preamble과 SFD, 프레임 길이 제한, CH04 Ethernet |
 | ethernet_evolution | 4세대(10 M bus+CSMA/CD → 100 M star+hub 250 m → 1 G switch full-duplex → 10 G fiber), 유지된 것(48-bit 주소·frame format·64/1518) vs 바뀐 것(속도·길이·매체·접근 방식) | CH04 Ethernet, Standard Ethernet, Fast Ethernet, Gigabit Ethernet, 10 Gigabit Ethernet |
+| hidden_station | L8 p.21–23: A·B·C 일렬, A 와 C 는 서로 범위 밖. ① A→B 전송 중 C 가 채널을 idle 로 보고 전송 → B 에서 충돌(CSMA/CD 로는 못 감지) ② RTS/CTS: A 의 RTS → B 의 CTS(duration 포함)가 C 에도 닿음 → C 가 NAV 설정, 조용히 기다림. 마지막에 exposed station(p.35: 쓸 수 있는데 참는 경우) 한 장면 | hidden station problem, exposed station problem, RTS와 CTS, CH04 WiFi |
+| csma_ca_timeline | L8 p.15–16 그림: 시간축 위 A(RTS, Data) · B(CTS, ACK) · 다른 스테이션들(NAV 막대) 과 DIFS/SIFS 간격이 순서대로 채워짐. 요점 "CSMA/CA 는 충돌을 감지하지 않고 피한다 — 이유: 무선은 half-duplex" | CSMA/CA, NAV, interframe space, DCF |
+| bss_ess | L8 p.10–12: BSS(ad-hoc: AP 없음 / infrastructure: AP) 두 개가 distribution system 으로 묶여 ESS 가 됨. 스테이션 토큰이 BSS 안 이동(no-transition) → 다른 BSS 로(BSS-transition) → 다른 ESS 로(ESS-transition, 연속성 보장 없음 ✗) | BSS, ESS, distribution system, station mobility, ad-hoc과 infrastructure, CH04 WiFi |
 | switch_fullduplex | hub(공유 매체) 에서 A·C 동시 전송 → 충돌 vs link-layer switch + full-duplex 전용 링크 → buffer 후 목적지 포트로만 → 충돌 없음, CSMA/CD 불필요 | link-layer 스위치와 full-duplex, Fast Ethernet, Gigabit Ethernet |
 | controlled_access | reservation(minislot 5 개에 1 표시 후 순서대로) → polling(primary 가 SEL/Poll, NAK/ACK) → token passing(토큰이 링을 돌고 가진 쪽만 전송) 세 장면 | controlled access, reservation, polling, token passing |

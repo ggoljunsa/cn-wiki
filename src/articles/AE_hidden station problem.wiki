@@ -1,0 +1,53 @@
+key: hidden station problem
+title: Hidden Station Problem (숨은 스테이션 문제)
+category: 10강 WiFi, 용어
+---
+'''Hidden station problem''' 은 두 스테이션(B, C)이 '''서로의 범위 밖'''이라 상대의 전송을 듣지 못하는데, 둘 다 '''가운데 스테이션 A 의 범위 안'''에 있는 상황에서 생긴다. B 가 A 에게 보내는 중에 C 는 채널이 idle 이라고 착각하고 A 에게 보내 → '''A 에서 충돌'''. 송신자들은 충돌을 감지하지 못한다. [[CSMA/CD]] 가 무선에 맞지 않는 세 번째 이유이고, 해결책은 '''[[RTS와 CTS|RTS/CTS 핸드셰이크]]'''(특히 CTS). L8 p.20–21.
+
+{def}"Collision may occur but not be detected — Potentially large distances between stations · '''The hidden station problem'''." (p.20)
+"a. Stations B and C are '''not in each other's range'''. b. Stations B and C are '''hidden from each other'''." (p.20 그림)
+"Solution: The handshake frames (RTS and CTS) can '''mitigate''' the issue. The '''CTS message''', which contains the duration of data transmission from B to A, '''reaches C'''. Station C knows that some hidden station is using the channel and '''refrains from transmitting'''." (p.21){/def}
+
+[[img:L8-20.png|p.20 Hidden station problem — (a) Range of B 와 Range of C 가 A 에서만 겹침 (b) 장애물 때문에 B 와 C 가 서로 숨겨짐|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''hidden''' — 누가 누구에게 숨겨졌나? '''B 와 C 가 서로에게'''. A 는 둘 다 보인다.
+* 숨겨지는 원인 두 가지(p.20 그림 a, b): ① '''거리''' — 범위(range)가 겹치지 않음 ② '''장애물''' — 벽 같은 것이 가로막음.
+* 결과: carrier sense("보내기 전에 듣기")가 '''거짓 idle''' 을 보고한다. 듣는 쪽(송신자)과 충돌이 나는 쪽(수신자)의 위치가 다르기 때문.
+
+[[anim:hidden_station|① C 가 B 의 신호를 못 들어 A 에서 충돌이 나는 장면과 ② A 의 CTS 가 C 에 닿아 C 가 NAV 로 기다리는 장면을 비교하라]]
+
+== 문제 → 해결 (p.20–21) ⭐⭐⭐ ==
+<pre class="txt">
+[문제]
+1. B → A 전송 시작. C 는 B 의 범위 밖이라 '''못 듣는다'''
+2. C 가 보기엔 채널 idle → C → A 전송
+3. 두 신호가 '''A 에서 충돌'''. B·C 는 서로 못 들으니 '''충돌을 감지 못함'''
+
+[해결: RTS/CTS]
+1. B → A : RTS        (C 는 못 들음 — 상관없음)
+2. A → B : '''CTS''' (duration 포함) — A 는 가운데라 '''C 에도 닿음'''
+3. C : 숨은 스테이션이 채널을 쓰는 중임을 알고 NAV 동안 '''전송 삼감'''
+4. B → A : Data → A → B : ACK, 충돌 없음
+</pre>
+
+{warn}슬라이드는 해결책을 "can '''mitigate'''"(완화)라고 쓴다 — '''완전히 없애지는 못한다'''. RTS 끼리는 여전히 충돌할 수 있고, 그때는 "CTS 미수신 → 충돌 가정 → backoff" 로 처리한다(p.17).{/warn}
+
+{|
+! || hidden station problem || [[exposed station problem]]
+|-
+| 무엇이 잘못되나 || 보내면 '''안 되는데''' 보냄 || 보내도 '''되는데''' 안 보냄
+|-
+| 결과 || 수신자 위치에서 '''충돌''' || 채널 '''낭비'''
+|-
+| 관련 프레임 || CTS 가 해결 || RTS 를 엿들은 것이 원인
+|}
+
+{analogy}🎭 '''가운데 앉은 친구에게 양쪽에서 동시에 말 걸기.''' B 와 C 는 A 의 양옆 멀리 앉아 서로의 목소리가 안 들린다. 둘 다 "아무도 말 안 하네" 하고 A 에게 말을 걸면 A 의 귀에서 두 목소리가 섞인다. 해결: A 가 "B 야, 말해. 30 초 동안!" 이라고 크게 대답(CTS)하면 C 도 그 말을 듣고 30 초 기다린다.{/analogy}
+
+{quiz}Hidden station problem 에서 왜 송신자(B, C)는 충돌을 감지하지 못하는가? 그리고 이 문제를 완화하는 방법은?{/quiz}
+{answer}B 와 C 는 '''서로의 범위 밖'''이라 상대의 신호를 듣지 못하고, 충돌은 둘 다의 범위 안인 '''수신자 A 의 위치'''에서 일어나기 때문이다. 완화: '''RTS/CTS 핸드셰이크''' — A 가 보내는 '''CTS''' 에 데이터 전송 duration 이 담겨 C 에도 닿고, C 는 그동안 전송을 삼간다(p.21).{/answer}
+
+== 관련 문서 ==
+* [[RTS와 CTS]] · [[NAV]] · [[CSMA/CA]] · [[exposed station problem]] · [[wireless LAN의 특성]]
+* [[CSMA/CD]] · [[collision]] · [[CH04 WiFi]]

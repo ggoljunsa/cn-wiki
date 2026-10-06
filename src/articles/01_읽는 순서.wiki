@@ -78,6 +78,14 @@ category: 안내
 # [[Ethernet implementations]] 이름 읽기(10Base5/2/T/F) → [[Fast Ethernet]]: $T_{fr} \ge 2T_p$ 라 10배 빠르면 길이 1/10 (2500 → 250 m), [[passive hub]] vs [[link-layer 스위치와 full-duplex]].
 # [[Gigabit Ethernet]] (25 m 는 불가 → full-duplex 스위치, CSMA/CD 불필요) → [[10 Gigabit Ethernet]]. [[WiFi]]·[[Bluetooth]] 는 다음 수업.
 
+== 10. CH04 WiFi (1시간, 10/6 수업 — 선제 작성) ==
+[[CH04 WiFi]] 통독 — 같은 LAN 인데 매체가 공기라서 무엇이 달라지는가. 들를 곳:
+# [[wireless LAN의 특성]](attenuation·interference·multipath·error) → [[IEEE 802.11]].
+# 구조: [[BSS]]([[ad-hoc과 infrastructure]]) → [[ESS]]·[[distribution system]] → [[station mobility]] 세 종류.
+# '''[[DCF]] = [[CSMA/CA]]''': [[interframe space]](DIFS/SIFS/PIFS) → [[RTS와 CTS]] → [[NAV]]. 왜 CSMA/CD 가 아닌가 — half-duplex, [[hidden station problem]] (그리고 [[exposed station problem]]).
+# [[PCF]](polling, PIFS < DIFS) 와 [[repetition interval]]·[[beacon frame]], [[fragmentation]].
+# '''[[802.11 프레임 형식]]'''(9 필드) → [[802.11 프레임 종류]] → '''[[802.11 주소 케이스]]'''(To DS/From DS 4 케이스 표) → [[802.11 physical layer]] 표.
+
 == 마무리 (시험 전날) ==
 # [[공식 모음]] 을 보지 않고 백지에 쓴다.
 # [[계산 문제 모음]] 의 Example 을 전부 다시 푼다 (시뮬레이터는 답 맞출 때만).

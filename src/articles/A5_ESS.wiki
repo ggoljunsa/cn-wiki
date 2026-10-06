@@ -1,0 +1,30 @@
+key: ESS
+title: ESS (Extended Service Set)
+category: 10강 WiFi, 용어
+---
+'''ESS (Extended Service Set)''' 는 '''AP 를 가진 BSS 둘 이상'''을 '''[[distribution system]]'''(유선 또는 무선 네트워크)으로 이어 만든 더 큰 무선 네트워크다. 캠퍼스 전체에 같은 WiFi 가 잡히는 것이 ESS 다. L8 p.11.
+
+{def}"Extended service set (ESS): Made up of '''two or more BSSs with APs'''. BSSs are connected through a '''distribution system''', which is a wired or a wireless network." (p.11)
+→ ESS = AP 있는 BSS 2개 이상 + 그것들을 잇는 distribution system.{/def}
+
+[[img:L8-11.png|p.11 ESS — BSS 3개의 AP 가 distribution system(가운데 스위치)으로 연결되고, 위에 server or gateway|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Extended''' — [[BSS]](Basic)를 '''확장'''한 것. BSS 하나의 범위는 AP 신호가 닿는 곳까지인데, 여러 BSS 를 이으면 범위가 넓어진다.
+* 조건 두 개를 꼭 같이 쓸 것: ① '''two or more''' BSSs ② '''with APs''' (ad-hoc BSS 로는 안 됨 — 묶을 연결점이 없다).
+
+== 그림 읽기 (p.11) ==
+* 아래: BSS 3 개. 각 BSS 안에 AP 1 대 + 노트북 3 대.
+* 가운데: 세 AP 를 잇는 장치(파란 원, 스위치)와 선 = '''distribution system'''.
+* 위: '''server or gateway''' — ESS 를 바깥(인터넷 등)과 연결.
+* 스테이션이 이 BSS 에서 저 BSS 로 옮겨 가면 '''BSS-transition mobility''', 다른 ESS 로 가면 '''ESS-transition mobility''' → [[station mobility]].
+
+[[anim:bss_ess|BSS 두 개가 distribution system 으로 묶여 ESS 가 되는 장면에서 '두 개 이상', 'AP 가 있는' 두 조건을 확인하라]]
+
+{analogy}🎭 '''ESS = 여러 교실(BSS)이 복도(distribution system)로 이어진 학교 건물.''' 교실을 옮겨 다녀도 같은 학교 안이다. 건물 정문(gateway)이 바깥 세상으로 통한다.{/analogy}
+
+{quiz}"Ad-hoc BSS 3 개를 묶어 ESS 를 만들 수 있다" — 참/거짓과 이유.{/quiz}
+{answer}'''거짓'''. ESS 는 "two or more BSSs '''with APs'''" 로 만든다. ad-hoc BSS 에는 AP 가 없어 distribution system 에 연결할 지점이 없다.{/answer}
+
+== 관련 문서 ==
+* [[BSS]] · [[distribution system]] · [[ad-hoc과 infrastructure]] · [[station mobility]] · [[802.11 주소 케이스]] · [[CH04 WiFi]]

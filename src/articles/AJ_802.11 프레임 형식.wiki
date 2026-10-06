@@ -1,0 +1,83 @@
+key: 802.11 프레임 형식
+title: 802.11 MAC 프레임 형식 (9 fields)
+category: 10강 WiFi, 용어
+---
+802.11 의 MAC layer frame 은 '''9 개 필드'''로 되어 있다: '''FC 2 · D 2 · Address 1 6 · Address 2 6 · Address 3 6 · SC 2 · Address 4 6 · Frame body 0–2312 · FCS 4''' (bytes). Ethernet 프레임과 가장 크게 다른 점은 '''주소가 4 개'''라는 것(→ [[802.11 주소 케이스]])과 [[NAV]] 를 위한 '''D(duration)''' 필드, [[fragmentation]] 을 위한 '''SC''' 필드가 있다는 것. L8 p.26.
+
+{def}"MAC layer frame format: 9 fields.
+'''FC''': define '''type of frame''' and some '''control information'''.
+'''D''': define the '''duration of the transmission''' to set the value of '''NAV'''.
+'''SC''': the first 4 bits define '''the fragment number'''.
+'''FCS''': '''CRC-32'''." (p.26){/def}
+
+[[img:L8-26.png|p.26 MAC layer frame format: 9 fields — 위: 9 필드와 bytes / 아래: FC 2 bytes 를 펼친 11 개 하위 필드와 bits|large]]
+
+== 9 필드 (p.26 그림 그대로) ⭐⭐⭐ ==
+{|
+! # || 필드 || 크기 || 역할 (슬라이드)
+|-
+| 1 || '''FC''' (frame control; 풀네임은 Forouzan 보충) || 2 bytes || 프레임 '''type''' 과 control information (아래 하위 필드)
+|-
+| 2 || '''D''' (duration) || 2 bytes || 전송 '''duration''' → '''NAV''' 값 설정
+|-
+| 3 || '''Address 1''' || 6 bytes || To DS/From DS 에 따라 의미가 달라짐 → [[802.11 주소 케이스]]
+|-
+| 4 || '''Address 2''' || 6 bytes || 〃
+|-
+| 5 || '''Address 3''' || 6 bytes || 〃
+|-
+| 6 || '''SC''' (sequence control; 풀네임은 Forouzan 보충) || 2 bytes || '''첫 4 bits = fragment number''' → [[fragmentation]]
+|-
+| 7 || '''Address 4''' || 6 bytes || 〃 (Case 4 에서만 사용, 나머지 N/A)
+|-
+| 8 || '''Frame body''' || '''0 to 2312''' bytes || 상위 계층 데이터
+|-
+| 9 || '''FCS''' || 4 bytes || '''CRC-32''' 오류 검출 ([[CRC]])
+|}
+* 순서 주의: '''Address 3 다음에 SC, 그다음 Address 4''' 다. 주소 넷이 붙어 있지 않다.
+* 헤더 합계(FCS 제외, Frame body 제외): 2+2+6+6+6+2+6 = '''30 bytes''' — 그림 값을 더한 것.
+
+== FC 필드 안 (2 bytes = 16 bits) ==
+{|
+! 하위 필드 || Protocol version || Type || Subtype || To DS || From DS || More frag || Retry || Pwr mgt || More data || WEP || Rsvd
+|-
+| 크기 || 2 bits || 2 bits || 4 bits || 1 bit || 1 bit || 1 bit || 1 bit || 1 bit || 1 bit || 1 bit || 1 bit
+|}
+* '''Type''' (2 bits) + '''Subtype''' (4 bits): 어떤 종류의 프레임인지 — control 은 Type '''01''', RTS 1011 · CTS 1100 · ACK 1101 → [[802.11 프레임 종류]].
+* '''To DS / From DS''': [[distribution system]] 기준 방향. 두 비트 조합이 Address 1~4 의 의미를 정한다 → [[802.11 주소 케이스]].
+* '''More frag''': 조각이 더 있음([[fragmentation]]; 그림의 필드 이름, 설명은 Forouzan 보충). Retry·Pwr mgt·More data·WEP·Rsvd 는 그림에 이름만 있고 슬라이드 설명은 없다.
+* 합계 2+2+4+1×8 = 16 bits = 2 bytes ✓.
+
+[[sim:wifi_addressing]]
+
+== Ethernet 프레임과 비교 ==
+{|
+! || [[Ethernet 프레임 형식|Ethernet (802.3)]] || 802.11
+|-
+| 필드 수 || 7 (Preamble·SFD 포함) || '''9'''
+|-
+| 주소 || 2 개 (Destination, Source) || '''4 개''' (Address 1–4, 의미는 To DS/From DS 로 결정)
+|-
+| 주소 순서 || Destination 이 먼저 || Address 1 이 먼저 (대개 받는 쪽)
+|-
+| 길이·종류 표시 || Type 2 bytes (상위 프로토콜) || FC 2 bytes (Type·Subtype 등 control 정보)
+|-
+| 시간 정보 || 없음 || '''D (duration)''' → NAV
+|-
+| 조각 정보 || 없음 || '''SC''' (fragment number)
+|-
+| 데이터 || 46–1500 bytes || '''0–2312''' bytes
+|-
+| 오류 검출 || CRC 4 bytes (CRC-32) || FCS 4 bytes ('''CRC-32''')
+|}
+
+{info}D 는 무선에만 있는 이유가 있다: [[CSMA/CA]] 는 충돌을 감지하지 못하니 미리 '''예약'''해야 하고, 그 예약 시간이 D 다. SC 는 무선이 noisy 해서 [[fragmentation]] 을 하기 때문. 주소가 4 개인 것은 프레임이 AP 와 [[distribution system]] 을 거치기 때문. '''필드 하나하나가 무선의 특성에서 나왔다.'''{/info}
+
+{analogy}🎭 '''국제 소포 운송장.''' Ethernet 운송장에는 "받는 사람·보내는 사람" 두 칸이면 됐다. 무선 운송장(802.11)에는 "이번에 받을 중계소(AP)·이번에 보낸 중계소·최종 수취인·최초 발송인" 네 칸, 그리고 "도로 점유 예정 시간(D)", "10 상자 중 몇 번째(SC)" 칸이 더 있다.{/analogy}
+
+{quiz}802.11 프레임의 9 필드를 순서대로 쓰고, D 필드와 SC 필드의 역할을 쓰시오.{/quiz}
+{answer}'''FC(2) · D(2) · Address 1(6) · Address 2(6) · Address 3(6) · SC(2) · Address 4(6) · Frame body(0–2312) · FCS(4)'''. D = 전송 '''duration''', '''NAV''' 값을 설정. SC = 첫 4 bits 가 '''fragment number'''.{/answer}
+
+== 관련 문서 ==
+* [[802.11 주소 케이스]] · [[802.11 프레임 종류]] · [[fragmentation]] · [[NAV]] · [[distribution system]]
+* [[Ethernet 프레임 형식]] · [[CRC]] · [[MAC 주소]] · [[CH04 WiFi]]

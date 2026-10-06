@@ -1,0 +1,37 @@
+key: BSS
+title: BSS (Basic Service Set)
+category: 10강 WiFi, 용어
+---
+'''BSS (Basic Service Set)''' 는 [[IEEE 802.11]] architecture 의 '''가장 작은 단위'''다. 무선 스테이션들이 모인 하나의 묶음이고, '''AP(access point)''' 가 없으면 '''ad-hoc''', 있으면 '''infrastructure''' 라고 부른다. BSS 둘 이상을 [[distribution system]] 으로 묶으면 [[ESS]]. L8 p.10.
+
+{def}"Basic service set (BSS): BSS '''without an AP (access point)''' is called '''ad-hoc'''. BSS '''with an AP''' is referred to as '''infrastructure'''." (p.10)
+→ BSS = 802.11 의 기본 묶음. AP 유무로 ad-hoc / infrastructure 로 나뉜다.{/def}
+
+[[img:L8-10.png|p.10 Ad hoc BSS(AP 없이 노트북 4대) vs Infrastructure BSS(가운데 AP)|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Basic''' — 가장 기초가 되는 단위. 이보다 큰 것은 '''Extended''' service set([[ESS]]).
+* '''Service Set''' — 같은 무선 "서비스"를 공유하는 스테이션들의 '''집합(set)'''.
+* 그래서 BSS ⊂ ESS. 이름만으로 크기 관계가 나온다.
+
+[[anim:bss_ess|BSS 두 개(ad-hoc / infrastructure)가 먼저 그려진 뒤 distribution system 으로 묶여 ESS 가 되는 순서를 보고, 스테이션이 BSS 경계를 넘을 때 mobility 이름이 어떻게 바뀌는지 확인하라]]
+
+{|
+! 종류 || AP || 통신 방식 || 자세히
+|-
+| Ad hoc BSS || '''없음''' || 스테이션끼리 직접 || [[ad-hoc과 infrastructure]]
+|-
+| Infrastructure BSS || '''있음''' (가운데) || AP 를 거쳐서 / AP 를 통해 바깥과 || [[ad-hoc과 infrastructure]]
+|}
+
+* 주소에서도 BSS 가 나온다: 프레임이 '''한 BSS 안에서만''' 움직이면(Case 1, To DS=0·From DS=0) Address 3 에 '''BSS ID''' 가 들어간다 → [[802.11 주소 케이스]].
+* 한 BSS 안에서만 움직이거나 가만히 있는 스테이션 = '''no-transition mobility''' → [[station mobility]].
+
+{analogy}🎭 '''BSS = 교실 하나.''' 선생님(AP)이 있는 교실(infrastructure)에서는 선생님을 통해 말을 전하고, 선생님 없는 자습실(ad-hoc)에서는 학생끼리 직접 말한다. 교실 여러 개를 복도(distribution system)로 이은 학교 건물 전체가 [[ESS]].{/analogy}
+
+{quiz}AP 가 없는 BSS 와 AP 가 있는 BSS 를 각각 무엇이라 부르는가?{/quiz}
+{answer}AP 없음 = '''ad-hoc''' (BSS), AP 있음 = '''infrastructure''' (BSS).{/answer}
+
+== 관련 문서 ==
+* [[ad-hoc과 infrastructure]] · [[ESS]] · [[distribution system]] · [[station mobility]]
+* [[IEEE 802.11]] · [[802.11 주소 케이스]] · [[CH04 WiFi]]

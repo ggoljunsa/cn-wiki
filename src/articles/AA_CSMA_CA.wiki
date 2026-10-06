@@ -1,0 +1,76 @@
+key: CSMA/CA
+title: CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance)
+category: 10강 WiFi, 용어
+---
+'''CSMA/CA''' 는 [[DCF]] 가 쓰는 매체 접근 방식으로, [[CSMA/CD]] 처럼 충돌을 '''감지(Detection)''' 하는 대신 충돌을 '''피한다(Avoidance)'''. 피하는 도구는 세 가지 — '''interframe space'''(DIFS/SIFS 로 기다리기), '''RTS/CTS 핸드셰이크'''(먼저 예약), '''NAV'''(예약을 들은 스테이션은 조용히). CSMA/CA 에는 '''충돌을 감지하는 메커니즘이 없다'''. 그래서 CTS 가 안 오면 "충돌이 났다고 '''가정'''" 하고 backoff 한다. L8 p.14–21.
+
+{def}"Distributed coordination function (DCF): Employs '''CSMA/CA (Collision Avoidance)'''." (p.14)
+"CSMA/CA '''does not have a mechanism for detecting collisions'''. Question: What happens if there is a collision during handshaking period? e.g., Many stations may try to send RTS frames at the same time. Answer: The sender '''assumes there has been a collision if it has not received a CTS frame''' from the receiver. If that happens: '''Backoff strategy''' is employed, and the sender tries again." (p.16–17){/def}
+
+[[img:L8-14.png|p.14 CSMA/CA 타임라인 — DIFS · RTS · SIFS · CTS · SIFS · Data · SIFS · ACK, 다른 스테이션 C·D 는 NAV|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''CSMA''' — 7강 [[CSMA]] 그대로: '''C'''arrier '''S'''ense(보내기 전에 듣기) + '''M'''ultiple '''A'''ccess(여럿이 공유).
+* '''/CD''' = Collision '''Detection''': 보내는 '''도중''' 충돌을 감지하면 중단(Ethernet).
+* '''/CA''' = Collision '''Avoidance''': 보내기 '''전에''' 충돌을 피한다(WiFi). 감지가 안 되니 피하는 수밖에 없다.
+
+[[anim:csma_ca_timeline|DIFS → RTS → SIFS → CTS → SIFS → Data → SIFS → ACK 순서와, C·D 가 NAV 동안 채널을 보지 않는 모습을 확인하라. 요점 문장을 그대로 외울 것]]
+
+[[sim:csma_ca_handshake]]
+
+== 핸드셰이크 중 충돌 (p.16–17) ⭐⭐⭐ ==
+교수가 슬라이드에 '''Question / Answer''' 구조로 직접 써 둔 대목 — 그대로 서술형 문제가 된다.
+<pre class="txt">
+Q. 핸드셰이크 도중 충돌이 나면? (예: 여러 스테이션이 동시에 RTS 를 보냄)
+1. CSMA/CA 에는 충돌을 '''감지'''하는 장치가 없다
+2. 송신자는 '''CTS 를 받지 못하면''' 충돌이 났다고 '''가정'''한다
+3. → '''backoff strategy''' 를 쓰고 다시 시도한다
+</pre>
+backoff 는 7강의 [[binary exponential backoff]] 와 같은 생각(충돌할수록 기다리는 범위를 넓혀 다시 겹칠 확률을 줄인다). 802.11 의 정확한 backoff 수치는 슬라이드에 없다.
+
+== 왜 CSMA/CD 를 안 쓰나 (p.18–20) ⭐⭐⭐ ==
+p.18 은 "Remember: Standard Ethernet uses the CSMA/CD … '''Question: why not using CSMA/CD for wireless LANs?'''" 를 던지고 7강 CSMA/CD 그림(A·C 의 충돌 감지 후 abort)을 다시 보여 준다. 답은 p.19–20:
+
+{|
+! 이유 (p.19–20) || 설명 || CSMA/CD 에서 무엇이 깨지나
+|-
+| Wireless devices are mostly '''[[half-duplex]]''' || 보내면서 동시에 받을 수 없다 || CSMA/CD 는 '''보내는 중에 들어서''' 충돌을 감지한다 → 불가능
+|-
+| '''Potentially large distances''' between stations || 신호가 [[attenuation|빠르게 약해짐]] || 멀리서 난 충돌의 신호가 송신자에게 닿지 않음 → 감지 못함
+|-
+| The '''[[hidden station problem]]''' || 서로의 범위 밖인 두 스테이션 || 서로를 못 들으니 채널이 idle 로 보이고, 수신자 위치에서 충돌
+|}
+결론: "'''Collision may occur but not be detected'''" → 감지가 안 되면 감지에 기반한 프로토콜(CD)은 의미가 없다 → '''피하자(CA)'''.
+
+[[img:L8-20.png|p.20 CSMA/CD 가 무선에 안 맞는 이유 — half-duplex, 큰 거리, hidden station problem (B 와 C 가 서로의 범위 밖, A 는 둘 다의 범위 안)|large]]
+
+== CSMA/CD vs CSMA/CA ==
+{|
+! || [[CSMA/CD]] (Ethernet) || CSMA/CA (WiFi DCF)
+|-
+| 충돌 처리 || 전송 '''중''' 감지 → abort + [[jamming signal]] || 전송 '''전''' 회피 (IFS + RTS/CTS + NAV)
+|-
+| 충돌 감지 || 있음 ([[energy level]] 비교) || '''없음'''
+|-
+| 충돌 판단 || 신호로 직접 감지 || '''CTS 미수신''' = 충돌 가정 / ACK 로 성공 확인
+|-
+| 전제 || 보내면서 들을 수 있음 || 무선 장치는 대부분 '''half-duplex'''
+|-
+| 실패 시 || [[binary exponential backoff|backoff]] 후 재전송 || '''backoff''' 후 재시도
+|-
+| 프레임 길이 제약 || [[최소 프레임 크기]] $T_{fr} \geq 2T_p$ || 감지를 안 하므로 그 제약이 없음
+|}
+
+{analogy}🎭 '''CSMA/CD = 말하다가 남과 겹치면 바로 멈추기, CSMA/CA = 말하기 전에 손 들고 허락받기.''' 시끄러운 운동장(무선)에서는 내가 말하는 동안 남의 목소리를 들을 수 없으니(half-duplex) "겹치면 멈추기"가 불가능하다. 그래서 먼저 손을 들고(RTS) 사회자가 "말하세요"(CTS)라고 하면 말한다. 그 "말하세요"를 들은 주변 사람은 그동안 입을 다문다(NAV). 허락이 안 돌아오면 "누군가와 동시에 손을 들었구나" 하고 잠깐 뒤에 다시 든다(backoff).{/analogy}
+
+{exam}🎯 녹음본은 아직 없지만 슬라이드 구조상 거의 확실한 출제 자리
+* "Why not CSMA/CD for wireless LANs?" — '''half-duplex''', '''large distance''', '''hidden station''' 세 가지 (p.18–20)
+* "Collision during handshaking?" — '''CTS 가 안 오면 충돌로 가정 → backoff → 재시도''' (p.17)
+* 이름에서: CD = Detection(감지) vs CA = Avoidance(회피) — 교수가 Ethernet 때도 "the name itself is very important" 패턴을 썼다{/exam}
+
+{quiz}CSMA/CA 에는 충돌 감지 메커니즘이 없다. 그렇다면 송신자는 RTS 가 충돌했다는 것을 어떻게 알고, 무엇을 하는가?{/quiz}
+{answer}수신자로부터 '''CTS frame 을 받지 못하면''' 충돌이 났다고 '''가정(assume)''' 한다. 그러면 '''backoff strategy''' 를 써서 기다린 뒤 다시 시도한다(p.17).{/answer}
+
+== 관련 문서 ==
+* [[DCF]] · [[RTS와 CTS]] · [[NAV]] · [[interframe space]] · [[hidden station problem]] · [[exposed station problem]]
+* [[CSMA/CD]] · [[CSMA]] · [[persistence method]] · [[binary exponential backoff]] · [[collision]] · [[half-duplex]] · [[CH04 WiFi]]

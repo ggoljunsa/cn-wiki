@@ -1,0 +1,298 @@
+key: CH04 WiFi
+title: CH04 WiFi (10강 — IEEE 802.11 wireless LAN: 충돌을 감지하지 말고 피하라)
+category: 10강 WiFi, 메인
+---
+{warn}'''10/6 수업 전 선제 작성 — 녹음본 반영 전.''' 슬라이드(L8)만으로 쓴 문서다. 교수가 무엇을 강조했는지(🎯), 학생 Q&A, 공지는 녹음본이 오면 `🎙 실제 수업 기록` 절로 추가한다. 슬라이드 p.32–33 캡션 오류 의심, p.36 대역 오타 의심은 아래 각 절의 주의 박스 참고.{/warn}
+
+'''CH04 WiFi''' 는 L8 덱(`CH04_Local Area Networks (2).pdf`, 36쪽) p.6–36 이다. p.2–5 는 [[CH04 Ethernet]] 복습(LAN 의 정의, 세 instance, Ethernet 4세대)이고, p.5 "'''Today's focus: WiFi, a wireless LAN'''" 부터 끝까지 전부 [[WiFi]] = [[IEEE 802.11]] 이다. [[Bluetooth]] 는 이 덱에 없다.
+이 덱이 던지는 질문은 — '''"매체가 선이 아니라 공기가 되면, 지금까지 배운 data-link 의 무엇이 깨지고 무엇으로 대신하나?"'''
+답: 무선은 신호가 빨리 약해지고 섞이고(p.8), 장치는 대부분 [[half-duplex]] 이며, 서로 못 듣는 [[hidden station problem|숨은 스테이션]]이 있다. 그래서 [[CSMA/CD]] 의 '''"보내면서 들어서 충돌을 감지"''' 가 불가능하다 → '''[[CSMA/CA]]: 감지 대신 회피''' — 기다리고([[interframe space]]), 예약하고([[RTS와 CTS]]), 예약을 들은 쪽은 입을 다문다([[NAV]]). 프레임도 그에 맞게 바뀐다: 예약 시간 칸(D), 조각 번호 칸(SC), AP 를 거치느라 '''주소 4 개'''.
+
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다.
+
+{exam}🎯 슬라이드 구조로 본 출제 예상 자리 (녹음 전이라 교수 강조는 미확인)
+* '''Why not CSMA/CD for wireless?''' — half-duplex · 큰 거리 · hidden station (p.18–20). 교수가 Question/Answer 로 써 둔 자리
+* '''Collision during handshaking?''' — CTS 미수신 = 충돌 가정 → backoff → 재시도 (p.16–17)
+* DCF 타임라인 순서 '''DIFS → RTS → SIFS → CTS → SIFS → Data → SIFS → ACK''', NAV 의 뜻 (p.14–15)
+* '''To DS / From DS''' 주소 표 4 행 (p.28) — Ethernet 에서 frame format 을 강조한 패턴
+* 이름에서 개념: DCF/PCF, CD/CA, hidden/exposed, PIFS < DIFS (교수의 "the name itself is very important"){/exam}
+
+{analogy}🎭 '''전화 회의 → 운동장 회의.''' Ethernet(유선)은 모두가 같은 전화선에 물려 있어서, 말하다가 남과 겹치면 바로 알아채고 멈출 수 있었다(CSMA/CD). WiFi(무선)는 넓고 시끄러운 운동장이다. 멀리 있는 사람의 목소리는 안 들리고(hidden station), 내가 소리치는 동안에는 남의 말을 못 듣는다(half-duplex). 그래서 규칙이 바뀐다: '''말하기 전에 잠깐 기다리고(DIFS), 손 들어 허락을 구하고(RTS), 사회자가 "말하세요, 30초!"(CTS) 하면 그걸 들은 모두가 30초 동안 조용히 한다(NAV).''' 충돌을 "감지"하는 게 아니라 "피하는" 것이다.{/analogy}
+
+[[anim:bss_ess|BSS(ad-hoc / infrastructure) 두 개가 distribution system 으로 묶여 ESS 가 되고, 스테이션이 no-transition → BSS-transition → ESS-transition 으로 옮겨 가는 순서를 따라가라]]
+
+== p.2–5 — Recap: LAN, 세 instance, Ethernet 4세대 ==
+* [[LAN]]: 제한된 지역(건물·캠퍼스)의 네트워크, 대개 [[WAN]]/인터넷에 연결. '''Wired / Wireless''' 두 범주.
+* 세 instance: '''1. Ethernet (wired)''' — Standard 10 / Fast 100 / Gigabit 1000 / 10 Gigabit 10,000 Mbps — '''2. WiFi (wireless)''' — 3. [[Bluetooth]] (wireless).
+* p.5: "'''Today's focus: WiFi, a wireless LAN'''".
+
+== p.6–8 — WiFi, 유선 vs 무선, wireless LAN 의 특성 ⭐⭐ ==
+{def}"WiFi (Wireless Fidelity): Based on the '''IEEE 802.11''' standard. Designed to provide services to '''wireless devices'''." (p.6){/def}
+
+{|
+! (p.7) || Wired LAN || Wireless LAN
+|-
+| Medium || '''wires''' || '''air''', 신호는 generally '''broadcast'''
+|-
+| Hosts || 한 지점에 '''always connected''' || '''not physically connected'''
+|}
+
+p.8 의 네 가지 특성 — 자세히는 [[wireless LAN의 특성]]:
+{|
+! 특성 || 뜻 (p.8)
+|-
+| '''Attenuation''' || electromagnetic signal 세기가 '''rapidly''' 감소 ([[attenuation]])
+|-
+| '''Interference''' || 의도한 송신자 외에 '''같은 frequency band''' 의 다른 송신자 신호도 수신
+|-
+| '''Multipath propagation''' || '''같은 송신자'''의 신호를 둘 이상 수신
+|-
+| '''Error''' || 오류 검출·정정이 '''more serious''' 한 문제
+|}
+
+{warn}interference(다른 송신자) 와 multipath(같은 송신자의 여러 사본)를 헷갈리지 말 것.{/warn}
+
+== p.9 — IEEE 802.11 ==
+{def}"IEEE 802.11: The specifications for a wireless LAN, which covers the '''physical and data-link layers'''. The public uses the term '''WiFi (Wireless Fidelity)'''. A wireless LAN '''certified by the WiFi Alliance'''." (p.9){/def}
+[[IEEE Project 802]] 의 한 갈래: 802.3 = Ethernet, '''802.11 = WiFi'''. 자세히는 [[IEEE 802.11]].
+
+== p.10–12 — Architecture: BSS, ESS, station mobility ⭐⭐ ==
+[[img:L8-10.png|p.10 BSS — Ad hoc BSS(AP 없음) vs Infrastructure BSS(AP 있음)|medium]]
+
+{def}"Basic service set (BSS): BSS '''without an AP (access point)''' is called '''ad-hoc'''. BSS '''with an AP''' is referred to as '''infrastructure'''." (p.10){/def}
+
+[[img:L8-11.png|p.11 ESS — BSS 3 개의 AP 가 distribution system 으로 연결, 위에 server or gateway|medium]]
+
+{def}"Extended service set (ESS): Made up of '''two or more BSSs with APs'''. BSSs are connected through a '''distribution system''', which is a '''wired or a wireless''' network." (p.11){/def}
+
+{def}"Station Types: '''No-transition''' mobility — either stationary or moving only inside a BSS. '''BSS-transition''' mobility — move from one BSS to another. '''ESS-transition''' mobility — move from one ESS to another. IEEE 802.11 '''does not guarantee''' that communication is continuous during the move." (p.12){/def}
+
+{|
+! 개념 || 한 줄 || 문서
+|-
+| BSS || 802.11 의 기본 묶음 || [[BSS]]
+|-
+| ad-hoc / infrastructure || AP 없음 / 있음 || [[ad-hoc과 infrastructure]]
+|-
+| ESS || AP 있는 BSS 2 개 이상 + DS || [[ESS]]
+|-
+| distribution system || BSS 들을 이어 ESS 를 만드는 유선/무선 망 || [[distribution system]]
+|-
+| mobility 3 종 || 넘는 경계: 없음 / BSS / ESS. '''연속성 보장 없음''' || [[station mobility]]
+|}
+
+== p.13–14 — 두 MAC sublayer, DCF ⭐⭐⭐ ==
+p.13: 802.11 MAC 은 '''두 개''' — '''[[DCF]] (Distributed coordination function)''' 와 '''[[PCF]] (Point coordination function)'''.
+
+{def}"Distributed coordination function (DCF): Employs '''CSMA/CA (Collision Avoidance)'''. DIFS: DCF interframe space · SIFS: short interframe space · RTS: request to send · CTS: clear to send · NAV: network allocation vector." (p.14){/def}
+
+[[img:L8-14.png|p.14 DCF 타임라인 — Source A, Destination B, Other stations C·D. DIFS → RTS → SIFS → CTS → SIFS → Data → SIFS → ACK, C·D 는 CTS 수신부터 ACK 끝까지 NAV|large]]
+
+[[anim:csma_ca_timeline|A 의 RTS·Data, B 의 CTS·ACK 사이에 DIFS(한 번)와 SIFS(세 번)가 끼는 리듬을 보고, C·D 의 NAV 막대가 언제 켜지고 꺼지는지 확인하라]]
+
+<pre class="txt">
+1. A : 채널 idle 확인 → '''DIFS''' 대기 → '''RTS''' (duration 포함)
+2. B : '''SIFS''' → '''CTS'''                  ← C, D 도 수신
+3. C, D : '''NAV''' 설정 (채널 idle 검사도 안 함)
+4. A : '''SIFS''' → '''Data'''
+5. B : '''SIFS''' → '''ACK'''                  ← NAV 종료
+</pre>
+
+[[sim:csma_ca_handshake]]
+
+== p.15 — NAV ⭐⭐ ==
+{def}"An '''RTS frame includes the duration''' of time that it needs to occupy the channel. The station that are affected by this transmission create '''a timer called a NAV'''. It shows how much time must pass before these stations are allowed to '''check the channel for idleness'''." (p.15){/def}
+NAV 값은 프레임의 '''D(duration) 필드'''에서 온다(p.26). p.24 범례는 NAV 를 "'''No carrier sensing'''" 이라고 풀어 쓴다. → [[NAV]]
+
+== p.16–17 — Collision During Handshaking ⭐⭐⭐ ==
+{def}"CSMA/CA '''does not have a mechanism for detecting collisions'''.
+'''Question''': What happens if there is a collision during handshaking period? e.g., Many stations may try to send RTS frames at the same time.
+'''Answer''': The sender '''assumes there has been a collision if it has not received a CTS frame''' from the receiver. If that happens: '''Backoff strategy''' is employed, and the sender tries again." (p.16–17){/def}
+
+7강의 [[binary exponential backoff]] 와 같은 발상이지만, 여기서는 충돌을 '''감지'''가 아니라 '''CTS 부재로 추정'''한다는 점이 다르다. → [[CSMA/CA]], [[RTS와 CTS]]
+
+== p.18–20 — Why CSMA/CA? CSMA/CD 가 무선에 안 맞는 이유 ⭐⭐⭐ ==
+p.18: "Remember: Standard Ethernet uses the CSMA/CD — each host contends to access the medium and sends its frame if it finds the medium idle. '''Question: why not using CSMA/CD for wireless LANs?'''" (7강 CSMA/CD 그림을 다시 보여 줌: A 와 C 가 전송 중 충돌을 감지하고 abort)
+
+[[img:L8-18.png|p.18 Why CSMA/CA? — 7강의 CSMA/CD 그림: A·C 가 전송 도중 충돌을 감지하고 abort|medium]]
+
+{|
+! 이유 (p.19–20) || 왜 CSMA/CD 가 깨지나
+|-
+| Wireless devices are mostly '''[[half-duplex]]''' — cannot send and receive at the same time || CSMA/CD 는 '''보내는 동안 들어서''' 충돌을 감지 → 불가
+|-
+| Collision may occur but '''not be detected''': '''potentially large distances''' || 신호가 빨리 약해져 먼 곳의 충돌 신호가 안 닿음
+|-
+| Collision may occur but not be detected: '''the hidden station problem''' || 서로 못 듣는 두 송신자 → 수신자 위치에서 충돌
+|}
+
+[[img:L8-20.png|p.20 Hidden station problem — (a) Range of B 와 Range of C 가 A 에서만 겹침 (b) 장애물로 B·C 가 서로 숨겨짐|large]]
+
+== p.21 — Solution to hidden station problem ⭐⭐⭐ ==
+{def}"The handshake frames (RTS and CTS) can '''mitigate''' the issue. The '''CTS message, which contains the duration of data transmission''' from B to A, '''reaches C'''. Station C knows that some hidden station is using the channel and '''refrains from transmitting'''." (p.21){/def}
+
+[[anim:hidden_station|① C 가 B 를 못 들어 A 에서 충돌 ② A 의 CTS 가 C 까지 닿아 C 가 NAV 로 기다림 ③ exposed station — 세 장면을 차례로 비교하라]]
+
+핵심: 충돌은 '''수신자 위치'''에서 나므로 '''수신자가 보내는 CTS''' 가 막아야 할 스테이션에 닿는다. → [[hidden station problem]]
+
+== p.22–24 — PCF, PIFS, repetition interval ⭐⭐ ==
+{def}"Point Coordination Function (PCF): An '''optional''' access method that can be implemented in an '''infrastructure''' network. It is used mostly for '''time-sensitive''' transmission. PCF has a '''centralized, contention-free polling''' access method. To give '''priority to PCF over DCF''', another interframe space, '''PIFS''', has been defined. '''PIFS is shorter than DIFS'''." (p.22){/def}
+
+{def}"Due to the priority of PCF over DCF, stations that only use DCF '''may not gain access''' to the medium. To prevent this, a '''repetition interval''' has been designed to cover both '''contention-free PCF''' and '''contention-based DCF''' traffic. It starts with a special control frame, called a '''beacon frame'''." (p.23){/def}
+
+[[img:L8-24.png|p.24 Example of repetition interval — AP: PIFS · B · SIFS · Poll · … · ACK+poll · CF end / Polled station: ACK+data / Others: NAV. Contention-free + Contention = Repetition interval|large]]
+
+{|
+! interframe space || 쓰는 곳 || 길이
+|-
+| SIFS || 진행 중 교환의 응답 (CTS·Data·ACK, Poll·ACK+data) || 가장 짧음
+|-
+| PIFS || PCF 의 AP (beacon 앞) || DIFS 보다 짧음 (p.22)
+|-
+| DIFS || DCF 스테이션의 새 전송 || 가장 긺
+|}
+'''짧게 기다리는 쪽이 먼저 채널을 잡는다.''' 슬라이드 명시는 PIFS < DIFS; SIFS < PIFS 는 Forouzan 보충. → [[interframe space]], [[PCF]], [[repetition interval]], [[beacon frame]]. PCF 의 polling 은 7강 [[controlled access]] 의 [[polling]] 그대로다.
+
+== p.25 — Fragmentation ⭐ ==
+{def}"The wireless environment is '''very noisy''', so frames are often corrupted. A corrupt frame has to be '''retransmitted'''. The '''division of a large frame into smaller ones''' is usually recommended." (p.25){/def}
+작게 나눌수록 깨졌을 때 다시 보낼 양이 줄어든다. 조각 번호는 SC 필드 첫 4 bits. → [[fragmentation]]
+
+== p.26 — MAC layer frame format: 9 fields ⭐⭐⭐ ==
+[[img:L8-26.png|p.26 MAC frame 9 fields — FC 2 · D 2 · Address 1/2/3 각 6 · SC 2 · Address 4 6 · Frame body 0–2312 · FCS 4 bytes, 그리고 FC 의 하위 필드|large]]
+
+{|
+! FC || D || Address 1 || Address 2 || Address 3 || SC || Address 4 || Frame body || FCS
+|-
+| 2 B || 2 B || 6 B || 6 B || 6 B || 2 B || 6 B || 0–2312 B || 4 B
+|}
+* '''FC''': type of frame + control information. 하위 필드: Protocol version 2 · Type 2 · Subtype 4 · To DS · From DS · More frag · Retry · Pwr mgt · More data · WEP · Rsvd (각 1 bit)
+* '''D''': duration → '''NAV''' 값 · '''SC''': 첫 4 bits = '''fragment number''' · '''FCS''': '''CRC-32'''
+→ [[802.11 프레임 형식]]
+
+== p.27 — Frame type ⭐ ==
+{def}"'''Management frames''': Used for the initial communication between stations and APs. '''Control frames''': Used for accessing the channel and acknowledging frames. The value of type field is '''01'''." (p.27){/def}
+
+[[img:L8-27.png|p.27 RTS(FC·D·Address 1·Address 2·FCS) / CTS or ACK(FC·D·Address 1·FCS) 와 Subtype 1011 RTS · 1100 CTS · 1101 ACK|medium]]
+→ [[802.11 프레임 종류]]
+
+== p.28–34 — Addresses: To DS / From DS 와 4 케이스 ⭐⭐⭐ ==
+[[img:L8-28.png|p.28 Addresses — To DS / From DS 에 따른 Address 1–4 표|large]]
+
+{|
+! To DS || From DS || Address 1 || Address 2 || Address 3 || Address 4 || Case (그림)
+|-
+| 0 || 0 || Destination || Source || BSS ID || N/A || 1: 한 BSS 안 [B·A·BSS-ID]
+|-
+| 0 || 1 || Destination || Sending AP || Source || N/A || 2: AP → B [B·AP·A]
+|-
+| 1 || 0 || Receiving AP || Source || Destination || N/A || 3: A → AP [AP·A·B]
+|-
+| 1 || 1 || Receiving AP || Sending AP || Destination || Source || 4: AP1 → AP2 [AP2·AP1·B·A]
+|}
+p.29: "DS: Distribution System → The infrastructure component that connects multiple BSSs together to form an ESS."
+
+[[img:L8-30.png|p.30 Addressing mechanisms 4 cases — a. 한 BSS 안 · b. AP → B · c. A → AP · d. AP1 → AP2 (wireless DS)|large]]
+
+{warn}'''p.32–33 캡션 주의.''' p.32 Case 2 캡션 "Frame is '''heading into''' the DS", p.33 Case 3 캡션 "Frame is '''coming out of''' the DS" 는 같은 슬라이드의 '''표 행·그림과 반대'''다(Case 2 = From DS=1, AP → B 이므로 DS 에서 '''나옴''' / Case 3 = To DS=1, A → AP 이므로 DS 로 '''들어감'''; Forouzan 원문도 Case 2 "coming from a DS", Case 3 "going to a DS"). '''p.32–33 캡션은 뒤바뀐 것으로 보인다 — 시험에서는 To DS/From DS 비트와 Address 1~4 표를 기준으로 답할 것.''' 10/6 수업에서 교수 설명을 확인할 것.{/warn}
+
+외우는 요령: '''Address 1 = 이번 hop 의 수신자, Address 2 = 이번 hop 의 송신자''', 남는 칸에 최종 목적지/출발지(Case 1 은 BSS ID). → [[802.11 주소 케이스]]
+
+[[sim:wifi_addressing]]
+
+== p.35 — Exposed Station Problem ⭐⭐ ==
+{def}"A station '''refrains from using a channel even when it is available'''." (p.35)
+그림: "C can send to D because this area is free, but C '''erroneously refrains from sending because of received RTS'''."{/def}
+
+[[img:L8-35.png|p.35 Exposed station — B·A·C·D 일렬. A 가 B 에게 RTS·Data, C 는 A 의 RTS 를 듣고 D 로의 전송을 잘못 삼감|large]]
+
+hidden station = 보내면 안 되는데 보냄('''충돌'''), exposed station = 보내도 되는데 안 보냄('''낭비'''). → [[exposed station problem]]
+
+== p.36 — Physical Layer ⭐⭐ ==
+[[img:L8-36.png|p.36 Specification of Physical Layer of IEEE 802.11|medium]]
+
+{|
+! IEEE || Technique || Band || Modulation || Rate (Mbps)
+|-
+| 802.11 || FHSS || 2.400–4.835 GHz¹ || FSK || 1 and 2
+|-
+| 802.11 || DSSS || 2.400–4.835 GHz¹ || PSK || 1 and 2
+|-
+| 802.11 || None || Infrared || PPM || 1 and 2
+|-
+| 802.11a || OFDM || 5.725–5.850 GHz || PSK or QAM || 6 to 54
+|-
+| 802.11b || DSSS || 2.400–4.835 GHz¹ || PSK || 5.5 and 11
+|-
+| 802.11g || OFDM || 2.400–4.835 GHz¹ || Different || 22 and 54
+|-
+| 802.11n || OFDM || 5.725–5.850 GHz || Different || 600
+|}
+¹ 슬라이드 표기 그대로. 2.4 GHz ISM 대역의 실제 범위는 '''2.400–2.4835 GHz''' — 슬라이드 값은 '''오타로 보인다'''. → [[802.11 physical layer]]
+
+== Ethernet (CSMA/CD) vs WiFi (CSMA/CA) ⭐⭐⭐ ==
+{|
+! || [[CH04 Ethernet|Ethernet]] (802.3) || WiFi (802.11)
+|-
+| 매체 || wire || '''air''' (broadcast)
+|-
+| 듀플렉스 || full-duplex 가능 (스위치) || 무선 장치는 대부분 '''half-duplex'''
+|-
+| MAC || [[CSMA/CD]] + [[1-persistent]] || [[CSMA/CA]] ([[DCF]]) + 선택적 [[PCF]](polling)
+|-
+| 충돌 || 전송 '''중 감지''' → abort + [[jamming signal]] || '''감지 메커니즘 없음''' → IFS·RTS/CTS·NAV 로 '''회피'''
+|-
+| 충돌 판단 || [[energy level]] 로 직접 || '''CTS 미수신''' = 충돌 가정
+|-
+| 실패 후 || [[binary exponential backoff|backoff]] || backoff
+|-
+| 프레임 크기 제약 || 최소 64 B ([[최소 프레임 크기]], $T_{fr} \geq 2T_p$) || 감지를 안 하므로 그 제약 없음. 오히려 '''잡음 때문에 작게'''([[fragmentation]])
+|-
+| 주소 || 2 개 || '''4 개''' (To DS/From DS)
+|-
+| 프레임 || 7 필드, Data 46–1500 B || '''9 필드''', Frame body 0–2312 B, '''D(duration)·SC''' 추가
+|-
+| 오류 검출 || [[CRC]]-32 || FCS = CRC-32
+|-
+| 오류 처리 || 손상 시 silently drop (unreliable) || '''ACK''' 로 수신 확인 (p.14), 깨지면 재전송 (p.25)
+|}
+
+{quiz}(1) 무선 LAN 에서 CSMA/CD 대신 CSMA/CA 를 쓰는 이유 세 가지를 쓰시오. (2) CSMA/CA 에서 송신자는 RTS 충돌을 어떻게 판단하는가? (3) To DS = 0, From DS = 1 인 프레임의 Address 1–3 은?{/quiz}
+{answer}(1) 무선 장치는 대부분 '''half-duplex''' 라 보내면서 받을 수 없다 · 스테이션 사이 '''거리가 커서''' 충돌이 감지되지 않을 수 있다 · '''hidden station problem''' (p.19–20). (2) '''CTS 를 받지 못하면''' 충돌로 가정하고 '''backoff''' 후 재시도 (p.17). (3) Address 1 = '''Destination''', Address 2 = '''Sending AP''', Address 3 = '''Source''' (AP 가 DS 에서 받은 프레임을 BSS 의 목적지로 보내는 경우).{/answer}
+
+== 시험 대비 핵심 요약 ==
+# WiFi = '''Wireless Fidelity''' = '''IEEE 802.11''' — wireless LAN 의 '''physical + data-link''' 명세, '''WiFi Alliance 인증'''.
+# 유선 vs 무선(p.7): 매체 wire vs '''air(broadcast)''', 호스트 always connected vs '''not physically connected'''. 무선의 특성(p.8): '''attenuation · interference(같은 band 의 다른 송신자) · multipath(같은 송신자의 여러 신호) · error'''.
+# '''BSS''': AP 없으면 '''ad-hoc''', 있으면 '''infrastructure'''. '''ESS''' = AP 있는 BSS '''2 개 이상''' + '''distribution system'''(유선/무선).
+# Mobility: '''no-transition'''(정지/BSS 안) · '''BSS-transition''' · '''ESS-transition'''. 802.11 은 이동 중 '''연속성을 보장하지 않는다'''.
+# MAC sublayer 두 개: '''DCF'''(CSMA/CA, distributed) · '''PCF'''(optional, infrastructure, time-sensitive, centralized contention-free polling).
+# DCF 순서: '''DIFS → RTS → SIFS → CTS → SIFS → Data → SIFS → ACK'''. CTS 를 들은 다른 스테이션은 '''NAV'''.
+# '''NAV''' = RTS(/CTS)의 duration 으로 만드는 '''타이머''' — 끝날 때까지 채널 idle 검사도 안 함. 값은 '''D 필드'''.
+# CSMA/CA 에는 '''충돌 감지 메커니즘이 없다''' → '''CTS 를 못 받으면 충돌로 가정 → backoff → 재시도'''.
+# CSMA/CD 를 안 쓰는 이유: ① 무선 장치는 '''half-duplex''' ② '''큰 거리''' ③ '''hidden station''' → 충돌이 나도 감지 못함.
+# '''Hidden station''': 서로 범위 밖 → 수신자에서 충돌. 해결 = '''RTS/CTS''' — '''CTS(duration 포함)가 C 에 닿아''' C 가 삼감 ("mitigate"). '''Exposed station''': 쓸 수 있는데 '''RTS 를 듣고 잘못 삼감''' → 낭비.
+# PCF 우선을 위해 '''PIFS < DIFS'''. DCF 기아 방지 → '''repetition interval'''(contention-free + contention), '''beacon frame'''(control frame)으로 시작.
+# Fragmentation: noisy → 자주 깨짐 → 재전송 → '''작게 나누기 권장'''. SC 첫 4 bits = fragment number.
+# 프레임 9 필드: '''FC 2 · D 2 · Addr1 6 · Addr2 6 · Addr3 6 · SC 2 · Addr4 6 · Body 0–2312 · FCS 4'''. FCS = CRC-32. Control frame Type '''01''', Subtype RTS 1011 · CTS 1100 · ACK 1101.
+# 주소 표: '''00''' Dest·Src·BSS ID / '''01''' Dest·Sending AP·Src / '''10''' Receiving AP·Src·Dest / '''11''' Receiving AP·Sending AP·Dest·Src. (p.32–33 캡션은 반대로 적혀 있음 — 표 기준)
+# Physical layer(p.36): 802.11 FHSS-FSK / DSSS-PSK / Infrared-PPM (1, 2 Mbps), a OFDM 5 GHz 6–54, b DSSS 2.4 GHz 5.5·11, g OFDM 2.4 GHz 22·54, n OFDM 600.
+
+== 공식 모음 ==
+{|
+! 관계 || 뜻
+|-
+| $\text{SIFS} < \text{PIFS} < \text{DIFS}$ || 짧게 기다리는 쪽이 우선 (슬라이드 명시: PIFS < DIFS)
+|-
+| Repetition interval = Contention-free (PCF) + Contention (DCF) || p.24
+|-
+| 802.11 헤더 = 2+2+6+6+6+2+6 = 30 bytes, + Body 0–2312 + FCS 4 || p.26 필드 합
+|-
+| FC = 2+2+4+1×8 = 16 bits || p.26
+|-
+| RTS = 20 bytes, CTS·ACK = 14 bytes || p.27 필드 합
+|}
+
+== 관련 문서 ==
+* 이전 강의: [[CH04 Ethernet]] · [[CH03 Media Access Control]] · [[CH03 Data-Link Control]]
+* 이 강의 사전: [[wireless LAN의 특성]] · [[IEEE 802.11]] · [[BSS]] · [[ad-hoc과 infrastructure]] · [[ESS]] · [[distribution system]] · [[station mobility]] · [[DCF]] · [[PCF]] · [[CSMA/CA]] · [[RTS와 CTS]] · [[NAV]] · [[interframe space]] · [[hidden station problem]] · [[exposed station problem]] · [[repetition interval]] · [[beacon frame]] · [[fragmentation]] · [[802.11 프레임 형식]] · [[802.11 프레임 종류]] · [[802.11 주소 케이스]] · [[802.11 physical layer]]
+* 다시 쓰이는 개념: [[WiFi]] · [[Bluetooth]] · [[LAN]] · [[IEEE Project 802]] · [[Standard Ethernet]] · [[CSMA/CD]] · [[CSMA]] · [[persistence method]] · [[1-persistent]] · [[binary exponential backoff]] · [[collision]] · [[random access]] · [[controlled access]] · [[polling]] · [[최소 프레임 크기]] · [[half-duplex]] · [[full-duplex]] · [[attenuation]] · [[noise]] · [[CRC]] · [[MAC 주소]] · [[Ethernet 프레임 형식]]
+* 시험: [[시험 정보]]

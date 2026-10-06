@@ -60,7 +60,9 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 |-
 | CH04 (1) || 10/1 목 ('''완료''') || LAN — Ethernet 4세대(Standard/Fast/Gigabit/10G): frame format, 주소 전송 순서, CSMA/CD 길이 제약, 스위치·full-duplex || [[CH04 Ethernet]]
 |-
-| CH04 (2)~ || 10/6 화 예정 || WiFi, Bluetooth → (WAN) || (덱이 오면 추가)
+| CH04 (2) || 10/6 화 예정 (덱 도착, '''수업 전 선제 작성''') || WiFi/IEEE 802.11 — BSS/ESS, DCF(CSMA/CA, RTS/CTS, NAV, hidden station), PCF, 프레임·주소 4 케이스, physical layer || [[CH04 WiFi]]
+|-
+| CH04 (3)~ || 10/8 목 예정 || Bluetooth → (WAN) || (덱이 오면 추가)
 |}
 
 == 미확정 — 교수·조교 공지로 확인할 것 ==

@@ -1,0 +1,69 @@
+key: 802.11 주소 케이스
+title: 802.11 주소 케이스 (To DS / From DS 와 Address 1–4)
+category: 10강 WiFi, 용어
+---
+802.11 프레임에는 주소 칸이 '''4 개''' 있고, 각 칸에 무엇이 들어가는지는 FC 필드의 '''To DS''' 와 '''From DS''' 두 비트가 정한다. 두 비트의 조합 4 가지 = '''주소 케이스 4 개'''. 외우는 요령은 하나다: '''Address 1 = 이번 hop 에서 받는 쪽, Address 2 = 이번 hop 에서 보내는 쪽''', 남는 칸에 최종 목적지·최초 출발지(그리고 Case 1 에서는 BSS ID). L8 p.28–34.
+
+{def}"Addresses — DS: '''Distribution System''' → The infrastructure component that connects multiple BSSs together to form an ESS." (p.28–29)
+"Addressing mechanisms: Cover '''4 different cases'''." (p.30)
+Case 1 "Frame is moving '''within a single BSS'''" (p.31) · Case 4 "Frame is traveling '''between two APs'''" (p.34){/def}
+
+[[img:L8-28.png|p.28 Addresses — 9 필드 프레임 + To DS/From DS 에 따른 Address 1–4 표|large]]
+
+== 주소 표 (p.28 그대로) ⭐⭐⭐ ==
+{|
+! To DS || From DS || Address 1 || Address 2 || Address 3 || Address 4
+|-
+| 0 || 0 || Destination || Source || BSS ID || N/A
+|-
+| 0 || 1 || Destination || Sending AP || Source || N/A
+|-
+| 1 || 0 || Receiving AP || Source || Destination || N/A
+|-
+| 1 || 1 || Receiving AP || Sending AP || Destination || Source
+|}
+
+[[img:L8-30.png|p.30 Addressing mechanisms — a. Case 1 (BSS 안) · b. Case 2 (AP → B) · c. Case 3 (A → AP) · d. Case 4 (AP1 → AP2, wireless DS)|large]]
+
+== 네 케이스 (p.31–34 그림 기준) ==
+{|
+! Case || To DS · From DS || 그림 (p.30–34) || 프레임 주소 칸 [1 · 2 · 3 · 4] || 의미
+|-
+| 1 || 0 · 0 || A → B, 같은 BSS || '''B · A · BSS-ID''' · — || '''한 BSS 안'''에서 이동 (p.31)
+|-
+| 2 || 0 · 1 || AP → B || '''B · AP · A''' · — || DS 에서 '''나와''' 목적지 BSS 의 스테이션으로
+|-
+| 3 || 1 · 0 || A → AP || '''AP · A · B''' · — || 출발 스테이션에서 AP 를 거쳐 DS 로 '''들어감'''
+|-
+| 4 || 1 · 1 || AP1 → AP2 (wireless DS) || '''AP2 · AP1 · B · A''' || '''두 AP 사이'''를 이동 (p.34)
+|}
+
+{warn}'''슬라이드 캡션 주의 (p.32–33).''' p.32 Case 2 의 캡션은 "Frame is '''heading into''' the Distribution System", p.33 Case 3 의 캡션은 "Frame is '''coming out of''' the Distribution System" 인데, 같은 슬라이드의 '''표 행과 그림은 반대'''를 보여 준다: Case 2(0·1) 그림은 '''AP → B''' 로 [B · AP · A], Case 3(1·0) 그림은 '''A → AP''' 로 [AP · A · B]. 비트 이름(From DS = DS 에서 나옴, To DS = DS 로 감)과 Forouzan 원문(Case 2 "coming from a distribution system", Case 3 "going to a distribution system")도 표·그림 쪽이다. '''p.32–33 캡션은 뒤바뀐 것으로 보인다 — 시험에서는 To DS/From DS 비트와 Address 1~4 표를 기준으로 답할 것.''' 10/6 수업에서 교수 설명을 확인할 것.{/warn}
+
+[[sim:wifi_addressing]]
+
+== 표를 외우지 않고 만드는 법 ==
+<pre class="txt">
+규칙 1. Address 1 = 이번 무선 hop 의 '''수신자''', Address 2 = 이번 hop 의 '''송신자'''
+        (To DS=1 이면 받는 쪽이 AP → Receiving AP / From DS=1 이면 보내는 쪽이 AP → Sending AP)
+규칙 2. 1·2 에 안 들어간 최종 주소를 3 에 (To DS=1 이면 Destination, From DS=1 이면 Source)
+규칙 3. 둘 다 1 (Case 4) 이면 주소가 하나 남음 → Address 4 = Source
+규칙 4. 둘 다 0 (Case 1) 이면 1·2 가 이미 최종 주소 → Address 3 = BSS ID
+</pre>
+
+{|
+! 직관 || To DS = 0 || To DS = 1
+|-
+| '''From DS = 0''' || Case 1: 같은 BSS 안 — 받는 사람·보낸 사람·'''BSS ID''' || Case 3: '''AP 로 보냄''' — AP·보낸 사람·최종 목적지
+|-
+| '''From DS = 1''' || Case 2: '''AP 가 보냄''' — 받는 사람·AP·최초 출발지 || Case 4: AP 끼리 — 받는 AP·보내는 AP·목적지·출발지
+|}
+
+{analogy}🎭 '''택배 운송장의 "이번 구간" 칸과 "최종" 칸.''' 기사가 보는 건 맨 앞 두 칸 — "이번에 넘겨줄 곳(Address 1)" 과 "이번에 받아 온 곳(Address 2)". 같은 동네면(Case 1) 그게 곧 최종 주소라 셋째 칸엔 동네 이름(BSS ID). 동네 지점(AP)으로 맡기면(Case 3) 셋째 칸에 최종 수취인. 지점에서 배달 나가면(Case 2) 셋째 칸에 최초 발송인. 지점끼리 옮기면(Case 4) 칸이 하나 모자라 넷째 칸까지 쓴다.{/analogy}
+
+{quiz}To DS = 1, From DS = 1 인 프레임의 Address 1–4 를 쓰고, 이 프레임이 어디를 지나는 중인지 쓰시오.{/quiz}
+{answer}Address 1 = '''Receiving AP''', Address 2 = '''Sending AP''', Address 3 = '''Destination''', Address 4 = '''Source'''. (wireless) distribution system 을 통해 '''두 AP 사이'''를 이동 중(Case 4, p.34 그림: AP2 · AP1 · B · A).{/answer}
+
+== 관련 문서 ==
+* [[802.11 프레임 형식]] · [[distribution system]] · [[BSS]] · [[ESS]]
+* [[MAC 주소]] · [[CH04 WiFi]]

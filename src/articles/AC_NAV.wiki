@@ -1,0 +1,39 @@
+key: NAV
+title: NAV (Network Allocation Vector)
+category: 10강 WiFi, 용어
+---
+'''NAV (Network Allocation Vector)''' 는 RTS/CTS 를 엿들은 스테이션이 만드는 '''타이머'''다. "앞으로 이만큼은 채널이 남의 것" 이라는 시간을 담고 있고, NAV 가 0 이 될 때까지 그 스테이션은 '''채널이 idle 인지 확인조차 하지 않는다'''. 값은 RTS/CTS 의 '''D(duration) 필드'''에서 온다. L8 p.14–15, p.24, p.26.
+
+{def}"An '''RTS frame includes the duration''' of time that it needs to occupy the channel. The station that are affected by this transmission create '''a timer called a NAV'''. It shows '''how much time must pass before these stations are allowed to check the channel for idleness'''." (p.15)
+"D: define the '''duration of the transmission to set the value of NAV'''." (p.26)
+→ NAV = 남의 전송에 영향을 받는 스테이션이 세우는 타이머. 끝나기 전에는 채널 idle 검사도 하지 않는다.{/def}
+
+[[img:L8-14.png|p.14 오른쪽 C·D 의 회색 NAV 구간 — CTS 를 받은 순간 시작해 ACK 가 끝날 때까지|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Network Allocation''' — 네트워크(채널)가 '''누구에게 할당(allocate)'''되어 있는지. "지금부터 x 초는 A–B 에게 할당됨".
+* '''Vector''' — 여기서는 '''값을 담은 카운터''' 정도로 이해. 슬라이드도 "a '''timer''' called a NAV" 라고 부른다.
+* p.24 범례는 NAV 를 "'''No carrier sensing'''" 이라고 풀어 쓴다 — NAV 동안에는 carrier sense 를 안 한다는 뜻이 그대로 이름 대신 들어 있다.
+
+[[anim:csma_ca_timeline|C·D 의 NAV 막대가 CTS 를 받은 순간 시작해 ACK 끝과 함께 사라지는 것을 확인하라]]
+
+== NAV 가 하는 일 ==
+<pre class="txt">
+1. A 가 RTS 를 보냄 — D 필드에 "채널을 얼마나 쓸지" 기록
+2. B 가 CTS 로 답함 — 역시 duration 포함
+3. RTS 나 CTS 를 들은 다른 스테이션: NAV = duration 으로 타이머 시작
+4. NAV > 0 인 동안: 채널을 '''보지도 않음''' (physical carrier sense 대신 "가상의 busy" — Forouzan 보충)
+5. NAV = 0 이 되면: 다시 DIFS 기다리고 채널 경쟁 (Forouzan 보충)
+</pre>
+* p.14 그림에서 C·D 의 NAV 는 '''CTS 수신''' 시점에서 시작해 '''ACK 끝'''에서 끝난다.
+* p.24 [[repetition interval]] 그림에서는 PCF 의 '''beacon''' 이후 contention-free 구간 내내 "Others" 의 NAV 가 켜져 있다 — DCF 스테이션이 PCF 구간을 방해하지 않게.
+
+{info}왜 "채널을 보지 않는" 타이머가 필요한가? 무선은 [[hidden station problem|숨은 스테이션]]이 있어서 '''직접 들어서는(carrier sense) 채널이 idle 로 보여도 실제로는 쓰이고 있을 수 있다'''. 그래서 "들은 것"보다 "예약 정보(duration)"를 믿는다.{/info}
+
+{analogy}🎭 '''NAV = 회의실 문 앞의 "사용 중 — 15:00 까지" 팻말.''' 안에서 소리가 안 들려도(carrier sense 로는 idle) 팻말을 본 사람은 15:00 까지 문을 열어 보지도 않는다. 팻말 시간은 예약자가 신청서(RTS)와 승인서(CTS)에 적은 duration 이다.{/analogy}
+
+{quiz}NAV 는 무엇의 약자이며, NAV 가 설정된 스테이션은 무엇을 하지 않는가? NAV 값은 802.11 프레임의 어느 필드에서 오는가?{/quiz}
+{answer}'''Network Allocation Vector'''. NAV 가 끝날 때까지 '''채널이 idle 인지 검사하는 것(carrier sensing) 자체를 하지 않는다'''. 값은 '''D (duration) 필드''' — RTS(그리고 CTS)에 담긴 전송 시간.{/answer}
+
+== 관련 문서 ==
+* [[RTS와 CTS]] · [[CSMA/CA]] · [[DCF]] · [[interframe space]] · [[802.11 프레임 형식]] · [[repetition interval]] · [[CH04 WiFi]]

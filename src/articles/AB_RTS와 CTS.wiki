@@ -1,0 +1,54 @@
+key: RTS와 CTS
+title: RTS 와 CTS (Request to Send / Clear to Send)
+category: 10강 WiFi, 용어
+---
+'''RTS (request to send)''' 와 '''CTS (clear to send)''' 는 [[CSMA/CA]] 의 '''핸드셰이크 프레임'''이다. 송신자가 RTS 로 "보내도 될까? 이만큼 걸려" 하고 묻고, 수신자가 CTS 로 "보내도 돼" 하고 답한다. 두 프레임 모두 '''duration''' 을 실어 주변 스테이션이 [[NAV]] 를 설정하게 하고, 특히 '''CTS 는 송신자가 못 듣는 hidden station 에게도 닿아''' [[hidden station problem]] 을 완화한다. 둘 다 '''control frame''' 이다. L8 p.14–17, p.21, p.27.
+
+{def}"RTS: '''request to send''' · CTS: '''clear to send'''" (p.14)
+"An '''RTS frame includes the duration''' of time that it needs to occupy the channel." (p.15)
+"The handshake frames (RTS and CTS) can '''mitigate''' the [hidden station] issue. The '''CTS message, which contains the duration of data transmission''' from B to A, '''reaches C'''. Station C knows that some hidden station is using the channel and '''refrains from transmitting'''." (p.21){/def}
+
+[[img:L8-14.png|p.14 RTS(A→B) 뒤 SIFS, CTS(B→A, 그리고 C·D 에도) — CTS 를 들은 C·D 가 NAV 시작|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Request to Send''' — "보내기를 '''요청'''". 아직 데이터는 안 보냈다. 짧은 예약 신청서.
+* '''Clear to Send''' — "보내도 '''깨끗하다(clear)'''", 즉 길이 비었으니 보내라. 항공 관제의 "cleared for takeoff" 와 같은 말.
+* 순서가 이름에 들어 있다: '''Request''' 가 먼저, '''Clear''' 가 답.
+
+== 프레임 구조 (p.27) ==
+[[img:L8-27.png|p.27 Control frames — RTS: FC 2 · D 2 · Address 1 6 · Address 2 6 · FCS 4 bytes / CTS or ACK: FC 2 · D 2 · Address 1 6 · FCS 4 bytes. Subtype 1011 RTS · 1100 CTS · 1101 ACK|large]]
+
+{|
+! 프레임 || 필드 (bytes) || 합계 || Subtype
+|-
+| '''RTS''' || FC 2 · D 2 · Address 1 6 · Address 2 6 · FCS 4 || 20 bytes || '''1011'''
+|-
+| '''CTS''' || FC 2 · D 2 · Address 1 6 · FCS 4 || 14 bytes || '''1100'''
+|-
+| ACK || FC 2 · D 2 · Address 1 6 · FCS 4 || 14 bytes || '''1101'''
+|}
+* 합계는 그림의 필드 크기를 더한 값. RTS 에만 Address 2 가 있다 — 수신자가 '''누가 요청했는지''' 알아야 그쪽으로 CTS 를 돌려줄 수 있기 때문. CTS·ACK 는 Address 1(받을 쪽)만 있으면 된다.
+* 세 프레임 모두 Type = '''01''' (control) → [[802.11 프레임 종류]]. D(duration) 필드가 바로 [[NAV]] 를 설정하는 값.
+
+== 왜 CTS 가 hidden station 을 해결하나 (p.21) ⭐⭐⭐ ==
+<pre class="txt">
+상황: B 와 C 는 서로의 범위 밖, A 는 둘 다의 범위 안 (p.20–21 그림)
+1. B → A : RTS          (C 는 B 의 RTS 를 '''못 듣는다''')
+2. A → B : CTS          (A 는 가운데라 C 도 '''듣는다'''; CTS 에 duration 포함)
+3. C : "누군가 숨은 스테이션이 채널을 쓰는구나" → NAV 설정, '''refrains from transmitting'''
+4. B → A : Data, A → B : ACK  (충돌 없음)
+</pre>
+핵심: '''RTS 는 송신자 주변, CTS 는 수신자 주변'''에 뿌려진다. 충돌은 '''수신자 위치'''에서 일어나므로, 수신자가 보내는 CTS 가 진짜로 막아야 할 스테이션들에게 닿는다.
+
+[[anim:hidden_station|첫 장면에서 C 가 B 의 신호를 못 들어 A 에서 충돌이 나는 것을, 둘째 장면에서 A 의 CTS 가 C 까지 닿아 C 가 NAV 로 기다리는 것을 비교하라]]
+
+{warn}RTS/CTS 는 '''충돌을 완전히 없애지 못한다'''. RTS 자체가 동시에 보내져 충돌할 수 있고(p.16–17: 그러면 CTS 가 안 옴 → 충돌로 가정 → backoff), 반대로 RTS 를 엿들은 스테이션이 '''쓸 수 있는데도 참는''' [[exposed station problem]] 을 만들기도 한다(p.35).{/warn}
+
+{analogy}🎭 '''RTS/CTS = 무전기의 "송신 요청 — 송신 허가".''' 조종사(송신자)가 "활주로 써도 됩니까, 2분 걸립니다"(RTS) 라고 하면 관제탑(수신자)이 "허가, 2분"(CTS) 이라고 '''모든 비행기가 듣는 주파수'''로 답한다. 조종사의 목소리가 안 닿는 먼 비행기도 관제탑 목소리는 들으니 2분 동안 착륙을 미룬다(NAV).{/analogy}
+
+{quiz}Hidden station 문제에서 RTS 가 아니라 '''CTS''' 가 해결의 열쇠인 이유는?{/quiz}
+{answer}hidden station(C)은 '''송신자(B)의 범위 밖'''이라 B 의 RTS 를 못 듣는다. 하지만 '''수신자(A)의 범위 안'''이라 A 가 보내는 CTS 는 듣는다. CTS 에는 데이터 전송 duration 이 들어 있으므로 C 는 그 시간 동안 NAV 를 설정하고 전송을 삼간다(p.21).{/answer}
+
+== 관련 문서 ==
+* [[CSMA/CA]] · [[NAV]] · [[interframe space]] · [[hidden station problem]] · [[exposed station problem]]
+* [[802.11 프레임 종류]] · [[802.11 프레임 형식]] · [[DCF]] · [[CH04 WiFi]]

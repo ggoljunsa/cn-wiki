@@ -1,0 +1,39 @@
+key: PCF
+title: PCF (Point Coordination Function)
+category: 10강 WiFi, 용어
+---
+'''PCF (Point Coordination Function)''' 는 802.11 의 두 번째 MAC sublayer 로, '''infrastructure network 에서만''' 구현할 수 있는 '''선택적(optional)''' 접근 방식이다. AP 가 중앙에서 스테이션을 차례로 부르는 '''centralized, contention-free polling''' 이고, 주로 '''time-sensitive''' 전송(지연에 민감한 트래픽)에 쓴다. [[DCF]] 보다 우선권을 주려고 '''PIFS''' 라는 더 짧은 interframe space 를 쓴다. L8 p.22.
+
+{def}"Point Coordination Function (PCF): An '''optional''' access method that can be implemented in an '''infrastructure''' network. It is used mostly for '''time-sensitive''' transmission. PCF has a '''centralized, contention-free polling''' access method. To give '''priority to PCF over DCF''', another interframe space, '''PIFS''', has been defined. '''PIFS is shorter than DIFS'''." (p.22){/def}
+
+== 이름에서 개념 끌어내기 ==
+* '''Point''' — 조율하는 주체가 '''한 점''', 즉 AP. ([[DCF]] 의 Distributed 와 정반대.)
+* '''contention-free''' — "경쟁이 없다". AP 가 부른 스테이션만 보내니 충돌도 없다. 7강 [[controlled access]] 의 [[polling]] 그대로.
+* '''PIFS''' — '''P'''CF '''I'''nter'''F'''rame '''S'''pace. DIFS(DCF 용)보다 '''짧다''' → AP 가 DCF 스테이션보다 '''먼저''' 채널을 잡는다.
+
+{|
+! 특징 (p.22) || 왜?
+|-
+| '''optional''' || DCF 만으로도 동작. 필요할 때만 켬
+|-
+| '''infrastructure''' 에서만 || 중앙에서 polling 할 AP 가 필요 ([[ad-hoc과 infrastructure]])
+|-
+| '''time-sensitive''' 전송용 || 경쟁·backoff 가 없어 '''지연이 예측 가능'''
+|-
+| '''centralized, contention-free polling''' || AP 가 한 명씩 부름 → 충돌 없음
+|-
+| '''PIFS < DIFS''' || 짧게 기다리는 쪽이 먼저 채널을 잡음 → PCF 우선
+|}
+
+[[img:L8-24.png|p.24 Repetition interval 예 — AP 가 PIFS 후 Beacon(B) → SIFS → Poll → polled station 이 SIFS 후 ACK+data → … → CF end. Others 는 contention-free 구간 내내 NAV|large]]
+
+{warn}PCF 가 우선이면 DCF 만 쓰는 스테이션은 '''영영 채널을 못 잡을 수도''' 있다(starvation). 그래서 [[repetition interval]] 로 '''contention-free(PCF) 구간 + contention(DCF) 구간'''을 번갈아 둔다(p.23).{/warn}
+
+{analogy}🎭 '''PCF = 수업 시간에 선생님이 출석부 순서대로 지목하기.''' 지목된 학생만 말하니 겹칠 일이 없고(contention-free), 순서가 정해져 있어 언제 차례가 오는지 예측된다(time-sensitive 에 유리). 다만 선생님(AP)이 있는 교실(infrastructure)에서만 가능하고, 선생님이 지목만 계속하면 자유 발언 시간(DCF)이 없어지니 쉬는 시간(contention 구간)을 따로 정해 둔다.{/analogy}
+
+{quiz}PCF 가 DCF 보다 우선권을 갖게 하는 장치는 무엇이며, 그 결과 생기는 문제와 해결책은?{/quiz}
+{answer}'''PIFS''' (DIFS 보다 짧은 interframe space) — 짧게 기다리는 AP 가 먼저 채널을 잡는다. 결과: DCF 만 쓰는 스테이션이 매체에 접근하지 못할 수 있음 → '''repetition interval''' 로 contention-free(PCF) 와 contention-based(DCF) 트래픽을 모두 포함시킨다. 각 interval 은 '''beacon frame''' 으로 시작.{/answer}
+
+== 관련 문서 ==
+* [[DCF]] · [[interframe space]] · [[repetition interval]] · [[beacon frame]]
+* [[polling]] · [[controlled access]] · [[ad-hoc과 infrastructure]] · [[CH04 WiFi]]
