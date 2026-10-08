@@ -11,7 +11,7 @@ category: 11강 Bluetooth, 용어
 [[img:L9-07.png|p.7 Piconet — 가운데 위 Primary 에서 Secondary 들로 번개 모양 링크. secondary 끼리는 직접 연결 없음|medium]]
 
 == 이름에서 개념 끌어내기 ==
-* '''pico-''' = 10⁻¹², "아주 작은". 슬라이드 괄호가 그대로 "'''i.e., a small net'''". 범위가 [[PAN]](방·홀 크기)이고 기기 수도 8 대뿐이라 "작은 망".
+* '''pico-''' = 10⁻¹², "아주 작은" (보충 — 슬라이드는 "small net" 만). 슬라이드 괄호가 그대로 "'''i.e., a small net'''". 범위가 [[PAN]](방·홀 크기)이고 기기 수도 8 대뿐이라 "작은 망".
 * '''-net''' = network. 작은 망들을 엮으면 [[scatternet]] — 흩어진(scatter) piconet 의 묶음.
 
 == 구조 ==

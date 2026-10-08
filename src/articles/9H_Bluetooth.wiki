@@ -10,7 +10,7 @@ category: 9강 Ethernet, 용어
 → Bluetooth 는 무선(wireless) LAN 의 한 instance.{/def}
 
 == 이름에서 개념 끌어내기 ==
-'''Bluetooth''' 는 기술 내용을 설명하는 이름이 아니라 '''사람 이름'''에서 왔다 — 10세기에 덴마크·노르웨이 지역을 통일한 왕 Harald "Bluetooth" 의 별명. "서로 다른 기기들을 하나로 묶는다(통일)"는 뜻으로 붙였다. L9 p.5 가 이를 확인한다: "'''Originally started as a project by the Ericsson Company. It is named for Harald Blaatand, a king of Denmark (940–981). Blaatand translates to Bluetooth in English.'''" ("통일" 의미 부분은 슬라이드에 없는 여담 — 시험에는 "wireless LAN 의 instance" 라는 분류와 [[IEEE 802.15]] PAN 이 중요.)
+'''Bluetooth''' 는 기술 내용을 설명하는 이름이 아니라 '''사람 이름'''에서 왔다 — 10세기에 덴마크·노르웨이 지역을 통일한 왕(보충) Harald "Bluetooth" 의 별명. "서로 다른 기기들을 하나로 묶는다(통일)"는 뜻으로 붙였다. L9 p.5 가 이를 확인한다: "'''Originally started as a project by the Ericsson Company. It is named for Harald Blaatand, a king of Denmark (940–981). Blaatand translates to Bluetooth in English.'''" ("통일" 의미 부분은 슬라이드에 없는 여담 — 시험에는 "wireless LAN 의 instance" 라는 분류와 [[IEEE 802.15]] PAN 이 중요.)
 
 == LAN 세 instance 비교 ==
 {|
@@ -22,6 +22,8 @@ category: 9강 Ethernet, 용어
 |-
 | 이 강의 || 10/1 ([[CH04 Ethernet]]) || 10/6 ([[CH04 WiFi]]) || 10/8 ([[CH04 Bluetooth]])
 |}
+
+[[anim:bluetooth_piconet|primary 1 + secondary 7 의 piconet, scatternet, 625 μs 슬롯 위 TDD-TDMA 와 hop 을 차례로 보라]]
 
 {analogy}🎭 '''무선 이어폰.''' WiFi 가 "집 안 전체를 덮는 무전망"이라면 Bluetooth 는 "내 책상 위, 몸 주변의 기기끼리 잇는 짧은 무선 끈"에 가깝다 — 휴대폰과 이어폰, 노트북과 마우스. 범위가 더 좁을 뿐 "선 없는 local network" 라는 점은 같다.{/analogy}
 

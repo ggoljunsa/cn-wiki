@@ -68,7 +68,7 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 |-
 | CH04 (2) || 10/6 화 p.2–21 ('''hidden station 해결까지''') + 10/8 목 p.22–36 예정 || WiFi/IEEE 802.11 — BSS/ESS, DCF(CSMA/CA, RTS/CTS, NAV, hidden station), PCF, 프레임·주소 4 케이스, physical layer || [[CH04 WiFi]]
 |-
-| CH04 (3) || 10/8 목 (덱 도착, '''수업 전 선제 작성''') || Bluetooth — piconet/scatternet, IEEE 802.15 PAN, TDD-TDMA 슬롯, FHSS/GFSK. 10/8 에 수업하므로 "다음 수업까지가 범위" 공지대로면 '''포함''' (교수 발언으로 확인) || [[CH04 Bluetooth]]
+| CH04 (3) || 10/8 목 (덱 도착, '''수업 전 선제 작성''') || Bluetooth — piconet/scatternet, IEEE 802.15 PAN, TDD-TDMA 슬롯, FHSS/GFSK. 10/8 에 수업하므로 "다음 수업까지가 범위" 공지대로면 '''포함''' 예상 (10/8 교수 발언으로 최종 확인 예정) || [[CH04 Bluetooth]]
 |-
 | CH05 || 중간고사 뒤 || WAN — '''중간고사 범위 아님''' (10/6 공지) || —
 |}

@@ -1,5 +1,5 @@
 // 오프라인용 service worker (build.py 생성 — 직접 편집 금지)
-const VER = "dffbc2e76a";
+const VER = "e7df89edad";
 const CACHE = "wiki-" + VER;
 const CORE = ["./", "./index.html", "./manifest.webmanifest"];
 const KATEX = ["https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css", "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js", "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"];

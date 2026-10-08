@@ -12,7 +12,7 @@ category: 11강 Bluetooth, 용어
 # '''서로 다른 사용자들'''(A 기기 vs B 기기 vs C 기기) → '''multiple access''' → TDMA(시간), FDMA(주파수), CDMA(코드).
 # 그다음 "무엇으로 나누냐" 는 이름 앞글자 '''T(ime) / F(requency) / C(ode)''' 가 알려 준다.
 
-'''③ 한 줄 요약 (답안용).''' "Duplexing 은 한 매체를 송신(Tx)과 수신(Rx)이 나눠 쓰는 것(TDD, FDD)이고, multiple access 는 한 매체를 여러 사용자가 나눠 쓰는 것(TDMA, FDMA, CDMA)이다."
+'''③ 한 줄 요약 (답안용).''' "Duplexing 은 한 매체를 송신(Tx)과 수신(Rx)이 나눠 쓰는 것(TDD, FDD)이고, multiple access 는 한 매체를 여러 사용자가 나눠 쓰는 것(TDMA, FDMA, CDMA)이다." (FDMA·CDMA 는 Forouzan 보충 — 슬라이드는 TDMA·TDD·FDD 만)
 
 {def}"Note: '''Don't confuse duplexing with multiple access (MA)'''.
 '''Duplexing: Sharing a medium for Tx / Rx'''; '''MA: sharing a medium among users'''." (p.14)
@@ -34,6 +34,7 @@ category: 11강 Bluetooth, 용어
 |-
 | (physical layer 의 친척) || [[TDM]] || [[FDM]] || —
 |}
+(FDMA·CDMA 는 Forouzan 보충 — 슬라이드는 TDMA·TDD·FDD 만)
 * '''Bluetooth''' baseband = 위 표의 '''시간 열 두 칸을 모두''' 쓴 것 → '''TDD-TDMA''': 사용자 간에도 시간 슬롯(TDMA), 송·수신 간에도 시간(TDD) → [[TDD-TDMA]].
 * 맨 아래 줄: 5강 [[multiplexing]] 의 TDM/FDM 은 '''여러 신호를 한 링크에 합치는''' physical-layer 기법이었다. TDMA/FDMA 는 같은 아이디어를 '''MAC 에서 사용자 접근'''으로 쓴 것([[channelization]] 의 info 박스 참고).
 
@@ -56,7 +57,7 @@ category: 11강 Bluetooth, 용어
 
 {quiz}다음을 duplexing 과 multiple access 로 분류하고, 각각 무엇을 나누는지 쓰시오: TDD, FDD, TDMA, FDMA, CDMA.{/quiz}
 {answer}'''Duplexing''' (Tx 와 Rx 가 매체를 나눔): '''TDD'''(시간), '''FDD'''(주파수).
-'''Multiple access''' (사용자들이 매체를 나눔): '''TDMA'''(시간), '''FDMA'''(주파수), '''CDMA'''(코드).{/answer}
+'''Multiple access''' (사용자들이 매체를 나눔): '''TDMA'''(시간), '''FDMA'''(주파수), '''CDMA'''(코드). (FDMA·CDMA 는 Forouzan 보충 — 슬라이드는 TDMA·TDD·FDD 만){/answer}
 
 {quiz}OX: "Bluetooth 의 TDD-TDMA 에서 TDD 는 여러 secondary 가 시간 슬롯을 나눠 쓰는 것을 뜻한다."{/quiz}
 {answer}'''X'''. 여러 secondary(사용자)가 시간 슬롯을 나눠 쓰는 것은 '''TDMA'''(multiple access). '''TDD''' 는 한 링크의 '''송신과 수신'''을 시간으로 번갈아 하는 것(duplexing) — half-duplex in time.{/answer}

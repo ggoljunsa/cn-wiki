@@ -87,7 +87,7 @@ category: 11강 Bluetooth, 메인
 
 {def}"A piconet (i.e., a '''small net''') — Can have '''up to 8 stations'''. One of which is called the '''primary''', the rest are called '''secondaries'''." (p.7){/def}
 
-* '''pico-''' = 아주 작은(10⁻¹²). "small net" 이라는 슬라이드 괄호 그대로.
+* '''pico-''' = 아주 작은(10⁻¹²) (보충). "small net" 이라는 슬라이드 괄호 그대로.
 * 8 = primary '''1''' + secondary 최대 '''7'''. → [[piconet]] · [[primary와 secondary]]
 * 그림에서 secondary 들은 '''primary 하고만''' 선이 이어져 있다(번개 모양 링크가 전부 primary 로 향함). secondary 끼리 직접 잇는 선은 없다 — HDLC [[NRM]] 이나 [[polling]] 의 primary/secondary 와 같은 star 모양 관계.
 
@@ -139,6 +139,7 @@ category: 11강 Bluetooth, 메인
 |-
 | '''Multiple access''' || '''여러 사용자'''가 매체를 나눔 || '''TDMA''' (Bluetooth) || '''FDMA''' (+ 코드로 CDMA)
 |}
+(FDMA·CDMA 는 Forouzan 보충 — 슬라이드는 TDMA·TDD·FDD 만)
 Bluetooth 의 '''TDD-TDMA''' 는 두 칸을 '''모두 시간'''으로 채운 것 — "사용자 간에도 시간으로(TDMA), 송·수신 간에도 시간으로(TDD)".
 
 {info}'''10/6 수업과 연결.''' WiFi 수업에서 교수는 half-duplex 를 '''"같은 주파수·같은 시간에 송수신 불가"''' 로 정의하고, 휴대폰 통화처럼 말하기·듣기가 동시에 되는 건 '''F1 / F2 로 주파수를 나눴기 때문'''이라고 했다("time and frequency as two important resources"). 그 F1/F2 방식이 바로 '''FDD''', 같은 주파수에서 시간을 번갈아 쓰는 방식이 '''TDD''' 다. 이번 덱은 그 설명에 이름을 붙인 것이다 → [[half-duplex]] · [[CH04 WiFi]].{/info}
@@ -228,7 +229,7 @@ hop 간격 = 1 / 1600 s
 hop 간격(dwell time) = 슬롯 하나. 그래서 '''슬롯마다 주파수가 하나씩''' 바뀌고, 그림의 슬롯 0·1·2·3 아래 적힌 f0·f1·f2·f3 가 그 주파수다.{/answer}
 
 {quiz}"Don't confuse duplexing with multiple access." 두 개념을 각각 한 문장으로 정의하고, TDD · FDD · TDMA · FDMA 를 둘 중 어디에 속하는지 분류하시오.{/quiz}
-{answer}'''Duplexing''': 한 매체를 '''송신(Tx)과 수신(Rx)이''' 나눠 쓰는 것 — '''TDD, FDD'''. '''Multiple access''': 한 매체를 '''여러 사용자가''' 나눠 쓰는 것 — '''TDMA, FDMA'''(, CDMA). Bluetooth baseband 는 둘 다 시간으로 하는 '''TDD-TDMA'''.{/answer}
+{answer}'''Duplexing''': 한 매체를 '''송신(Tx)과 수신(Rx)이''' 나눠 쓰는 것 — '''TDD, FDD'''. '''Multiple access''': 한 매체를 '''여러 사용자가''' 나눠 쓰는 것 — '''TDMA, FDMA'''(, CDMA). (FDMA·CDMA 는 Forouzan 보충 — 슬라이드는 TDMA·TDD·FDD 만) Bluetooth baseband 는 둘 다 시간으로 하는 '''TDD-TDMA'''.{/answer}
 
 == 시험 대비 핵심 요약 ==
 # Bluetooth = '''different types of devices''' 를 위한 '''ad-hoc''' 망 — '''spontaneously''' 형성, AP 없음. 기기 하나가 인터넷 능력이 있으면 인터넷에도 연결 가능 (p.2–4).

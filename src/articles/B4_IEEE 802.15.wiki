@@ -10,6 +10,8 @@ category: 11강 Bluetooth, 용어
 == 이름에서 개념 끌어내기 ==
 '''802.''' 은 [[IEEE Project 802]] — LAN 계열 표준의 '''physical + data-link''' 두 계층 묶음. 점 뒤 번호는 "어떤 종류의 망이냐" 다. 교수(10/1): "if you see IEEE 802 point blah blah … you can think of it as another standard for other types of computer networks." → '''802.15''' 는 "'''PAN''' 이라는 종류의 망".
 
+[[img:L9-06.png|p.6 IEEE 802.15 — Bluetooth 는 802.15 표준의 구현, wireless PAN(room 또는 hall 크기)|medium]]
+
 == 802 세 갈래 한 표 ⭐⭐ ==
 {|
 ! 표준 || 구현(이 강의) || 범위 || 매체 || 접근 방식

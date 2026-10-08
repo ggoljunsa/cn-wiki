@@ -11,7 +11,7 @@ category: 11강 Bluetooth, 용어
 [[img:L9-14.png|p.14 Baseband layer — TDMA, TDD-TDMA, Cf. FDD, Note: Don't confuse duplexing with multiple access (MA)|large]]
 
 == 이름에서 개념 끌어내기 ==
-'''base-band''' = "기저 대역". 2강의 [[baseband 전송]] 이 "변조 없이 원래 대역 그대로" 였듯, 여기서도 '''아직 반송파(radio)에 올리기 전의 디지털 처리 층'''이라는 이름이다. 그 층에서 하는 핵심 일이 "'''누가 어느 슬롯에 보낼지'''" 정하기라서 MAC 에 대응한다.
+(보충 — 이 이름 풀이는 슬라이드가 아니라 용어 해설이다.) '''base-band''' = "기저 대역". 2강의 [[baseband 전송]] 이 "변조 없이 원래 대역 그대로" 였듯, 여기서도 '''아직 반송파(radio)에 올리기 전의 디지털 처리 층'''이라는 이름이다. 그 층에서 하는 핵심 일이 "'''누가 어느 슬롯에 보낼지'''" 정하기라서 MAC 에 대응한다.
 
 == 슬라이드가 쌓아 올리는 네 줄 (p.10 → p.14) ==
 <pre class="txt">
