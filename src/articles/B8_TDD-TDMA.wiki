@@ -66,5 +66,7 @@ TDD (Bluetooth)                       FDD
 {quiz}TDD-TDMA 의 "TDD" 와 "TDMA" 는 각각 무엇을 시간으로 나누는가? FDD 와 비교해, 각각 무엇을 할 수 없는지 슬라이드 문장으로 쓰시오.{/quiz}
 {answer}'''TDD''': 한 기기의 '''송신(Tx)과 수신(Rx)'''을 시간으로 나눔. '''TDMA''': '''여러 사용자(primary·secondary들)'''가 매체를 시간 슬롯으로 나눔. TDD — "can send and receive data, but '''not at the same time'''". FDD — "can send and receive data, but '''not at the same frequency'''".{/answer}
 
+{exam}🎯 교수(10/8): TDMA 는 "'''contention-free''' … not contention-based — it is '''rule-based'''. Every station has their own pre-assigned time slots" (CSMA 같은 random access 와 대비). TDD = "'''half-duplex in time''' — transmitting and receiving is divided in time", FDD = "half-duplex … in frequency — not at the same frequency". 짝수 primary / 홀수 secondary 는 "a '''fixed rule''' … because they don't contend". → [[CH04 Bluetooth]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[duplexing과 multiple access]] · [[baseband layer]] · [[Bluetooth 시간 슬롯]] · [[half-duplex]] · [[full-duplex]] · [[TDM]] · [[channelization]] · [[CH04 Bluetooth]] · [[CH04 WiFi]]

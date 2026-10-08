@@ -56,5 +56,7 @@ dwell time = 1 / 1600 s = 0.000625 s = 625 μs
 </pre>
 '''시간 슬롯 하나(625 μs)'''와 같다 — 슬롯마다 주파수가 바뀐다.{/answer}
 
+{exam}🎯 교수(10/8): radio layer 물리 사양은 "not that important" 라면서도 "I would like to mention '''one important thing''', which is FHSS" / "FHSS is kind of important thing in the radio layer". 목적 = '''interference''' 회피 + '''security'''. '''1600 hops/s'''("very fast"), '''dwell time = 슬롯 길이(625 μs)''' — "'''This is just a design parameter'''"(다르게 잡을 수도 있지만 복잡해진다). 마우스와 이어폰이 서로 간섭하지 않는 이유. → [[CH04 Bluetooth]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[radio layer]] · [[Bluetooth 시간 슬롯]] · [[GFSK]] · [[802.11 physical layer]] · [[wireless LAN의 특성]] · [[CH04 Bluetooth]]

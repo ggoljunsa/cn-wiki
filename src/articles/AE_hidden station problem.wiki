@@ -64,6 +64,8 @@ category: 10강 WiFi, 용어
 {quiz}Hidden station problem 에서 왜 송신자(B, C)는 충돌을 감지하지 못하는가? 그리고 이 문제를 완화하는 방법은?{/quiz}
 {answer}B 와 C 는 '''서로의 범위 밖'''이라 상대의 신호를 듣지 못하고, 충돌은 둘 다의 범위 안인 '''수신자 A 의 위치'''에서 일어나기 때문이다. 완화: '''RTS/CTS 핸드셰이크''' — A 가 보내는 '''CTS''' 에 데이터 전송 duration 이 담겨 C 에도 닿고, C 는 그동안 전송을 삼간다(p.21).{/answer}
 
+{exam}🎯 교수(10/8): "'''I replaced the diagram here''' … you can '''download that one from the website'''." 새 p.21 그림 = '''A 송신 · B 수신''', '''C·D 가 A 에게 hidden''', "they still can see '''CTS from B''', so that they allocate '''NAV'''." 우리 PDF 는 구버전(수신자가 A). 원리는 같다 — 수신자의 CTS(duration 포함)가 숨은 스테이션에 닿는다. 해결은 "enabled by RTS and CTS" — RTS 는 송신자, CTS 는 수신자가 보낸다. → [[CH04 WiFi]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[RTS와 CTS]] · [[NAV]] · [[CSMA/CA]] · [[exposed station problem]] · [[wireless LAN의 특성]]
 * [[CSMA/CD]] · [[collision]] · [[CH04 WiFi]]

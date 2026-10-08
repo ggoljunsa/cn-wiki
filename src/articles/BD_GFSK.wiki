@@ -39,5 +39,7 @@ GFSK 주파수 ‾‾‾‾‾╲_____╱‾‾‾‾‾‾‾‾‾‾‾╲___
 {quiz}Bluetooth radio layer 의 변조 방식 이름과 뜻을 쓰고, 그것이 어떤 디지털-아날로그 변환 방식의 개량인지 쓰시오.{/quiz}
 {answer}'''GFSK — FSK with Gaussian bandwidth filtering'''. '''FSK'''(Frequency Shift Keying, 비트에 따라 반송파 주파수를 바꿈)의 "sophisticated version".{/answer}
 
+{exam}🎯 교수(10/8): "a sophisticated version of FSK that we studied in the physical layer, but I think '''it is not that important'''." → 비중 '''낮음'''. "GFSK = FSK with Gaussian bandwidth filtering" 한 줄만 알아 두고, 대신 같은 radio layer 의 '''[[FHSS]]''' 를 챙길 것. → [[CH04 Bluetooth]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[FSK]] · [[radio layer]] · [[FHSS]] · [[modulation]] · [[bandwidth]] · [[CH04 Bluetooth]]

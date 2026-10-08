@@ -51,5 +51,7 @@ category: 10강 WiFi, 용어
 {quiz}Exposed station problem 을 한 문장으로 정의하고, hidden station problem 과 결과가 어떻게 다른지 쓰시오.{/quiz}
 {answer}스테이션이 채널을 '''사용할 수 있는데도 사용을 삼가는''' 문제(p.35: C 가 A 의 RTS 를 듣고 D 로의 전송을 잘못 삼감). hidden station 은 '''충돌'''을 일으키고, exposed station 은 '''채널 낭비(효율 저하)''' 를 일으킨다.{/answer}
 
+{exam}🎯 교수(10/8): C 는 A 의 RTS 를 듣는 순간 NAV 를 건다("not explicitly shown in this diagram"). C→D 는 B 에 간섭하지 않는데도 못 보낸다. "Why we call it exposed? Because C is '''exposed to RTS'''." 결과는 "limits the '''channel usage efficiency''', lowering … the '''throughput'''" — hidden station(충돌)과 달리 '''효율''' 문제. → [[CH04 WiFi]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[hidden station problem]] · [[RTS와 CTS]] · [[NAV]] · [[CSMA/CA]] · [[CH04 WiFi]]

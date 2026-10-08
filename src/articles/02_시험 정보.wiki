@@ -4,7 +4,7 @@ category: 안내
 ---
 CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'''과 '''아직 확인 안 된 것'''을 구분해 적는다. 확인되면 이 문서와 과목 폴더의 `_시험정보.md` 를 함께 갱신한다.
 
-== 확정 (CH00 Course Introduction 슬라이드 + 9/22 · 9/29 · 10/1 · 10/6 녹음 공지) ==
+== 확정 (CH00 Course Introduction 슬라이드 + 9/22 · 9/29 · 10/1 · 10/6 · 10/8 녹음 공지) ==
 
 [[img:L0-8.png|CH00 p.8 Grading — 출석 10 / 과제 10 / 중간 40 / 기말 40|medium]]
 
@@ -25,11 +25,11 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 |-
 | '''형식''' || '''필기''' — 교수가 '''시험지를 배부'''하고 '''연필·펜'''으로 답을 쓴다. 개인 응시, 컴퓨터·노트북 불가 || 1006 녹음본 (0922 녹음본)
 |-
-| '''문항 유형''' || '''OX''' · (계산/단답 — 녹음 "tuition problems", 불명확) · '''서술형(descriptive)''' 이 섞인다. 상세는 "이번 주 LMS 공지" || 1006 녹음본
+| '''문항 유형''' || '''OX''' · '''객관식(4~5지 선다)''' — "choosing problems among four or five candidates" · (계산/단답) · '''서술형(descriptive)'''. 상세·'''장소·시간은 10/8~9 공지''' || 1006 · 1008 녹음본
 |-
 | '''출제 범위 성격''' || 슬라이드 중심 — "교재에만 있는 문제는 내지 않겠다" || 0922 녹음본 (9/22 녹음)
 |-
-| '''범위''' || '''CH01–CH04''' — "the classes up to the next time [10/8] would be the total coverage". CH04 WiFi 는 '''10/8 진도까지'''(10/6 은 p.21 까지). '''CH05 WAN 은 제외''' — "postpone our progression to wide area networks after the midterm" || 1006 녹음본 (수업 첫머리 + 끝)
+| '''범위''' || '''CH01–CH04 (3) Bluetooth 끝까지''' — 10/8 에 WiFi p.21–36 과 Bluetooth 19p 를 전부 나가고 마지막 슬라이드에서 "'''the coverage of midterm ends here'''". '''CH05 WAN 은 제외''' — "postpone our progression to wide area networks after the midterm" || 1006 · 1008 녹음본
 |}
 
 {exam}🎯 교수(9/22, 수업 첫머리): "I promise you that I will '''avoid taking some problems that are only contained in the textbooks'''. … I focus on materials [in the slides]." / "I will prepare exams '''in writing, by your own hands, not by computers''' or something like that." / "almost '''70 or 80%''' of [your grade] depends on the two exams … they should be fair, thorough and robust." / "I'm not sure whether we would spend total '''one and a half hours or just one hour''' … the exam should be maybe one hour." → [[CH03 Media Access Control]] 의 🎙 절.{/exam}
@@ -41,6 +41,10 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 {exam}🎯 교수(10/6, 수업 첫머리): "The classes up to the next time would be the '''total coverage''' for the midterm, which is planned on '''the next Tuesday''', right? The exam will take '''one hour'''. … you should write down your answer '''with pencil or pen'''. And I will '''distribute an exam sheet''' … you may wonder what could be the type of each problem. And I will '''upload an announcement''' later on, during this week. … there will be some '''OX quizzes''' or some [계산/단답 — 녹음 불명확] problems. And indeed there will be some '''descriptive problems''' also. And some details could be found in the announcements during this week. So please pay attention."
 (수업 끝) "I think we should end up [here] for the midterm and '''postpone our progression to wide area networks after the midterm'''. … the midterm coverage would be '''from Chapter 1''' … [to Chapter 4]; wide area network, which is '''Chapter 5'''[, after the midterm]." (녹음 일부 불명확, 문맥상 복원)
 → 10/13(화) 1시간 필기, 범위 = 10/8 수업까지(CH01–CH04), WAN 제외. 문항 유형 상세는 이번 주 LMS 공지. → [[CH04 WiFi]] 의 🎙 절.{/exam}
+
+{exam}🎯 교수(10/8, 수업 첫머리): "Next time we're going to have a '''midterm'''. I will [upload] a related announcement maybe '''during today or tomorrow''' … on how the problems would be, in a form such as '''descriptive''' or something else. But as I told you, there would be some '''choosing problems among four or five candidates''' and some '''descriptive''' ones … and the coverage of the exam would be '''from Chapter 1 to Chapter 4, which we will finish today'''."
+(수업 끝, Bluetooth 마지막 슬라이드) "This is the last slide in this lecture and '''the coverage of midterm ends here'''. So I will recommend you to prepare for the midterm. … I will upload some announcements … '''don't forget the place and time''' … just find our announcement."
+→ '''Bluetooth 포함 확정''', 객관식(4~5지) + 서술, 장소·시간은 LMS 공지. → [[CH04 WiFi]] · [[CH04 Bluetooth]] 의 🎙 절.{/exam}
 
 * 정책: 부정행위·표절은 과목 F. '''결석이 전체의 1/4 을 넘으면 F''' (CH00 p.9).
 * 교재: [[Forouzan]], ''Data Communications and Networking with TCP/IP Protocol Suite'', 6e (CH00 p.6).
@@ -66,9 +70,9 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 |-
 | CH04 (1) || 10/1 목 ('''완료''') || LAN — Ethernet 4세대(Standard/Fast/Gigabit/10G): frame format, 주소 전송 순서, CSMA/CD 길이 제약, 스위치·full-duplex || [[CH04 Ethernet]]
 |-
-| CH04 (2) || 10/6 화 p.2–21 ('''hidden station 해결까지''') + 10/8 목 p.22–36 예정 || WiFi/IEEE 802.11 — BSS/ESS, DCF(CSMA/CA, RTS/CTS, NAV, hidden station), PCF, 프레임·주소 4 케이스, physical layer || [[CH04 WiFi]]
+| CH04 (2) || 10/6 화 p.2–21 + 10/8 목 p.21–36 ('''완료'''; p.21 그림은 교수가 새 버전으로 교체 → [[hidden station problem]]) || WiFi/IEEE 802.11 — BSS/ESS, DCF(CSMA/CA, RTS/CTS, NAV, hidden station), PCF, 프레임·주소 4 케이스, physical layer || [[CH04 WiFi]]
 |-
-| CH04 (3) || 10/8 목 (덱 도착, '''수업 전 선제 작성''') || Bluetooth — piconet/scatternet, IEEE 802.15 PAN, TDD-TDMA 슬롯, FHSS/GFSK. 10/8 에 수업하므로 "다음 수업까지가 범위" 공지대로면 '''포함''' 예상 (10/8 교수 발언으로 최종 확인 예정) || [[CH04 Bluetooth]]
+| CH04 (3) || 10/8 목 ('''완료''') || Bluetooth — piconet/scatternet, IEEE 802.15 PAN, TDD-TDMA 슬롯, duplexing ≠ MA, FHSS/GFSK. '''시험 범위 포함 확정''' ("the coverage of midterm ends here") || [[CH04 Bluetooth]]
 |-
 | CH05 || 중간고사 뒤 || WAN — '''중간고사 범위 아님''' (10/6 공지) || —
 |}
@@ -76,10 +80,9 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 == 미확정 — 교수·조교 공지로 확인할 것 ==
 
 {warn}
-* '''시험 장소·시각''': 날짜는 10/13(화)로 확정(10/6). 몇 시에 어디서 보는지는 아직 공지 없음 — 정규 수업 시간(화 9시대)·강의실일 가능성이 크지만 확인할 것.
-* '''문항 비율·세부 구성''': OX·(계산/단답)·서술형이 섞인다는 것까지만 확정(10/6). 유형별 비율·배점, 계산기 허용, 공식 제공 여부는 '''이번 주 LMS 공지 대기'''. 단서: 녹음본(9/10)에서 교수가 "'''시험 문제에서 $d$(roll-off factor)는 항상 내가 줄 것'''" → 계산 문제가 나온다.
-* '''Bluetooth 포함 여부''': 10/8 에 CH04 (3) Bluetooth 덱이 배포돼 수업한다. 10/6 공지("다음 수업까지가 범위")대로면 포함되지만, 10/6 녹음 끝의 "midterm isn't B…"(불명확) 발언이 있어 '''10/8 수업에서 교수 발언으로 최종 확인'''.
-* '''CH04 WiFi 의 끝 지점''': 10/6 은 p.21 까지. 10/8 에 PCF(p.22)~p.36 을 다 나가는지는 10/8 녹음으로 확인.
+* '''시험 장소·시각''': 날짜는 10/13(화)로 확정(10/6). 몇 시에 어디서 보는지는 '''10/8~9 LMS 공지''' — 교수가 "don't forget the place and time" 이라고 했으니 정규 시간·강의실이 아닐 수도 있다. 꼭 확인.
+* '''문항 비율·세부 구성''': OX·객관식(4~5지)·(계산/단답)·서술형이 섞인다는 것까지만 확정(10/6·10/8). 유형별 비율·배점, 계산기 허용, 공식 제공 여부는 '''이번 주 LMS 공지 대기'''. 단서: 녹음본(9/10)에서 교수가 "'''시험 문제에서 $d$(roll-off factor)는 항상 내가 줄 것'''" → 계산 문제가 나온다.
+* ~~Bluetooth 포함 여부~~ → '''포함 확정'''(10/8). ~~CH04 WiFi 끝 지점~~ → p.36 까지 완료(10/8). 단, 교수가 p.35 physical layer 표는 "not going to explain, not that important", Bluetooth 의 GFSK·radio 사양도 "not that important" 라고 했다 — 암기 우선순위 낮춤.
 * 족보·이전 학기 시험지: 이 과목은 2026 Fall 이 교수의 DGIST 첫 개설이라 족보가 없다. 대신 [[계산 문제 모음]] 과 [[0920 오답 복기]] 가 그 역할을 한다.
 {/warn}
 
@@ -93,7 +96,7 @@ CSE403 Computer Network 중간고사에 대해 '''지금까지 확인된 사실'
 # '''Ethernet 주소 전송 순서''' (Ex 13.1: byte 는 왼→오, byte 안은 LSB first) 와 unicast/multicast 판별 (Ex 13.2). → [[Ethernet 주소 전송 순서]].
 
 {analogy}
-🎭 시험 정보는 '''일기예보'''다. 확정된 건 배점(40%), 날짜(10/13 화), 형식(필기·1시간·OX/서술 혼합·슬라이드 중심), 범위(CH01–CH04)이고 나머지는 구름 모양으로 추정한 것이다. 우산(계산 연습)은 챙기고, 날짜가 발표되면 이 문서를 고친다.
+🎭 시험 정보는 '''일기예보'''다. 확정된 건 배점(40%), 날짜(10/13 화), 형식(필기·1시간·OX/객관식/서술 혼합·슬라이드 중심), 범위(CH01–CH04 Bluetooth 까지)이고 나머지는 구름 모양으로 추정한 것이다. 우산(계산 연습)은 챙기고, 날짜가 발표되면 이 문서를 고친다.
 {/analogy}
 
 == 관련 문서 ==

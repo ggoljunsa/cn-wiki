@@ -35,5 +35,7 @@ category: 11강 Bluetooth, 용어
 {quiz}Piconet 의 최대 스테이션 수와 그 구성을 쓰시오. piconet 은 ad-hoc 망인가 infrastructure 망인가?{/quiz}
 {answer}'''최대 8 대 = primary 1 + secondary 7'''. AP 없이 기기들이 서로 찾아 spontaneously 만드는 '''ad-hoc''' 망(p.3).{/answer}
 
+{exam}🎯 교수(10/8): "pico … means '''small, very small'''." 최대 '''8''' 대, primary 1 + secondary. "this is '''ad hoc''' … all devices [can] act as primary — they are all '''equal devices hierarchically'''." 기기 하나가 능력이 있으면 '''인터넷에도 연결''' 가능. → [[CH04 Bluetooth]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[primary와 secondary]] · [[scatternet]] · [[Bluetooth 시간 슬롯]] · [[ad-hoc과 infrastructure]] · [[PAN]] · [[CH04 Bluetooth]]

@@ -62,5 +62,7 @@ category: 11강 Bluetooth, 용어
 {quiz}OX: "Bluetooth 의 TDD-TDMA 에서 TDD 는 여러 secondary 가 시간 슬롯을 나눠 쓰는 것을 뜻한다."{/quiz}
 {answer}'''X'''. 여러 secondary(사용자)가 시간 슬롯을 나눠 쓰는 것은 '''TDMA'''(multiple access). '''TDD''' 는 한 링크의 '''송신과 수신'''을 시간으로 번갈아 하는 것(duplexing) — half-duplex in time.{/answer}
 
+{exam}🎯 ⭐⭐⭐ 교수(10/8): "'''I'd like to make a clear distinction''' … duplexing is about sharing a medium for transmitting and receiving … MA is about sharing of medium '''among users'''. TDMA is about sharing medium with users, while TDD is about sharing the medium for '''my own transmission and reception'''." 그리고 한 번 더 반복. → '''MA = 사용자들끼리, duplexing = 내 Tx·Rx 끼리'''. → [[CH04 Bluetooth]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[TDD-TDMA]] · [[channelization]] · [[multiple access protocols]] · [[half-duplex]] · [[full-duplex]] · [[TDM]] · [[FDM]] · [[multiplexing]] · [[baseband layer]] · [[CH04 Bluetooth]]

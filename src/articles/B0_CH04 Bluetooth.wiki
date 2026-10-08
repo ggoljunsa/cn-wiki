@@ -2,7 +2,7 @@ key: CH04 Bluetooth
 title: CH04 Bluetooth (11강 — IEEE 802.15 PAN: 한 명이 지휘하는 작은 망)
 category: 11강 Bluetooth, 메인
 ---
-{warn}'''10/8 수업 전 선제 작성 — 녹음본 없음.''' 슬라이드(L9 `CH04_Local Area Networks (3).pdf`, 19쪽)만 보고 썼다. 수업 뒤 녹음본이 오면 진도·교수 강조·공지를 `🎙 실제 수업 기록` 절로 추가한다. 10/6 수업 공지 기준으로 '''Bluetooth 가 10/13 중간고사 범위에 들어가는지는 미확정'''(범위는 "10/8 진도까지") → [[시험 정보]].{/warn}
+{warn}'''10/8 수업 녹음본 반영 완료''' → 아래 `🎙 실제 수업 기록 (10/8 목)` 절. '''Bluetooth 는 중간고사 범위에 포함 — 10/8 확정''' ("the coverage of midterm ends here"). (이하 원래 안내) '''10/8 수업 전 선제 작성 — 녹음본 없음.''' 슬라이드(L9 `CH04_Local Area Networks (3).pdf`, 19쪽)만 보고 썼다. 수업 뒤 녹음본이 오면 진도·교수 강조·공지를 `🎙 실제 수업 기록` 절로 추가한다. 10/6 수업 공지 기준으로 '''Bluetooth 가 10/13 중간고사 범위에 들어가는지는 미확정'''(범위는 "10/8 진도까지") → [[시험 정보]].{/warn}
 
 '''CH04 Bluetooth''' 는 L9 덱(`CH04_Local Area Networks (3).pdf`, 19쪽) p.2–19 전부다. recap 없이 바로 "'''3. Bluetooth'''" 로 시작한다 — [[CH04 Ethernet]]·[[CH04 WiFi]] 에 이어 [[LAN]] 의 세 번째 instance 다.
 이 덱이 던지는 질문은 — '''"방 하나 크기의 작은 무선망에서, 여러 기기가 한 매체를 어떻게 나눠 쓰나?"'''
@@ -231,6 +231,39 @@ hop 간격(dwell time) = 슬롯 하나. 그래서 '''슬롯마다 주파수가 �
 {quiz}"Don't confuse duplexing with multiple access." 두 개념을 각각 한 문장으로 정의하고, TDD · FDD · TDMA · FDMA 를 둘 중 어디에 속하는지 분류하시오.{/quiz}
 {answer}'''Duplexing''': 한 매체를 '''송신(Tx)과 수신(Rx)이''' 나눠 쓰는 것 — '''TDD, FDD'''. '''Multiple access''': 한 매체를 '''여러 사용자가''' 나눠 쓰는 것 — '''TDMA, FDMA'''(, CDMA). (FDMA·CDMA 는 Forouzan 보충 — 슬라이드는 TDMA·TDD·FDD 만) Bluetooth baseband 는 둘 다 시간으로 하는 '''TDD-TDMA'''.{/answer}
 
+== 🎙 실제 수업 기록 (10/8 목, 녹음본 기준) ==
+10/8 수업(`컴네 261008_091132.txt`, Clova, 67분)은 [[CH04 WiFi]] p.21–36 을 마친 뒤 '''약 41:50 부터 이 덱 p.2–19 전부'''를 다뤘다(약 24분). 오인식 복원: "Brutus/Rochus/Bluetus/glose" = Bluetooth, "PICO net/pict/picnet" = piconet, "IROP/IV/IGP" = IEEE, "Harlan" = Harald (Blaatand), "FHFF" = FHSS, "hope/hall" = hop, "drell/drill" = dwell, "time slop/slut" = time slot, "and walk/endwork network" = ad hoc network, "meter/winter" = midterm.
+
+=== 공지 — Bluetooth 시험 범위 확정 ===
+{exam}🎯 '''Bluetooth 는 중간고사 범위에 들어간다 (10/8 확정).''' 마지막 슬라이드(p.19)에서: "This is the last slide in this lecture and '''the coverage of [the midterm] ends here'''. So I will recommend you to prepare for the midterm." 수업 첫머리에도 "the coverage of the exam would be from chapter 1 to Chapter 4, '''which we will finish today'''". → 범위 = CH01–CH04 '''Bluetooth p.19 까지'''. 장소·시간은 LMS 공지. → [[시험 정보]]{/exam}
+
+=== 교수 설명 순서대로 ===
+* '''ad hoc 이 "one big difference"''' (p.2–4) ⭐⭐: "one prominent property of Bluetooth is that it is an '''ad hoc network''', different from wireless LAN … a dominant part of wireless LAN is about an '''infrastructure network with AP'''. But Bluetooth is inherently an ad hoc network. '''This is one big difference''' between Bluetooth and wireless LANs." 예: 폰–무선 이어폰, 무선 마우스. → [[ad-hoc과 infrastructure]]
+* '''piconet 이름''' (p.4) ⭐: "Are you familiar with this word pico? It means '''small, very small'''." ad hoc 으로 작은 망을 이뤄도 "if it has that capability of connection, it can be '''connected to the Internet'''."
+* '''역사''' (p.5): '''Ericsson''' 프로젝트("a telephone company … in Sweden if I remember correctly"), 이름은 덴마크 왕 '''Harald''' (Blaatand) — 교수도 발음을 자신 없어 했다.
+* '''IEEE 802.15 = PAN''' (p.6) ⭐⭐: "almost every device you are working on [is] IEEE standard-based." PAN = "operated in a small-sized space such as '''room or home'''". 이어폰을 낀 채 폰을 두고 멀리 가면 끊기는 경험 — "this standard '''does not serve long range communication'''", 그래서 LAN 보다 훨씬 작은 personal area network.
+* '''piconet 구조''' (p.7) ⭐⭐⭐: "up to '''eight stations''' … one of which is called '''primary''' while the rest are called '''secondary'''. As I told you, this is ad hoc. So basically '''all devices [are capable to] act as primary''' — they are all '''equal devices hierarchically'''." primary 는 역할이지 특별한 장비가 아니다(WiFi 의 AP 와 대비).
+* '''scatternet''' (p.8) ⭐⭐: 한 piconet 안에서는 하나가 primary, 나머지가 secondary. 그중 어떤 기기가 다른 기기들과의 통신에서는 primary 를 맡으면 또 하나의 piconet 이 생긴다 — "'''one secondary of a piconet actually acts as a primary for the other piconet'''. This is what we call a scatternet", "basically a combination of two different [pico]nets".
+* '''계층 이름''' (p.9) ⭐: "not the same as the Internet model … in TCP/IP the first layer was physical layer, the second the data link layer. But in this case we see different naming, '''radio''' and '''baseband''' layer for the first and second layers." 이유: "I'm not sure why, but I think '''they were built independently''' and separately."
+* '''Baseband = MAC, TDMA = contention-free''' (p.10–11) ⭐⭐⭐: baseband 는 MAC 와 비슷한 역할로 접근 방식을 관리하며 그 방식이 '''TDMA''' — "'''it is actually contention-free'''. It is not maintained by contention." contention 의 예는 CSMA 같은 '''random access'''. "But TDMA-based is not contention-based — it is '''rule-based'''. Every station has their own '''pre-assigned time slots''', and they don't have to fight each other to possess access." → [[channelization]] vs [[random access]]
+* '''TDD vs FDD''' (p.12–13) ⭐⭐⭐: TDD = "'''half-duplex in time''' — we can send and receive data but not at the same time; transmitting and receiving is divided in time." FDD = "half-duplex communication but '''in frequency''' — it can send and receive data but '''not at the same frequency'''" (Bluetooth baseband 와 직접 관계는 없는 비교 대상).
+* '''duplexing vs MA''' (p.14) ⭐⭐⭐ — 아래 🎯 박스.
+* '''슬롯 규칙''' (p.15) ⭐⭐⭐: 슬롯 길이 '''625 μs'''. '''짝수''' 슬롯 = primary → secondary, '''홀수''' 슬롯 = secondary → primary. "This is a '''fixed rule''' maintained by TDMA. They should have a rule because '''they don't contend''' each other for channels … so they have to respect this one." primary 가 보낼 때 secondary 는 받기만 = TDD.
+* '''multiple-secondary''' (p.16) ⭐⭐⭐: 짝수 슬롯에서 primary 가 보낼 때 모든 secondary 가 듣고, "this message contains '''the specific secondary device''' that primary wants to communicate with" — 지목된 secondary '''하나만''' 다음 홀수 슬롯에 응답. 다음 짝수 슬롯 메시지가 또 다른 secondary 를 지목.
+* '''radio layer''' (p.17): physical layer 와 비슷한 역할, 물리 사양이 있지만 "'''I think it is not that important'''." (2.4 GHz ISM, 79 × 1 MHz 는 설명 없이 넘어감 — 슬라이드 문장만 알아 두면 됨.)
+* '''FHSS 는 중요''' (p.18) ⭐⭐⭐: "I would like to mention '''one important thing''', which is FHSS." 통신 중 계속 주파수를 바꾼다 — p.15 그림의 "Hop" = 다른 주파수(f0 → f1 → f2)로 뛰기, primary 와 secondary 모두. "'''1600 times per second''' — very fast." 한 주파수에 머무는 시간 = '''dwell time''' = 슬롯 길이(625 μs). "dwell means maintain at one point … '''This is just a design parameter'''. You may want to use a different dwell time [from] the length of the time slot, but I think it makes complications."
+* '''GFSK''' (p.19): "a sophisticated version of FSK that we studied in the physical layer, but I think '''it is not that important'''." 대신 "'''FHSS is kind of [an] important thing''' in the radio layer … mainly for '''security''' reasons or '''interference''' reasons" — 주파수를 계속 바꾸니 다른 시스템과의 간섭을 피한다. "This is why you may have less experience of seeing interference between your mouse and your earphone." → [[FHSS]]
+
+{exam}🎯 ⭐⭐⭐ '''Duplexing vs Multiple access — 교수가 "I'd like to make a clear distinction" 이라며 두 번 반복.'''
+"'''Duplexing''' is about sharing a medium for '''transmitting and receiving''' — how we divide transmission and reception [in] time and frequency. While '''MA''' is about sharing of medium '''among users'''. TDMA is about sharing medium with users, while TDD is about sharing the medium for '''my own transmission and reception'''. … totally different concepts, but they look similar because they are all about how to share a medium." 그리고 다시: "MA is about sharing a channel among users while duplexing is about sharing the medium for my own transmission and reception."
+→ 한국어: '''MA = 여러 사용자끼리''' 매체를 나눔(TDMA·FDMA), '''duplexing = 내 송신과 내 수신끼리''' 매체를 나눔(TDD·FDD). 둘 다 "매체 나누기"라 헷갈리지만 '''누구와 누구가 나누는가'''가 다르다. 서술형·OX 1순위. → [[duplexing과 multiple access]]{/exam}
+
+{exam}🎯 '''TDMA = contention-free, rule-based''' vs '''CSMA 류 = contention'''(fighting each other to possess the medium). Bluetooth 는 슬롯이 미리 정해져 있어(짝수 primary / 홀수 지목된 secondary) 경쟁도 충돌도 없다. WiFi 의 PCF(polling) 와 함께 "contention-free" 로 묶이는 것 — [[CH04 WiFi]] 10/8 절. → [[TDD-TDMA]]{/exam}
+
+{info}'''비중 조정(10/8 교수 발언 기준).''' ⭐ 낮춤: radio layer 물리 사양(2.4 GHz, 79 × 1 MHz), '''GFSK''' — 둘 다 "not that important". ⭐ 올림: '''FHSS'''(목적 = interference 회피 + security, 1600 hops/s, dwell time = 슬롯 = design parameter), '''duplexing vs MA''', '''ad hoc vs infrastructure''', '''TDMA 는 contention-free'''.{/info}
+
+'''학생 Q&A''': 녹음상 학생 질문 없음.
+
 == 시험 대비 핵심 요약 ==
 # Bluetooth = '''different types of devices''' 를 위한 '''ad-hoc''' 망 — '''spontaneously''' 형성, AP 없음. 기기 하나가 인터넷 능력이 있으면 인터넷에도 연결 가능 (p.2–4).
 # 역사: '''Ericsson''' 프로젝트, 이름은 덴마크 왕 '''Harald Blaatand (940–981)''' (p.5).
@@ -245,7 +278,11 @@ hop 간격(dwell time) = 슬롯 하나. 그래서 '''슬롯마다 주파수가 �
 # '''FHSS''': 간섭 회피, '''1600 hops/s''', dwell time '''625 μs (1/1600 s) = 슬롯 하나''' (p.18).
 # 변조 '''GFSK''' = '''FSK with Gaussian bandwidth filtering''' (p.19).
 # (10/6 교수와 연결) half-duplex 는 시간·주파수 두 자원의 문제 — 시간으로 나누면 TDD, 주파수(F1/F2)로 나누면 FDD.
-# 중간고사 범위에 Bluetooth 포함 여부는 10/8 수업 뒤 확인 → [[시험 정보]].
+# 중간고사 범위에 Bluetooth 포함 여부는 10/8 수업 뒤 확인 → '''10/8 확정: 포함'''("the coverage of midterm ends here") → [[시험 정보]].
+# (10/8 교수) Bluetooth = '''ad hoc''' 망(WiFi 는 infrastructure 위주) — "one big difference". 모든 기기가 primary 가 될 수 있다(hierarchically equal). Scatternet = 한 piconet 의 secondary 가 다른 piconet 의 primary.
+# (10/8 교수) TDMA 는 '''contention-free, rule-based'''(미리 배정된 슬롯) — CSMA 류의 contention 과 대비.
+# (10/8 교수 ⭐⭐⭐) '''MA = 사용자들끼리, duplexing = 내 송신·수신끼리''' 매체 공유 — "I'd like to make a clear distinction".
+# (10/8 교수) '''FHSS 는 중요'''(interference·security, dwell time = 슬롯 = design parameter). radio 물리 사양·GFSK 는 "not that important".
 
 == 공식 모음 ==
 {|

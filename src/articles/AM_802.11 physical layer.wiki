@@ -45,6 +45,8 @@ category: 10강 WiFi, 용어
 {quiz}p.36 표에서 (1) 5.725–5.850 GHz 대역을 쓰는 표준 두 개, (2) 원조 802.11 의 세 technique 과 각 modulation, (3) 가장 빠른 표준과 그 rate 를 쓰시오.{/quiz}
 {answer}(1) '''802.11a''', '''802.11n'''. (2) '''FHSS–FSK''', '''DSSS–PSK''', '''None(Infrared)–PPM''' (모두 1 and 2 Mbps). (3) '''802.11n, 600 Mbps'''.{/answer}
 
+{exam}🎯 교수(10/8): "here I [wrote] some specifications for physical layer, which '''I'm not going to explain in more detail''' … many different versions of standards … techniques primarily related to the physical layer, OFDM or something." → 수업에서 설명 없이 넘어감, 비중 '''낮음'''. 표의 큰 줄기(802.11 원조 = FHSS/DSSS/Infrared, a·g·n = OFDM)만. → [[CH04 WiFi]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[IEEE 802.11]] · [[wireless LAN의 특성]] · [[physical layer]]
 * [[modulation]] · [[FSK]] · [[PSK]] · [[QAM]] · [[FDM]] · [[bit rate]] · [[CH04 WiFi]]

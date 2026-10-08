@@ -47,6 +47,8 @@ category: 10강 WiFi, 용어
 {quiz}PCF 가 DCF 보다 우선권을 갖게 하는 장치는 무엇이며, 그 결과 생기는 문제와 해결책은?{/quiz}
 {answer}'''PIFS''' (DIFS 보다 짧은 interframe space) — 짧게 기다리는 AP 가 먼저 채널을 잡는다. 결과: DCF 만 쓰는 스테이션이 매체에 접근하지 못할 수 있음 → '''repetition interval''' 로 contention-free(PCF) 와 contention-based(DCF) 트래픽을 모두 포함시킨다. 각 interval 은 '''beacon frame''' 으로 시작.{/answer}
 
+{exam}🎯 교수(10/8): "PCF is an '''optional''' access method — it is not primary", '''time-sensitive''' 전송용, "implemented in an '''infrastructure network which has an access point'''" → AP 가 조정하므로 '''centralized''', 그리고 '''contention-free''' — "contention means fighting each other to possess the medium … PCF is basically '''polling''' access method that we studied in the data link." DCF 보다 우선하려고 '''PIFS < DIFS'''. 서술형이면 이 다섯 단어(optional · infrastructure · centralized · contention-free polling · PIFS<DIFS)를 다 쓸 것. → [[CH04 WiFi]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[DCF]] · [[interframe space]] · [[repetition interval]] · [[beacon frame]]
 * [[polling]] · [[controlled access]] · [[ad-hoc과 infrastructure]] · [[CH04 WiFi]]

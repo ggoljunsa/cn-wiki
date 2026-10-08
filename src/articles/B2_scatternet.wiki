@@ -33,5 +33,7 @@ category: 11강 Bluetooth, 용어
 {quiz}Scatternet 이란 무엇인가? p.8 그림에서 두 piconet 을 잇는 기기의 역할은?{/quiz}
 {answer}'''piconet 들을 결합한 망'''(p.8). 잇는 기기는 '''한 piconet 에서는 secondary, 다른 piconet 에서는 primary''' 로 동작한다(그림 라벨 "Primary/Secondary").{/answer}
 
+{exam}🎯 교수(10/8): "'''one secondary of a piconet actually acts as a primary for the other piconet'''. This is what we call a scatternet" — "basically a combination of two different [pico]nets". → [[CH04 Bluetooth]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[piconet]] · [[primary와 secondary]] · [[CH04 Bluetooth]] · [[ESS]]

@@ -2,7 +2,7 @@ key: main
 title: 컴네위키 — DGIST CSE403 Computer Network 중간고사
 category: 안내
 ---
-'''컴네위키'''는 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) 중간고사 범위 — '''CH01 Introduction · CH02 Physical Layer (1)(2)(3) · CH03 Data-Link Layer (1)(2) · CH04 Local Area Networks (1) Ethernet''' — 를 나무위키 스타일로 정리한 학습 위키다. 교재는 [[Forouzan]] 6e. 강의는 영어, 문서는 한국어 산문 + 영어 용어 그대로.
+'''컴네위키'''는 DGIST [CSE403] Computer Network (Prof. Soobin Um, 2026 Fall) 중간고사 범위 — '''CH01 Introduction · CH02 Physical Layer (1)(2)(3) · CH03 Data-Link Layer (1)(2) · CH04 Local Area Networks (1) Ethernet (2) WiFi (3) Bluetooth''' — 를 나무위키 스타일로 정리한 학습 위키다. 교재는 [[Forouzan]] 6e. 강의는 영어, 문서는 한국어 산문 + 영어 용어 그대로.
 
 해설본(`정리본/CH0X_정리.md`)이 "그림이 없고, 기호가 뭔지 그때마다 까먹어서" 안 읽히던 문제를 풀기 위해 만들었다. 그래서 이 위키는 세 가지를 약속한다.
 
@@ -17,7 +17,7 @@ category: 안내
 * 처음이면 → [[읽는 순서]] (강의 순서대로, 한 강의 = 메인 문서 1편 + 딸린 사전 문서)
 * 시험이 코앞이면 → [[공식 모음]] → [[계산 문제 모음]] → [[자주 틀리는 함정 모음]]
 * 내가 뭘 틀렸었지 → [[0920 오답 복기]] (NotebookLM 퀴즈 8문항, 전부 개념으로 다시)
-* 시험 날짜·형식·비중 → [[시험 정보]] (10/1 공지: '''시험 1시간''', 범위는 CH04 LAN·WAN 까지 계획)
+* 시험 날짜·형식·비중 → [[시험 정보]] ('''10/13 화, 1시간''', OX·객관식·서술; 범위 CH01–CH04 Bluetooth 까지 확정, WAN 제외)
 * 모의고사 → [[중간고사 모의 v1]] · [[중간고사 모의 v2]] (v2 는 CH04 포함, 문항 전부 새것)
 
 == 강의별 메인 문서 ==

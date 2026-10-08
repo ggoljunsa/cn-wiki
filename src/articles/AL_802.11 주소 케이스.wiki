@@ -78,6 +78,8 @@ Case 1 "Frame is moving '''within a single BSS'''" (p.31) · Case 4 "Frame is tr
 {quiz}To DS = 1, From DS = 1 인 프레임의 Address 1–4 를 쓰고, 이 프레임이 어디를 지나는 중인지 쓰시오.{/quiz}
 {answer}Address 1 = '''Receiving AP''', Address 2 = '''Sending AP''', Address 3 = '''Destination''', Address 4 = '''Source'''. (wireless) distribution system 을 통해 '''두 AP 사이'''를 이동 중(Case 4, p.34 그림: AP2 · AP1 · B · A).{/answer}
 
+{exam}🎯 교수(10/8): "looks somewhat complicated but you can easily understand by considering these four cases." Case 2 = "'''coming from''' a distribution system … to B via AP"(From DS = 1), Case 3 = "it should be '''To DS = 1''' because we want to send message firstly to AP". "Every transmission in an infrastructure network is conveyed by AP — you never communicate with each other device directly." → 표가 맞고 p.32–33 캡션이 뒤바뀐 것으로 정리. → [[CH04 WiFi]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[802.11 프레임 형식]] · [[distribution system]] · [[BSS]] · [[ESS]]
 * [[MAC 주소]] · [[CH04 WiFi]]

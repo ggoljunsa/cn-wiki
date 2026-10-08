@@ -76,5 +76,7 @@ hop 횟수  = 1600 hops/s
 </pre>
 1000 배 차이 → 그림의 ms 는 '''μs 의 오타'''. 슬롯 = '''625 μs'''.{/answer}
 
+{exam}🎯 교수(10/8): 슬롯 '''625 μs''', 짝수 = primary, 홀수 = secondary — "a '''fixed rule''' maintained by TDMA … they don't contend each other for channels". Multiple-secondary 에서는 짝수 슬롯 primary 메시지가 "contains '''the specific secondary device'''" — 지목된 secondary '''하나만''' 다음 홀수 슬롯에 응답. → [[CH04 Bluetooth]] 🎙 10/8{/exam}
+
 == 관련 문서 ==
 * [[TDD-TDMA]] · [[primary와 secondary]] · [[piconet]] · [[FHSS]] · [[baseband layer]] · [[polling]] · [[TDM]] · [[CH04 Bluetooth]]
