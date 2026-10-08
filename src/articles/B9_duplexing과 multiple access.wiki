@@ -1,0 +1,65 @@
+key: duplexing과 multiple access
+title: Duplexing과 Multiple Access (헷갈리지 말 것)
+category: 11강 Bluetooth, 용어
+---
+슬라이드가 '''"Note: Don't confuse duplexing with multiple access (MA)."''' 라고 못 박아 둔 개념 쌍이다. 둘 다 "한 매체를 시간·주파수(·코드)로 나눠 쓴다" 는 같은 도구를 쓰지만, '''누구끼리 나누느냐'''가 다르다. '''Duplexing''' 은 한 링크의 '''송신(Tx)과 수신(Rx)''' 이, '''Multiple access''' 는 '''여러 사용자'''가 매체를 나눈다. L9 p.14.
+
+== 쉽게 말하면 ==
+'''① 왜 필요한가.''' TDD 와 TDMA, FDD 와 FDMA — 앞 두 글자가 똑같아서 같은 것으로 착각하기 쉽다. 게다가 Bluetooth 는 "'''TDD-TDMA'''" 로 둘을 한 이름에 붙여 쓴다. 이름만 보고 외우면 "TDD 가 뭐냐" 에 TDMA 를 설명하는 실수가 나온다.
+
+'''② 어떻게 구분하나.''' 질문 하나로 가른다 — '''"매체를 나눠 갖는 게 누구냐?"'''
+# '''같은 기기의 송신기와 수신기'''(내가 말하는 것 vs 내가 듣는 것) → '''duplexing''' → TDD(시간으로), FDD(주파수로).
+# '''서로 다른 사용자들'''(A 기기 vs B 기기 vs C 기기) → '''multiple access''' → TDMA(시간), FDMA(주파수), CDMA(코드).
+# 그다음 "무엇으로 나누냐" 는 이름 앞글자 '''T(ime) / F(requency) / C(ode)''' 가 알려 준다.
+
+'''③ 한 줄 요약 (답안용).''' "Duplexing 은 한 매체를 송신(Tx)과 수신(Rx)이 나눠 쓰는 것(TDD, FDD)이고, multiple access 는 한 매체를 여러 사용자가 나눠 쓰는 것(TDMA, FDMA, CDMA)이다."
+
+{def}"Note: '''Don't confuse duplexing with multiple access (MA)'''.
+'''Duplexing: Sharing a medium for Tx / Rx'''; '''MA: sharing a medium among users'''." (p.14)
+→ Duplexing = 송신/수신이 매체를 나눔. MA = 사용자들이 매체를 나눔.{/def}
+
+[[img:L9-14.png|p.14 맨 아래 Note — "Don't confuse duplexing with multiple access (MA). Duplexing: Sharing a medium for Tx / Rx; MA: sharing a medium among users"|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''duplex''' = "두 겹(du-)으로 접힌(-plex)" → '''양방향'''. 1강 [[simplex]] / [[half-duplex]] / [[full-duplex]] 가 전부 "한 링크의 '''두 방향'''을 어떻게 쓰나" 였다. duplexing 은 그 두 방향(Tx·Rx)을 '''어떤 자원으로 갈라 주나'''의 문제.
+* '''multiple access''' = "'''여럿이''' 접근". 7강 [[multiple access protocols]] 의 그 말 — 여러 스테이션이 한 매체에 접근하는 규칙. random access · controlled access · [[channelization]] 이 그 세 분류였고, TDMA/FDMA/CDMA 는 channelization 이다.
+
+== 한 표로 ⭐⭐⭐ ==
+{|
+! || 시간으로 나눔 || 주파수로 나눔 || 코드로 나눔
+|-
+| '''Duplexing''' (Tx ↔ Rx) || '''TDD''' — 같은 시간 송수신 X (Bluetooth) || '''FDD''' — 같은 주파수 송수신 X || —
+|-
+| '''Multiple access''' (user ↔ user) || '''TDMA''' — 시간 슬롯 || '''FDMA''' — 주파수 대역 || '''CDMA''' — 코드
+|-
+| (physical layer 의 친척) || [[TDM]] || [[FDM]] || —
+|}
+* '''Bluetooth''' baseband = 위 표의 '''시간 열 두 칸을 모두''' 쓴 것 → '''TDD-TDMA''': 사용자 간에도 시간 슬롯(TDMA), 송·수신 간에도 시간(TDD) → [[TDD-TDMA]].
+* 맨 아래 줄: 5강 [[multiplexing]] 의 TDM/FDM 은 '''여러 신호를 한 링크에 합치는''' physical-layer 기법이었다. TDMA/FDMA 는 같은 아이디어를 '''MAC 에서 사용자 접근'''으로 쓴 것([[channelization]] 의 info 박스 참고).
+
+<pre class="ascii">
+       Duplexing                        Multiple access
+   (한 기기의 두 방향)                    (여러 사용자)
+
+   기기 A  ──Tx──▶                     A ─┐
+           ◀──Rx──                     B ─┼──▶ 한 매체
+   Tx·Rx 가 매체를 나눔                  C ─┘
+   → TDD / FDD                        A·B·C 가 매체를 나눔
+                                       → TDMA / FDMA / CDMA
+</pre>
+
+{exam}🎯 p.14 의 '''Note''' 는 이 덱에서 교수가 명시적으로 "헷갈리지 마라" 고 쓴 유일한 문장이다. OX 로 "TDD 는 multiple access 방식이다 (X)", "TDMA 는 송신과 수신을 시간으로 나눈다 (X — 사용자들을 나눈다)" 같은 형태가 쉽게 나온다. 10/6 수업에서 half-duplex 를 '''시간·주파수 두 자원'''으로 설명한 것(F1/F2)이 duplexing 쪽 이야기다.{/exam}
+
+{analogy}🎭 '''아파트 한 채(매체)를 나누는 두 가지 방법.''' ① '''Duplexing''' — 한 가족(한 링크)이 방을 "말하는 방(Tx)" 과 "듣는 방(Rx)" 으로 나눈다: 오전엔 말하는 방, 오후엔 듣는 방(TDD)이거나, 아예 다른 방 두 개(FDD). ② '''Multiple access''' — 여러 가족(사용자)이 아파트를 나눈다: 요일별로 돌아가며(TDMA), 층별로(FDMA), 같은 공간에서 다른 언어로(CDMA). 같은 "나누기" 지만 나누는 '''사람이''' 다르다.{/analogy}
+
+{warn}"TDD-TDMA" 를 "TDMA 의 한 종류" 로만 외우면 TDD 부분(송수신 분리)을 놓친다. 이름의 '''앞 반쪽 = duplexing, 뒤 반쪽 = multiple access'''.{/warn}
+
+{quiz}다음을 duplexing 과 multiple access 로 분류하고, 각각 무엇을 나누는지 쓰시오: TDD, FDD, TDMA, FDMA, CDMA.{/quiz}
+{answer}'''Duplexing''' (Tx 와 Rx 가 매체를 나눔): '''TDD'''(시간), '''FDD'''(주파수).
+'''Multiple access''' (사용자들이 매체를 나눔): '''TDMA'''(시간), '''FDMA'''(주파수), '''CDMA'''(코드).{/answer}
+
+{quiz}OX: "Bluetooth 의 TDD-TDMA 에서 TDD 는 여러 secondary 가 시간 슬롯을 나눠 쓰는 것을 뜻한다."{/quiz}
+{answer}'''X'''. 여러 secondary(사용자)가 시간 슬롯을 나눠 쓰는 것은 '''TDMA'''(multiple access). '''TDD''' 는 한 링크의 '''송신과 수신'''을 시간으로 번갈아 하는 것(duplexing) — half-duplex in time.{/answer}
+
+== 관련 문서 ==
+* [[TDD-TDMA]] · [[channelization]] · [[multiple access protocols]] · [[half-duplex]] · [[full-duplex]] · [[TDM]] · [[FDM]] · [[multiplexing]] · [[baseband layer]] · [[CH04 Bluetooth]]

@@ -1,0 +1,43 @@
+key: GFSK
+title: GFSK (Gaussian Frequency Shift Keying)
+category: 11강 Bluetooth, 용어
+---
+'''GFSK''' 는 Bluetooth [[radio layer]] 의 변조 방식으로, 슬라이드 표현 그대로 "'''FSK 의 정교한(sophisticated) 버전'''" — '''FSK with Gaussian bandwidth filtering''' 이다. 비트를 주파수로 표현하는 것은 5강 [[FSK]] 와 같고, 거기에 '''Gaussian filter''' 로 대역폭을 다듬은 것이 추가됐다. L9 p.19.
+
+{def}"Modulation — Use a '''sophisticated version of FSK''', called '''GFSK (FSK with Gaussian bandwidth filtering)'''." (p.19)
+→ GFSK = Gaussian 대역 필터링을 더한 FSK.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''G''' + '''FSK''' — 이름이 "무엇에 무엇을 더했나" 를 그대로 말한다.
+* '''FSK''' (Frequency Shift Keying) — 5강: 비트에 따라 [[carrier|반송파]]의 '''주파수'''를 바꾼다. 0 → $f_1$, 1 → $f_2$.
+* '''G'''(aussian) — 종 모양(정규분포) 곡선 이름의 그 Gauss. 비트를 주파수로 바꾸기 '''전에''' 비트 신호를 Gaussian 모양 필터에 통과시켜 '''가장자리를 부드럽게''' 한다.
+* 왜 부드럽게? 주파수가 0↔1 에서 '''뚝 끊겨''' 바뀌면 순간적인 급변 때문에 신호가 넓은 주파수로 번진다 → 옆 채널을 침범. 부드럽게 바꾸면 신호가 '''좁은 [[bandwidth]] 안에''' 머문다 — 채널이 '''1 MHz''' 밖에 안 되는 Bluetooth(79 × 1 MHz)에 필요하다. (원리 설명은 Forouzan·신호처리 보충; 슬라이드는 "Gaussian bandwidth filtering" 까지만.)
+
+== FSK vs GFSK ==
+<pre class="ascii">
+비트        1     0     1     1     0
+
+FSK 주파수  ‾‾‾‾‾|_____|‾‾‾‾‾‾‾‾‾‾‾|_____      ← 계단처럼 뚝뚝 바뀜 → 스펙트럼이 넓게 번짐
+GFSK 주파수 ‾‾‾‾‾╲_____╱‾‾‾‾‾‾‾‾‾‾‾╲_____      ← Gaussian 필터로 모서리를 둥글게 → 좁은 대역에 머묾
+</pre>
+{|
+! || [[FSK]] (5강, L4 p.40–43) || '''GFSK''' (L9 p.19)
+|-
+| 비트 표현 || 주파수 ($f_1$ / $f_2$) || 주파수 (같음)
+|-
+| 전환 || 즉시 (계단) || '''Gaussian filtering''' 으로 매끄럽게
+|-
+| 대역폭 || $B = (1+d)S + 2\Delta f$ || FSK 보다 좁게 유지 (슬라이드에 식 없음)
+|-
+| 쓰인 곳 || 원조 802.11 FHSS ([[802.11 physical layer]]) || '''Bluetooth''' radio layer
+|}
+
+[[img:L9-19.png|p.19 맨 아래 Modulation — "a sophisticated version of FSK, called GFSK (FSK with Gaussian bandwidth filtering)"|medium]]
+
+{analogy}🎭 '''급정거 vs 부드러운 감속.''' FSK 는 신호등이 바뀔 때마다 급정거·급출발하는 운전 — 승객(옆 채널)이 다 흔들린다. GFSK 는 같은 신호등(같은 비트)을 지키되 미리 부드럽게 속도를 줄였다 높이는 운전 — 목적지(주파수)는 같은데 주변을 덜 흔든다.{/analogy}
+
+{quiz}Bluetooth radio layer 의 변조 방식 이름과 뜻을 쓰고, 그것이 어떤 디지털-아날로그 변환 방식의 개량인지 쓰시오.{/quiz}
+{answer}'''GFSK — FSK with Gaussian bandwidth filtering'''. '''FSK'''(Frequency Shift Keying, 비트에 따라 반송파 주파수를 바꿈)의 "sophisticated version".{/answer}
+
+== 관련 문서 ==
+* [[FSK]] · [[radio layer]] · [[FHSS]] · [[modulation]] · [[bandwidth]] · [[CH04 Bluetooth]]

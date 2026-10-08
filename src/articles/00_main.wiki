@@ -44,6 +44,8 @@ category: 안내
 | 9 || [[CH04 Ethernet]] || LAN 의 대표 Ethernet 4세대: [[Ethernet 프레임 형식]], [[프레임 길이 제한]](64/1518), '''[[Ethernet 주소 전송 순서]]'''(LSB first), [[Fast Ethernet]]의 길이 1/10, [[Gigabit Ethernet]]의 full-duplex 스위치 || `sim:ethernet_addr_bits` · `sim:fast_ethernet_length` · `anim:ethernet_frame` · `anim:ethernet_evolution` · `anim:switch_fullduplex`
 |-
 | 10 || [[CH04 WiFi]] || IEEE 802.11: [[BSS]]/[[ESS]], '''[[CSMA/CA]]'''([[RTS와 CTS]], [[NAV]], [[interframe space]]) 와 왜 CSMA/CD 가 아닌가([[hidden station problem]]), [[PCF]]·[[repetition interval]], [[802.11 프레임 형식]]·[[802.11 주소 케이스]] (10/6 수업 전 선제 작성) || `sim:csma_ca_handshake` · `sim:wifi_addressing` · `anim:csma_ca_timeline` · `anim:hidden_station` · `anim:bss_ess`
+|-
+| 11 || [[CH04 Bluetooth]] || IEEE 802.15 PAN: [[piconet]](8대)·[[scatternet]], [[baseband layer]]=[[TDD-TDMA]](625 μs 슬롯, primary 짝수/secondary 홀수), '''[[duplexing과 multiple access]] 구분''', [[radio layer]](2.4 GHz 79채널, [[FHSS]] 1600 hops/s, [[GFSK]]) (10/8 수업 전 선제 작성) || `anim:bluetooth_piconet`
 |}
 
 == 이 위키를 읽는 법 ==

@@ -26,7 +26,7 @@ Three kinds of "visual" content exist, and each has its own syntax and engine:
 ## Subdirectories
 | Directory | Purpose |
 |-----------|---------|
-| `src/` | All authored sources: contract, CSS/layout, renderer, articles (248), sims (20), anims (26), tests (see `src/AGENTS.md`) |
+| `src/` | All authored sources: contract, CSS/layout, renderer, articles (262), sims (20), anims (27), tests (see `src/AGENTS.md`) |
 | `images/` | Build output: slide captures actually referenced by articles (see `images/AGENTS.md`) |
 | `_slides/` | Slide PNG originals `L{덱}-{pp}.png`. Git-ignored; regenerate with `pdftoppm -r 90 -png "../강의자료/<pdf>" _slides/L<n>` — on Windows without poppler use PyMuPDF: `py -3.12 -c "import fitz; ...page.get_pixmap(dpi=90).save(...)"` (deck table in `src/CONTRACT.md` §1). |
 | `_text/` | `pdftotext -layout` output per deck. Git-ignored. |

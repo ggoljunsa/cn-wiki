@@ -1,0 +1,39 @@
+key: piconet
+title: Piconet (피코넷 — Bluetooth 의 기본 단위)
+category: 11강 Bluetooth, 용어
+---
+'''Piconet''' 은 [[Bluetooth]] 망의 기본 단위로, '''최대 8 대'''의 스테이션이 '''primary 1 대 + secondary 최대 7 대'''로 묶인 작은 [[ad-hoc과 infrastructure|ad-hoc]] 망이다. AP 없이 기기들이 서로를 찾아 그때그때(spontaneously) 만든다. L9 p.3, p.7.
+
+{def}"The devices, sometimes gadgets, find each other and make a network called a '''piconet'''." (p.3)
+"A piconet (i.e., a '''small net''') — Can have '''up to 8 stations'''. One of which is called the '''primary''', the rest are called '''secondaries'''." (p.7)
+→ 피코넷 = 최대 8 스테이션의 작은 망. 하나가 primary, 나머지가 secondary.{/def}
+
+[[img:L9-07.png|p.7 Piconet — 가운데 위 Primary 에서 Secondary 들로 번개 모양 링크. secondary 끼리는 직접 연결 없음|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''pico-''' = 10⁻¹², "아주 작은". 슬라이드 괄호가 그대로 "'''i.e., a small net'''". 범위가 [[PAN]](방·홀 크기)이고 기기 수도 8 대뿐이라 "작은 망".
+* '''-net''' = network. 작은 망들을 엮으면 [[scatternet]] — 흩어진(scatter) piconet 의 묶음.
+
+== 구조 ==
+<pre class="ascii">
+        P            ← primary 1 대 (지휘자: 슬롯을 배정)
+   ╱  ╱ │ ╲  ╲
+  S1 S2 S3 … S7      ← secondary 최대 7 대 (primary 하고만 통신)
+  ────────────────
+  합계 최대 8 = 1 + 7
+</pre>
+* 링크는 '''primary ↔ secondary''' 뿐 — secondary 끼리 직접 말하지 않는다(그림의 모든 번개가 primary 로 향한다).
+* 누가 언제 말할지는 primary 가 정한다: primary 는 '''짝수 슬롯''', 지목된 secondary 는 '''다음 홀수 슬롯''' → [[Bluetooth 시간 슬롯]], [[TDD-TDMA]].
+* p.7 그림에는 secondary 가 '''4 대'''만 그려져 있다 — "최대 8" 은 상한이지 그림의 수가 아니다.
+
+[[anim:bluetooth_piconet|맨 앞 장면에서 primary 1 + secondary 7 이 모여 8 대 piconet 이 되는 것을 세어 보라]]
+
+{analogy}🎭 '''선생님 1 명 + 학생 최대 7 명의 소규모 과외반.''' 학생은 선생님하고만 이야기하고, 선생님이 이름을 부를 때만 대답한다. 반 정원이 8 명(선생님 포함)이라 더 들어오려면 반을 하나 더 만들어야 한다 — 그 반들을 잇는 게 [[scatternet]].{/analogy}
+
+{warn}"8 stations" 에는 '''primary 도 포함'''된다. "secondary 8 대" 로 쓰면 틀린다 — secondary 는 최대 '''7''' 대.{/warn}
+
+{quiz}Piconet 의 최대 스테이션 수와 그 구성을 쓰시오. piconet 은 ad-hoc 망인가 infrastructure 망인가?{/quiz}
+{answer}'''최대 8 대 = primary 1 + secondary 7'''. AP 없이 기기들이 서로 찾아 spontaneously 만드는 '''ad-hoc''' 망(p.3).{/answer}
+
+== 관련 문서 ==
+* [[primary와 secondary]] · [[scatternet]] · [[Bluetooth 시간 슬롯]] · [[ad-hoc과 infrastructure]] · [[PAN]] · [[CH04 Bluetooth]]

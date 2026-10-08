@@ -1,6 +1,6 @@
 # 컴네위키 (CN Wiki)
 
-DGIST **CSE403 Computer Network** (Prof. Soobin Um, 교재 Forouzan *Data Communications and Networking with TCP/IP Protocol Suite* 6e) 중간고사 범위 — CH01 Introduction, CH02 Physical Layer (1)(2)(3), CH03 Data-Link Layer (1)(2), CH04 Local Area Networks (1)(2) — 를 나무위키 스타일로 정리한 단일 페이지 위키.
+DGIST **CSE403 Computer Network** (Prof. Soobin Um, 교재 Forouzan *Data Communications and Networking with TCP/IP Protocol Suite* 6e) 중간고사 범위 — CH01 Introduction, CH02 Physical Layer (1)(2)(3), CH03 Data-Link Layer (1)(2), CH04 Local Area Networks (1)(2)(3) — 를 나무위키 스타일로 정리한 단일 페이지 위키.
 계산 Example 이 나오는 곳마다 **한 단계씩 값이 바뀌는 시뮬레이터**가 붙어 있고, 핵심 메커니즘마다 **저절로 도는 움직이는 그림(SVG 애니메이션)**과 **실제 강의 슬라이드 캡처**가 들어 있으며, 모든 기호·용어는 사전 문서로 하이퍼링크된다.
 
 **라이브**: https://ggoljunsa.github.io/cn-wiki/
@@ -17,6 +17,7 @@ DGIST **CSE403 Computer Network** (Prof. Soobin Um, 교재 Forouzan *Data Commun
 8. CH03 Link-Layer Addressing — MAC 주소, IP vs MAC 순서, unicast/multicast/broadcast, ARP
 9. CH04 Ethernet — Ethernet 4세대(Standard/Fast/Gigabit/10G), **frame format**(64/1518), **주소 전송 순서**(LSB first), $T_{fr} \ge 2T_p$ 로 길이 1/10, full-duplex 스위치 (10/1 수업)
 10. CH04 WiFi — IEEE 802.11: BSS/ESS, **DCF = CSMA/CA**(RTS/CTS·NAV·IFS, hidden/exposed station), PCF, 프레임 9필드, **주소 4 케이스**, physical layer 표 (10/6 수업 전 선제 작성)
+11. CH04 Bluetooth — IEEE 802.15 PAN: piconet(1+7)/scatternet, **TDD-TDMA** 625 μs 슬롯(짝수 primary/홀수 secondary), **duplexing ≠ multiple access**, FHSS 1600 hops/s, GFSK (10/8 수업 전 선제 작성)
 
 ## 구조
 

@@ -1,0 +1,31 @@
+key: IEEE 802.15
+title: IEEE 802.15 (wireless PAN 표준 — Bluetooth)
+category: 11강 Bluetooth, 용어
+---
+'''IEEE 802.15''' 는 '''wireless personal-area network(PAN)''' 를 정의하는 표준이고, [[Bluetooth]] 는 그 '''구현(implementation)'''이다. [[IEEE Project 802]] 우산 아래에서 802.3(Ethernet), 802.11(WiFi) 와 나란히 있는 번호다. L9 p.6.
+
+{def}"An implementation of '''IEEE 802.15''' standard. The standard defines a '''wireless personal-area network (PAN)''' operable in an area the size of a '''room or a hall'''." (p.6)
+→ Bluetooth = IEEE 802.15 의 구현. 802.15 는 방·홀 크기에서 동작하는 무선 PAN 을 정의한다.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''802.''' 은 [[IEEE Project 802]] — LAN 계열 표준의 '''physical + data-link''' 두 계층 묶음. 점 뒤 번호는 "어떤 종류의 망이냐" 다. 교수(10/1): "if you see IEEE 802 point blah blah … you can think of it as another standard for other types of computer networks." → '''802.15''' 는 "'''PAN''' 이라는 종류의 망".
+
+== 802 세 갈래 한 표 ⭐⭐ ==
+{|
+! 표준 || 구현(이 강의) || 범위 || 매체 || 접근 방식
+|-
+| '''IEEE 802.3''' || [[Standard Ethernet|Ethernet]] || [[LAN]] || wired || [[CSMA/CD]]
+|-
+| '''IEEE 802.11''' || [[WiFi]] || LAN (wireless) || wireless || [[CSMA/CA]] (DCF) + PCF
+|-
+| '''IEEE 802.15''' || '''[[Bluetooth]]''' || '''[[PAN]]''' (room / hall) || wireless (2.4 GHz ISM) || [[TDD-TDMA]]
+|}
+외우는 법: '''3 → 11 → 15''' 숫자가 커질수록 '''선 → 무선 → 몸 주변''' 으로 범위가 좁아진다(LAN → WLAN → PAN).
+
+{analogy}🎭 '''같은 출판사(IEEE 802)의 시리즈물.''' 3권은 "유선 사무실망", 11권은 "무선 사무실망", 15권은 "내 책상 위 무선망". 시리즈라서 다루는 범위(아래 두 계층)는 같고, 권마다 다른 환경을 다룬다.{/analogy}
+
+{quiz}Bluetooth 는 어떤 IEEE 표준의 구현이며, 그 표준이 정의하는 망의 종류와 크기는? Ethernet·WiFi 의 표준 번호도 쓰시오.{/quiz}
+{answer}'''IEEE 802.15''' — '''wireless personal-area network (PAN)''', '''room 이나 hall''' 크기. Ethernet = '''802.3''', WiFi = '''802.11'''.{/answer}
+
+== 관련 문서 ==
+* [[IEEE Project 802]] · [[IEEE 802.11]] · [[PAN]] · [[Bluetooth]] · [[CH04 Bluetooth]]

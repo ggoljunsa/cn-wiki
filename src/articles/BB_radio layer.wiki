@@ -1,0 +1,46 @@
+key: radio layer
+title: Radio Layer (Bluetooth 의 physical layer)
+category: 11강 Bluetooth, 용어
+---
+'''Radio layer''' 는 [[Bluetooth 계층]] 의 맨 아래 층으로, 인터넷 모델의 '''[[physical layer]] 에 대략(roughly) 해당'''한다. 세 가지를 정한다 — '''대역''': 2.4 GHz ISM band 를 '''1 MHz 채널 79 개'''로 나눠 쓴다, '''확산''': [[FHSS]] 로 초당 '''1600 번''' 주파수를 바꿔 간섭을 피한다, '''변조''': [[FSK]] 의 정교한 버전인 [[GFSK]]. L9 p.17–19.
+
+{def}"Radio Layer — '''Roughly equivalent to the physical layer''' of the Internet model.
+Band: Use a '''2.4-GHz ISM band''' divided into '''79 channels of 1MHz each'''." (p.17)
+"FHSS (frequency-hopping spread spectrum): Use FHSS method to '''avoid interference''' from other devices or networks. '''Hop 1600 times per second'''." (p.18)
+"Modulation: Use a sophisticated version of FSK, called '''GFSK (FSK with Gaussian bandwidth filtering)'''." (p.19)
+→ Radio ≈ physical layer. 2.4 GHz ISM 을 79 × 1 MHz 로, FHSS 1600 hops/s, GFSK 변조.{/def}
+
+[[img:L9-19.png|p.19 Radio Layer 전체 — Band / FHSS / Modulation 세 블록, 오른쪽에 p.15 슬롯 그림 축소판(dwell time = 슬롯)|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''Radio''' = 전파(무선). 전파의 '''주파수·세기·모양'''을 다루는 층이니 physical layer 의 일(어느 주파수로, 어떻게 비트를 신호로 바꿀지)을 한다. 위층 [[baseband layer]] 가 "누가 언제" 를 정한다면, radio 는 "어느 주파수로, 어떤 파형으로" 를 정한다.
+
+== 세 가지를 한 표로 ⭐⭐⭐ ==
+{|
+! 항목 || 슬라이드 값 || 왜 / 어디서 배운 것 || 문서
+|-
+| Band || '''2.4 GHz ISM''', '''79 channels × 1 MHz''' || 대역을 채널로 나눔 = 5강 [[FDM]] 식 주파수 분할 || 이 문서
+|-
+| 확산 || '''FHSS''', '''1600 hops/s''', dwell '''625 μs''' || '''간섭 회피''' — 공용 대역이라 남(WiFi 등)과 겹침 || [[FHSS]]
+|-
+| 변조 || '''GFSK''' = FSK + Gaussian bandwidth filtering || 5강 [[FSK]] 의 개량 — 주파수로 비트 표현 || [[GFSK]]
+|}
+
+<pre class="ascii">
+ 2.4 GHz ISM band
+ ├─┬─┬─┬─┬─┬─┬─ … ─┬─┬─┤
+ │0│1│2│3│4│5│     │78│        ← 1 MHz 채널 79 개 (79 MHz)
+ └─┴─┴─┴─┴─┴─┴─ … ─┴─┴─┘
+  슬롯 0 → ch 5, 슬롯 1 → ch 41, 슬롯 2 → ch 12, …   (매 625 μs 마다 다른 채널로 hop — 순서는 예시)
+</pre>
+
+* '''ISM''' = Industrial, Scientific, Medical — 면허 없이 쓰는 공용 대역(약어 풀이 Forouzan 보충). 802.11 FHSS/DSSS, 802.11b·g 도 '''같은 2.4 GHz 대'''다([[802.11 physical layer]]) → 그래서 간섭 회피가 Radio layer 의 큰 과제.
+* 10/6 교수: interference 는 '''같은 시간 + 같은 frequency band''' 에서만 문제. FHSS 는 그중 '''주파수를 계속 바꿔''' 남과 오래 겹치지 않게 한다 → [[wireless LAN의 특성]].
+
+{analogy}🎭 '''라디오 79 개 방송 채널을 0.000625 초마다 돌려 가며 듣는 두 사람.''' 둘은 "다음은 몇 번 채널" 순서를 미리 맞춰 놨다. 그래서 어떤 채널에 잡음(옆집 WiFi)이 있어도 그 짧은 순간만 손해 보고 바로 다른 채널로 넘어간다. 그리고 각 채널에서 말하는 방식은 "높은 음 = 1, 낮은 음 = 0" 을 부드럽게 다듬은 것(GFSK).{/analogy}
+
+{quiz}Bluetooth radio layer 의 대역, 채널 수와 폭, 간섭 회피 방식과 hop 속도, 변조 방식을 쓰시오. radio layer 는 인터넷 모델의 어느 층에 대응하는가?{/quiz}
+{answer}'''2.4 GHz ISM band''', '''79 channels of 1 MHz''', '''FHSS''' — '''1600 hops/s'''(dwell time 625 μs = 슬롯 하나), 변조 '''GFSK'''(FSK with Gaussian bandwidth filtering). '''physical layer''' 에 대략(roughly) 대응.{/answer}
+
+== 관련 문서 ==
+* [[FHSS]] · [[GFSK]] · [[FSK]] · [[baseband layer]] · [[Bluetooth 계층]] · [[physical layer]] · [[802.11 physical layer]] · [[FDM]] · [[CH04 Bluetooth]]

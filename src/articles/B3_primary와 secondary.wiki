@@ -1,0 +1,44 @@
+key: primary와 secondary
+title: Primary와 Secondary (Bluetooth piconet 의 두 역할)
+category: 11강 Bluetooth, 용어
+---
+[[piconet]] 의 스테이션 중 '''하나가 primary''', '''나머지가 secondary''' 다. primary 는 시간 슬롯을 지휘하고(짝수 슬롯에 송신), secondary 는 primary 가 보낼 때 듣고 '''지목받았을 때만''' 다음 홀수 슬롯에 답한다. 이 "한 명이 지휘하고 나머지는 지목받아야 말한다" 구조는 이미 두 번 본 것이다 — [[HDLC]] 의 [[NRM]] 과 [[polling]]. L9 p.7, p.15–16.
+
+{def}"One of which is called the '''primary''', the rest are called '''secondaries'''." (p.7)
+"The primary sends at '''even-numbered slots''' (0, 2, 4, . . .) while '''all secondaries listen'''. The '''associated secondary''' sends in the '''next odd-numbered slot'''." (p.16)
+→ primary = 짝수 슬롯에 보내는 지휘자 1 대. secondary = 나머지, 지목되면 다음 홀수 슬롯에 보냄.{/def}
+
+[[img:L9-16.png|p.16 Multiple-secondary — Primary(위)가 짝수 슬롯에, Secondary 1·2 가 각각 지목받은 직후 홀수 슬롯에 보냄|large]]
+
+== 이름에서 개념 끌어내기 ==
+* '''primary''' = 첫째, 주(主). 슬롯 0 을 가지고 대화를 '''먼저 시작'''하는 쪽.
+* '''secondary''' = 둘째, 종(從). 스스로 시작하지 않고 primary 의 뒤를 '''따르는''' 쪽 — 슬롯도 primary 슬롯 '''다음'''(홀수)이다.
+* 슬라이드는 "secondaries" 복수형 — piconet 안에 secondary 는 여럿(최대 7).
+
+== 이미 본 primary / secondary 와 비교 ⭐⭐ ==
+{|
+! || HDLC [[NRM]] (L5 p.54) || [[polling]] (L6 p.51–53) || '''Bluetooth piconet''' (L9)
+|-
+| 계층/분류 || DLC — HDLC 전송 모드 || MAC — [[controlled access]] || Bluetooth '''baseband''' (≈ MAC)
+|-
+| primary 가 하는 일 || Command 를 보냄 || SEL(보낼 때) / Poll(받을 때) || '''짝수 슬롯'''에 보냄 = 그 슬롯에서 상대 지목
+|-
+| secondary 가 하는 일 || Response 로만 응답 || 물어봐야 보냄 (NAK/data) || 모두 듣고, '''지목된 하나가 다음 홀수 슬롯'''에 보냄
+|-
+| secondary 끼리 직접 통신 || 없음 || 없음 || 없음 (모든 링크가 primary 와)
+|-
+| 충돌 || 없음 || 없음 || 없음 — 누가 언제 말할지 정해져 있음
+|-
+| 시간 구조 || 없음 (명령–응답 순서만) || 없음 || '''625 μs 슬롯''', 슬롯마다 주파수 hop
+|}
+* 공통점: '''secondary 는 먼저 말할 수 없다''' → 충돌이 구조적으로 없다.
+* Bluetooth 만의 차이: 차례가 '''시간 슬롯 번호(짝수/홀수)'''로 고정돼 있다 → [[TDD-TDMA]], [[Bluetooth 시간 슬롯]].
+* 한 기기가 piconet ① 의 secondary 이면서 piconet ② 의 primary 일 수도 있다 → [[scatternet]].
+
+{analogy}🎭 '''무전 교신의 관제탑과 비행기.''' 관제탑(primary)이 "KE123, 고도 보고" 하면 그 비행기(secondary)만 다음 차례에 답한다. 다른 비행기들도 다 듣고 있지만 자기 호출이 아니면 입을 다문다. 비행기끼리 직접 교신하지 않는다.{/analogy}
+
+{quiz}Bluetooth 의 primary 와 secondary 는 각각 어느 슬롯에 보내는가? 이 구조가 HDLC NRM, polling 과 공통으로 가지는 성질 하나를 쓰시오.{/quiz}
+{answer}primary 는 '''짝수 슬롯(0, 2, 4, …)''', secondary 는 primary 가 지목한 경우 '''바로 다음 홀수 슬롯'''. 공통점: '''secondary 는 primary 가 지목(command/poll)해야만 보낸다''' → secondary 끼리 경쟁·충돌이 없다.{/answer}
+
+== 관련 문서 ==
+* [[piconet]] · [[scatternet]] · [[Bluetooth 시간 슬롯]] · [[NRM]] · [[polling]] · [[controlled access]] · [[CH04 Bluetooth]]

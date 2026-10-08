@@ -1,0 +1,80 @@
+key: Bluetooth 시간 슬롯
+title: Bluetooth 시간 슬롯 (625 μs, primary 짝수 · secondary 홀수)
+category: 11강 Bluetooth, 용어
+---
+Bluetooth [[baseband layer]] 는 시간을 '''625 μs 슬롯'''으로 자른다. [[primary와 secondary|primary]] 는 '''짝수 슬롯(0, 2, 4, …)'''에 보내고, 그동안 secondary 는 듣기만 한다. primary 가 지목한(associated) secondary 는 '''바로 다음 홀수 슬롯'''에 보낸다. 슬롯 하나가 끝나면 주파수를 바꾼다(hop) — 625 μs 는 [[FHSS]] 의 dwell time 과 같다. L9 p.15–16, p.18.
+
+== 쉽게 말하면 ==
+'''① 왜 필요한가.''' piconet 의 8 대가 한 무선 매체를 쓴다. 아무나 보내면 부딪히고, 무선은 충돌을 감지하기도 어렵다(10/6 [[CH04 WiFi]]). Bluetooth 는 WiFi 처럼 "피하기" 를 하는 대신 '''순서를 아예 정해 버린다''' — 그러려면 모두가 공유하는 '''박자(슬롯)'''가 있어야 한다.
+
+'''② 어떻게 동작하나.'''
+# 시간 = 625 μs 슬롯의 연속. 슬롯에 0, 1, 2, 3, … 번호가 붙는다.
+# '''짝수 슬롯''': primary 가 보낸다. '''모든 secondary 가 듣는다'''(p.16 "while all secondaries listen").
+# '''다음 홀수 슬롯''': 방금 primary 가 보낸 상대(associated secondary) '''하나만''' primary 에게 보낸다.
+# 슬롯이 바뀔 때마다 주파수도 바뀐다: 슬롯 0 = f0, 슬롯 1 = f1, … (그림의 "Hop").
+# 다시 짝수 슬롯 → primary 가 이번엔 다른 secondary 를 지목할 수 있다(p.16 그림의 Secondary 2).
+
+'''③ 한 줄 요약 (답안용).''' "Bluetooth 는 시간을 625 μs 슬롯으로 나누어 primary 는 짝수 슬롯에 보내고, 그동안 모든 secondary 는 수신하며, primary 가 지목한 secondary 만 다음 홀수 슬롯에 보낸다(TDD-TDMA). 슬롯마다 주파수를 바꾼다(FHSS)."
+
+{def}"The time is divided into '''slots of 625 μs'''. The primary sends at '''even-numbered slots (0, 2, 4, . . .)'''. Half-duplex mode in time (TDD-TDMA) — When the primary sends, the secondary receives (not sending)." (p.15, Single-secondary communication)
+"The primary sends at even-numbered slots (0, 2, 4, . . .) '''while all secondaries listen'''. The '''associated secondary sends in the next odd-numbered slot'''." (p.16, Multiple-secondary communication)
+"The '''dwell time is 625 us (= a time slot)'''." (p.18){/def}
+
+== Single-secondary (p.15) ⭐⭐⭐ ==
+[[img:L9-15.png|p.15 Single-secondary — Primary(위 줄) 슬롯 0·2 에 ↓, Secondary(아래 줄) 슬롯 1·3 에 ↑, 슬롯 아래 f0 f1 f2 f3, 프레임 뒤 "Hop"|large]]
+<pre class="txt">
+슬롯     0       1       2       3
+주파수   f0      f1      f2      f3
+Primary  ■■ →                    ■■ →
+Second.          ← ■■                    ← ■■
+         (짝수: P 송신, S 수신)   (홀수: S 송신, P 수신)
+</pre>
+{warn}'''그림의 "625 ms", "366 ms" 는 단위 오타다 — μs.''' 본문 "slots of '''625 μs'''", p.18 "625 us (1/1600 s)" 가 기준. 시험에는 '''625 μs'''. 366 은 그림에서 슬롯 안 프레임 길이로 표시된 값이고 슬라이드 본문에는 설명이 없다(남는 시간이 hop 준비용이라는 해석은 Forouzan 보충).{/warn}
+
+== Multiple-secondary (p.16) ⭐⭐⭐ ==
+[[img:L9-16.png|p.16 Multiple-secondary — 슬롯 0: P→S1, 슬롯 1: S1→P, 슬롯 2: P→S2, 슬롯 3: S2→P. 지목받지 않은 secondary 는 그 홀수 슬롯에 조용|large]]
+{|
+! 슬롯 || 주파수 || 보내는 쪽 || 받는 쪽 || 나머지
+|-
+| 0 (짝수) || f0 || Primary || Secondary 1 (지목) || 모든 secondary 가 들음
+|-
+| 1 (홀수) || f1 || '''Secondary 1''' || Primary || Secondary 2 는 조용
+|-
+| 2 (짝수) || f2 || Primary || Secondary 2 (지목) || 모든 secondary 가 들음
+|-
+| 3 (홀수) || f3 || '''Secondary 2''' || Primary || Secondary 1 은 조용
+|}
+* 홀수 슬롯의 주인은 '''바로 앞 짝수 슬롯에서 primary 가 보낸 상대'''다 — secondary 는 스스로 슬롯을 고르지 않는다. 그래서 '''충돌이 없다'''.
+* 이것이 [[TDD-TDMA]]: 사용자(S1, S2)가 홀수 슬롯을 나눠 갖고(TDMA), 각 링크의 송·수신이 짝수/홀수로 번갈아 간다(TDD).
+* 지목 방식이 [[polling]](primary 가 차례로 묻는다)과 닮았다.
+
+[[anim:bluetooth_piconet|세 번째 장면에서 primary 가 짝수 슬롯에 보내고 지목된 secondary 가 다음 홀수 슬롯에 답하는 리듬, 그리고 슬롯마다 바뀌는 주파수 f0→f1→f2→f3 을 확인하라]]
+
+== 숫자 정리 ==
+<pre class="txt">
+슬롯 길이 = 625 μs
+hop 횟수  = 1600 hops/s
+1 / 1600 s = 0.000625 s = 625 μs     ← 슬롯 = dwell time (한 주파수에 머무는 시간)
+1 초 = 1600 슬롯 = primary 800 슬롯(짝수) + secondary 800 슬롯(홀수)
+</pre>
+(마지막 줄은 규칙에서 바로 나오는 산수 — 슬라이드에 직접 적힌 값은 아니다.)
+
+== 이름에서 개념 끌어내기 ==
+* '''slot''' = 홈, 칸. 시간축에 판 '''칸''' 하나에 한 쪽만 들어간다.
+* '''even / odd''' — primary 가 '''먼저''' 시작(0 = 짝수)하고 secondary 는 '''응답'''이라 그 '''다음'''(홀수). 질문-대답이 항상 짝(0·1, 2·3, …)으로 묶인다.
+* '''associated secondary''' — primary 와 이번에 "연관된", 즉 직전 짝수 슬롯에서 primary 가 말을 건 그 secondary.
+
+{analogy}🎭 '''탁구.''' 공(슬롯)은 한 번에 한쪽에만 있다. 선생님(primary)이 서브(짝수)하면 상대가 받아친다(홀수). 선생님 쪽에 여러 학생이 줄 서 있어도, 선생님이 '''이번에 공을 보낸 학생만''' 받아친다. 랠리 한 번마다 탁구대를 옆 테이블로 옮기는(hop) 이상한 규칙까지 있다 — 옆 테이블이 시끄러워도 오래 방해받지 않게.{/analogy}
+
+{quiz}Bluetooth 슬롯의 길이는? primary 와 secondary 는 각각 어느 슬롯에 보내며, multiple-secondary 에서 홀수 슬롯에 보낼 secondary 는 어떻게 정해지는가?{/quiz}
+{answer}'''625 μs'''. primary — '''짝수 슬롯(0, 2, 4, …)''', 이때 모든 secondary 는 듣는다. secondary — '''다음 홀수 슬롯'''. 보낼 secondary 는 '''직전 짝수 슬롯에서 primary 가 보낸 상대(associated secondary)''' 다.{/answer}
+
+{quiz}p.15 그림의 "625 ms" 표기를 그대로 믿고 1 초에 몇 번 hop 하는지 계산하면 어떤 모순이 생기는가?{/quiz}
+{answer}<pre class="txt">
+625 ms 라면  1 s / 0.625 s = 1.6 hops/s
+슬라이드 p.18 은 1600 hops/s, "625 us (1/1600 s)"
+</pre>
+1000 배 차이 → 그림의 ms 는 '''μs 의 오타'''. 슬롯 = '''625 μs'''.{/answer}
+
+== 관련 문서 ==
+* [[TDD-TDMA]] · [[primary와 secondary]] · [[piconet]] · [[FHSS]] · [[baseband layer]] · [[polling]] · [[TDM]] · [[CH04 Bluetooth]]

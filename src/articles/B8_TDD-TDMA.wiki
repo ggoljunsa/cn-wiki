@@ -1,0 +1,70 @@
+key: TDD-TDMA
+title: TDD-TDMA (Time-Division Duplex TDMA)
+category: 11강 Bluetooth, 용어
+---
+'''TDD-TDMA (Time-Division Duplex TDMA)''' 는 Bluetooth [[baseband layer]] 의 접근 방식이다. '''사용자들 사이'''는 TDMA(시간 슬롯)로 나누고, '''한 기기의 송신과 수신 사이'''도 TDD(시간)로 나눈다 — 결과는 '''"half-duplex communication in time"''': 보내고 받을 수 있지만 '''같은 시간에는''' 못 한다. 비교 대상은 '''FDD''' — 보내고 받을 수 있지만 '''같은 주파수에서는''' 못 한다. L9 p.12–13, p.15.
+
+== 쉽게 말하면 ==
+'''① 왜 필요한가.''' 무선 기기는 같은 주파수로 보내면서 동시에 받을 수 없다 — 10/6 수업의 '''self-interference''': 내가 세게 쏘는 신호가 멀리서 약해져 온 상대 신호를 덮는다("When we are speaking, it is difficult to hear"). 그러니 송신과 수신을 '''뭔가로 갈라야''' 한다. 가르는 자원은 두 개뿐 — 교수 표현대로 "'''time and frequency as two important resources'''". 주파수로 가르면 FDD, '''시간으로 가르면 TDD'''. Bluetooth 는 시간을 고른다.
+
+'''② 어떻게 동작하나.'''
+# 시간을 '''625 μs 슬롯'''으로 자른다(p.15).
+# primary 는 '''짝수 슬롯'''(0, 2, 4, …)에만 보낸다. 이때 secondary 는 '''받기만''' 한다("When the primary sends, the secondary receives (not sending)").
+# primary 가 지목한 secondary 는 '''다음 홀수 슬롯'''에 보낸다. 이때 primary 가 받는다.
+# 그러니 각 기기 입장에서 송신 슬롯과 수신 슬롯이 '''번갈아''' 온다 = '''TDD''' (duplexing 을 시간으로). 여러 secondary 가 홀수 슬롯을 차례로 나눠 갖는다 = '''TDMA''' (multiple access 를 시간으로).
+
+'''③ 한 줄 요약 (답안용).''' "TDD-TDMA 는 시간을 슬롯으로 나눠 사용자들이 나눠 쓰고(TDMA), 한 링크의 송신과 수신도 슬롯을 번갈아 쓰는(TDD) 방식으로, 송수신은 모두 가능하지만 같은 시간에는 할 수 없는 시간상 half-duplex 통신이다."
+
+{def}"Uses '''TDD-TDMA (Time-division duplex TDMA)''' — '''A half-duplex communication in time''': Can send and receive data, but '''not at the same time'''." (p.12)
+"Cf. '''FDD (Frequency-division duplex)''' — Can send and receive data, but '''not at the same frequency'''." (p.13)
+"Half-duplex mode in time (TDD-TDMA) — When the primary sends, the secondary receives (not sending)." (p.15)
+→ TDD-TDMA = 시간 분할 duplex + 시간 분할 다중 접근. 같은 시간에 송수신 불가. FDD 는 같은 주파수에서 송수신 불가.{/def}
+
+[[img:L9-15.png|p.15 Single-secondary — Primary 가 짝수 슬롯(f0·f2)에 ↓, Secondary 가 홀수 슬롯(f1·f3)에 ↑. 한 기기의 송신·수신이 슬롯 단위로 번갈아 옴(그림의 ms 는 μs 오타)|large]]
+
+== 이름에서 개념 끌어내기 ==
+이름을 앞뒤로 쪼개면 된다 — '''무엇을 무엇으로 나누나''':
+{|
+! 조각 || 풀이 || 나누는 대상 || 나누는 자원
+|-
+| '''TD'''D || Time-Division '''Duplex''' || 한 기기의 '''Tx 와 Rx''' || 시간
+|-
+| '''TD'''MA || Time-Division '''Multiple Access''' || '''여러 사용자''' || 시간
+|}
+둘 다 "TD" = 시간 분할. 뒤 글자 '''D(uplex)''' 냐 '''MA''' 냐가 "누구끼리 나누느냐" 다 → [[duplexing과 multiple access]].
+
+== TDD vs FDD ⭐⭐⭐ ==
+<pre class="ascii">
+TDD (Bluetooth)                       FDD
+같은 주파수, 시간을 번갈아              다른 주파수(F1 송신 / F2 수신), 동시에
+
+시간 →  [Tx][Rx][Tx][Rx]…               F1 : [Tx Tx Tx Tx Tx …]
+                                        F2 : [Rx Rx Rx Rx Rx …]
+"send and receive, but                  "send and receive, but
+ '''not at the same time'''"                  '''not at the same frequency'''"
+</pre>
+{|
+! || '''TDD''' || '''FDD'''
+|-
+| 송·수신을 가르는 자원 || '''시간''' || '''주파수'''
+|-
+| 못 하는 것 (슬라이드) || 같은 '''시간'''에 송수신 || 같은 '''주파수'''에서 송수신
+|-
+| 사용자 입장 || 번갈아 말함 — 시간상 half-duplex || 동시에 말하고 들음 (주파수 2 개 필요)
+|-
+| 10/6 수업 예 || — || 휴대폰 통화: F1 로 말하고 F2 로 들어서 동시에 되는 것처럼 느껴짐
+|-
+| 이 강의 예 || '''Bluetooth''' baseband || (슬라이드엔 "Cf." 로만)
+|}
+
+{info}'''1강 [[half-duplex]] 와의 관계.''' 1강 정의는 "양쪽 다 보낼 수 있지만 '''동시에는''' 한쪽만" — 그게 바로 TDD 의 "not at the same time" 이다. 10/6 교수는 half-duplex 를 "'''같은 시간·같은 주파수'''로 송수신 불가" 로 정의했다. 그 기준이면 TDD 도 FDD 도 '''같은 시간 + 같은 주파수''' 동시 송수신은 피한다 — TDD 는 시간을 바꾸고, FDD 는 주파수를 바꿀 뿐. 슬라이드가 Bluetooth 를 "half-duplex '''in time'''" 이라고 굳이 "in time" 을 붙인 이유다.{/info}
+
+{exam}🎯 10/6 WiFi 수업의 half-duplex 설명("time and frequency as two important resources", F1/F2 로 나눈 휴대폰 통화)과 이번 덱의 TDD/FDD 가 '''한 쌍'''이다. 서술형으로 "TDD 와 FDD 의 차이" 가 나오면 '''나누는 자원(시간 vs 주파수)''' 과 슬라이드 문장 "'''not at the same time''' / '''not at the same frequency'''" 를 함께 쓸 것. 그리고 TDD 는 '''duplexing''', TDMA 는 '''multiple access''' — 섞으면 감점(p.14 Note).{/exam}
+
+{analogy}🎭 '''TDD = 무전기, FDD = 전화.''' 무전기는 같은 채널을 쓰니까 "오버" 하고 '''번갈아''' 말한다(시간으로 나눔). 전화는 말하는 선과 듣는 선이 따로라서 '''동시에''' 말하고 듣는다(주파수로 나눔). Bluetooth 는 무전기 방식인데, 거기에 "누가 몇 번째 차례에 말하나" 까지 시간표로 정한 것(TDMA)이다.{/analogy}
+
+{quiz}TDD-TDMA 의 "TDD" 와 "TDMA" 는 각각 무엇을 시간으로 나누는가? FDD 와 비교해, 각각 무엇을 할 수 없는지 슬라이드 문장으로 쓰시오.{/quiz}
+{answer}'''TDD''': 한 기기의 '''송신(Tx)과 수신(Rx)'''을 시간으로 나눔. '''TDMA''': '''여러 사용자(primary·secondary들)'''가 매체를 시간 슬롯으로 나눔. TDD — "can send and receive data, but '''not at the same time'''". FDD — "can send and receive data, but '''not at the same frequency'''".{/answer}
+
+== 관련 문서 ==
+* [[duplexing과 multiple access]] · [[baseband layer]] · [[Bluetooth 시간 슬롯]] · [[half-duplex]] · [[full-duplex]] · [[TDM]] · [[channelization]] · [[CH04 Bluetooth]] · [[CH04 WiFi]]

@@ -1,0 +1,60 @@
+key: FHSS
+title: FHSS (Frequency-Hopping Spread Spectrum)
+category: 11강 Bluetooth, 용어
+---
+'''FHSS (frequency-hopping spread spectrum)''' 는 송신 주파수를 짧은 간격마다 '''다른 채널로 뛰어다니며(hop)''' 쓰는 방식이다. Bluetooth [[radio layer]] 는 FHSS 로 '''다른 기기·망의 간섭을 피하고''', '''초당 1600 번''' hop 한다 — 한 주파수에 머무는 시간(dwell time)은 '''625 μs = 시간 슬롯 하나'''. [[CH04 WiFi]] 의 physical layer 표에서 원조 802.11 의 기술로 이름만 나왔던 그 FHSS 다. L9 p.18–19.
+
+{def}"'''FHSS (frequency-hopping spread spectrum)''' — Use FHSS method to '''avoid interference from other devices or networks'''. '''Hop 1600 times per second'''. A device uses a frequency for only '''625 us (1/1600s)''' before it hops to another frequency. e.g., The '''dwell time is 625 us (= a time slot)'''." (p.18)
+→ FHSS = 주파수를 건너뛰며 대역 전체로 퍼뜨리는 방식. 간섭 회피, 초당 1600 hop, 한 주파수에 625 μs.{/def}
+
+[[img:L9-19.png|p.19 FHSS 블록 — "uses a frequency for only 625 us (1/1600s)", "dwell time is 625 us (= a time slot)", 오른쪽 슬롯 그림의 f0 f1 f2 f3|large]]
+
+== 이름에서 개념 끌어내기 ==
+이름이 동작 설명 그 자체다(교수: "the name itself is very important"):
+* '''Frequency-Hopping''' — 주파수를 '''깡충깡충 뛰어''' 옮긴다.
+* '''Spread Spectrum''' — 그 결과 신호가 한 채널(1 MHz)에 머물지 않고 '''대역 전체(79 채널)에 퍼진다(spread)'''. 시간을 길게 보면 스펙트럼이 넓게 퍼져 보인다.
+* '''dwell''' = 머무르다. dwell time = 한 주파수에 머무는 시간.
+
+== 숫자 ⭐⭐⭐ ==
+<pre class="txt">
+hop 횟수   = 1600 hops/s
+dwell time = 1 / 1600 s
+           = 0.000625 s
+           = '''625 μs'''           = Bluetooth 시간 슬롯 하나 (p.15)
+⇒ 슬롯 하나마다 주파수 하나: 슬롯 0 = f0, 슬롯 1 = f1, 슬롯 2 = f2, …
+</pre>
+p.15 그림에서 각 프레임 뒤에 붙은 "'''Hop'''" 과 슬롯 아래의 '''f0, f1, f2, f3''' 가 바로 이것 → [[Bluetooth 시간 슬롯]].
+
+== 왜 간섭을 피하나 ==
+* 2.4 GHz ISM 은 공용 대역 — WiFi(802.11b/g 등, [[802.11 physical layer]])도 같은 대역에 있다.
+* 10/6 교수: interference 는 '''같은 시간 + 같은 frequency band''' 일 때 문제, "it is fine if you differentiate time or frequency." → [[wireless LAN의 특성]]
+* FHSS 는 625 μs 마다 주파수를 바꾸므로, 어떤 채널에 남의 신호가 있어도 '''그 슬롯 하나만''' 영향을 받고 다음 슬롯은 다른 채널이다. 한 채널에 계속 머무르는 것보다 간섭에 강하다.
+* hop 순서를 piconet 안에서 어떻게 맞추는지(primary 기준의 의사난수 순서)는 슬라이드에 없다 — Forouzan 보충.
+
+[[anim:bluetooth_piconet|세 번째 장면에서 슬롯이 바뀔 때마다 주파수 f0→f1→f2→f3 로 hop 하는 것을 보라 — 한 슬롯 = 한 주파수]]
+
+== WiFi physical layer 표의 FHSS 와 연결 ==
+{|
+! || 원조 IEEE 802.11 (L8 p.36) || Bluetooth (L9 p.18–19)
+|-
+| 기술 || FHSS || FHSS
+|-
+| 변조 || [[FSK]] || [[GFSK]] (FSK 의 개량)
+|-
+| 대역 || 2.4 GHz 대 || 2.4 GHz ISM, 79 × 1 MHz
+|-
+| hop 속도 || (슬라이드에 없음) || '''1600 hops/s'''
+|}
+L8 표에서 FHSS 는 약어만 있었다(풀이는 Forouzan 보충이었다). 이번 덱이 그 '''풀이와 동작'''을 처음으로 준다.
+
+{analogy}🎭 '''도청을 피하는 007 의 무전.''' 두 요원은 미리 약속한 순서대로 1 초에 1600 번 채널을 바꾼다. 누가 한 채널에서 소음을 내도(간섭) 그 0.000625 초만 잃고, 다음 순간엔 이미 다른 채널이다. 원래 FHSS 는 군사 통신에서 재밍(방해 전파)을 피하려고 나왔다(Forouzan 보충 — 여담).{/analogy}
+
+{quiz}FHSS 의 full name 과 Bluetooth 에서 쓰는 목적을 쓰시오. 초당 hop 횟수가 1600 일 때 dwell time 을 계산하고, 이것이 Bluetooth 의 무엇과 같은지 쓰시오.{/quiz}
+{answer}'''Frequency-Hopping Spread Spectrum'''. 목적: '''다른 기기나 네트워크로부터의 간섭(interference) 회피'''.
+<pre class="txt">
+dwell time = 1 / 1600 s = 0.000625 s = 625 μs
+</pre>
+'''시간 슬롯 하나(625 μs)'''와 같다 — 슬롯마다 주파수가 바뀐다.{/answer}
+
+== 관련 문서 ==
+* [[radio layer]] · [[Bluetooth 시간 슬롯]] · [[GFSK]] · [[802.11 physical layer]] · [[wireless LAN의 특성]] · [[CH04 Bluetooth]]

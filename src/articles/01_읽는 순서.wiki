@@ -86,6 +86,14 @@ category: 안내
 # [[PCF]](polling, PIFS < DIFS) 와 [[repetition interval]]·[[beacon frame]], [[fragmentation]].
 # '''[[802.11 프레임 형식]]'''(9 필드) → [[802.11 프레임 종류]] → '''[[802.11 주소 케이스]]'''(To DS/From DS 4 케이스 표) → [[802.11 physical layer]] 표.
 
+== 11. CH04 Bluetooth (30분, 10/8 수업 — 선제 작성) ==
+[[CH04 Bluetooth]] 통독. 들를 곳:
+# [[piconet]](primary 1 + secondary 7) → [[scatternet]] → [[IEEE 802.15]]·[[PAN]].
+# [[Bluetooth 계층]]: [[baseband layer]] ≈ MAC, [[radio layer]] ≈ physical.
+# '''[[TDD-TDMA]]'''(시간 half-duplex) 와 '''[[duplexing과 multiple access]]'''(TDD/FDD vs TDMA/FDMA — 슬라이드 "Don't confuse").
+# [[Bluetooth 시간 슬롯]] 625 μs, primary 짝수·secondary 홀수.
+# [[radio layer]]: 2.4 GHz ISM 79×1 MHz, [[FHSS]] 1600 hops/s(dwell = 슬롯), [[GFSK]].
+
 == 마무리 (시험 전날) ==
 # [[공식 모음]] 을 보지 않고 백지에 쓴다.
 # [[계산 문제 모음]] 의 Example 을 전부 다시 푼다 (시뮬레이터는 답 맞출 때만).

@@ -1,0 +1,39 @@
+key: Bluetooth 계층
+title: Bluetooth 계층 (Bluetooth layers)
+category: 11강 Bluetooth, 용어
+---
+[[Bluetooth]] 는 자기만의 계층 구조를 가진다 — 아래부터 '''Radio layer → Baseband layer → L2CAP layer → Profiles → Applications''', 그리고 L2CAP 양옆에 '''Audio''' 와 '''Control''' 통로가 있다. 슬라이드의 핵심 문장은 단 하나: 이 계층들은 인터넷 모델과 '''정확히 대응하지 않는다'''. 슬라이드가 설명하는 것은 아래 두 층뿐이고, 둘 다 "'''roughly'''" 대응한다. L9 p.9–10, p.17.
+
+{def}"Bluetooth layers — '''Does not exactly match''' those of the Internet model." (p.9)
+"Baseband layer — '''Roughly equivalent to the MAC sublayer''' in LANs." (p.10)
+"Radio Layer — '''Roughly equivalent to the physical layer''' of the Internet model." (p.17)
+→ Bluetooth 계층은 인터넷 모델과 딱 맞지 않는다. Baseband ≈ MAC sublayer, Radio ≈ physical layer.{/def}
+
+[[img:L9-09.png|p.9 Bluetooth layers — Radio(맨 아래) · Baseband · L2CAP(가운데, 위로 Data 통로) · Profiles · Applications(맨 위), 양옆 세로 띠 Audio · Control|medium]]
+
+== 이름에서 개념 끌어내기 ==
+* '''Radio''' = 전파. 전파를 직접 다루는 층 → 주파수 대역, hop, 변조 = physical layer 의 일.
+* '''Baseband''' — 2강의 [[baseband 전송]] 에서 본 그 말("변조 전 원래 대역"). Bluetooth 에서는 그 위에서 '''누가 언제 보낼지(슬롯)'''를 정하는 층이라 MAC 에 대응한다.
+* 슬라이드가 "exactly" 를 부정하고 "roughly" 를 쓴 것 자체가 포인트: '''정확한 1:1 대응을 묻는 문제가 나오면 "does not exactly match" 가 답'''.
+
+== 인터넷 모델과의 대응 ⭐⭐ ==
+<pre class="ascii">
+  Bluetooth (p.9)                    인터넷 모델 ([[TCP/IP 프로토콜 스위트]])
+  ───────────────                    ─────────────────────────────
+  Applications                       application  (슬라이드 설명 없음)
+  Profiles
+  L2CAP  (+ Audio / Control / Data)   (슬라이드 설명 없음)
+  ── Baseband layer ──      ≈ roughly ≈   data-link 의 '''MAC sublayer'''
+  ── Radio layer ─────      ≈ roughly ≈   '''physical layer'''
+</pre>
+* '''[[baseband layer]]''' — 접근 방식 TDMA, '''TDD-TDMA''', 625 μs 슬롯 → [[MAC sublayer]] 의 역할.
+* '''[[radio layer]]''' — 2.4 GHz ISM, 79 × 1 MHz, '''FHSS''', '''GFSK''' → [[physical layer]] 의 역할.
+* L2CAP·Profiles·Audio·Control 은 이번 슬라이드에 '''그림의 이름만''' 있다. (L2CAP = Logical Link Control and Adaptation Protocol 이라는 풀이는 Forouzan 보충.)
+
+{analogy}🎭 '''다른 나라의 학제.''' 우리나라 "초·중·고·대" 와 어떤 나라의 학제가 대략 맞지만 학년 경계가 딱 맞지는 않는다. Bluetooth 계층도 "아래 두 층은 대략 physical·MAC 쯤" 이라고 짝지을 수 있을 뿐, 칸이 정확히 겹치진 않는다.{/analogy}
+
+{quiz}Bluetooth 의 Baseband layer 와 Radio layer 는 각각 인터넷 모델의 무엇에 대략 대응하는가? 슬라이드가 Bluetooth 계층과 인터넷 모델의 관계를 어떻게 표현했는가?{/quiz}
+{answer}'''Baseband ≈ MAC sublayer''', '''Radio ≈ physical layer'''(둘 다 "roughly equivalent"). 관계: "'''Does not exactly match''' those of the Internet model."{/answer}
+
+== 관련 문서 ==
+* [[baseband layer]] · [[radio layer]] · [[MAC sublayer]] · [[physical layer]] · [[TCP/IP 프로토콜 스위트]] · [[CH04 Bluetooth]]

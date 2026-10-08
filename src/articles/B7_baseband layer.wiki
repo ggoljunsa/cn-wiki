@@ -1,0 +1,45 @@
+key: baseband layer
+title: Baseband Layer (Bluetooth 의 MAC)
+category: 11강 Bluetooth, 용어
+---
+'''Baseband layer''' 는 [[Bluetooth 계층]] 에서 Radio layer 바로 위 층으로, LAN 의 '''[[MAC sublayer]] 에 대략(roughly) 해당'''한다. 접근 방식은 '''TDMA''' — primary 와 secondary 가 '''시간 슬롯'''으로 통신한다 — 이고, 그것을 '''TDD-TDMA''' 로, 즉 '''시간으로 송수신을 번갈아 하는 half-duplex''' 로 운용한다. L9 p.10–16.
+
+{def}"Baseband layer — '''Roughly equivalent to the MAC sublayer''' in LANs. The access method is '''TDMA (Time Division Multiple Access)'''. The primary and secondary stations communicate with each other '''using time slots'''." (p.10–11)
+"Uses '''TDD-TDMA (Time-division duplex TDMA)'''. A '''half-duplex communication in time''' — Can send and receive data, but '''not at the same time'''." (p.12)
+→ Baseband = Bluetooth 의 MAC. TDMA 로 접근하고, TDD-TDMA 로 시간상 half-duplex.{/def}
+
+[[img:L9-14.png|p.14 Baseband layer — TDMA, TDD-TDMA, Cf. FDD, Note: Don't confuse duplexing with multiple access (MA)|large]]
+
+== 이름에서 개념 끌어내기 ==
+'''base-band''' = "기저 대역". 2강의 [[baseband 전송]] 이 "변조 없이 원래 대역 그대로" 였듯, 여기서도 '''아직 반송파(radio)에 올리기 전의 디지털 처리 층'''이라는 이름이다. 그 층에서 하는 핵심 일이 "'''누가 어느 슬롯에 보낼지'''" 정하기라서 MAC 에 대응한다.
+
+== 슬라이드가 쌓아 올리는 네 줄 (p.10 → p.14) ==
+<pre class="txt">
+p.10  Baseband ≈ '''MAC sublayer'''
+p.11  access method = '''TDMA'''   — primary·secondary 가 time slot 으로 통신   (사용자들이 시간을 나눔)
+p.12  '''TDD'''-TDMA              — half-duplex '''in time''': 송수신 O, '''같은 시간'''엔 X  (Tx/Rx 가 시간을 나눔)
+p.13  Cf. '''FDD'''               — 송수신 O, '''같은 주파수'''에선 X                    (Tx/Rx 가 주파수를 나눔)
+p.14  Note: duplexing ≠ multiple access
+</pre>
+* '''TDMA''' 는 [[channelization]] 의 그 TDMA — 경쟁([[random access]])이 아니라 시간 칸을 '''미리 나눠''' 쓴다. 다만 Bluetooth 에서는 칸 배정을 primary 가 지목으로 하므로 [[polling]] 과도 닮았다.
+* '''TDD''' 는 duplexing 의 방식 → [[TDD-TDMA]], [[duplexing과 multiple access]].
+* 슬롯 규칙(625 μs, primary 짝수 / secondary 홀수)도 baseband 의 일 → [[Bluetooth 시간 슬롯]].
+
+== Ethernet·WiFi 의 MAC 과 비교 ==
+{|
+! || Ethernet MAC || WiFi MAC || '''Bluetooth Baseband'''
+|-
+| 방식 || [[CSMA/CD]] || [[CSMA/CA]] (DCF) / PCF || '''TDD-TDMA'''
+|-
+| 경쟁 || 있음 (충돌 후 감지) || 있음 (충돌 회피) || '''없음''' (primary 가 배정)
+|-
+| 분류 || random access || random access (+ PCF polling) || channelization(TDMA) + 지목
+|}
+
+{analogy}🎭 '''Baseband = 교실의 시간표 담당.''' 전파를 쏘는 일(radio)은 아래층 기사님이 하고, baseband 는 "1교시는 선생님 말할 차례, 2교시는 철수 대답할 차례" 처럼 '''시간표를 짜고 지킨다'''. 시간표가 있으니 아무도 동시에 말하지 않는다.{/analogy}
+
+{quiz}Bluetooth 의 baseband layer 는 무엇에 대응하고, 접근 방식은 무엇인가? 그 접근 방식이 "half-duplex" 라는 말은 무슨 뜻인가?{/quiz}
+{answer}'''MAC sublayer''' 에 대략 대응, 접근 방식은 '''TDMA''' — 구체적으로 '''TDD-TDMA'''. half-duplex '''in time''' = 송신과 수신을 모두 할 수 있지만 '''같은 시간에는 할 수 없다'''(시간을 번갈아 씀).{/answer}
+
+== 관련 문서 ==
+* [[TDD-TDMA]] · [[duplexing과 multiple access]] · [[Bluetooth 시간 슬롯]] · [[Bluetooth 계층]] · [[radio layer]] · [[MAC sublayer]] · [[CH04 Bluetooth]]

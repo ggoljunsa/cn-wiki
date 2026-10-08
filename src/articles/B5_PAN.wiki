@@ -1,0 +1,44 @@
+key: PAN
+title: PAN (Personal-Area Network)
+category: 11강 Bluetooth, 용어
+---
+'''PAN (Personal-Area Network)''' 은 '''방(room)이나 홀(hall) 크기'''에서 동작하는 개인 주변의 망이다. [[IEEE 802.15]] 가 '''wireless PAN''' 을 정의하고, [[Bluetooth]] 가 그 구현이다. [[LAN]](사무실·건물·캠퍼스)보다 한 단계 작다. L9 p.6.
+
+{def}"The standard defines a '''wireless personal-area network (PAN)''' operable in an area the size of a '''room or a hall'''." (p.6)
+→ PAN = 방이나 홀 크기의 영역에서 동작하는 개인 영역 망.{/def}
+
+== 이름에서 개념 끌어내기 ==
+'''Personal''' — "개인의". 회사나 학교의 망(Local)이 아니라 '''한 사람 주변의 기기들'''(폰·이어폰·시계·노트북·마우스)을 잇는 망이다. '''Area''' 는 LAN·WAN 과 같은 "범위" 축. 그래서 이름 순서대로 크기가 정해진다: '''Personal < Local < Wide'''.
+
+== 크기로 줄 세우기 ==
+<pre class="ascii">
+  PAN    ⊂    LAN                    ⊂   WAN
+  ────        ───                        ───
+  room/hall   office·building·campus     도시·나라 (L1)
+  [[Bluetooth]]   [[Standard Ethernet|Ethernet]], [[WiFi]]          (CH05, 중간고사 뒤)
+  802.15      802.3, 802.11
+</pre>
+
+{|
+! || '''PAN''' || [[LAN]]
+|-
+| 범위 || '''room / hall''' (p.6) || single office, building, campus (L1 p.14)
+|-
+| 누구의 망 || 한 '''개인'''의 기기들 || 한 조직의 사설(privately owned) 망
+|-
+| 대표 || Bluetooth (802.15) || Ethernet (802.3), WiFi (802.11)
+|-
+| 기기 종류 || '''different types of devices''', gadget (p.2–3) || 주로 컴퓨터·서버
+|-
+| 망 형성 || '''ad-hoc''', spontaneously (p.3) || 대개 스위치·AP 같은 인프라
+|}
+
+{info}슬라이드는 Bluetooth 를 [[LAN]] 의 세 번째 instance 로 소개하면서(L7 p.9, L8 p.2–5) 동시에 '''PAN''' 표준의 구현이라고 한다(p.6). 모순이 아니라 '''넓게는 LAN 계열(IEEE 802), 범위로는 PAN''' 이라는 뜻으로 읽으면 된다.{/info}
+
+{analogy}🎭 '''LAN 이 집 전체 콘센트 배선이라면, PAN 은 멀티탭 하나.''' 내 책상 위 기기 몇 개만 꽂아 쓰고, 들고 다니면 같이 따라온다.{/analogy}
+
+{quiz}PAN 의 약자와, IEEE 802.15 슬라이드가 정의한 동작 범위를 쓰시오. LAN 과 범위를 비교하시오.{/quiz}
+{answer}'''Personal-Area Network'''. 범위는 '''방(room)이나 홀(hall) 크기'''. LAN 은 '''사무실·건물·캠퍼스''' 범위로 PAN 보다 넓다.{/answer}
+
+== 관련 문서 ==
+* [[IEEE 802.15]] · [[LAN]] · [[WAN]] · [[Bluetooth]] · [[piconet]] · [[CH04 Bluetooth]]

@@ -1,0 +1,266 @@
+key: CH04 Bluetooth
+title: CH04 Bluetooth (11강 — IEEE 802.15 PAN: 한 명이 지휘하는 작은 망)
+category: 11강 Bluetooth, 메인
+---
+{warn}'''10/8 수업 전 선제 작성 — 녹음본 없음.''' 슬라이드(L9 `CH04_Local Area Networks (3).pdf`, 19쪽)만 보고 썼다. 수업 뒤 녹음본이 오면 진도·교수 강조·공지를 `🎙 실제 수업 기록` 절로 추가한다. 10/6 수업 공지 기준으로 '''Bluetooth 가 10/13 중간고사 범위에 들어가는지는 미확정'''(범위는 "10/8 진도까지") → [[시험 정보]].{/warn}
+
+'''CH04 Bluetooth''' 는 L9 덱(`CH04_Local Area Networks (3).pdf`, 19쪽) p.2–19 전부다. recap 없이 바로 "'''3. Bluetooth'''" 로 시작한다 — [[CH04 Ethernet]]·[[CH04 WiFi]] 에 이어 [[LAN]] 의 세 번째 instance 다.
+이 덱이 던지는 질문은 — '''"방 하나 크기의 작은 무선망에서, 여러 기기가 한 매체를 어떻게 나눠 쓰나?"'''
+답: 경쟁(CSMA)하지 않는다. 기기 하나가 '''primary''' 로 지휘하고 나머지 '''secondary''' 는 지목받았을 때만 말한다([[piconet]]). 시간은 '''625 μs 슬롯'''으로 잘려 있고, primary 는 '''짝수''' 슬롯, secondary 는 그 다음 '''홀수''' 슬롯에 보낸다 — 시간으로 송수신을 번갈아 하는 '''[[TDD-TDMA]]'''. 그리고 슬롯마다 주파수를 바꿔 뛴다([[FHSS]], 초당 1600 번). 슬라이드가 굳이 "'''Don't confuse duplexing with multiple access'''" 를 써 둔 자리가 이 덱의 함정이다 → [[duplexing과 multiple access]].
+
+페이지 번호는 슬라이드 인쇄 번호(= PDF 페이지)다.
+
+== 한눈에 보기 ==
+기호를 까먹었을 때 이 절만 다시 읽으면 된다. 등장인물: '''P = primary(지휘하는 1 대), S1·S2… = secondary(따르는 나머지)'''.
+
+=== ① piconet 구조 ===
+<pre class="ascii">
+            ┌──────────── '''[[piconet]]''' (최대 8 대) ────────────┐
+            │                 P (primary, 1 대)                 │
+            │        ╱      ╱      │      ╲      ╲             │
+            │      S1     S2      S3      S4 … S7             │
+            │           (secondary, 최대 7 대)                  │
+            └───────────────────────────────────────────────────┘
+  piconet + piconet → 한 기기(Primary/Secondary)를 공유 → '''[[scatternet]]'''
+</pre>
+* Bluetooth LAN 은 '''[[ad-hoc과 infrastructure|ad-hoc]]''' 망 — AP 없이 기기들이 '''spontaneously''' 서로 찾아 망을 만든다(p.3).
+* 한 piconet = '''primary 1 + secondary 최대 7 = 8 대'''(p.7). 둘 이상의 piconet 을 묶으면 [[scatternet]](p.8).
+
+=== ② 슬롯 규칙 (TDD-TDMA) ===
+<pre class="txt">
+슬롯 번호 :   0        1        2        3        4   …
+주파수    :   f0       f1       f2       f3       f4  …   ← 슬롯마다 hop ([[FHSS]])
+누가 보냄 :   P →      ← S      P →      ← S      P →
+              (짝수)   (홀수)   (짝수)   (홀수)
+* P 가 보낼 때 모든 S 는 '''듣기만''' 한다 (half-duplex in time)
+* P 가 짝수 슬롯에서 지목한 S 만 '''바로 다음 홀수 슬롯'''에 답한다
+</pre>
+→ [[Bluetooth 시간 슬롯]] · [[TDD-TDMA]]
+
+=== ③ 외울 숫자 다섯 개 ===
+{|
+! 숫자 || 뜻 || 슬라이드
+|-
+| '''8''' || piconet 최대 스테이션 수 (primary 1 + secondary 7) || p.7
+|-
+| '''625 μs''' || 시간 슬롯 하나 = 한 주파수에 머무는 dwell time || p.15, p.18
+|-
+| '''1600 hops/s''' || 초당 주파수 hop 횟수. $1/1600\text{ s} = 625\ \mu\text{s}$ || p.18
+|-
+| '''79 × 1 MHz''' || 대역을 1 MHz 채널 79 개로 나눔 || p.17
+|-
+| '''2.4 GHz''' || ISM band || p.17
+|}
+<pre class="txt">
+625 μs × 1600 = 1,000,000 μs = 1 s     ← 슬롯 하나 = hop 하나, 그래서 두 숫자는 같은 사실
+</pre>
+
+{exam}🎯 출제 예상 자리 (슬라이드 구조 기준 — 녹음본 오기 전)
+* '''"Note: Don't confuse duplexing with multiple access (MA)."''' (p.14) — 교수가 Note 로 박아 둔 유일한 문장. Duplexing = '''Tx/Rx''' 가 매체를 나눔, MA = '''사용자들'''이 매체를 나눔. TDD/FDD 는 duplexing, TDMA/FDMA/CDMA 는 MA.
+* 숫자 다섯 개: '''8''' · '''625 μs''' · '''1600 hops/s''' · '''79 × 1 MHz''' · '''2.4 GHz ISM'''.
+* '''TDD-TDMA = half-duplex in time''' — "can send and receive data, but '''not at the same time'''" vs FDD "'''not at the same frequency'''". 10/6 수업에서 교수가 half-duplex 를 '''주파수·시간 두 자원'''으로 설명한 것(F1/F2 로 나누면 동시에 말하고 듣는다)과 그대로 이어진다 → [[CH04 WiFi]] 🎙 절.
+* primary '''짝수''' 슬롯(0, 2, 4, …), secondary '''다음 홀수''' 슬롯 (p.15–16).
+* 계층 대응: '''Baseband ≈ MAC sublayer''', '''Radio ≈ physical layer''' — 인터넷 모델과 "'''does not exactly match'''" (p.9).{/exam}
+
+{analogy}🎭 '''Ethernet 은 수다방, WiFi 는 손 들고 허락받는 운동장, Bluetooth 는 선생님 한 명이 진행하는 소규모 과외.''' 과외 교실(방 하나 크기 = PAN)에는 선생님(primary) 1 명과 학생(secondary) 최대 7 명. 학생은 먼저 말하지 않는다 — 선생님이 짝수 번째 박자에 "S2, 대답해" 하면 S2 만 다음 홀수 박자에 대답한다. 그러니 둘이 동시에 말해서 부딪힐 일이 애초에 없다(CSMA 불필요). 게다가 이 교실은 박자마다 칠판(주파수)을 옮겨 가며 쓴다(FHSS) — 옆 교실이 시끄러워도 한 박자만 손해 본다.{/analogy}
+
+[[anim:bluetooth_piconet|① primary 1 + secondary 7 의 piconet, ② 두 piconet 이 기기 하나를 공유한 scatternet, ③ 625 μs 슬롯에서 primary 는 짝수·secondary 는 다음 홀수에 보내고 슬롯마다 주파수가 바뀌는 순서를 따라가라]]
+
+== p.2–4 — Bluetooth: 서로 다른 기기를 위한 ad-hoc 망 ⭐ ==
+{def}"3. Bluetooth — Designed to provide services to '''different types of devices'''." (p.2)
+"A Bluetooth LAN is an '''ad-hoc network'''. The network is formed '''spontaneously'''. The devices, sometimes gadgets, find each other and make a network called a '''piconet'''. A Bluetooth LAN can even be '''connected to the Internet''' if one of the gadgets has this capability." (p.3–4){/def}
+
+* '''different types of devices''' — WiFi(p.6 "services to wireless devices")가 노트북·폰 같은 "컴퓨터"를 묶는다면, Bluetooth 는 이어폰·마우스·키보드 같은 '''gadget''' 까지 종류가 제각각인 기기를 묶는다.
+* '''ad-hoc''' — [[CH04 WiFi]] 의 BSS 에서 본 그 말: '''AP(access point) 없이''' 기기끼리 바로 망을 이룬다 → [[ad-hoc과 infrastructure]]. 누가 깔아 둔 인프라가 아니라 "그때그때(spontaneously)" 생긴다.
+* 기기 하나가 인터넷 연결 능력이 있으면 Bluetooth LAN 전체가 인터넷에 붙을 수 있다(p.4) — 예: 폰이 테더링으로 노트북을 인터넷에 연결.
+
+== p.5–6 — A brief history, IEEE 802.15 PAN ⭐⭐ ==
+{def}"Originally started as a project by the '''Ericsson Company'''. It is named for '''Harald Blaatand, a king of Denmark (940–981)'''. Blaatand translates to Bluetooth in English." (p.5)
+"An implementation of '''IEEE 802.15''' standard. The standard defines a '''wireless personal-area network (PAN)''' operable in an area the size of a '''room or a hall'''." (p.6){/def}
+
+* 이름은 기술 설명이 아니라 '''왕의 이름'''(Harald Blaatand, 덴마크 왕, '''940–981''') — [[Bluetooth]] 의 "이름에서 개념 끌어내기" 참고.
+* 표준: [[IEEE Project 802]] 의 또 한 갈래 '''[[IEEE 802.15]]''' — 802.3 = Ethernet, 802.11 = WiFi, '''802.15 = Bluetooth(PAN)'''.
+* 범위: '''[[PAN]]''' = personal-area network, '''방(room)이나 홀(hall)''' 크기. LAN(건물·캠퍼스)보다 작다.
+
+== p.7 — Piconet ⭐⭐⭐ ==
+[[img:L9-07.png|p.7 Piconet — Primary 1 대가 Secondary 4 대와 무선으로 연결(그림은 4 대지만 최대 8 대 = primary 1 + secondary 7)|medium]]
+
+{def}"A piconet (i.e., a '''small net''') — Can have '''up to 8 stations'''. One of which is called the '''primary''', the rest are called '''secondaries'''." (p.7){/def}
+
+* '''pico-''' = 아주 작은(10⁻¹²). "small net" 이라는 슬라이드 괄호 그대로.
+* 8 = primary '''1''' + secondary 최대 '''7'''. → [[piconet]] · [[primary와 secondary]]
+* 그림에서 secondary 들은 '''primary 하고만''' 선이 이어져 있다(번개 모양 링크가 전부 primary 로 향함). secondary 끼리 직접 잇는 선은 없다 — HDLC [[NRM]] 이나 [[polling]] 의 primary/secondary 와 같은 star 모양 관계.
+
+== p.8 — Scatternet ⭐⭐ ==
+[[img:L9-08.png|p.8 Scatternet — 왼쪽 piconet(노란색)의 secondary 하나가 오른쪽 piconet 의 primary 를 겸함("Primary/Secondary")|medium]]
+
+{def}"Piconets can be combined to a '''scatternet'''." (p.8){/def}
+
+* 그림의 가운데 기기 라벨이 '''"Primary/Secondary"''' — 왼쪽 piconet 에서는 secondary, 오른쪽 piconet 에서는 primary. 두 piconet 의 상자가 '''이 기기에서 겹친다'''.
+* 이름: '''scatter''' = 흩뿌리다 — 작은 piconet 들이 흩어져 있다가 공유 기기로 이어진 망. → [[scatternet]]
+
+== p.9 — Bluetooth layers ⭐⭐ ==
+[[img:L9-09.png|p.9 Bluetooth layers — 아래부터 Radio layer, Baseband layer, L2CAP layer(+ 양옆 Audio·Control), Profiles, Applications|medium]]
+
+{def}"Bluetooth layers — '''Does not exactly match''' those of the Internet model." (p.9){/def}
+
+{|
+! Bluetooth 층 (p.9 그림) || 인터넷 모델에서 대략 || 슬라이드
+|-
+| Applications · Profiles || application 쪽 (슬라이드 설명 없음) || p.9 그림만
+|-
+| L2CAP layer (+ Audio, Control, Data 통로) || (슬라이드 설명 없음) || p.9 그림만
+|-
+| '''[[baseband layer|Baseband layer]]''' || '''MAC sublayer''' ("roughly equivalent") || p.10
+|-
+| '''[[radio layer|Radio layer]]''' || '''physical layer''' ("roughly equivalent") || p.17
+|}
+슬라이드가 설명하는 것은 '''아래 두 층(Baseband, Radio)뿐'''이다. 둘 다 "'''roughly''' equivalent" — 정확히 대응하지 않는다는 p.9 문장과 짝. → [[Bluetooth 계층]]
+
+== p.10–14 — Baseband layer: TDMA, TDD-TDMA, FDD, duplexing vs MA ⭐⭐⭐ ==
+[[img:L9-14.png|p.14 Baseband layer 전체 — TDMA, TDD-TDMA(half-duplex in time), Cf. FDD, Note: Don't confuse duplexing with multiple access|large]]
+
+{def}"Baseband layer — '''Roughly equivalent to the MAC sublayer''' in LANs. The access method is '''TDMA (Time Division Multiple Access)'''. The primary and secondary stations communicate with each other '''using time slots'''." (p.10–11)
+"Uses '''TDD-TDMA (Time-division duplex TDMA)'''. '''A half-duplex communication in time''' — Can send and receive data, but '''not at the same time'''." (p.12)
+"Cf. '''FDD (Frequency-division duplex)''' — Can send and receive data, but '''not at the same frequency'''." (p.13)
+"Note: '''Don't confuse duplexing with multiple access (MA)'''. Duplexing: Sharing a medium for '''Tx / Rx'''; MA: sharing a medium '''among users'''." (p.14){/def}
+
+슬라이드가 한 줄씩 쌓아 올린 순서를 그대로 따라가면:
+# '''p.10''' Baseband = Bluetooth 의 MAC → [[baseband layer]], [[MAC sublayer]]
+# '''p.11''' 접근 방식은 '''TDMA''' — [[channelization]] 의 그 TDMA(시간 슬롯으로 사용자들이 나눠 씀). 경쟁하는 [[random access]] 가 아니다.
+# '''p.12''' 그 TDMA 를 '''TDD''' 로 운용 — 같은 주파수에서 '''보내는 시간과 받는 시간을 번갈아''' → half-duplex in time → [[TDD-TDMA]]
+# '''p.13''' 비교 대상 '''FDD''' — 보내는 주파수와 받는 주파수를 따로 → 동시에 송수신 가능, 대신 같은 주파수에서는 안 됨
+# '''p.14''' 경고: '''TDD/FDD(duplexing)''' 와 '''TDMA/FDMA(multiple access)''' 는 다른 문제다 → [[duplexing과 multiple access]]
+
+{|
+! || 무엇을 나누나 || 시간으로 나누면 || 주파수로 나누면
+|-
+| '''Duplexing''' || '''한 기기의 Tx 와 Rx''' 가 매체를 나눔 || '''TDD''' (Bluetooth) || '''FDD'''
+|-
+| '''Multiple access''' || '''여러 사용자'''가 매체를 나눔 || '''TDMA''' (Bluetooth) || '''FDMA''' (+ 코드로 CDMA)
+|}
+Bluetooth 의 '''TDD-TDMA''' 는 두 칸을 '''모두 시간'''으로 채운 것 — "사용자 간에도 시간으로(TDMA), 송·수신 간에도 시간으로(TDD)".
+
+{info}'''10/6 수업과 연결.''' WiFi 수업에서 교수는 half-duplex 를 '''"같은 주파수·같은 시간에 송수신 불가"''' 로 정의하고, 휴대폰 통화처럼 말하기·듣기가 동시에 되는 건 '''F1 / F2 로 주파수를 나눴기 때문'''이라고 했다("time and frequency as two important resources"). 그 F1/F2 방식이 바로 '''FDD''', 같은 주파수에서 시간을 번갈아 쓰는 방식이 '''TDD''' 다. 이번 덱은 그 설명에 이름을 붙인 것이다 → [[half-duplex]] · [[CH04 WiFi]].{/info}
+
+== p.15 — Single-secondary communication ⭐⭐⭐ ==
+[[img:L9-15.png|p.15 Single-secondary — Primary 가 슬롯 0·2(f0·f2)에 보내고(↓), Secondary 가 슬롯 1·3(f1·f3)에 보냄(↑). 프레임 뒤마다 "Hop"|large]]
+
+{def}"The time is divided into '''slots of 625 μs'''. The primary sends at '''even-numbered slots (0, 2, 4, . . .)'''. '''Half-duplex mode in time (TDD-TDMA)''' — When the primary sends, the secondary receives (not sending)." (p.15){/def}
+
+그림 읽기:
+* 위 줄 Primary, 아래 줄 Secondary, 점선 사이가 슬롯 하나. 슬롯 아래 '''f0, f1, f2, f3''' = 슬롯마다 다른 주파수.
+* 슬롯 0(f0): Primary 가 보냄 ↓ → 슬롯 1(f1): Secondary 가 보냄 ↑ → 슬롯 2(f2): Primary ↓ → 슬롯 3(f3): Secondary ↑.
+* 프레임 뒤의 '''"Hop"''' = 슬롯이 끝나면 다음 주파수로 뛴다([[FHSS]]).
+* 슬롯 폭 '''625''', 그 안의 프레임 폭 '''366''' 이 화살표로 표시돼 있다.
+
+{warn}'''그림의 단위 "625 ms", "366 ms" 는 오타 — μs 다.''' 본문 문장이 "slots of '''625 μs'''" 이고 p.18 도 "625 us (1/1600 s)" 다. 시험 답안에는 '''625 μs''' 로. (366 μs 는 그림에만 있는 프레임 길이 — 남는 시간은 hop 준비에 쓴다는 해석은 Forouzan 보충.){/warn}
+
+== p.16 — Multiple-secondary communication ⭐⭐⭐ ==
+[[img:L9-16.png|p.16 Multiple-secondary — Primary 의 슬롯 0 은 Secondary 1 에게, 슬롯 1 에 Secondary 1 응답; 슬롯 2 는 Secondary 2 에게, 슬롯 3 에 Secondary 2 응답|large]]
+
+{def}"The primary sends at even-numbered slots (0, 2, 4, . . .) '''while all secondaries listen'''. The '''associated secondary''' sends in the '''next odd-numbered slot'''." (p.16){/def}
+
+* 짝수 슬롯에서 primary 가 보낼 때 '''모든''' secondary 가 듣는다 — 그중 primary 가 지목한(associated) secondary 만 '''바로 다음 홀수 슬롯'''에 답한다.
+* 그림: 슬롯 0 → S1, 슬롯 1 ← S1, 슬롯 2 → S2, 슬롯 3 ← S2. 지목받지 않은 secondary 는 그 홀수 슬롯에 조용하다.
+* 그래서 '''충돌이 구조적으로 없다''' — 누가 언제 말할지 primary 가 정한다. [[controlled access]] 의 [[polling]] 과 같은 발상(Forouzan 은 이것을 primary 의 poll 로 설명 — 보충). → [[Bluetooth 시간 슬롯]]
+
+== p.17–19 — Radio layer: 2.4 GHz ISM, FHSS, GFSK ⭐⭐⭐ ==
+[[img:L9-19.png|p.19 Radio Layer 전체 — Band(2.4 GHz ISM, 79 × 1 MHz), FHSS(1600 hops/s, dwell time 625 us = a time slot), Modulation(GFSK)|large]]
+
+{def}"Radio Layer — '''Roughly equivalent to the physical layer''' of the Internet model. Band: Use a '''2.4-GHz ISM band''' divided into '''79 channels of 1MHz each'''." (p.17)
+"'''FHSS (frequency-hopping spread spectrum)''': Use FHSS method to '''avoid interference''' from other devices or networks. '''Hop 1600 times per second'''. A device uses a frequency for only '''625 us (1/1600s)''' before it hops to another frequency. e.g., The '''dwell time is 625 us (= a time slot)'''." (p.18)
+"Modulation: Use a sophisticated version of FSK, called '''GFSK (FSK with Gaussian bandwidth filtering)'''." (p.19){/def}
+
+{|
+! 항목 || 값 || 문서
+|-
+| 대응 계층 || physical layer (roughly) || [[radio layer]]
+|-
+| Band || '''2.4 GHz ISM''', '''79 채널 × 1 MHz''' || [[radio layer]]
+|-
+| 확산 방식 || '''FHSS''' — 간섭 회피, '''1600 hops/s''', dwell time '''625 μs = 슬롯 1 개''' || [[FHSS]]
+|-
+| 변조 || '''GFSK''' = [[FSK]] + Gaussian bandwidth filtering || [[GFSK]]
+|}
+
+<pre class="txt">
+hop 간격 = 1 / 1600 s
+         = 0.000625 s
+         = '''625 μs'''              ← p.15 의 슬롯 길이와 같다
+⇒ "슬롯 하나 = 주파수 하나". p.15 그림의 f0, f1, f2, f3 가 그 뜻.
+</pre>
+
+* '''ISM''' = Industrial, Scientific, Medical — 면허 없이 쓰는 공용 대역(약어 풀이는 Forouzan 보충). 공용이라 WiFi(802.11b/g 도 2.4 GHz — [[802.11 physical layer]]) 등과 '''같은 대역을 나눠 쓴다''' → 그래서 간섭 회피(FHSS)가 필요하다. 10/6 교수 말 "interference 는 '''같은 시간 + 같은 주파수'''일 때만 문제" 를 뒤집으면: '''주파수를 계속 바꾸면 남과 같은 주파수에 오래 머물지 않는다'''.
+* WiFi 의 원조 802.11 도 '''FHSS + FSK''' 를 썼다(L8 p.36 표) — Bluetooth 는 그 계열.
+
+== 3 instance 비교: Ethernet · WiFi · Bluetooth ⭐⭐⭐ ==
+{|
+! || [[Standard Ethernet|Ethernet]] || [[WiFi]] || '''Bluetooth'''
+|-
+| 표준 || IEEE '''802.3''' || IEEE '''802.11''' || IEEE '''802.15'''
+|-
+| 범위 || [[LAN]] || [[LAN]] (wireless) || '''[[PAN]]''' (room / hall)
+|-
+| 매체 || wired || wireless (air) || wireless (2.4 GHz ISM)
+|-
+| 접근 방식 (MAC) || '''[[CSMA/CD]]''' — 충돌 감지 || '''[[CSMA/CA]]''' — 충돌 회피 (DCF) + PCF || '''TDD-TDMA''' — primary 가 슬롯 배정, 경쟁 없음
+|-
+| 접근 방식 분류 || [[random access]] || random access (+ PCF 는 polling) || [[channelization]](TDMA) + [[polling]] 식 지목
+|-
+| 토폴로지 || bus → star (hub/switch) || BSS (ad-hoc / infrastructure), ESS || '''piconet''' (ad-hoc, 1 + 7), '''scatternet'''
+|-
+| 중심 장비 || hub / switch || AP (infrastructure) || '''없음''' — primary 역할을 기기 하나가 맡음
+|-
+| 송수신 || half → full-duplex (switch) || half-duplex (self-interference) || '''half-duplex in time (TDD)'''
+|-
+| Physical || 세대별 매체·line coding || FHSS / DSSS / OFDM (p.36) || '''FHSS 1600 hops/s, GFSK''', 79 × 1 MHz
+|}
+{tip}한 줄로: '''Ethernet 은 부딪히고 알아챈다(CD), WiFi 는 부딪히기 전에 피한다(CA), Bluetooth 는 애초에 순서를 정해 준다(TDD-TDMA).'''{/tip}
+
+{quiz}Ethernet, WiFi, Bluetooth 의 IEEE 표준 번호와 매체 접근 방식을 각각 쓰시오. Bluetooth 는 왜 CSMA 계열이 필요 없는가?{/quiz}
+{answer}'''Ethernet 802.3 — CSMA/CD''', '''WiFi 802.11 — CSMA/CA''', '''Bluetooth 802.15 — TDD-TDMA'''. Bluetooth 는 primary 가 짝수 슬롯에서 보내고 '''지목된 secondary 만''' 다음 홀수 슬롯에 보내므로 두 기기가 같은 슬롯에 보낼 일이 없다 — 경쟁·충돌 자체가 없어서 carrier sense 가 필요 없다.{/answer}
+
+{quiz}Bluetooth 슬롯은 625 μs 이고 radio 는 초당 1600 번 hop 한다. 두 숫자의 관계를 계산으로 보이고, 이것이 p.15 그림의 f0, f1, f2, f3 와 어떤 관계인지 쓰시오.{/quiz}
+{answer}<pre class="txt">
+1 / 1600 s = 0.000625 s = 625 μs
+</pre>
+hop 간격(dwell time) = 슬롯 하나. 그래서 '''슬롯마다 주파수가 하나씩''' 바뀌고, 그림의 슬롯 0·1·2·3 아래 적힌 f0·f1·f2·f3 가 그 주파수다.{/answer}
+
+{quiz}"Don't confuse duplexing with multiple access." 두 개념을 각각 한 문장으로 정의하고, TDD · FDD · TDMA · FDMA 를 둘 중 어디에 속하는지 분류하시오.{/quiz}
+{answer}'''Duplexing''': 한 매체를 '''송신(Tx)과 수신(Rx)이''' 나눠 쓰는 것 — '''TDD, FDD'''. '''Multiple access''': 한 매체를 '''여러 사용자가''' 나눠 쓰는 것 — '''TDMA, FDMA'''(, CDMA). Bluetooth baseband 는 둘 다 시간으로 하는 '''TDD-TDMA'''.{/answer}
+
+== 시험 대비 핵심 요약 ==
+# Bluetooth = '''different types of devices''' 를 위한 '''ad-hoc''' 망 — '''spontaneously''' 형성, AP 없음. 기기 하나가 인터넷 능력이 있으면 인터넷에도 연결 가능 (p.2–4).
+# 역사: '''Ericsson''' 프로젝트, 이름은 덴마크 왕 '''Harald Blaatand (940–981)''' (p.5).
+# '''IEEE 802.15''' 의 구현 → '''wireless PAN''', '''room 이나 hall''' 크기 (p.6). (802.3 Ethernet / 802.11 WiFi / 802.15 Bluetooth)
+# '''Piconet''' = small net, '''최대 8 stations''' = '''primary 1 + secondaries''' (p.7). '''Scatternet''' = piconet 들의 결합, 한 기기가 Primary/Secondary 겸함 (p.8).
+# Bluetooth layers 는 인터넷 모델과 '''정확히 대응하지 않는다''' — 아래부터 Radio · Baseband · L2CAP · Profiles · Applications (p.9).
+# '''Baseband ≈ MAC sublayer''', 접근 방식 '''TDMA''' (time slots로 primary–secondary 통신) (p.10–11).
+# '''TDD-TDMA''' = '''half-duplex in time''': 송수신 가능하지만 '''같은 시간에는 불가'''. Cf. '''FDD''': '''같은 주파수에서는 불가''' (p.12–13).
+# '''Duplexing ≠ Multiple access''': duplexing = '''Tx/Rx''' 가 매체 공유, MA = '''users''' 가 매체 공유 (p.14 Note).
+# 슬롯 '''625 μs'''. Primary 는 '''짝수 슬롯(0, 2, 4, …)''', 그때 secondary 는 수신만. Multiple-secondary: 모든 secondary 가 듣고 '''지목된 secondary 가 다음 홀수 슬롯'''에 전송 (p.15–16). (그림의 "ms" 는 오타)
+# '''Radio ≈ physical layer''': '''2.4 GHz ISM''' band, '''79 channels × 1 MHz''' (p.17).
+# '''FHSS''': 간섭 회피, '''1600 hops/s''', dwell time '''625 μs (1/1600 s) = 슬롯 하나''' (p.18).
+# 변조 '''GFSK''' = '''FSK with Gaussian bandwidth filtering''' (p.19).
+# (10/6 교수와 연결) half-duplex 는 시간·주파수 두 자원의 문제 — 시간으로 나누면 TDD, 주파수(F1/F2)로 나누면 FDD.
+# 중간고사 범위에 Bluetooth 포함 여부는 10/8 수업 뒤 확인 → [[시험 정보]].
+
+== 공식 모음 ==
+{|
+! 관계 || 뜻
+|-
+| $8 = 1 + 7$ || piconet = primary 1 + secondary 최대 7
+|-
+| $T_{slot} = 1/1600\text{ s} = 625\ \mu\text{s}$ || 슬롯 = dwell time = hop 간격
+|-
+| $79 \times 1\text{ MHz} = 79\text{ MHz}$ || 2.4 GHz ISM 에서 Bluetooth 가 쓰는 채널 수 × 폭
+|-
+| 슬롯 $2k$ → primary, 슬롯 $2k+1$ → 지목된 secondary || TDD-TDMA 슬롯 규칙
+|}
+
+== 관련 문서 ==
+* 이전 강의: [[CH04 WiFi]] · [[CH04 Ethernet]] · [[CH03 Media Access Control]]
+* 이 강의 사전: [[piconet]] · [[scatternet]] · [[primary와 secondary]] · [[IEEE 802.15]] · [[PAN]] · [[Bluetooth 계층]] · [[baseband layer]] · [[TDD-TDMA]] · [[duplexing과 multiple access]] · [[Bluetooth 시간 슬롯]] · [[radio layer]] · [[FHSS]] · [[GFSK]]
+* 다시 쓰이는 개념: [[Bluetooth]] · [[WiFi]] · [[LAN]] · [[ad-hoc과 infrastructure]] · [[half-duplex]] · [[full-duplex]] · [[FSK]] · [[TDM]] · [[FDM]] · [[multiplexing]] · [[channelization]] · [[polling]] · [[controlled access]] · [[multiple access protocols]] · [[IEEE Project 802]] · [[IEEE 802.11]] · [[802.11 physical layer]] · [[NRM]] · [[MAC sublayer]] · [[physical layer]]
+* 시험: [[시험 정보]]

@@ -2,21 +2,25 @@ key: Bluetooth
 title: Bluetooth (wireless LAN 의 세 번째 instance)
 category: 9강 Ethernet, 용어
 ---
-'''Bluetooth''' 는 L7 p.9 가 꼽은 LAN 의 세 instance 중 세 번째로, [[WiFi]] 와 함께 '''wireless''' LAN 에 속한다. 10/1 수업에서는 이름만 나왔고, 교수가 "'''다음 수업에서 WiFi 와 Bluetooth 로 chapter 4 를 마친다'''"고 공지했다 — 내용은 그때 확장한다. L7 p.9.
+'''Bluetooth''' 는 L7 p.9 가 꼽은 LAN 의 세 instance 중 세 번째로, [[WiFi]] 와 함께 '''wireless''' LAN 에 속한다. 10/1 수업에서는 이름만 나왔고, 교수가 "'''다음 수업에서 WiFi 와 Bluetooth 로 chapter 4 를 마친다'''"고 공지했다. L7 p.9.
+
+{info}'''10/8 수업 덱(CH04 (3), L9) 도착 — 자세한 내용은 [[CH04 Bluetooth]] 참고.''' piconet(최대 8 = primary 1 + secondary 7) · scatternet · [[IEEE 802.15]] [[PAN]] · baseband(TDD-TDMA, 625 μs 슬롯) · radio(2.4 GHz ISM, 79 × 1 MHz, FHSS 1600 hops/s, GFSK).{/info}
 
 {def}"Three instances of LANs: 1. Ethernet - wired / 2. WiFi (Wireless Fidelity) - wireless / 3. '''Bluetooth - wireless'''" (p.9)
 → Bluetooth 는 무선(wireless) LAN 의 한 instance.{/def}
 
 == 이름에서 개념 끌어내기 ==
-'''Bluetooth''' 는 기술 내용을 설명하는 이름이 아니라 '''사람 이름'''에서 왔다 — 10세기에 덴마크·노르웨이 지역을 통일한 왕 Harald "Bluetooth" 의 별명. "서로 다른 기기들을 하나로 묶는다(통일)"는 뜻으로 붙였다. (슬라이드에는 없는 여담 — 시험에는 "wireless LAN 의 instance" 라는 분류가 중요.)
+'''Bluetooth''' 는 기술 내용을 설명하는 이름이 아니라 '''사람 이름'''에서 왔다 — 10세기에 덴마크·노르웨이 지역을 통일한 왕 Harald "Bluetooth" 의 별명. "서로 다른 기기들을 하나로 묶는다(통일)"는 뜻으로 붙였다. L9 p.5 가 이를 확인한다: "'''Originally started as a project by the Ericsson Company. It is named for Harald Blaatand, a king of Denmark (940–981). Blaatand translates to Bluetooth in English.'''" ("통일" 의미 부분은 슬라이드에 없는 여담 — 시험에는 "wireless LAN 의 instance" 라는 분류와 [[IEEE 802.15]] PAN 이 중요.)
 
-== LAN 세 instance 비교 (지금까지 알려진 것) ==
+== LAN 세 instance 비교 ==
 {|
 ! || [[Standard Ethernet|Ethernet]] || [[WiFi]] || '''Bluetooth'''
 |-
 | wired / wireless || wired || wireless || '''wireless'''
 |-
-| 이 강의 || 10/1 || 다음 수업 || 다음 수업
+| 표준 || 802.3 || 802.11 || '''[[IEEE 802.15]]'''
+|-
+| 이 강의 || 10/1 ([[CH04 Ethernet]]) || 10/6 ([[CH04 WiFi]]) || 10/8 ([[CH04 Bluetooth]])
 |}
 
 {analogy}🎭 '''무선 이어폰.''' WiFi 가 "집 안 전체를 덮는 무전망"이라면 Bluetooth 는 "내 책상 위, 몸 주변의 기기끼리 잇는 짧은 무선 끈"에 가깝다 — 휴대폰과 이어폰, 노트북과 마우스. 범위가 더 좁을 뿐 "선 없는 local network" 라는 점은 같다.{/analogy}
@@ -25,4 +29,4 @@ category: 9강 Ethernet, 용어
 {answer}'''Ethernet — wired''', '''WiFi — wireless''', '''Bluetooth — wireless'''.{/answer}
 
 == 관련 문서 ==
-* [[WiFi]] · [[LAN]] · [[Standard Ethernet]] · [[CH04 Ethernet]]
+* [[CH04 Bluetooth]] · [[piconet]] · [[IEEE 802.15]] · [[WiFi]] · [[LAN]] · [[Standard Ethernet]] · [[CH04 Ethernet]]

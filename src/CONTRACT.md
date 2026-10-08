@@ -39,6 +39,7 @@
 | L6 | CH03_Data Link Layer (2) | 63 | 전부 (recap 없음) | `../정리본/CH03(2)_정리.md` |
 | L7 | CH04_Local Area Networks (1) | 42 | 전부 (p.2–3 은 L6 Ex 3.13/3.14 의 정정판, p.4–8 복습) — Ethernet 4세대 | `../정리본/CH04_정리.md` |
 | L8 | CH04_Local Area Networks (2) | 36 | p.6– (p.2–5 복습) — WiFi/IEEE 802.11 전부: wireless LAN 특성, BSS/ESS, DCF(CSMA/CA, RTS/CTS, NAV, hidden/exposed station), PCF, repetition interval, fragmentation, 프레임 9 필드, 주소 4 케이스, physical layer 표. Bluetooth 는 이 덱에 없음(다음 덱). 10/6 수업 전 선제 작성, 녹음본 없음 | `../정리본/CH04(2)_정리.md` |
+| L9 | CH04_Local Area Networks (3) | 19 | 전부 — Bluetooth: ad-hoc/piconet/scatternet, IEEE 802.15 PAN, Baseband(TDD-TDMA, 625 μs 슬롯, primary 짝수/secondary 홀수), duplexing vs multiple access, Radio(2.4 GHz ISM 79×1 MHz, FHSS 1600 hops/s, GFSK). 10/8 수업 전 선제 작성 | `../정리본/CH04(3)_정리.md` |
 
 복습 슬라이드는 내용이 같으면 **원 덱의 페이지를 캡처**한다(예: attenuation 그림은 L2-41). 다만 복습 덱에서 그림이 더 좋으면 그쪽을 써도 된다.
 
@@ -145,6 +146,11 @@ main(대문) · 읽는 순서 · 시험 정보 · 자주 틀리는 함정 모음
 **메인**: CH04 WiFi
 **사전**: wireless LAN의 특성 · IEEE 802.11 · BSS · ad-hoc과 infrastructure · ESS · distribution system · station mobility · DCF · PCF · CSMA/CA · RTS와 CTS · NAV · interframe space · hidden station problem · exposed station problem · repetition interval · beacon frame · fragmentation · 802.11 프레임 형식 · 802.11 프레임 종류 · 802.11 주소 케이스 · 802.11 physical layer
 (기존 키 재사용: WiFi(9G, 10/1 수업 기준의 짧은 문서 — 10강 메인으로 링크하도록 갱신) · Bluetooth · LAN · CSMA/CD · CSMA · persistence method · binary exponential backoff · collision · 최소 프레임 크기 · half-duplex · full-duplex · attenuation · noise · CRC · MAC 주소 · Standard Ethernet · IEEE Project 802 · polling · controlled access · random access · 1-persistent)
+
+### 11강 CH04 Bluetooth (`11강 Bluetooth`) [B0_–] — L9 (10/8 수업, 선제 작성)
+**메인**: CH04 Bluetooth
+**사전**: piconet · scatternet · primary와 secondary · IEEE 802.15 · PAN · Bluetooth 계층 · baseband layer · TDD-TDMA · duplexing과 multiple access · Bluetooth 시간 슬롯 · radio layer · FHSS · GFSK
+(기존 키 재사용: Bluetooth(9H — 11강 메인으로 링크하도록 갱신) · WiFi · LAN · ad-hoc과 infrastructure · half-duplex · full-duplex · FSK · TDM · FDM · multiplexing · channelization · polling · multiple access protocols · IEEE Project 802 · CH04 WiFi)
 
 ### 기타 용어 (`용어`) [Z0_]
 Forouzan · 교수 소개 · bps와 Hz · log₂ 계산법 · XOR · modular arithmetic
@@ -270,5 +276,6 @@ python3 build.py                        # index.html 재생성 + 문서에서 �
 | hidden_station | L8 p.21–23: A·B·C 일렬, A 와 C 는 서로 범위 밖. ① A→B 전송 중 C 가 채널을 idle 로 보고 전송 → B 에서 충돌(CSMA/CD 로는 못 감지) ② RTS/CTS: A 의 RTS → B 의 CTS(duration 포함)가 C 에도 닿음 → C 가 NAV 설정, 조용히 기다림. 마지막에 exposed station(p.35: 쓸 수 있는데 참는 경우) 한 장면 | hidden station problem, exposed station problem, RTS와 CTS, CH04 WiFi |
 | csma_ca_timeline | L8 p.15–16 그림: 시간축 위 A(RTS, Data) · B(CTS, ACK) · 다른 스테이션들(NAV 막대) 과 DIFS/SIFS 간격이 순서대로 채워짐. 요점 "CSMA/CA 는 충돌을 감지하지 않고 피한다 — 이유: 무선은 half-duplex" | CSMA/CA, NAV, interframe space, DCF |
 | bss_ess | L8 p.10–12: BSS(ad-hoc: AP 없음 / infrastructure: AP) 두 개가 distribution system 으로 묶여 ESS 가 됨. 스테이션 토큰이 BSS 안 이동(no-transition) → 다른 BSS 로(BSS-transition) → 다른 ESS 로(ESS-transition, 연속성 보장 없음 ✗) | BSS, ESS, distribution system, station mobility, ad-hoc과 infrastructure, CH04 WiFi |
+| bluetooth_piconet | L9 p.7–8·15–16: ① primary 1 + secondary 7 의 piconet(8대) → ② 두 piconet 이 한 기기를 공유해 scatternet → ③ 시간축 625 μs 슬롯: primary 가 짝수 슬롯(0,2,4)에 보내고 지목된 secondary 가 다음 홀수 슬롯에 응답(TDD-TDMA, 동시에는 못 함), 슬롯마다 주파수가 바뀜(FHSS 1600 hops/s) | piconet, scatternet, TDD-TDMA, Bluetooth 시간 슬롯, FHSS, CH04 Bluetooth |
 | switch_fullduplex | hub(공유 매체) 에서 A·C 동시 전송 → 충돌 vs link-layer switch + full-duplex 전용 링크 → buffer 후 목적지 포트로만 → 충돌 없음, CSMA/CD 불필요 | link-layer 스위치와 full-duplex, Fast Ethernet, Gigabit Ethernet |
 | controlled_access | reservation(minislot 5 개에 1 표시 후 순서대로) → polling(primary 가 SEL/Poll, NAK/ACK) → token passing(토큰이 링을 돌고 가진 쪽만 전송) 세 장면 | controlled access, reservation, polling, token passing |
